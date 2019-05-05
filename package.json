@@ -28,7 +28,6 @@
     "dependencies": {
         "@babel/plugin-proposal-class-properties": "^7.4.4",
         "acorn-dynamic-import": "^4.0.0",
-        "argon-dashboard-react": "^1.0.0",
         "babel-loader": "^8.0.5",
         "babel-plugin-transform-class-properties": "^6.24.1",
         "babel-preset-env": "^1.7.0",

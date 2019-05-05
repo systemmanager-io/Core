@@ -375,313 +375,1933 @@ module.exports = _objectWithoutPropertiesLoose;
 
 /***/ }),
 
-/***/ "./node_modules/argon-dashboard-react/src/assets/css/argon-dashboard-react.css":
-/*!*************************************************************************************!*\
-  !*** ./node_modules/argon-dashboard-react/src/assets/css/argon-dashboard-react.css ***!
-  \*************************************************************************************/
+/***/ "./node_modules/React/cjs/react.development.js":
+/*!*****************************************************!*\
+  !*** ./node_modules/React/cjs/react.development.js ***!
+  \*****************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
+"use strict";
+/** @license React v16.8.6
+ * react.development.js
+ *
+ * Copyright (c) Facebook, Inc. and its affiliates.
+ *
+ * This source code is licensed under the MIT license found in the
+ * LICENSE file in the root directory of this source tree.
+ */
 
-var content = __webpack_require__(/*! !../../../../css-loader??ref--6-1!../../../../postcss-loader/src??ref--6-2!./argon-dashboard-react.css */ "./node_modules/css-loader/index.js?!./node_modules/postcss-loader/src/index.js?!./node_modules/argon-dashboard-react/src/assets/css/argon-dashboard-react.css");
-
-if(typeof content === 'string') content = [[module.i, content, '']];
-
-var transform;
-var insertInto;
 
 
 
-var options = {"hmr":true}
 
-options.transform = transform
-options.insertInto = undefined;
+if (true) {
+  (function() {
+'use strict';
 
-var update = __webpack_require__(/*! ../../../../style-loader/lib/addStyles.js */ "./node_modules/style-loader/lib/addStyles.js")(content, options);
+var _assign = __webpack_require__(/*! object-assign */ "./node_modules/object-assign/index.js");
+var checkPropTypes = __webpack_require__(/*! prop-types/checkPropTypes */ "./node_modules/prop-types/checkPropTypes.js");
 
-if(content.locals) module.exports = content.locals;
+// TODO: this is special because it gets imported during build.
 
-if(false) {}
+var ReactVersion = '16.8.6';
+
+// The Symbol used to tag the ReactElement-like types. If there is no native Symbol
+// nor polyfill, then a plain number is used for performance.
+var hasSymbol = typeof Symbol === 'function' && Symbol.for;
+
+var REACT_ELEMENT_TYPE = hasSymbol ? Symbol.for('react.element') : 0xeac7;
+var REACT_PORTAL_TYPE = hasSymbol ? Symbol.for('react.portal') : 0xeaca;
+var REACT_FRAGMENT_TYPE = hasSymbol ? Symbol.for('react.fragment') : 0xeacb;
+var REACT_STRICT_MODE_TYPE = hasSymbol ? Symbol.for('react.strict_mode') : 0xeacc;
+var REACT_PROFILER_TYPE = hasSymbol ? Symbol.for('react.profiler') : 0xead2;
+var REACT_PROVIDER_TYPE = hasSymbol ? Symbol.for('react.provider') : 0xeacd;
+var REACT_CONTEXT_TYPE = hasSymbol ? Symbol.for('react.context') : 0xeace;
+
+var REACT_CONCURRENT_MODE_TYPE = hasSymbol ? Symbol.for('react.concurrent_mode') : 0xeacf;
+var REACT_FORWARD_REF_TYPE = hasSymbol ? Symbol.for('react.forward_ref') : 0xead0;
+var REACT_SUSPENSE_TYPE = hasSymbol ? Symbol.for('react.suspense') : 0xead1;
+var REACT_MEMO_TYPE = hasSymbol ? Symbol.for('react.memo') : 0xead3;
+var REACT_LAZY_TYPE = hasSymbol ? Symbol.for('react.lazy') : 0xead4;
+
+var MAYBE_ITERATOR_SYMBOL = typeof Symbol === 'function' && Symbol.iterator;
+var FAUX_ITERATOR_SYMBOL = '@@iterator';
+
+function getIteratorFn(maybeIterable) {
+  if (maybeIterable === null || typeof maybeIterable !== 'object') {
+    return null;
+  }
+  var maybeIterator = MAYBE_ITERATOR_SYMBOL && maybeIterable[MAYBE_ITERATOR_SYMBOL] || maybeIterable[FAUX_ITERATOR_SYMBOL];
+  if (typeof maybeIterator === 'function') {
+    return maybeIterator;
+  }
+  return null;
+}
+
+/**
+ * Use invariant() to assert state which your program assumes to be true.
+ *
+ * Provide sprintf-style format (only %s is supported) and arguments
+ * to provide information about what broke and what you were
+ * expecting.
+ *
+ * The invariant message will be stripped in production, but the invariant
+ * will remain to ensure logic does not differ in production.
+ */
+
+var validateFormat = function () {};
+
+{
+  validateFormat = function (format) {
+    if (format === undefined) {
+      throw new Error('invariant requires an error message argument');
+    }
+  };
+}
+
+function invariant(condition, format, a, b, c, d, e, f) {
+  validateFormat(format);
+
+  if (!condition) {
+    var error = void 0;
+    if (format === undefined) {
+      error = new Error('Minified exception occurred; use the non-minified dev environment ' + 'for the full error message and additional helpful warnings.');
+    } else {
+      var args = [a, b, c, d, e, f];
+      var argIndex = 0;
+      error = new Error(format.replace(/%s/g, function () {
+        return args[argIndex++];
+      }));
+      error.name = 'Invariant Violation';
+    }
+
+    error.framesToPop = 1; // we don't care about invariant's own frame
+    throw error;
+  }
+}
+
+// Relying on the `invariant()` implementation lets us
+// preserve the format and params in the www builds.
+
+/**
+ * Forked from fbjs/warning:
+ * https://github.com/facebook/fbjs/blob/e66ba20ad5be433eb54423f2b097d829324d9de6/packages/fbjs/src/__forks__/warning.js
+ *
+ * Only change is we use console.warn instead of console.error,
+ * and do nothing when 'console' is not supported.
+ * This really simplifies the code.
+ * ---
+ * Similar to invariant but only logs a warning if the condition is not met.
+ * This can be used to log issues in development environments in critical
+ * paths. Removing the logging code for production environments will keep the
+ * same logic and follow the same code paths.
+ */
+
+var lowPriorityWarning = function () {};
+
+{
+  var printWarning = function (format) {
+    for (var _len = arguments.length, args = Array(_len > 1 ? _len - 1 : 0), _key = 1; _key < _len; _key++) {
+      args[_key - 1] = arguments[_key];
+    }
+
+    var argIndex = 0;
+    var message = 'Warning: ' + format.replace(/%s/g, function () {
+      return args[argIndex++];
+    });
+    if (typeof console !== 'undefined') {
+      console.warn(message);
+    }
+    try {
+      // --- Welcome to debugging React ---
+      // This error was thrown as a convenience so that you can use this stack
+      // to find the callsite that caused this warning to fire.
+      throw new Error(message);
+    } catch (x) {}
+  };
+
+  lowPriorityWarning = function (condition, format) {
+    if (format === undefined) {
+      throw new Error('`lowPriorityWarning(condition, format, ...args)` requires a warning ' + 'message argument');
+    }
+    if (!condition) {
+      for (var _len2 = arguments.length, args = Array(_len2 > 2 ? _len2 - 2 : 0), _key2 = 2; _key2 < _len2; _key2++) {
+        args[_key2 - 2] = arguments[_key2];
+      }
+
+      printWarning.apply(undefined, [format].concat(args));
+    }
+  };
+}
+
+var lowPriorityWarning$1 = lowPriorityWarning;
+
+/**
+ * Similar to invariant but only logs a warning if the condition is not met.
+ * This can be used to log issues in development environments in critical
+ * paths. Removing the logging code for production environments will keep the
+ * same logic and follow the same code paths.
+ */
+
+var warningWithoutStack = function () {};
+
+{
+  warningWithoutStack = function (condition, format) {
+    for (var _len = arguments.length, args = Array(_len > 2 ? _len - 2 : 0), _key = 2; _key < _len; _key++) {
+      args[_key - 2] = arguments[_key];
+    }
+
+    if (format === undefined) {
+      throw new Error('`warningWithoutStack(condition, format, ...args)` requires a warning ' + 'message argument');
+    }
+    if (args.length > 8) {
+      // Check before the condition to catch violations early.
+      throw new Error('warningWithoutStack() currently supports at most 8 arguments.');
+    }
+    if (condition) {
+      return;
+    }
+    if (typeof console !== 'undefined') {
+      var argsWithFormat = args.map(function (item) {
+        return '' + item;
+      });
+      argsWithFormat.unshift('Warning: ' + format);
+
+      // We intentionally don't use spread (or .apply) directly because it
+      // breaks IE9: https://github.com/facebook/react/issues/13610
+      Function.prototype.apply.call(console.error, console, argsWithFormat);
+    }
+    try {
+      // --- Welcome to debugging React ---
+      // This error was thrown as a convenience so that you can use this stack
+      // to find the callsite that caused this warning to fire.
+      var argIndex = 0;
+      var message = 'Warning: ' + format.replace(/%s/g, function () {
+        return args[argIndex++];
+      });
+      throw new Error(message);
+    } catch (x) {}
+  };
+}
+
+var warningWithoutStack$1 = warningWithoutStack;
+
+var didWarnStateUpdateForUnmountedComponent = {};
+
+function warnNoop(publicInstance, callerName) {
+  {
+    var _constructor = publicInstance.constructor;
+    var componentName = _constructor && (_constructor.displayName || _constructor.name) || 'ReactClass';
+    var warningKey = componentName + '.' + callerName;
+    if (didWarnStateUpdateForUnmountedComponent[warningKey]) {
+      return;
+    }
+    warningWithoutStack$1(false, "Can't call %s on a component that is not yet mounted. " + 'This is a no-op, but it might indicate a bug in your application. ' + 'Instead, assign to `this.state` directly or define a `state = {};` ' + 'class property with the desired state in the %s component.', callerName, componentName);
+    didWarnStateUpdateForUnmountedComponent[warningKey] = true;
+  }
+}
+
+/**
+ * This is the abstract API for an update queue.
+ */
+var ReactNoopUpdateQueue = {
+  /**
+   * Checks whether or not this composite component is mounted.
+   * @param {ReactClass} publicInstance The instance we want to test.
+   * @return {boolean} True if mounted, false otherwise.
+   * @protected
+   * @final
+   */
+  isMounted: function (publicInstance) {
+    return false;
+  },
+
+  /**
+   * Forces an update. This should only be invoked when it is known with
+   * certainty that we are **not** in a DOM transaction.
+   *
+   * You may want to call this when you know that some deeper aspect of the
+   * component's state has changed but `setState` was not called.
+   *
+   * This will not invoke `shouldComponentUpdate`, but it will invoke
+   * `componentWillUpdate` and `componentDidUpdate`.
+   *
+   * @param {ReactClass} publicInstance The instance that should rerender.
+   * @param {?function} callback Called after component is updated.
+   * @param {?string} callerName name of the calling function in the public API.
+   * @internal
+   */
+  enqueueForceUpdate: function (publicInstance, callback, callerName) {
+    warnNoop(publicInstance, 'forceUpdate');
+  },
+
+  /**
+   * Replaces all of the state. Always use this or `setState` to mutate state.
+   * You should treat `this.state` as immutable.
+   *
+   * There is no guarantee that `this.state` will be immediately updated, so
+   * accessing `this.state` after calling this method may return the old value.
+   *
+   * @param {ReactClass} publicInstance The instance that should rerender.
+   * @param {object} completeState Next state.
+   * @param {?function} callback Called after component is updated.
+   * @param {?string} callerName name of the calling function in the public API.
+   * @internal
+   */
+  enqueueReplaceState: function (publicInstance, completeState, callback, callerName) {
+    warnNoop(publicInstance, 'replaceState');
+  },
+
+  /**
+   * Sets a subset of the state. This only exists because _pendingState is
+   * internal. This provides a merging strategy that is not available to deep
+   * properties which is confusing. TODO: Expose pendingState or don't use it
+   * during the merge.
+   *
+   * @param {ReactClass} publicInstance The instance that should rerender.
+   * @param {object} partialState Next partial state to be merged with state.
+   * @param {?function} callback Called after component is updated.
+   * @param {?string} Name of the calling function in the public API.
+   * @internal
+   */
+  enqueueSetState: function (publicInstance, partialState, callback, callerName) {
+    warnNoop(publicInstance, 'setState');
+  }
+};
+
+var emptyObject = {};
+{
+  Object.freeze(emptyObject);
+}
+
+/**
+ * Base class helpers for the updating state of a component.
+ */
+function Component(props, context, updater) {
+  this.props = props;
+  this.context = context;
+  // If a component has string refs, we will assign a different object later.
+  this.refs = emptyObject;
+  // We initialize the default updater but the real one gets injected by the
+  // renderer.
+  this.updater = updater || ReactNoopUpdateQueue;
+}
+
+Component.prototype.isReactComponent = {};
+
+/**
+ * Sets a subset of the state. Always use this to mutate
+ * state. You should treat `this.state` as immutable.
+ *
+ * There is no guarantee that `this.state` will be immediately updated, so
+ * accessing `this.state` after calling this method may return the old value.
+ *
+ * There is no guarantee that calls to `setState` will run synchronously,
+ * as they may eventually be batched together.  You can provide an optional
+ * callback that will be executed when the call to setState is actually
+ * completed.
+ *
+ * When a function is provided to setState, it will be called at some point in
+ * the future (not synchronously). It will be called with the up to date
+ * component arguments (state, props, context). These values can be different
+ * from this.* because your function may be called after receiveProps but before
+ * shouldComponentUpdate, and this new state, props, and context will not yet be
+ * assigned to this.
+ *
+ * @param {object|function} partialState Next partial state or function to
+ *        produce next partial state to be merged with current state.
+ * @param {?function} callback Called after state is updated.
+ * @final
+ * @protected
+ */
+Component.prototype.setState = function (partialState, callback) {
+  !(typeof partialState === 'object' || typeof partialState === 'function' || partialState == null) ? invariant(false, 'setState(...): takes an object of state variables to update or a function which returns an object of state variables.') : void 0;
+  this.updater.enqueueSetState(this, partialState, callback, 'setState');
+};
+
+/**
+ * Forces an update. This should only be invoked when it is known with
+ * certainty that we are **not** in a DOM transaction.
+ *
+ * You may want to call this when you know that some deeper aspect of the
+ * component's state has changed but `setState` was not called.
+ *
+ * This will not invoke `shouldComponentUpdate`, but it will invoke
+ * `componentWillUpdate` and `componentDidUpdate`.
+ *
+ * @param {?function} callback Called after update is complete.
+ * @final
+ * @protected
+ */
+Component.prototype.forceUpdate = function (callback) {
+  this.updater.enqueueForceUpdate(this, callback, 'forceUpdate');
+};
+
+/**
+ * Deprecated APIs. These APIs used to exist on classic React classes but since
+ * we would like to deprecate them, we're not going to move them over to this
+ * modern base class. Instead, we define a getter that warns if it's accessed.
+ */
+{
+  var deprecatedAPIs = {
+    isMounted: ['isMounted', 'Instead, make sure to clean up subscriptions and pending requests in ' + 'componentWillUnmount to prevent memory leaks.'],
+    replaceState: ['replaceState', 'Refactor your code to use setState instead (see ' + 'https://github.com/facebook/react/issues/3236).']
+  };
+  var defineDeprecationWarning = function (methodName, info) {
+    Object.defineProperty(Component.prototype, methodName, {
+      get: function () {
+        lowPriorityWarning$1(false, '%s(...) is deprecated in plain JavaScript React classes. %s', info[0], info[1]);
+        return undefined;
+      }
+    });
+  };
+  for (var fnName in deprecatedAPIs) {
+    if (deprecatedAPIs.hasOwnProperty(fnName)) {
+      defineDeprecationWarning(fnName, deprecatedAPIs[fnName]);
+    }
+  }
+}
+
+function ComponentDummy() {}
+ComponentDummy.prototype = Component.prototype;
+
+/**
+ * Convenience component with default shallow equality check for sCU.
+ */
+function PureComponent(props, context, updater) {
+  this.props = props;
+  this.context = context;
+  // If a component has string refs, we will assign a different object later.
+  this.refs = emptyObject;
+  this.updater = updater || ReactNoopUpdateQueue;
+}
+
+var pureComponentPrototype = PureComponent.prototype = new ComponentDummy();
+pureComponentPrototype.constructor = PureComponent;
+// Avoid an extra prototype jump for these methods.
+_assign(pureComponentPrototype, Component.prototype);
+pureComponentPrototype.isPureReactComponent = true;
+
+// an immutable object with a single mutable value
+function createRef() {
+  var refObject = {
+    current: null
+  };
+  {
+    Object.seal(refObject);
+  }
+  return refObject;
+}
+
+/**
+ * Keeps track of the current dispatcher.
+ */
+var ReactCurrentDispatcher = {
+  /**
+   * @internal
+   * @type {ReactComponent}
+   */
+  current: null
+};
+
+/**
+ * Keeps track of the current owner.
+ *
+ * The current owner is the component who should own any components that are
+ * currently being constructed.
+ */
+var ReactCurrentOwner = {
+  /**
+   * @internal
+   * @type {ReactComponent}
+   */
+  current: null
+};
+
+var BEFORE_SLASH_RE = /^(.*)[\\\/]/;
+
+var describeComponentFrame = function (name, source, ownerName) {
+  var sourceInfo = '';
+  if (source) {
+    var path = source.fileName;
+    var fileName = path.replace(BEFORE_SLASH_RE, '');
+    {
+      // In DEV, include code for a common special case:
+      // prefer "folder/index.js" instead of just "index.js".
+      if (/^index\./.test(fileName)) {
+        var match = path.match(BEFORE_SLASH_RE);
+        if (match) {
+          var pathBeforeSlash = match[1];
+          if (pathBeforeSlash) {
+            var folderName = pathBeforeSlash.replace(BEFORE_SLASH_RE, '');
+            fileName = folderName + '/' + fileName;
+          }
+        }
+      }
+    }
+    sourceInfo = ' (at ' + fileName + ':' + source.lineNumber + ')';
+  } else if (ownerName) {
+    sourceInfo = ' (created by ' + ownerName + ')';
+  }
+  return '\n    in ' + (name || 'Unknown') + sourceInfo;
+};
+
+var Resolved = 1;
+
+
+function refineResolvedLazyComponent(lazyComponent) {
+  return lazyComponent._status === Resolved ? lazyComponent._result : null;
+}
+
+function getWrappedName(outerType, innerType, wrapperName) {
+  var functionName = innerType.displayName || innerType.name || '';
+  return outerType.displayName || (functionName !== '' ? wrapperName + '(' + functionName + ')' : wrapperName);
+}
+
+function getComponentName(type) {
+  if (type == null) {
+    // Host root, text node or just invalid type.
+    return null;
+  }
+  {
+    if (typeof type.tag === 'number') {
+      warningWithoutStack$1(false, 'Received an unexpected object in getComponentName(). ' + 'This is likely a bug in React. Please file an issue.');
+    }
+  }
+  if (typeof type === 'function') {
+    return type.displayName || type.name || null;
+  }
+  if (typeof type === 'string') {
+    return type;
+  }
+  switch (type) {
+    case REACT_CONCURRENT_MODE_TYPE:
+      return 'ConcurrentMode';
+    case REACT_FRAGMENT_TYPE:
+      return 'Fragment';
+    case REACT_PORTAL_TYPE:
+      return 'Portal';
+    case REACT_PROFILER_TYPE:
+      return 'Profiler';
+    case REACT_STRICT_MODE_TYPE:
+      return 'StrictMode';
+    case REACT_SUSPENSE_TYPE:
+      return 'Suspense';
+  }
+  if (typeof type === 'object') {
+    switch (type.$$typeof) {
+      case REACT_CONTEXT_TYPE:
+        return 'Context.Consumer';
+      case REACT_PROVIDER_TYPE:
+        return 'Context.Provider';
+      case REACT_FORWARD_REF_TYPE:
+        return getWrappedName(type, type.render, 'ForwardRef');
+      case REACT_MEMO_TYPE:
+        return getComponentName(type.type);
+      case REACT_LAZY_TYPE:
+        {
+          var thenable = type;
+          var resolvedThenable = refineResolvedLazyComponent(thenable);
+          if (resolvedThenable) {
+            return getComponentName(resolvedThenable);
+          }
+        }
+    }
+  }
+  return null;
+}
+
+var ReactDebugCurrentFrame = {};
+
+var currentlyValidatingElement = null;
+
+function setCurrentlyValidatingElement(element) {
+  {
+    currentlyValidatingElement = element;
+  }
+}
+
+{
+  // Stack implementation injected by the current renderer.
+  ReactDebugCurrentFrame.getCurrentStack = null;
+
+  ReactDebugCurrentFrame.getStackAddendum = function () {
+    var stack = '';
+
+    // Add an extra top frame while an element is being validated
+    if (currentlyValidatingElement) {
+      var name = getComponentName(currentlyValidatingElement.type);
+      var owner = currentlyValidatingElement._owner;
+      stack += describeComponentFrame(name, currentlyValidatingElement._source, owner && getComponentName(owner.type));
+    }
+
+    // Delegate to the injected renderer-specific implementation
+    var impl = ReactDebugCurrentFrame.getCurrentStack;
+    if (impl) {
+      stack += impl() || '';
+    }
+
+    return stack;
+  };
+}
+
+var ReactSharedInternals = {
+  ReactCurrentDispatcher: ReactCurrentDispatcher,
+  ReactCurrentOwner: ReactCurrentOwner,
+  // Used by renderers to avoid bundling object-assign twice in UMD bundles:
+  assign: _assign
+};
+
+{
+  _assign(ReactSharedInternals, {
+    // These should not be included in production.
+    ReactDebugCurrentFrame: ReactDebugCurrentFrame,
+    // Shim for React DOM 16.0.0 which still destructured (but not used) this.
+    // TODO: remove in React 17.0.
+    ReactComponentTreeHook: {}
+  });
+}
+
+/**
+ * Similar to invariant but only logs a warning if the condition is not met.
+ * This can be used to log issues in development environments in critical
+ * paths. Removing the logging code for production environments will keep the
+ * same logic and follow the same code paths.
+ */
+
+var warning = warningWithoutStack$1;
+
+{
+  warning = function (condition, format) {
+    if (condition) {
+      return;
+    }
+    var ReactDebugCurrentFrame = ReactSharedInternals.ReactDebugCurrentFrame;
+    var stack = ReactDebugCurrentFrame.getStackAddendum();
+    // eslint-disable-next-line react-internal/warning-and-invariant-args
+
+    for (var _len = arguments.length, args = Array(_len > 2 ? _len - 2 : 0), _key = 2; _key < _len; _key++) {
+      args[_key - 2] = arguments[_key];
+    }
+
+    warningWithoutStack$1.apply(undefined, [false, format + '%s'].concat(args, [stack]));
+  };
+}
+
+var warning$1 = warning;
+
+var hasOwnProperty = Object.prototype.hasOwnProperty;
+
+var RESERVED_PROPS = {
+  key: true,
+  ref: true,
+  __self: true,
+  __source: true
+};
+
+var specialPropKeyWarningShown = void 0;
+var specialPropRefWarningShown = void 0;
+
+function hasValidRef(config) {
+  {
+    if (hasOwnProperty.call(config, 'ref')) {
+      var getter = Object.getOwnPropertyDescriptor(config, 'ref').get;
+      if (getter && getter.isReactWarning) {
+        return false;
+      }
+    }
+  }
+  return config.ref !== undefined;
+}
+
+function hasValidKey(config) {
+  {
+    if (hasOwnProperty.call(config, 'key')) {
+      var getter = Object.getOwnPropertyDescriptor(config, 'key').get;
+      if (getter && getter.isReactWarning) {
+        return false;
+      }
+    }
+  }
+  return config.key !== undefined;
+}
+
+function defineKeyPropWarningGetter(props, displayName) {
+  var warnAboutAccessingKey = function () {
+    if (!specialPropKeyWarningShown) {
+      specialPropKeyWarningShown = true;
+      warningWithoutStack$1(false, '%s: `key` is not a prop. Trying to access it will result ' + 'in `undefined` being returned. If you need to access the same ' + 'value within the child component, you should pass it as a different ' + 'prop. (https://fb.me/react-special-props)', displayName);
+    }
+  };
+  warnAboutAccessingKey.isReactWarning = true;
+  Object.defineProperty(props, 'key', {
+    get: warnAboutAccessingKey,
+    configurable: true
+  });
+}
+
+function defineRefPropWarningGetter(props, displayName) {
+  var warnAboutAccessingRef = function () {
+    if (!specialPropRefWarningShown) {
+      specialPropRefWarningShown = true;
+      warningWithoutStack$1(false, '%s: `ref` is not a prop. Trying to access it will result ' + 'in `undefined` being returned. If you need to access the same ' + 'value within the child component, you should pass it as a different ' + 'prop. (https://fb.me/react-special-props)', displayName);
+    }
+  };
+  warnAboutAccessingRef.isReactWarning = true;
+  Object.defineProperty(props, 'ref', {
+    get: warnAboutAccessingRef,
+    configurable: true
+  });
+}
+
+/**
+ * Factory method to create a new React element. This no longer adheres to
+ * the class pattern, so do not use new to call it. Also, no instanceof check
+ * will work. Instead test $$typeof field against Symbol.for('react.element') to check
+ * if something is a React Element.
+ *
+ * @param {*} type
+ * @param {*} key
+ * @param {string|object} ref
+ * @param {*} self A *temporary* helper to detect places where `this` is
+ * different from the `owner` when React.createElement is called, so that we
+ * can warn. We want to get rid of owner and replace string `ref`s with arrow
+ * functions, and as long as `this` and owner are the same, there will be no
+ * change in behavior.
+ * @param {*} source An annotation object (added by a transpiler or otherwise)
+ * indicating filename, line number, and/or other information.
+ * @param {*} owner
+ * @param {*} props
+ * @internal
+ */
+var ReactElement = function (type, key, ref, self, source, owner, props) {
+  var element = {
+    // This tag allows us to uniquely identify this as a React Element
+    $$typeof: REACT_ELEMENT_TYPE,
+
+    // Built-in properties that belong on the element
+    type: type,
+    key: key,
+    ref: ref,
+    props: props,
+
+    // Record the component responsible for creating this element.
+    _owner: owner
+  };
+
+  {
+    // The validation flag is currently mutative. We put it on
+    // an external backing store so that we can freeze the whole object.
+    // This can be replaced with a WeakMap once they are implemented in
+    // commonly used development environments.
+    element._store = {};
+
+    // To make comparing ReactElements easier for testing purposes, we make
+    // the validation flag non-enumerable (where possible, which should
+    // include every environment we run tests in), so the test framework
+    // ignores it.
+    Object.defineProperty(element._store, 'validated', {
+      configurable: false,
+      enumerable: false,
+      writable: true,
+      value: false
+    });
+    // self and source are DEV only properties.
+    Object.defineProperty(element, '_self', {
+      configurable: false,
+      enumerable: false,
+      writable: false,
+      value: self
+    });
+    // Two elements created in two different places should be considered
+    // equal for testing purposes and therefore we hide it from enumeration.
+    Object.defineProperty(element, '_source', {
+      configurable: false,
+      enumerable: false,
+      writable: false,
+      value: source
+    });
+    if (Object.freeze) {
+      Object.freeze(element.props);
+      Object.freeze(element);
+    }
+  }
+
+  return element;
+};
+
+/**
+ * Create and return a new ReactElement of the given type.
+ * See https://reactjs.org/docs/react-api.html#createelement
+ */
+function createElement(type, config, children) {
+  var propName = void 0;
+
+  // Reserved names are extracted
+  var props = {};
+
+  var key = null;
+  var ref = null;
+  var self = null;
+  var source = null;
+
+  if (config != null) {
+    if (hasValidRef(config)) {
+      ref = config.ref;
+    }
+    if (hasValidKey(config)) {
+      key = '' + config.key;
+    }
+
+    self = config.__self === undefined ? null : config.__self;
+    source = config.__source === undefined ? null : config.__source;
+    // Remaining properties are added to a new props object
+    for (propName in config) {
+      if (hasOwnProperty.call(config, propName) && !RESERVED_PROPS.hasOwnProperty(propName)) {
+        props[propName] = config[propName];
+      }
+    }
+  }
+
+  // Children can be more than one argument, and those are transferred onto
+  // the newly allocated props object.
+  var childrenLength = arguments.length - 2;
+  if (childrenLength === 1) {
+    props.children = children;
+  } else if (childrenLength > 1) {
+    var childArray = Array(childrenLength);
+    for (var i = 0; i < childrenLength; i++) {
+      childArray[i] = arguments[i + 2];
+    }
+    {
+      if (Object.freeze) {
+        Object.freeze(childArray);
+      }
+    }
+    props.children = childArray;
+  }
+
+  // Resolve default props
+  if (type && type.defaultProps) {
+    var defaultProps = type.defaultProps;
+    for (propName in defaultProps) {
+      if (props[propName] === undefined) {
+        props[propName] = defaultProps[propName];
+      }
+    }
+  }
+  {
+    if (key || ref) {
+      var displayName = typeof type === 'function' ? type.displayName || type.name || 'Unknown' : type;
+      if (key) {
+        defineKeyPropWarningGetter(props, displayName);
+      }
+      if (ref) {
+        defineRefPropWarningGetter(props, displayName);
+      }
+    }
+  }
+  return ReactElement(type, key, ref, self, source, ReactCurrentOwner.current, props);
+}
+
+/**
+ * Return a function that produces ReactElements of a given type.
+ * See https://reactjs.org/docs/react-api.html#createfactory
+ */
+
+
+function cloneAndReplaceKey(oldElement, newKey) {
+  var newElement = ReactElement(oldElement.type, newKey, oldElement.ref, oldElement._self, oldElement._source, oldElement._owner, oldElement.props);
+
+  return newElement;
+}
+
+/**
+ * Clone and return a new ReactElement using element as the starting point.
+ * See https://reactjs.org/docs/react-api.html#cloneelement
+ */
+function cloneElement(element, config, children) {
+  !!(element === null || element === undefined) ? invariant(false, 'React.cloneElement(...): The argument must be a React element, but you passed %s.', element) : void 0;
+
+  var propName = void 0;
+
+  // Original props are copied
+  var props = _assign({}, element.props);
+
+  // Reserved names are extracted
+  var key = element.key;
+  var ref = element.ref;
+  // Self is preserved since the owner is preserved.
+  var self = element._self;
+  // Source is preserved since cloneElement is unlikely to be targeted by a
+  // transpiler, and the original source is probably a better indicator of the
+  // true owner.
+  var source = element._source;
+
+  // Owner will be preserved, unless ref is overridden
+  var owner = element._owner;
+
+  if (config != null) {
+    if (hasValidRef(config)) {
+      // Silently steal the ref from the parent.
+      ref = config.ref;
+      owner = ReactCurrentOwner.current;
+    }
+    if (hasValidKey(config)) {
+      key = '' + config.key;
+    }
+
+    // Remaining properties override existing props
+    var defaultProps = void 0;
+    if (element.type && element.type.defaultProps) {
+      defaultProps = element.type.defaultProps;
+    }
+    for (propName in config) {
+      if (hasOwnProperty.call(config, propName) && !RESERVED_PROPS.hasOwnProperty(propName)) {
+        if (config[propName] === undefined && defaultProps !== undefined) {
+          // Resolve default props
+          props[propName] = defaultProps[propName];
+        } else {
+          props[propName] = config[propName];
+        }
+      }
+    }
+  }
+
+  // Children can be more than one argument, and those are transferred onto
+  // the newly allocated props object.
+  var childrenLength = arguments.length - 2;
+  if (childrenLength === 1) {
+    props.children = children;
+  } else if (childrenLength > 1) {
+    var childArray = Array(childrenLength);
+    for (var i = 0; i < childrenLength; i++) {
+      childArray[i] = arguments[i + 2];
+    }
+    props.children = childArray;
+  }
+
+  return ReactElement(element.type, key, ref, self, source, owner, props);
+}
+
+/**
+ * Verifies the object is a ReactElement.
+ * See https://reactjs.org/docs/react-api.html#isvalidelement
+ * @param {?object} object
+ * @return {boolean} True if `object` is a ReactElement.
+ * @final
+ */
+function isValidElement(object) {
+  return typeof object === 'object' && object !== null && object.$$typeof === REACT_ELEMENT_TYPE;
+}
+
+var SEPARATOR = '.';
+var SUBSEPARATOR = ':';
+
+/**
+ * Escape and wrap key so it is safe to use as a reactid
+ *
+ * @param {string} key to be escaped.
+ * @return {string} the escaped key.
+ */
+function escape(key) {
+  var escapeRegex = /[=:]/g;
+  var escaperLookup = {
+    '=': '=0',
+    ':': '=2'
+  };
+  var escapedString = ('' + key).replace(escapeRegex, function (match) {
+    return escaperLookup[match];
+  });
+
+  return '$' + escapedString;
+}
+
+/**
+ * TODO: Test that a single child and an array with one item have the same key
+ * pattern.
+ */
+
+var didWarnAboutMaps = false;
+
+var userProvidedKeyEscapeRegex = /\/+/g;
+function escapeUserProvidedKey(text) {
+  return ('' + text).replace(userProvidedKeyEscapeRegex, '$&/');
+}
+
+var POOL_SIZE = 10;
+var traverseContextPool = [];
+function getPooledTraverseContext(mapResult, keyPrefix, mapFunction, mapContext) {
+  if (traverseContextPool.length) {
+    var traverseContext = traverseContextPool.pop();
+    traverseContext.result = mapResult;
+    traverseContext.keyPrefix = keyPrefix;
+    traverseContext.func = mapFunction;
+    traverseContext.context = mapContext;
+    traverseContext.count = 0;
+    return traverseContext;
+  } else {
+    return {
+      result: mapResult,
+      keyPrefix: keyPrefix,
+      func: mapFunction,
+      context: mapContext,
+      count: 0
+    };
+  }
+}
+
+function releaseTraverseContext(traverseContext) {
+  traverseContext.result = null;
+  traverseContext.keyPrefix = null;
+  traverseContext.func = null;
+  traverseContext.context = null;
+  traverseContext.count = 0;
+  if (traverseContextPool.length < POOL_SIZE) {
+    traverseContextPool.push(traverseContext);
+  }
+}
+
+/**
+ * @param {?*} children Children tree container.
+ * @param {!string} nameSoFar Name of the key path so far.
+ * @param {!function} callback Callback to invoke with each child found.
+ * @param {?*} traverseContext Used to pass information throughout the traversal
+ * process.
+ * @return {!number} The number of children in this subtree.
+ */
+function traverseAllChildrenImpl(children, nameSoFar, callback, traverseContext) {
+  var type = typeof children;
+
+  if (type === 'undefined' || type === 'boolean') {
+    // All of the above are perceived as null.
+    children = null;
+  }
+
+  var invokeCallback = false;
+
+  if (children === null) {
+    invokeCallback = true;
+  } else {
+    switch (type) {
+      case 'string':
+      case 'number':
+        invokeCallback = true;
+        break;
+      case 'object':
+        switch (children.$$typeof) {
+          case REACT_ELEMENT_TYPE:
+          case REACT_PORTAL_TYPE:
+            invokeCallback = true;
+        }
+    }
+  }
+
+  if (invokeCallback) {
+    callback(traverseContext, children,
+    // If it's the only child, treat the name as if it was wrapped in an array
+    // so that it's consistent if the number of children grows.
+    nameSoFar === '' ? SEPARATOR + getComponentKey(children, 0) : nameSoFar);
+    return 1;
+  }
+
+  var child = void 0;
+  var nextName = void 0;
+  var subtreeCount = 0; // Count of children found in the current subtree.
+  var nextNamePrefix = nameSoFar === '' ? SEPARATOR : nameSoFar + SUBSEPARATOR;
+
+  if (Array.isArray(children)) {
+    for (var i = 0; i < children.length; i++) {
+      child = children[i];
+      nextName = nextNamePrefix + getComponentKey(child, i);
+      subtreeCount += traverseAllChildrenImpl(child, nextName, callback, traverseContext);
+    }
+  } else {
+    var iteratorFn = getIteratorFn(children);
+    if (typeof iteratorFn === 'function') {
+      {
+        // Warn about using Maps as children
+        if (iteratorFn === children.entries) {
+          !didWarnAboutMaps ? warning$1(false, 'Using Maps as children is unsupported and will likely yield ' + 'unexpected results. Convert it to a sequence/iterable of keyed ' + 'ReactElements instead.') : void 0;
+          didWarnAboutMaps = true;
+        }
+      }
+
+      var iterator = iteratorFn.call(children);
+      var step = void 0;
+      var ii = 0;
+      while (!(step = iterator.next()).done) {
+        child = step.value;
+        nextName = nextNamePrefix + getComponentKey(child, ii++);
+        subtreeCount += traverseAllChildrenImpl(child, nextName, callback, traverseContext);
+      }
+    } else if (type === 'object') {
+      var addendum = '';
+      {
+        addendum = ' If you meant to render a collection of children, use an array ' + 'instead.' + ReactDebugCurrentFrame.getStackAddendum();
+      }
+      var childrenString = '' + children;
+      invariant(false, 'Objects are not valid as a React child (found: %s).%s', childrenString === '[object Object]' ? 'object with keys {' + Object.keys(children).join(', ') + '}' : childrenString, addendum);
+    }
+  }
+
+  return subtreeCount;
+}
+
+/**
+ * Traverses children that are typically specified as `props.children`, but
+ * might also be specified through attributes:
+ *
+ * - `traverseAllChildren(this.props.children, ...)`
+ * - `traverseAllChildren(this.props.leftPanelChildren, ...)`
+ *
+ * The `traverseContext` is an optional argument that is passed through the
+ * entire traversal. It can be used to store accumulations or anything else that
+ * the callback might find relevant.
+ *
+ * @param {?*} children Children tree object.
+ * @param {!function} callback To invoke upon traversing each child.
+ * @param {?*} traverseContext Context for traversal.
+ * @return {!number} The number of children in this subtree.
+ */
+function traverseAllChildren(children, callback, traverseContext) {
+  if (children == null) {
+    return 0;
+  }
+
+  return traverseAllChildrenImpl(children, '', callback, traverseContext);
+}
+
+/**
+ * Generate a key string that identifies a component within a set.
+ *
+ * @param {*} component A component that could contain a manual key.
+ * @param {number} index Index that is used if a manual key is not provided.
+ * @return {string}
+ */
+function getComponentKey(component, index) {
+  // Do some typechecking here since we call this blindly. We want to ensure
+  // that we don't block potential future ES APIs.
+  if (typeof component === 'object' && component !== null && component.key != null) {
+    // Explicit key
+    return escape(component.key);
+  }
+  // Implicit key determined by the index in the set
+  return index.toString(36);
+}
+
+function forEachSingleChild(bookKeeping, child, name) {
+  var func = bookKeeping.func,
+      context = bookKeeping.context;
+
+  func.call(context, child, bookKeeping.count++);
+}
+
+/**
+ * Iterates through children that are typically specified as `props.children`.
+ *
+ * See https://reactjs.org/docs/react-api.html#reactchildrenforeach
+ *
+ * The provided forEachFunc(child, index) will be called for each
+ * leaf child.
+ *
+ * @param {?*} children Children tree container.
+ * @param {function(*, int)} forEachFunc
+ * @param {*} forEachContext Context for forEachContext.
+ */
+function forEachChildren(children, forEachFunc, forEachContext) {
+  if (children == null) {
+    return children;
+  }
+  var traverseContext = getPooledTraverseContext(null, null, forEachFunc, forEachContext);
+  traverseAllChildren(children, forEachSingleChild, traverseContext);
+  releaseTraverseContext(traverseContext);
+}
+
+function mapSingleChildIntoContext(bookKeeping, child, childKey) {
+  var result = bookKeeping.result,
+      keyPrefix = bookKeeping.keyPrefix,
+      func = bookKeeping.func,
+      context = bookKeeping.context;
+
+
+  var mappedChild = func.call(context, child, bookKeeping.count++);
+  if (Array.isArray(mappedChild)) {
+    mapIntoWithKeyPrefixInternal(mappedChild, result, childKey, function (c) {
+      return c;
+    });
+  } else if (mappedChild != null) {
+    if (isValidElement(mappedChild)) {
+      mappedChild = cloneAndReplaceKey(mappedChild,
+      // Keep both the (mapped) and old keys if they differ, just as
+      // traverseAllChildren used to do for objects as children
+      keyPrefix + (mappedChild.key && (!child || child.key !== mappedChild.key) ? escapeUserProvidedKey(mappedChild.key) + '/' : '') + childKey);
+    }
+    result.push(mappedChild);
+  }
+}
+
+function mapIntoWithKeyPrefixInternal(children, array, prefix, func, context) {
+  var escapedPrefix = '';
+  if (prefix != null) {
+    escapedPrefix = escapeUserProvidedKey(prefix) + '/';
+  }
+  var traverseContext = getPooledTraverseContext(array, escapedPrefix, func, context);
+  traverseAllChildren(children, mapSingleChildIntoContext, traverseContext);
+  releaseTraverseContext(traverseContext);
+}
+
+/**
+ * Maps children that are typically specified as `props.children`.
+ *
+ * See https://reactjs.org/docs/react-api.html#reactchildrenmap
+ *
+ * The provided mapFunction(child, key, index) will be called for each
+ * leaf child.
+ *
+ * @param {?*} children Children tree container.
+ * @param {function(*, int)} func The map function.
+ * @param {*} context Context for mapFunction.
+ * @return {object} Object containing the ordered map of results.
+ */
+function mapChildren(children, func, context) {
+  if (children == null) {
+    return children;
+  }
+  var result = [];
+  mapIntoWithKeyPrefixInternal(children, result, null, func, context);
+  return result;
+}
+
+/**
+ * Count the number of children that are typically specified as
+ * `props.children`.
+ *
+ * See https://reactjs.org/docs/react-api.html#reactchildrencount
+ *
+ * @param {?*} children Children tree container.
+ * @return {number} The number of children.
+ */
+function countChildren(children) {
+  return traverseAllChildren(children, function () {
+    return null;
+  }, null);
+}
+
+/**
+ * Flatten a children object (typically specified as `props.children`) and
+ * return an array with appropriately re-keyed children.
+ *
+ * See https://reactjs.org/docs/react-api.html#reactchildrentoarray
+ */
+function toArray(children) {
+  var result = [];
+  mapIntoWithKeyPrefixInternal(children, result, null, function (child) {
+    return child;
+  });
+  return result;
+}
+
+/**
+ * Returns the first child in a collection of children and verifies that there
+ * is only one child in the collection.
+ *
+ * See https://reactjs.org/docs/react-api.html#reactchildrenonly
+ *
+ * The current implementation of this function assumes that a single child gets
+ * passed without a wrapper, but the purpose of this helper function is to
+ * abstract away the particular structure of children.
+ *
+ * @param {?object} children Child collection structure.
+ * @return {ReactElement} The first and only `ReactElement` contained in the
+ * structure.
+ */
+function onlyChild(children) {
+  !isValidElement(children) ? invariant(false, 'React.Children.only expected to receive a single React element child.') : void 0;
+  return children;
+}
+
+function createContext(defaultValue, calculateChangedBits) {
+  if (calculateChangedBits === undefined) {
+    calculateChangedBits = null;
+  } else {
+    {
+      !(calculateChangedBits === null || typeof calculateChangedBits === 'function') ? warningWithoutStack$1(false, 'createContext: Expected the optional second argument to be a ' + 'function. Instead received: %s', calculateChangedBits) : void 0;
+    }
+  }
+
+  var context = {
+    $$typeof: REACT_CONTEXT_TYPE,
+    _calculateChangedBits: calculateChangedBits,
+    // As a workaround to support multiple concurrent renderers, we categorize
+    // some renderers as primary and others as secondary. We only expect
+    // there to be two concurrent renderers at most: React Native (primary) and
+    // Fabric (secondary); React DOM (primary) and React ART (secondary).
+    // Secondary renderers store their context values on separate fields.
+    _currentValue: defaultValue,
+    _currentValue2: defaultValue,
+    // Used to track how many concurrent renderers this context currently
+    // supports within in a single renderer. Such as parallel server rendering.
+    _threadCount: 0,
+    // These are circular
+    Provider: null,
+    Consumer: null
+  };
+
+  context.Provider = {
+    $$typeof: REACT_PROVIDER_TYPE,
+    _context: context
+  };
+
+  var hasWarnedAboutUsingNestedContextConsumers = false;
+  var hasWarnedAboutUsingConsumerProvider = false;
+
+  {
+    // A separate object, but proxies back to the original context object for
+    // backwards compatibility. It has a different $$typeof, so we can properly
+    // warn for the incorrect usage of Context as a Consumer.
+    var Consumer = {
+      $$typeof: REACT_CONTEXT_TYPE,
+      _context: context,
+      _calculateChangedBits: context._calculateChangedBits
+    };
+    // $FlowFixMe: Flow complains about not setting a value, which is intentional here
+    Object.defineProperties(Consumer, {
+      Provider: {
+        get: function () {
+          if (!hasWarnedAboutUsingConsumerProvider) {
+            hasWarnedAboutUsingConsumerProvider = true;
+            warning$1(false, 'Rendering <Context.Consumer.Provider> is not supported and will be removed in ' + 'a future major release. Did you mean to render <Context.Provider> instead?');
+          }
+          return context.Provider;
+        },
+        set: function (_Provider) {
+          context.Provider = _Provider;
+        }
+      },
+      _currentValue: {
+        get: function () {
+          return context._currentValue;
+        },
+        set: function (_currentValue) {
+          context._currentValue = _currentValue;
+        }
+      },
+      _currentValue2: {
+        get: function () {
+          return context._currentValue2;
+        },
+        set: function (_currentValue2) {
+          context._currentValue2 = _currentValue2;
+        }
+      },
+      _threadCount: {
+        get: function () {
+          return context._threadCount;
+        },
+        set: function (_threadCount) {
+          context._threadCount = _threadCount;
+        }
+      },
+      Consumer: {
+        get: function () {
+          if (!hasWarnedAboutUsingNestedContextConsumers) {
+            hasWarnedAboutUsingNestedContextConsumers = true;
+            warning$1(false, 'Rendering <Context.Consumer.Consumer> is not supported and will be removed in ' + 'a future major release. Did you mean to render <Context.Consumer> instead?');
+          }
+          return context.Consumer;
+        }
+      }
+    });
+    // $FlowFixMe: Flow complains about missing properties because it doesn't understand defineProperty
+    context.Consumer = Consumer;
+  }
+
+  {
+    context._currentRenderer = null;
+    context._currentRenderer2 = null;
+  }
+
+  return context;
+}
+
+function lazy(ctor) {
+  var lazyType = {
+    $$typeof: REACT_LAZY_TYPE,
+    _ctor: ctor,
+    // React uses these fields to store the result.
+    _status: -1,
+    _result: null
+  };
+
+  {
+    // In production, this would just set it on the object.
+    var defaultProps = void 0;
+    var propTypes = void 0;
+    Object.defineProperties(lazyType, {
+      defaultProps: {
+        configurable: true,
+        get: function () {
+          return defaultProps;
+        },
+        set: function (newDefaultProps) {
+          warning$1(false, 'React.lazy(...): It is not supported to assign `defaultProps` to ' + 'a lazy component import. Either specify them where the component ' + 'is defined, or create a wrapping component around it.');
+          defaultProps = newDefaultProps;
+          // Match production behavior more closely:
+          Object.defineProperty(lazyType, 'defaultProps', {
+            enumerable: true
+          });
+        }
+      },
+      propTypes: {
+        configurable: true,
+        get: function () {
+          return propTypes;
+        },
+        set: function (newPropTypes) {
+          warning$1(false, 'React.lazy(...): It is not supported to assign `propTypes` to ' + 'a lazy component import. Either specify them where the component ' + 'is defined, or create a wrapping component around it.');
+          propTypes = newPropTypes;
+          // Match production behavior more closely:
+          Object.defineProperty(lazyType, 'propTypes', {
+            enumerable: true
+          });
+        }
+      }
+    });
+  }
+
+  return lazyType;
+}
+
+function forwardRef(render) {
+  {
+    if (render != null && render.$$typeof === REACT_MEMO_TYPE) {
+      warningWithoutStack$1(false, 'forwardRef requires a render function but received a `memo` ' + 'component. Instead of forwardRef(memo(...)), use ' + 'memo(forwardRef(...)).');
+    } else if (typeof render !== 'function') {
+      warningWithoutStack$1(false, 'forwardRef requires a render function but was given %s.', render === null ? 'null' : typeof render);
+    } else {
+      !(
+      // Do not warn for 0 arguments because it could be due to usage of the 'arguments' object
+      render.length === 0 || render.length === 2) ? warningWithoutStack$1(false, 'forwardRef render functions accept exactly two parameters: props and ref. %s', render.length === 1 ? 'Did you forget to use the ref parameter?' : 'Any additional parameter will be undefined.') : void 0;
+    }
+
+    if (render != null) {
+      !(render.defaultProps == null && render.propTypes == null) ? warningWithoutStack$1(false, 'forwardRef render functions do not support propTypes or defaultProps. ' + 'Did you accidentally pass a React component?') : void 0;
+    }
+  }
+
+  return {
+    $$typeof: REACT_FORWARD_REF_TYPE,
+    render: render
+  };
+}
+
+function isValidElementType(type) {
+  return typeof type === 'string' || typeof type === 'function' ||
+  // Note: its typeof might be other than 'symbol' or 'number' if it's a polyfill.
+  type === REACT_FRAGMENT_TYPE || type === REACT_CONCURRENT_MODE_TYPE || type === REACT_PROFILER_TYPE || type === REACT_STRICT_MODE_TYPE || type === REACT_SUSPENSE_TYPE || typeof type === 'object' && type !== null && (type.$$typeof === REACT_LAZY_TYPE || type.$$typeof === REACT_MEMO_TYPE || type.$$typeof === REACT_PROVIDER_TYPE || type.$$typeof === REACT_CONTEXT_TYPE || type.$$typeof === REACT_FORWARD_REF_TYPE);
+}
+
+function memo(type, compare) {
+  {
+    if (!isValidElementType(type)) {
+      warningWithoutStack$1(false, 'memo: The first argument must be a component. Instead ' + 'received: %s', type === null ? 'null' : typeof type);
+    }
+  }
+  return {
+    $$typeof: REACT_MEMO_TYPE,
+    type: type,
+    compare: compare === undefined ? null : compare
+  };
+}
+
+function resolveDispatcher() {
+  var dispatcher = ReactCurrentDispatcher.current;
+  !(dispatcher !== null) ? invariant(false, 'Invalid hook call. Hooks can only be called inside of the body of a function component. This could happen for one of the following reasons:\n1. You might have mismatching versions of React and the renderer (such as React DOM)\n2. You might be breaking the Rules of Hooks\n3. You might have more than one copy of React in the same app\nSee https://fb.me/react-invalid-hook-call for tips about how to debug and fix this problem.') : void 0;
+  return dispatcher;
+}
+
+function useContext(Context, unstable_observedBits) {
+  var dispatcher = resolveDispatcher();
+  {
+    !(unstable_observedBits === undefined) ? warning$1(false, 'useContext() second argument is reserved for future ' + 'use in React. Passing it is not supported. ' + 'You passed: %s.%s', unstable_observedBits, typeof unstable_observedBits === 'number' && Array.isArray(arguments[2]) ? '\n\nDid you call array.map(useContext)? ' + 'Calling Hooks inside a loop is not supported. ' + 'Learn more at https://fb.me/rules-of-hooks' : '') : void 0;
+
+    // TODO: add a more generic warning for invalid values.
+    if (Context._context !== undefined) {
+      var realContext = Context._context;
+      // Don't deduplicate because this legitimately causes bugs
+      // and nobody should be using this in existing code.
+      if (realContext.Consumer === Context) {
+        warning$1(false, 'Calling useContext(Context.Consumer) is not supported, may cause bugs, and will be ' + 'removed in a future major release. Did you mean to call useContext(Context) instead?');
+      } else if (realContext.Provider === Context) {
+        warning$1(false, 'Calling useContext(Context.Provider) is not supported. ' + 'Did you mean to call useContext(Context) instead?');
+      }
+    }
+  }
+  return dispatcher.useContext(Context, unstable_observedBits);
+}
+
+function useState(initialState) {
+  var dispatcher = resolveDispatcher();
+  return dispatcher.useState(initialState);
+}
+
+function useReducer(reducer, initialArg, init) {
+  var dispatcher = resolveDispatcher();
+  return dispatcher.useReducer(reducer, initialArg, init);
+}
+
+function useRef(initialValue) {
+  var dispatcher = resolveDispatcher();
+  return dispatcher.useRef(initialValue);
+}
+
+function useEffect(create, inputs) {
+  var dispatcher = resolveDispatcher();
+  return dispatcher.useEffect(create, inputs);
+}
+
+function useLayoutEffect(create, inputs) {
+  var dispatcher = resolveDispatcher();
+  return dispatcher.useLayoutEffect(create, inputs);
+}
+
+function useCallback(callback, inputs) {
+  var dispatcher = resolveDispatcher();
+  return dispatcher.useCallback(callback, inputs);
+}
+
+function useMemo(create, inputs) {
+  var dispatcher = resolveDispatcher();
+  return dispatcher.useMemo(create, inputs);
+}
+
+function useImperativeHandle(ref, create, inputs) {
+  var dispatcher = resolveDispatcher();
+  return dispatcher.useImperativeHandle(ref, create, inputs);
+}
+
+function useDebugValue(value, formatterFn) {
+  {
+    var dispatcher = resolveDispatcher();
+    return dispatcher.useDebugValue(value, formatterFn);
+  }
+}
+
+/**
+ * ReactElementValidator provides a wrapper around a element factory
+ * which validates the props passed to the element. This is intended to be
+ * used only in DEV and could be replaced by a static type checker for languages
+ * that support it.
+ */
+
+var propTypesMisspellWarningShown = void 0;
+
+{
+  propTypesMisspellWarningShown = false;
+}
+
+function getDeclarationErrorAddendum() {
+  if (ReactCurrentOwner.current) {
+    var name = getComponentName(ReactCurrentOwner.current.type);
+    if (name) {
+      return '\n\nCheck the render method of `' + name + '`.';
+    }
+  }
+  return '';
+}
+
+function getSourceInfoErrorAddendum(elementProps) {
+  if (elementProps !== null && elementProps !== undefined && elementProps.__source !== undefined) {
+    var source = elementProps.__source;
+    var fileName = source.fileName.replace(/^.*[\\\/]/, '');
+    var lineNumber = source.lineNumber;
+    return '\n\nCheck your code at ' + fileName + ':' + lineNumber + '.';
+  }
+  return '';
+}
+
+/**
+ * Warn if there's no key explicitly set on dynamic arrays of children or
+ * object keys are not valid. This allows us to keep track of children between
+ * updates.
+ */
+var ownerHasKeyUseWarning = {};
+
+function getCurrentComponentErrorInfo(parentType) {
+  var info = getDeclarationErrorAddendum();
+
+  if (!info) {
+    var parentName = typeof parentType === 'string' ? parentType : parentType.displayName || parentType.name;
+    if (parentName) {
+      info = '\n\nCheck the top-level render call using <' + parentName + '>.';
+    }
+  }
+  return info;
+}
+
+/**
+ * Warn if the element doesn't have an explicit key assigned to it.
+ * This element is in an array. The array could grow and shrink or be
+ * reordered. All children that haven't already been validated are required to
+ * have a "key" property assigned to it. Error statuses are cached so a warning
+ * will only be shown once.
+ *
+ * @internal
+ * @param {ReactElement} element Element that requires a key.
+ * @param {*} parentType element's parent's type.
+ */
+function validateExplicitKey(element, parentType) {
+  if (!element._store || element._store.validated || element.key != null) {
+    return;
+  }
+  element._store.validated = true;
+
+  var currentComponentErrorInfo = getCurrentComponentErrorInfo(parentType);
+  if (ownerHasKeyUseWarning[currentComponentErrorInfo]) {
+    return;
+  }
+  ownerHasKeyUseWarning[currentComponentErrorInfo] = true;
+
+  // Usually the current owner is the offender, but if it accepts children as a
+  // property, it may be the creator of the child that's responsible for
+  // assigning it a key.
+  var childOwner = '';
+  if (element && element._owner && element._owner !== ReactCurrentOwner.current) {
+    // Give the component that originally created this child.
+    childOwner = ' It was passed a child from ' + getComponentName(element._owner.type) + '.';
+  }
+
+  setCurrentlyValidatingElement(element);
+  {
+    warning$1(false, 'Each child in a list should have a unique "key" prop.' + '%s%s See https://fb.me/react-warning-keys for more information.', currentComponentErrorInfo, childOwner);
+  }
+  setCurrentlyValidatingElement(null);
+}
+
+/**
+ * Ensure that every element either is passed in a static location, in an
+ * array with an explicit keys property defined, or in an object literal
+ * with valid key property.
+ *
+ * @internal
+ * @param {ReactNode} node Statically passed child of any type.
+ * @param {*} parentType node's parent's type.
+ */
+function validateChildKeys(node, parentType) {
+  if (typeof node !== 'object') {
+    return;
+  }
+  if (Array.isArray(node)) {
+    for (var i = 0; i < node.length; i++) {
+      var child = node[i];
+      if (isValidElement(child)) {
+        validateExplicitKey(child, parentType);
+      }
+    }
+  } else if (isValidElement(node)) {
+    // This element was passed in a valid location.
+    if (node._store) {
+      node._store.validated = true;
+    }
+  } else if (node) {
+    var iteratorFn = getIteratorFn(node);
+    if (typeof iteratorFn === 'function') {
+      // Entry iterators used to provide implicit keys,
+      // but now we print a separate warning for them later.
+      if (iteratorFn !== node.entries) {
+        var iterator = iteratorFn.call(node);
+        var step = void 0;
+        while (!(step = iterator.next()).done) {
+          if (isValidElement(step.value)) {
+            validateExplicitKey(step.value, parentType);
+          }
+        }
+      }
+    }
+  }
+}
+
+/**
+ * Given an element, validate that its props follow the propTypes definition,
+ * provided by the type.
+ *
+ * @param {ReactElement} element
+ */
+function validatePropTypes(element) {
+  var type = element.type;
+  if (type === null || type === undefined || typeof type === 'string') {
+    return;
+  }
+  var name = getComponentName(type);
+  var propTypes = void 0;
+  if (typeof type === 'function') {
+    propTypes = type.propTypes;
+  } else if (typeof type === 'object' && (type.$$typeof === REACT_FORWARD_REF_TYPE ||
+  // Note: Memo only checks outer props here.
+  // Inner props are checked in the reconciler.
+  type.$$typeof === REACT_MEMO_TYPE)) {
+    propTypes = type.propTypes;
+  } else {
+    return;
+  }
+  if (propTypes) {
+    setCurrentlyValidatingElement(element);
+    checkPropTypes(propTypes, element.props, 'prop', name, ReactDebugCurrentFrame.getStackAddendum);
+    setCurrentlyValidatingElement(null);
+  } else if (type.PropTypes !== undefined && !propTypesMisspellWarningShown) {
+    propTypesMisspellWarningShown = true;
+    warningWithoutStack$1(false, 'Component %s declared `PropTypes` instead of `propTypes`. Did you misspell the property assignment?', name || 'Unknown');
+  }
+  if (typeof type.getDefaultProps === 'function') {
+    !type.getDefaultProps.isReactClassApproved ? warningWithoutStack$1(false, 'getDefaultProps is only used on classic React.createClass ' + 'definitions. Use a static property named `defaultProps` instead.') : void 0;
+  }
+}
+
+/**
+ * Given a fragment, validate that it can only be provided with fragment props
+ * @param {ReactElement} fragment
+ */
+function validateFragmentProps(fragment) {
+  setCurrentlyValidatingElement(fragment);
+
+  var keys = Object.keys(fragment.props);
+  for (var i = 0; i < keys.length; i++) {
+    var key = keys[i];
+    if (key !== 'children' && key !== 'key') {
+      warning$1(false, 'Invalid prop `%s` supplied to `React.Fragment`. ' + 'React.Fragment can only have `key` and `children` props.', key);
+      break;
+    }
+  }
+
+  if (fragment.ref !== null) {
+    warning$1(false, 'Invalid attribute `ref` supplied to `React.Fragment`.');
+  }
+
+  setCurrentlyValidatingElement(null);
+}
+
+function createElementWithValidation(type, props, children) {
+  var validType = isValidElementType(type);
+
+  // We warn in this case but don't throw. We expect the element creation to
+  // succeed and there will likely be errors in render.
+  if (!validType) {
+    var info = '';
+    if (type === undefined || typeof type === 'object' && type !== null && Object.keys(type).length === 0) {
+      info += ' You likely forgot to export your component from the file ' + "it's defined in, or you might have mixed up default and named imports.";
+    }
+
+    var sourceInfo = getSourceInfoErrorAddendum(props);
+    if (sourceInfo) {
+      info += sourceInfo;
+    } else {
+      info += getDeclarationErrorAddendum();
+    }
+
+    var typeString = void 0;
+    if (type === null) {
+      typeString = 'null';
+    } else if (Array.isArray(type)) {
+      typeString = 'array';
+    } else if (type !== undefined && type.$$typeof === REACT_ELEMENT_TYPE) {
+      typeString = '<' + (getComponentName(type.type) || 'Unknown') + ' />';
+      info = ' Did you accidentally export a JSX literal instead of a component?';
+    } else {
+      typeString = typeof type;
+    }
+
+    warning$1(false, 'React.createElement: type is invalid -- expected a string (for ' + 'built-in components) or a class/function (for composite ' + 'components) but got: %s.%s', typeString, info);
+  }
+
+  var element = createElement.apply(this, arguments);
+
+  // The result can be nullish if a mock or a custom function is used.
+  // TODO: Drop this when these are no longer allowed as the type argument.
+  if (element == null) {
+    return element;
+  }
+
+  // Skip key warning if the type isn't valid since our key validation logic
+  // doesn't expect a non-string/function type and can throw confusing errors.
+  // We don't want exception behavior to differ between dev and prod.
+  // (Rendering will throw with a helpful message and as soon as the type is
+  // fixed, the key warnings will appear.)
+  if (validType) {
+    for (var i = 2; i < arguments.length; i++) {
+      validateChildKeys(arguments[i], type);
+    }
+  }
+
+  if (type === REACT_FRAGMENT_TYPE) {
+    validateFragmentProps(element);
+  } else {
+    validatePropTypes(element);
+  }
+
+  return element;
+}
+
+function createFactoryWithValidation(type) {
+  var validatedFactory = createElementWithValidation.bind(null, type);
+  validatedFactory.type = type;
+  // Legacy hook: remove it
+  {
+    Object.defineProperty(validatedFactory, 'type', {
+      enumerable: false,
+      get: function () {
+        lowPriorityWarning$1(false, 'Factory.type is deprecated. Access the class directly ' + 'before passing it to createFactory.');
+        Object.defineProperty(this, 'type', {
+          value: type
+        });
+        return type;
+      }
+    });
+  }
+
+  return validatedFactory;
+}
+
+function cloneElementWithValidation(element, props, children) {
+  var newElement = cloneElement.apply(this, arguments);
+  for (var i = 2; i < arguments.length; i++) {
+    validateChildKeys(arguments[i], newElement.type);
+  }
+  validatePropTypes(newElement);
+  return newElement;
+}
+
+// Helps identify side effects in begin-phase lifecycle hooks and setState reducers:
+
+
+// In some cases, StrictMode should also double-render lifecycles.
+// This can be confusing for tests though,
+// And it can be bad for performance in production.
+// This feature flag can be used to control the behavior:
+
+
+// To preserve the "Pause on caught exceptions" behavior of the debugger, we
+// replay the begin phase of a failed component inside invokeGuardedCallback.
+
+
+// Warn about deprecated, async-unsafe lifecycles; relates to RFC #6:
+
+
+// Gather advanced timing metrics for Profiler subtrees.
+
+
+// Trace which interactions trigger each commit.
+
+
+// Only used in www builds.
+ // TODO: true? Here it might just be false.
+
+// Only used in www builds.
+
+
+// Only used in www builds.
+
+
+// React Fire: prevent the value and checked attributes from syncing
+// with their related DOM properties
+
+
+// These APIs will no longer be "unstable" in the upcoming 16.7 release,
+// Control this behavior with a flag to support 16.6 minor releases in the meanwhile.
+var enableStableConcurrentModeAPIs = false;
+
+var React = {
+  Children: {
+    map: mapChildren,
+    forEach: forEachChildren,
+    count: countChildren,
+    toArray: toArray,
+    only: onlyChild
+  },
+
+  createRef: createRef,
+  Component: Component,
+  PureComponent: PureComponent,
+
+  createContext: createContext,
+  forwardRef: forwardRef,
+  lazy: lazy,
+  memo: memo,
+
+  useCallback: useCallback,
+  useContext: useContext,
+  useEffect: useEffect,
+  useImperativeHandle: useImperativeHandle,
+  useDebugValue: useDebugValue,
+  useLayoutEffect: useLayoutEffect,
+  useMemo: useMemo,
+  useReducer: useReducer,
+  useRef: useRef,
+  useState: useState,
+
+  Fragment: REACT_FRAGMENT_TYPE,
+  StrictMode: REACT_STRICT_MODE_TYPE,
+  Suspense: REACT_SUSPENSE_TYPE,
+
+  createElement: createElementWithValidation,
+  cloneElement: cloneElementWithValidation,
+  createFactory: createFactoryWithValidation,
+  isValidElement: isValidElement,
+
+  version: ReactVersion,
+
+  unstable_ConcurrentMode: REACT_CONCURRENT_MODE_TYPE,
+  unstable_Profiler: REACT_PROFILER_TYPE,
+
+  __SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_FIRED: ReactSharedInternals
+};
+
+// Note: some APIs are added with feature flags.
+// Make sure that stable builds for open source
+// don't modify the React object to avoid deopts.
+// Also let's not expose their names in stable builds.
+
+if (enableStableConcurrentModeAPIs) {
+  React.ConcurrentMode = REACT_CONCURRENT_MODE_TYPE;
+  React.Profiler = REACT_PROFILER_TYPE;
+  React.unstable_ConcurrentMode = undefined;
+  React.unstable_Profiler = undefined;
+}
+
+
+
+var React$2 = Object.freeze({
+	default: React
+});
+
+var React$3 = ( React$2 && React ) || React$2;
+
+// TODO: decide on the top-level export form.
+// This is hacky but makes it work with both Rollup and Jest.
+var react = React$3.default || React$3;
+
+module.exports = react;
+  })();
+}
+
 
 /***/ }),
 
-/***/ "./node_modules/argon-dashboard-react/src/assets/vendor/@fortawesome/fontawesome-free/css/all.min.css":
-/*!************************************************************************************************************!*\
-  !*** ./node_modules/argon-dashboard-react/src/assets/vendor/@fortawesome/fontawesome-free/css/all.min.css ***!
-  \************************************************************************************************************/
+/***/ "./node_modules/React/index.js":
+/*!*************************************!*\
+  !*** ./node_modules/React/index.js ***!
+  \*************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
+"use strict";
 
-var content = __webpack_require__(/*! !../../../../../../../css-loader??ref--6-1!../../../../../../../postcss-loader/src??ref--6-2!./all.min.css */ "./node_modules/css-loader/index.js?!./node_modules/postcss-loader/src/index.js?!./node_modules/argon-dashboard-react/src/assets/vendor/@fortawesome/fontawesome-free/css/all.min.css");
 
-if(typeof content === 'string') content = [[module.i, content, '']];
+if (false) {} else {
+  module.exports = __webpack_require__(/*! ./cjs/react.development.js */ "./node_modules/React/cjs/react.development.js");
+}
 
-var transform;
-var insertInto;
-
-
-
-var options = {"hmr":true}
-
-options.transform = transform
-options.insertInto = undefined;
-
-var update = __webpack_require__(/*! ../../../../../../../style-loader/lib/addStyles.js */ "./node_modules/style-loader/lib/addStyles.js")(content, options);
-
-if(content.locals) module.exports = content.locals;
-
-if(false) {}
-
-/***/ }),
-
-/***/ "./node_modules/argon-dashboard-react/src/assets/vendor/@fortawesome/fontawesome-free/webfonts/fa-brands-400.eot":
-/*!***********************************************************************************************************************!*\
-  !*** ./node_modules/argon-dashboard-react/src/assets/vendor/@fortawesome/fontawesome-free/webfonts/fa-brands-400.eot ***!
-  \***********************************************************************************************************************/
-/*! no static exports found */
-/***/ (function(module, exports) {
-
-module.exports = "/fonts/vendor/argon-dashboard-react/src/vendor/@fortawesome/fontawesome-free/webfa-brands-400.eot?9b6c8da3c489424e2b3e9c9fb6314b37";
-
-/***/ }),
-
-/***/ "./node_modules/argon-dashboard-react/src/assets/vendor/@fortawesome/fontawesome-free/webfonts/fa-brands-400.svg":
-/*!***********************************************************************************************************************!*\
-  !*** ./node_modules/argon-dashboard-react/src/assets/vendor/@fortawesome/fontawesome-free/webfonts/fa-brands-400.svg ***!
-  \***********************************************************************************************************************/
-/*! no static exports found */
-/***/ (function(module, exports) {
-
-module.exports = "/fonts/vendor/argon-dashboard-react/src/vendor/@fortawesome/fontawesome-free/webfa-brands-400.svg?b5472631dbace30d549357ec325b9c62";
-
-/***/ }),
-
-/***/ "./node_modules/argon-dashboard-react/src/assets/vendor/@fortawesome/fontawesome-free/webfonts/fa-brands-400.ttf":
-/*!***********************************************************************************************************************!*\
-  !*** ./node_modules/argon-dashboard-react/src/assets/vendor/@fortawesome/fontawesome-free/webfonts/fa-brands-400.ttf ***!
-  \***********************************************************************************************************************/
-/*! no static exports found */
-/***/ (function(module, exports) {
-
-module.exports = "/fonts/vendor/argon-dashboard-react/src/vendor/@fortawesome/fontawesome-free/webfa-brands-400.ttf?947b9537bc0fecc8130d48eb753495a1";
-
-/***/ }),
-
-/***/ "./node_modules/argon-dashboard-react/src/assets/vendor/@fortawesome/fontawesome-free/webfonts/fa-brands-400.woff":
-/*!************************************************************************************************************************!*\
-  !*** ./node_modules/argon-dashboard-react/src/assets/vendor/@fortawesome/fontawesome-free/webfonts/fa-brands-400.woff ***!
-  \************************************************************************************************************************/
-/*! no static exports found */
-/***/ (function(module, exports) {
-
-module.exports = "/fonts/vendor/argon-dashboard-react/src/vendor/@fortawesome/fontawesome-free/webfa-brands-400.woff?7b464e274bc331f9a765d765359635a5";
-
-/***/ }),
-
-/***/ "./node_modules/argon-dashboard-react/src/assets/vendor/@fortawesome/fontawesome-free/webfonts/fa-brands-400.woff2":
-/*!*************************************************************************************************************************!*\
-  !*** ./node_modules/argon-dashboard-react/src/assets/vendor/@fortawesome/fontawesome-free/webfonts/fa-brands-400.woff2 ***!
-  \*************************************************************************************************************************/
-/*! no static exports found */
-/***/ (function(module, exports) {
-
-module.exports = "/fonts/vendor/argon-dashboard-react/src/vendor/@fortawesome/fontawesome-free/webfa-brands-400.woff2?48461ea4e797c9774dabb4a0440d2f56";
-
-/***/ }),
-
-/***/ "./node_modules/argon-dashboard-react/src/assets/vendor/@fortawesome/fontawesome-free/webfonts/fa-regular-400.eot":
-/*!************************************************************************************************************************!*\
-  !*** ./node_modules/argon-dashboard-react/src/assets/vendor/@fortawesome/fontawesome-free/webfonts/fa-regular-400.eot ***!
-  \************************************************************************************************************************/
-/*! no static exports found */
-/***/ (function(module, exports) {
-
-module.exports = "/fonts/vendor/argon-dashboard-react/src/vendor/@fortawesome/fontawesome-free/webfa-regular-400.eot?7422060ca379ee9939d3b687d072acad";
-
-/***/ }),
-
-/***/ "./node_modules/argon-dashboard-react/src/assets/vendor/@fortawesome/fontawesome-free/webfonts/fa-regular-400.svg":
-/*!************************************************************************************************************************!*\
-  !*** ./node_modules/argon-dashboard-react/src/assets/vendor/@fortawesome/fontawesome-free/webfonts/fa-regular-400.svg ***!
-  \************************************************************************************************************************/
-/*! no static exports found */
-/***/ (function(module, exports) {
-
-module.exports = "/fonts/vendor/argon-dashboard-react/src/vendor/@fortawesome/fontawesome-free/webfa-regular-400.svg?b5a61b229c9c92a6ac21f5b0e3c6e9f1";
-
-/***/ }),
-
-/***/ "./node_modules/argon-dashboard-react/src/assets/vendor/@fortawesome/fontawesome-free/webfonts/fa-regular-400.ttf":
-/*!************************************************************************************************************************!*\
-  !*** ./node_modules/argon-dashboard-react/src/assets/vendor/@fortawesome/fontawesome-free/webfonts/fa-regular-400.ttf ***!
-  \************************************************************************************************************************/
-/*! no static exports found */
-/***/ (function(module, exports) {
-
-module.exports = "/fonts/vendor/argon-dashboard-react/src/vendor/@fortawesome/fontawesome-free/webfa-regular-400.ttf?73fe7f1effbf382f499831a0a9f18626";
-
-/***/ }),
-
-/***/ "./node_modules/argon-dashboard-react/src/assets/vendor/@fortawesome/fontawesome-free/webfonts/fa-regular-400.woff":
-/*!*************************************************************************************************************************!*\
-  !*** ./node_modules/argon-dashboard-react/src/assets/vendor/@fortawesome/fontawesome-free/webfonts/fa-regular-400.woff ***!
-  \*************************************************************************************************************************/
-/*! no static exports found */
-/***/ (function(module, exports) {
-
-module.exports = "/fonts/vendor/argon-dashboard-react/src/vendor/@fortawesome/fontawesome-free/webfa-regular-400.woff?381af09a1366b6c2ae65eac5dd6f0588";
-
-/***/ }),
-
-/***/ "./node_modules/argon-dashboard-react/src/assets/vendor/@fortawesome/fontawesome-free/webfonts/fa-regular-400.woff2":
-/*!**************************************************************************************************************************!*\
-  !*** ./node_modules/argon-dashboard-react/src/assets/vendor/@fortawesome/fontawesome-free/webfonts/fa-regular-400.woff2 ***!
-  \**************************************************************************************************************************/
-/*! no static exports found */
-/***/ (function(module, exports) {
-
-module.exports = "/fonts/vendor/argon-dashboard-react/src/vendor/@fortawesome/fontawesome-free/webfa-regular-400.woff2?949a2b066ec37f5a384712fc7beaf2f1";
-
-/***/ }),
-
-/***/ "./node_modules/argon-dashboard-react/src/assets/vendor/@fortawesome/fontawesome-free/webfonts/fa-solid-900.eot":
-/*!**********************************************************************************************************************!*\
-  !*** ./node_modules/argon-dashboard-react/src/assets/vendor/@fortawesome/fontawesome-free/webfonts/fa-solid-900.eot ***!
-  \**********************************************************************************************************************/
-/*! no static exports found */
-/***/ (function(module, exports) {
-
-module.exports = "/fonts/vendor/argon-dashboard-react/src/vendor/@fortawesome/fontawesome-free/webfa-solid-900.eot?70e65a7d34902f2c350816ecfe2f6492";
-
-/***/ }),
-
-/***/ "./node_modules/argon-dashboard-react/src/assets/vendor/@fortawesome/fontawesome-free/webfonts/fa-solid-900.svg":
-/*!**********************************************************************************************************************!*\
-  !*** ./node_modules/argon-dashboard-react/src/assets/vendor/@fortawesome/fontawesome-free/webfonts/fa-solid-900.svg ***!
-  \**********************************************************************************************************************/
-/*! no static exports found */
-/***/ (function(module, exports) {
-
-module.exports = "/fonts/vendor/argon-dashboard-react/src/vendor/@fortawesome/fontawesome-free/webfa-solid-900.svg?38508b2e7fac045869a86a15936433f7";
-
-/***/ }),
-
-/***/ "./node_modules/argon-dashboard-react/src/assets/vendor/@fortawesome/fontawesome-free/webfonts/fa-solid-900.ttf":
-/*!**********************************************************************************************************************!*\
-  !*** ./node_modules/argon-dashboard-react/src/assets/vendor/@fortawesome/fontawesome-free/webfonts/fa-solid-900.ttf ***!
-  \**********************************************************************************************************************/
-/*! no static exports found */
-/***/ (function(module, exports) {
-
-module.exports = "/fonts/vendor/argon-dashboard-react/src/vendor/@fortawesome/fontawesome-free/webfa-solid-900.ttf?0079a0ab6bec4da7d6e16f2a2e87cd71";
-
-/***/ }),
-
-/***/ "./node_modules/argon-dashboard-react/src/assets/vendor/@fortawesome/fontawesome-free/webfonts/fa-solid-900.woff":
-/*!***********************************************************************************************************************!*\
-  !*** ./node_modules/argon-dashboard-react/src/assets/vendor/@fortawesome/fontawesome-free/webfonts/fa-solid-900.woff ***!
-  \***********************************************************************************************************************/
-/*! no static exports found */
-/***/ (function(module, exports) {
-
-module.exports = "/fonts/vendor/argon-dashboard-react/src/vendor/@fortawesome/fontawesome-free/webfa-solid-900.woff?815694de1120d6c1e9d1f0895ee81056";
-
-/***/ }),
-
-/***/ "./node_modules/argon-dashboard-react/src/assets/vendor/@fortawesome/fontawesome-free/webfonts/fa-solid-900.woff2":
-/*!************************************************************************************************************************!*\
-  !*** ./node_modules/argon-dashboard-react/src/assets/vendor/@fortawesome/fontawesome-free/webfonts/fa-solid-900.woff2 ***!
-  \************************************************************************************************************************/
-/*! no static exports found */
-/***/ (function(module, exports) {
-
-module.exports = "/fonts/vendor/argon-dashboard-react/src/vendor/@fortawesome/fontawesome-free/webfa-solid-900.woff2?14a08198ec7d1eb96d515362293fed36";
-
-/***/ }),
-
-/***/ "./node_modules/argon-dashboard-react/src/assets/vendor/nucleo/css/nucleo.css":
-/*!************************************************************************************!*\
-  !*** ./node_modules/argon-dashboard-react/src/assets/vendor/nucleo/css/nucleo.css ***!
-  \************************************************************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-
-var content = __webpack_require__(/*! !../../../../../../css-loader??ref--6-1!../../../../../../postcss-loader/src??ref--6-2!./nucleo.css */ "./node_modules/css-loader/index.js?!./node_modules/postcss-loader/src/index.js?!./node_modules/argon-dashboard-react/src/assets/vendor/nucleo/css/nucleo.css");
-
-if(typeof content === 'string') content = [[module.i, content, '']];
-
-var transform;
-var insertInto;
-
-
-
-var options = {"hmr":true}
-
-options.transform = transform
-options.insertInto = undefined;
-
-var update = __webpack_require__(/*! ../../../../../../style-loader/lib/addStyles.js */ "./node_modules/style-loader/lib/addStyles.js")(content, options);
-
-if(content.locals) module.exports = content.locals;
-
-if(false) {}
-
-/***/ }),
-
-/***/ "./node_modules/argon-dashboard-react/src/assets/vendor/nucleo/fonts/nucleo-icons.eot":
-/*!********************************************************************************************!*\
-  !*** ./node_modules/argon-dashboard-react/src/assets/vendor/nucleo/fonts/nucleo-icons.eot ***!
-  \********************************************************************************************/
-/*! no static exports found */
-/***/ (function(module, exports) {
-
-module.exports = "/fonts/vendor/argon-dashboard-react/src/vendor/nucleo/nucleo-icons.eot?c1733565b32b585676302d4233c39da8";
-
-/***/ }),
-
-/***/ "./node_modules/argon-dashboard-react/src/assets/vendor/nucleo/fonts/nucleo-icons.svg":
-/*!********************************************************************************************!*\
-  !*** ./node_modules/argon-dashboard-react/src/assets/vendor/nucleo/fonts/nucleo-icons.svg ***!
-  \********************************************************************************************/
-/*! no static exports found */
-/***/ (function(module, exports) {
-
-module.exports = "/fonts/vendor/argon-dashboard-react/src/vendor/nucleo/nucleo-icons.svg?0b8a30b10cbe7708d5f3a4b007c1d665";
-
-/***/ }),
-
-/***/ "./node_modules/argon-dashboard-react/src/assets/vendor/nucleo/fonts/nucleo-icons.ttf":
-/*!********************************************************************************************!*\
-  !*** ./node_modules/argon-dashboard-react/src/assets/vendor/nucleo/fonts/nucleo-icons.ttf ***!
-  \********************************************************************************************/
-/*! no static exports found */
-/***/ (function(module, exports) {
-
-module.exports = "/fonts/vendor/argon-dashboard-react/src/vendor/nucleo/nucleo-icons.ttf?f82ec6ba2dc4181db2af35c499462840";
-
-/***/ }),
-
-/***/ "./node_modules/argon-dashboard-react/src/assets/vendor/nucleo/fonts/nucleo-icons.woff":
-/*!*********************************************************************************************!*\
-  !*** ./node_modules/argon-dashboard-react/src/assets/vendor/nucleo/fonts/nucleo-icons.woff ***!
-  \*********************************************************************************************/
-/*! no static exports found */
-/***/ (function(module, exports) {
-
-module.exports = "/fonts/vendor/argon-dashboard-react/src/vendor/nucleo/nucleo-icons.woff?2569aaea6eaaf8cd210db7f2fa016743";
-
-/***/ }),
-
-/***/ "./node_modules/argon-dashboard-react/src/assets/vendor/nucleo/fonts/nucleo-icons.woff2":
-/*!**********************************************************************************************!*\
-  !*** ./node_modules/argon-dashboard-react/src/assets/vendor/nucleo/fonts/nucleo-icons.woff2 ***!
-  \**********************************************************************************************/
-/*! no static exports found */
-/***/ (function(module, exports) {
-
-module.exports = "/fonts/vendor/argon-dashboard-react/src/vendor/nucleo/nucleo-icons.woff2?426439788ec5ba772cdf94057f6f4659";
 
 /***/ }),
 
@@ -7094,179 +8714,6 @@ module.exports = exports['default'];
 
 /***/ }),
 
-/***/ "./node_modules/css-loader/index.js?!./node_modules/postcss-loader/src/index.js?!./node_modules/argon-dashboard-react/src/assets/css/argon-dashboard-react.css":
-/*!*********************************************************************************************************************************************************************!*\
-  !*** ./node_modules/css-loader??ref--6-1!./node_modules/postcss-loader/src??ref--6-2!./node_modules/argon-dashboard-react/src/assets/css/argon-dashboard-react.css ***!
-  \*********************************************************************************************************************************************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-exports = module.exports = __webpack_require__(/*! ../../../../css-loader/lib/css-base.js */ "./node_modules/css-loader/lib/css-base.js")(false);
-// imports
-
-
-// module
-exports.push([module.i, "/*!\n\n=========================================================\n* Argon Dashboard - v1.0.0\n=========================================================\n\n* Product Page: https://www.creative-tim.com/product/argon-dashboard\n* Copyright 2018 Creative Tim (https://www.creative-tim.com)\n* Licensed under MIT (https://github.com/creativetimofficial/argon-dashboard/blob/master/LICENSE.md)\n\n* Coded by Creative Tim\n\n=========================================================\n\n* The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.\n\n*/\n:root {\n  --blue: #5e72e4;\n  --indigo: #5603ad;\n  --purple: #8965e0;\n  --pink: #f3a4b5;\n  --red: #f5365c;\n  --orange: #fb6340;\n  --yellow: #ffd600;\n  --green: #2dce89;\n  --teal: #11cdef;\n  --cyan: #2bffc6;\n  --white: #fff;\n  --gray: #8898aa;\n  --gray-dark: #32325d;\n  --light: #ced4da;\n  --lighter: #e9ecef;\n  --primary: #5e72e4;\n  --secondary: #f7fafc;\n  --success: #2dce89;\n  --info: #11cdef;\n  --warning: #fb6340;\n  --danger: #f5365c;\n  --light: #adb5bd;\n  --dark: #212529;\n  --default: #172b4d;\n  --white: #fff;\n  --neutral: #fff;\n  --darker: black;\n  --breakpoint-xs: 0;\n  --breakpoint-sm: 576px;\n  --breakpoint-md: 768px;\n  --breakpoint-lg: 992px;\n  --breakpoint-xl: 1200px;\n  --font-family-sans-serif: Open Sans, sans-serif;\n  --font-family-monospace: SFMono-Regular, Menlo, Monaco, Consolas, \"Liberation Mono\", \"Courier New\", monospace; }\n\n*,\n*::before,\n*::after {\n  box-sizing: border-box; }\n\nhtml {\n  font-family: sans-serif;\n  line-height: 1.15;\n  -webkit-text-size-adjust: 100%;\n  -ms-text-size-adjust: 100%;\n  -ms-overflow-style: scrollbar;\n  -webkit-tap-highlight-color: rgba(0, 0, 0, 0); }\n\n@-ms-viewport {\n  width: device-width; }\n\narticle, aside, figcaption, figure, footer, header, hgroup, main, nav, section {\n  display: block; }\n\nbody {\n  margin: 0;\n  font-family: Open Sans, sans-serif;\n  font-size: 1rem;\n  font-weight: 400;\n  line-height: 1.5;\n  color: #525f7f;\n  text-align: left;\n  background-color: #f8f9fe; }\n\n[tabindex=\"-1\"]:focus {\n  outline: 0 !important; }\n\nhr {\n  box-sizing: content-box;\n  height: 0;\n  overflow: visible; }\n\nh1, h2, h3, h4, h5, h6 {\n  margin-top: 0;\n  margin-bottom: 0.5rem; }\n\np {\n  margin-top: 0;\n  margin-bottom: 1rem; }\n\nabbr[title],\nabbr[data-original-title] {\n  text-decoration: underline;\n  -webkit-text-decoration: underline dotted;\n          text-decoration: underline dotted;\n  cursor: help;\n  border-bottom: 0; }\n\naddress {\n  margin-bottom: 1rem;\n  font-style: normal;\n  line-height: inherit; }\n\nol,\nul,\ndl {\n  margin-top: 0;\n  margin-bottom: 1rem; }\n\nol ol,\nul ul,\nol ul,\nul ol {\n  margin-bottom: 0; }\n\ndt {\n  font-weight: 600; }\n\ndd {\n  margin-bottom: .5rem;\n  margin-left: 0; }\n\nblockquote {\n  margin: 0 0 1rem; }\n\ndfn {\n  font-style: italic; }\n\nb,\nstrong {\n  font-weight: bolder; }\n\nsmall {\n  font-size: 80%; }\n\nsub,\nsup {\n  position: relative;\n  font-size: 75%;\n  line-height: 0;\n  vertical-align: baseline; }\n\nsub {\n  bottom: -.25em; }\n\nsup {\n  top: -.5em; }\n\na {\n  color: #5e72e4;\n  text-decoration: none;\n  background-color: transparent;\n  -webkit-text-decoration-skip: objects; }\n  a:hover {\n    color: #233dd2;\n    text-decoration: none; }\n\na:not([href]):not([tabindex]) {\n  color: inherit;\n  text-decoration: none; }\n  a:not([href]):not([tabindex]):hover, a:not([href]):not([tabindex]):focus {\n    color: inherit;\n    text-decoration: none; }\n  a:not([href]):not([tabindex]):focus {\n    outline: 0; }\n\npre,\ncode,\nkbd,\nsamp {\n  font-family: SFMono-Regular, Menlo, Monaco, Consolas, \"Liberation Mono\", \"Courier New\", monospace;\n  font-size: 1em; }\n\npre {\n  margin-top: 0;\n  margin-bottom: 1rem;\n  overflow: auto;\n  -ms-overflow-style: scrollbar; }\n\nfigure {\n  margin: 0 0 1rem; }\n\nimg {\n  vertical-align: middle;\n  border-style: none; }\n\nsvg {\n  overflow: hidden;\n  vertical-align: middle; }\n\ntable {\n  border-collapse: collapse; }\n\ncaption {\n  padding-top: 1rem;\n  padding-bottom: 1rem;\n  color: #8898aa;\n  text-align: left;\n  caption-side: bottom; }\n\nth {\n  text-align: inherit; }\n\nlabel {\n  display: inline-block;\n  margin-bottom: 0.5rem; }\n\nbutton {\n  border-radius: 0; }\n\nbutton:focus {\n  outline: 1px dotted;\n  outline: 5px auto -webkit-focus-ring-color; }\n\ninput,\nbutton,\nselect,\noptgroup,\ntextarea {\n  margin: 0;\n  font-family: inherit;\n  font-size: inherit;\n  line-height: inherit; }\n\nbutton,\ninput {\n  overflow: visible; }\n\nbutton,\nselect {\n  text-transform: none; }\n\nbutton,\nhtml [type=\"button\"],\n[type=\"reset\"],\n[type=\"submit\"] {\n  -webkit-appearance: button; }\n\nbutton::-moz-focus-inner,\n[type=\"button\"]::-moz-focus-inner,\n[type=\"reset\"]::-moz-focus-inner,\n[type=\"submit\"]::-moz-focus-inner {\n  padding: 0;\n  border-style: none; }\n\ninput[type=\"radio\"],\ninput[type=\"checkbox\"] {\n  box-sizing: border-box;\n  padding: 0; }\n\ninput[type=\"date\"],\ninput[type=\"time\"],\ninput[type=\"datetime-local\"],\ninput[type=\"month\"] {\n  -webkit-appearance: listbox; }\n\ntextarea {\n  overflow: auto;\n  resize: vertical; }\n\nfieldset {\n  min-width: 0;\n  padding: 0;\n  margin: 0;\n  border: 0; }\n\nlegend {\n  display: block;\n  width: 100%;\n  max-width: 100%;\n  padding: 0;\n  margin-bottom: .5rem;\n  font-size: 1.5rem;\n  line-height: inherit;\n  color: inherit;\n  white-space: normal; }\n\nprogress {\n  vertical-align: baseline; }\n\n[type=\"number\"]::-webkit-inner-spin-button,\n[type=\"number\"]::-webkit-outer-spin-button {\n  height: auto; }\n\n[type=\"search\"] {\n  outline-offset: -2px;\n  -webkit-appearance: none; }\n\n[type=\"search\"]::-webkit-search-cancel-button,\n[type=\"search\"]::-webkit-search-decoration {\n  -webkit-appearance: none; }\n\n::-webkit-file-upload-button {\n  font: inherit;\n  -webkit-appearance: button; }\n\noutput {\n  display: inline-block; }\n\nsummary {\n  display: list-item;\n  cursor: pointer; }\n\ntemplate {\n  display: none; }\n\n[hidden] {\n  display: none !important; }\n\nh1, h2, h3, h4, h5, h6,\n.h1, .h2, .h3, .h4, .h5, .h6 {\n  margin-bottom: 0.5rem;\n  font-family: inherit;\n  font-weight: 600;\n  line-height: 1.5;\n  color: #32325d; }\n\nh1, .h1 {\n  font-size: 1.625rem; }\n\nh2, .h2 {\n  font-size: 1.25rem; }\n\nh3, .h3 {\n  font-size: 1.0625rem; }\n\nh4, .h4 {\n  font-size: 0.9375rem; }\n\nh5, .h5 {\n  font-size: 0.8125rem; }\n\nh6, .h6 {\n  font-size: 0.625rem; }\n\n.lead {\n  font-size: 1.25rem;\n  font-weight: 300; }\n\n.display-1 {\n  font-size: 3.3rem;\n  font-weight: 600;\n  line-height: 1.5; }\n\n.display-2 {\n  font-size: 2.75rem;\n  font-weight: 600;\n  line-height: 1.5; }\n\n.display-3 {\n  font-size: 2.1875rem;\n  font-weight: 600;\n  line-height: 1.5; }\n\n.display-4 {\n  font-size: 1.6275rem;\n  font-weight: 600;\n  line-height: 1.5; }\n\nhr {\n  margin-top: 2rem;\n  margin-bottom: 2rem;\n  border: 0;\n  border-top: 1px solid rgba(0, 0, 0, 0.1); }\n\nsmall,\n.small {\n  font-size: 80%;\n  font-weight: 400; }\n\nmark,\n.mark {\n  padding: 0.2em;\n  background-color: #fcf8e3; }\n\n.list-unstyled {\n  padding-left: 0;\n  list-style: none; }\n\n.list-inline {\n  padding-left: 0;\n  list-style: none; }\n\n.list-inline-item {\n  display: inline-block; }\n  .list-inline-item:not(:last-child) {\n    margin-right: 0.5rem; }\n\n.initialism {\n  font-size: 90%;\n  text-transform: uppercase; }\n\n.blockquote {\n  margin-bottom: 1rem;\n  font-size: 1.25rem; }\n\n.blockquote-footer {\n  display: block;\n  font-size: 80%;\n  color: #8898aa; }\n  .blockquote-footer::before {\n    content: \"\\2014   \\A0\"; }\n\n.img-fluid {\n  max-width: 100%;\n  height: auto; }\n\n.img-thumbnail {\n  padding: 0.25rem;\n  background-color: #f8f9fe;\n  border: 1px solid #dee2e6;\n  border-radius: 0.375rem;\n  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.075);\n  max-width: 100%;\n  height: auto; }\n\n.figure {\n  display: inline-block; }\n\n.figure-img {\n  margin-bottom: 0.5rem;\n  line-height: 1; }\n\n.figure-caption {\n  font-size: 90%;\n  color: #8898aa; }\n\ncode {\n  font-size: 87.5%;\n  color: #f3a4b5;\n  word-break: break-word; }\n  a > code {\n    color: inherit; }\n\nkbd {\n  padding: 0.2rem 0.4rem;\n  font-size: 87.5%;\n  color: #fff;\n  background-color: #212529;\n  border-radius: 0.25rem;\n  box-shadow: inset 0 -0.1rem 0 rgba(0, 0, 0, 0.25); }\n  kbd kbd {\n    padding: 0;\n    font-size: 100%;\n    font-weight: 600;\n    box-shadow: none; }\n\npre {\n  display: block;\n  font-size: 87.5%;\n  color: #212529; }\n  pre code {\n    font-size: inherit;\n    color: inherit;\n    word-break: normal; }\n\n.pre-scrollable {\n  max-height: 340px;\n  overflow-y: scroll; }\n\n.container {\n  width: 100%;\n  padding-right: 15px;\n  padding-left: 15px;\n  margin-right: auto;\n  margin-left: auto; }\n  @media (min-width: 576px) {\n    .container {\n      max-width: 540px; } }\n  @media (min-width: 768px) {\n    .container {\n      max-width: 720px; } }\n  @media (min-width: 992px) {\n    .container {\n      max-width: 960px; } }\n  @media (min-width: 1200px) {\n    .container {\n      max-width: 1140px; } }\n\n.container-fluid {\n  width: 100%;\n  padding-right: 15px;\n  padding-left: 15px;\n  margin-right: auto;\n  margin-left: auto; }\n\n.row {\n  display: -webkit-box;\n  display: flex;\n  flex-wrap: wrap;\n  margin-right: -15px;\n  margin-left: -15px; }\n\n.no-gutters {\n  margin-right: 0;\n  margin-left: 0; }\n  .no-gutters > .col,\n  .no-gutters > [class*=\"col-\"] {\n    padding-right: 0;\n    padding-left: 0; }\n\n.col-1, .col-2, .col-3, .col-4, .col-5, .col-6, .col-7, .col-8, .col-9, .col-10, .col-11, .col-12, .col,\n.col-auto, .col-sm-1, .col-sm-2, .col-sm-3, .col-sm-4, .col-sm-5, .col-sm-6, .col-sm-7, .col-sm-8, .col-sm-9, .col-sm-10, .col-sm-11, .col-sm-12, .col-sm,\n.col-sm-auto, .col-md-1, .col-md-2, .col-md-3, .col-md-4, .col-md-5, .col-md-6, .col-md-7, .col-md-8, .col-md-9, .col-md-10, .col-md-11, .col-md-12, .col-md,\n.col-md-auto, .col-lg-1, .col-lg-2, .col-lg-3, .col-lg-4, .col-lg-5, .col-lg-6, .col-lg-7, .col-lg-8, .col-lg-9, .col-lg-10, .col-lg-11, .col-lg-12, .col-lg,\n.col-lg-auto, .col-xl-1, .col-xl-2, .col-xl-3, .col-xl-4, .col-xl-5, .col-xl-6, .col-xl-7, .col-xl-8, .col-xl-9, .col-xl-10, .col-xl-11, .col-xl-12, .col-xl,\n.col-xl-auto {\n  position: relative;\n  width: 100%;\n  min-height: 1px;\n  padding-right: 15px;\n  padding-left: 15px; }\n\n.col {\n  flex-basis: 0;\n  -webkit-box-flex: 1;\n          flex-grow: 1;\n  max-width: 100%; }\n\n.col-auto {\n  -webkit-box-flex: 0;\n          flex: 0 0 auto;\n  width: auto;\n  max-width: none; }\n\n.col-1 {\n  -webkit-box-flex: 0;\n          flex: 0 0 8.33333%;\n  max-width: 8.33333%; }\n\n.col-2 {\n  -webkit-box-flex: 0;\n          flex: 0 0 16.66667%;\n  max-width: 16.66667%; }\n\n.col-3 {\n  -webkit-box-flex: 0;\n          flex: 0 0 25%;\n  max-width: 25%; }\n\n.col-4 {\n  -webkit-box-flex: 0;\n          flex: 0 0 33.33333%;\n  max-width: 33.33333%; }\n\n.col-5 {\n  -webkit-box-flex: 0;\n          flex: 0 0 41.66667%;\n  max-width: 41.66667%; }\n\n.col-6 {\n  -webkit-box-flex: 0;\n          flex: 0 0 50%;\n  max-width: 50%; }\n\n.col-7 {\n  -webkit-box-flex: 0;\n          flex: 0 0 58.33333%;\n  max-width: 58.33333%; }\n\n.col-8 {\n  -webkit-box-flex: 0;\n          flex: 0 0 66.66667%;\n  max-width: 66.66667%; }\n\n.col-9 {\n  -webkit-box-flex: 0;\n          flex: 0 0 75%;\n  max-width: 75%; }\n\n.col-10 {\n  -webkit-box-flex: 0;\n          flex: 0 0 83.33333%;\n  max-width: 83.33333%; }\n\n.col-11 {\n  -webkit-box-flex: 0;\n          flex: 0 0 91.66667%;\n  max-width: 91.66667%; }\n\n.col-12 {\n  -webkit-box-flex: 0;\n          flex: 0 0 100%;\n  max-width: 100%; }\n\n.order-first {\n  -webkit-box-ordinal-group: 0;\n          order: -1; }\n\n.order-last {\n  -webkit-box-ordinal-group: 14;\n          order: 13; }\n\n.order-0 {\n  -webkit-box-ordinal-group: 1;\n          order: 0; }\n\n.order-1 {\n  -webkit-box-ordinal-group: 2;\n          order: 1; }\n\n.order-2 {\n  -webkit-box-ordinal-group: 3;\n          order: 2; }\n\n.order-3 {\n  -webkit-box-ordinal-group: 4;\n          order: 3; }\n\n.order-4 {\n  -webkit-box-ordinal-group: 5;\n          order: 4; }\n\n.order-5 {\n  -webkit-box-ordinal-group: 6;\n          order: 5; }\n\n.order-6 {\n  -webkit-box-ordinal-group: 7;\n          order: 6; }\n\n.order-7 {\n  -webkit-box-ordinal-group: 8;\n          order: 7; }\n\n.order-8 {\n  -webkit-box-ordinal-group: 9;\n          order: 8; }\n\n.order-9 {\n  -webkit-box-ordinal-group: 10;\n          order: 9; }\n\n.order-10 {\n  -webkit-box-ordinal-group: 11;\n          order: 10; }\n\n.order-11 {\n  -webkit-box-ordinal-group: 12;\n          order: 11; }\n\n.order-12 {\n  -webkit-box-ordinal-group: 13;\n          order: 12; }\n\n.offset-1 {\n  margin-left: 8.33333%; }\n\n.offset-2 {\n  margin-left: 16.66667%; }\n\n.offset-3 {\n  margin-left: 25%; }\n\n.offset-4 {\n  margin-left: 33.33333%; }\n\n.offset-5 {\n  margin-left: 41.66667%; }\n\n.offset-6 {\n  margin-left: 50%; }\n\n.offset-7 {\n  margin-left: 58.33333%; }\n\n.offset-8 {\n  margin-left: 66.66667%; }\n\n.offset-9 {\n  margin-left: 75%; }\n\n.offset-10 {\n  margin-left: 83.33333%; }\n\n.offset-11 {\n  margin-left: 91.66667%; }\n\n@media (min-width: 576px) {\n  .col-sm {\n    flex-basis: 0;\n    -webkit-box-flex: 1;\n            flex-grow: 1;\n    max-width: 100%; }\n  .col-sm-auto {\n    -webkit-box-flex: 0;\n            flex: 0 0 auto;\n    width: auto;\n    max-width: none; }\n  .col-sm-1 {\n    -webkit-box-flex: 0;\n            flex: 0 0 8.33333%;\n    max-width: 8.33333%; }\n  .col-sm-2 {\n    -webkit-box-flex: 0;\n            flex: 0 0 16.66667%;\n    max-width: 16.66667%; }\n  .col-sm-3 {\n    -webkit-box-flex: 0;\n            flex: 0 0 25%;\n    max-width: 25%; }\n  .col-sm-4 {\n    -webkit-box-flex: 0;\n            flex: 0 0 33.33333%;\n    max-width: 33.33333%; }\n  .col-sm-5 {\n    -webkit-box-flex: 0;\n            flex: 0 0 41.66667%;\n    max-width: 41.66667%; }\n  .col-sm-6 {\n    -webkit-box-flex: 0;\n            flex: 0 0 50%;\n    max-width: 50%; }\n  .col-sm-7 {\n    -webkit-box-flex: 0;\n            flex: 0 0 58.33333%;\n    max-width: 58.33333%; }\n  .col-sm-8 {\n    -webkit-box-flex: 0;\n            flex: 0 0 66.66667%;\n    max-width: 66.66667%; }\n  .col-sm-9 {\n    -webkit-box-flex: 0;\n            flex: 0 0 75%;\n    max-width: 75%; }\n  .col-sm-10 {\n    -webkit-box-flex: 0;\n            flex: 0 0 83.33333%;\n    max-width: 83.33333%; }\n  .col-sm-11 {\n    -webkit-box-flex: 0;\n            flex: 0 0 91.66667%;\n    max-width: 91.66667%; }\n  .col-sm-12 {\n    -webkit-box-flex: 0;\n            flex: 0 0 100%;\n    max-width: 100%; }\n  .order-sm-first {\n    -webkit-box-ordinal-group: 0;\n            order: -1; }\n  .order-sm-last {\n    -webkit-box-ordinal-group: 14;\n            order: 13; }\n  .order-sm-0 {\n    -webkit-box-ordinal-group: 1;\n            order: 0; }\n  .order-sm-1 {\n    -webkit-box-ordinal-group: 2;\n            order: 1; }\n  .order-sm-2 {\n    -webkit-box-ordinal-group: 3;\n            order: 2; }\n  .order-sm-3 {\n    -webkit-box-ordinal-group: 4;\n            order: 3; }\n  .order-sm-4 {\n    -webkit-box-ordinal-group: 5;\n            order: 4; }\n  .order-sm-5 {\n    -webkit-box-ordinal-group: 6;\n            order: 5; }\n  .order-sm-6 {\n    -webkit-box-ordinal-group: 7;\n            order: 6; }\n  .order-sm-7 {\n    -webkit-box-ordinal-group: 8;\n            order: 7; }\n  .order-sm-8 {\n    -webkit-box-ordinal-group: 9;\n            order: 8; }\n  .order-sm-9 {\n    -webkit-box-ordinal-group: 10;\n            order: 9; }\n  .order-sm-10 {\n    -webkit-box-ordinal-group: 11;\n            order: 10; }\n  .order-sm-11 {\n    -webkit-box-ordinal-group: 12;\n            order: 11; }\n  .order-sm-12 {\n    -webkit-box-ordinal-group: 13;\n            order: 12; }\n  .offset-sm-0 {\n    margin-left: 0; }\n  .offset-sm-1 {\n    margin-left: 8.33333%; }\n  .offset-sm-2 {\n    margin-left: 16.66667%; }\n  .offset-sm-3 {\n    margin-left: 25%; }\n  .offset-sm-4 {\n    margin-left: 33.33333%; }\n  .offset-sm-5 {\n    margin-left: 41.66667%; }\n  .offset-sm-6 {\n    margin-left: 50%; }\n  .offset-sm-7 {\n    margin-left: 58.33333%; }\n  .offset-sm-8 {\n    margin-left: 66.66667%; }\n  .offset-sm-9 {\n    margin-left: 75%; }\n  .offset-sm-10 {\n    margin-left: 83.33333%; }\n  .offset-sm-11 {\n    margin-left: 91.66667%; } }\n\n@media (min-width: 768px) {\n  .col-md {\n    flex-basis: 0;\n    -webkit-box-flex: 1;\n            flex-grow: 1;\n    max-width: 100%; }\n  .col-md-auto {\n    -webkit-box-flex: 0;\n            flex: 0 0 auto;\n    width: auto;\n    max-width: none; }\n  .col-md-1 {\n    -webkit-box-flex: 0;\n            flex: 0 0 8.33333%;\n    max-width: 8.33333%; }\n  .col-md-2 {\n    -webkit-box-flex: 0;\n            flex: 0 0 16.66667%;\n    max-width: 16.66667%; }\n  .col-md-3 {\n    -webkit-box-flex: 0;\n            flex: 0 0 25%;\n    max-width: 25%; }\n  .col-md-4 {\n    -webkit-box-flex: 0;\n            flex: 0 0 33.33333%;\n    max-width: 33.33333%; }\n  .col-md-5 {\n    -webkit-box-flex: 0;\n            flex: 0 0 41.66667%;\n    max-width: 41.66667%; }\n  .col-md-6 {\n    -webkit-box-flex: 0;\n            flex: 0 0 50%;\n    max-width: 50%; }\n  .col-md-7 {\n    -webkit-box-flex: 0;\n            flex: 0 0 58.33333%;\n    max-width: 58.33333%; }\n  .col-md-8 {\n    -webkit-box-flex: 0;\n            flex: 0 0 66.66667%;\n    max-width: 66.66667%; }\n  .col-md-9 {\n    -webkit-box-flex: 0;\n            flex: 0 0 75%;\n    max-width: 75%; }\n  .col-md-10 {\n    -webkit-box-flex: 0;\n            flex: 0 0 83.33333%;\n    max-width: 83.33333%; }\n  .col-md-11 {\n    -webkit-box-flex: 0;\n            flex: 0 0 91.66667%;\n    max-width: 91.66667%; }\n  .col-md-12 {\n    -webkit-box-flex: 0;\n            flex: 0 0 100%;\n    max-width: 100%; }\n  .order-md-first {\n    -webkit-box-ordinal-group: 0;\n            order: -1; }\n  .order-md-last {\n    -webkit-box-ordinal-group: 14;\n            order: 13; }\n  .order-md-0 {\n    -webkit-box-ordinal-group: 1;\n            order: 0; }\n  .order-md-1 {\n    -webkit-box-ordinal-group: 2;\n            order: 1; }\n  .order-md-2 {\n    -webkit-box-ordinal-group: 3;\n            order: 2; }\n  .order-md-3 {\n    -webkit-box-ordinal-group: 4;\n            order: 3; }\n  .order-md-4 {\n    -webkit-box-ordinal-group: 5;\n            order: 4; }\n  .order-md-5 {\n    -webkit-box-ordinal-group: 6;\n            order: 5; }\n  .order-md-6 {\n    -webkit-box-ordinal-group: 7;\n            order: 6; }\n  .order-md-7 {\n    -webkit-box-ordinal-group: 8;\n            order: 7; }\n  .order-md-8 {\n    -webkit-box-ordinal-group: 9;\n            order: 8; }\n  .order-md-9 {\n    -webkit-box-ordinal-group: 10;\n            order: 9; }\n  .order-md-10 {\n    -webkit-box-ordinal-group: 11;\n            order: 10; }\n  .order-md-11 {\n    -webkit-box-ordinal-group: 12;\n            order: 11; }\n  .order-md-12 {\n    -webkit-box-ordinal-group: 13;\n            order: 12; }\n  .offset-md-0 {\n    margin-left: 0; }\n  .offset-md-1 {\n    margin-left: 8.33333%; }\n  .offset-md-2 {\n    margin-left: 16.66667%; }\n  .offset-md-3 {\n    margin-left: 25%; }\n  .offset-md-4 {\n    margin-left: 33.33333%; }\n  .offset-md-5 {\n    margin-left: 41.66667%; }\n  .offset-md-6 {\n    margin-left: 50%; }\n  .offset-md-7 {\n    margin-left: 58.33333%; }\n  .offset-md-8 {\n    margin-left: 66.66667%; }\n  .offset-md-9 {\n    margin-left: 75%; }\n  .offset-md-10 {\n    margin-left: 83.33333%; }\n  .offset-md-11 {\n    margin-left: 91.66667%; } }\n\n@media (min-width: 992px) {\n  .col-lg {\n    flex-basis: 0;\n    -webkit-box-flex: 1;\n            flex-grow: 1;\n    max-width: 100%; }\n  .col-lg-auto {\n    -webkit-box-flex: 0;\n            flex: 0 0 auto;\n    width: auto;\n    max-width: none; }\n  .col-lg-1 {\n    -webkit-box-flex: 0;\n            flex: 0 0 8.33333%;\n    max-width: 8.33333%; }\n  .col-lg-2 {\n    -webkit-box-flex: 0;\n            flex: 0 0 16.66667%;\n    max-width: 16.66667%; }\n  .col-lg-3 {\n    -webkit-box-flex: 0;\n            flex: 0 0 25%;\n    max-width: 25%; }\n  .col-lg-4 {\n    -webkit-box-flex: 0;\n            flex: 0 0 33.33333%;\n    max-width: 33.33333%; }\n  .col-lg-5 {\n    -webkit-box-flex: 0;\n            flex: 0 0 41.66667%;\n    max-width: 41.66667%; }\n  .col-lg-6 {\n    -webkit-box-flex: 0;\n            flex: 0 0 50%;\n    max-width: 50%; }\n  .col-lg-7 {\n    -webkit-box-flex: 0;\n            flex: 0 0 58.33333%;\n    max-width: 58.33333%; }\n  .col-lg-8 {\n    -webkit-box-flex: 0;\n            flex: 0 0 66.66667%;\n    max-width: 66.66667%; }\n  .col-lg-9 {\n    -webkit-box-flex: 0;\n            flex: 0 0 75%;\n    max-width: 75%; }\n  .col-lg-10 {\n    -webkit-box-flex: 0;\n            flex: 0 0 83.33333%;\n    max-width: 83.33333%; }\n  .col-lg-11 {\n    -webkit-box-flex: 0;\n            flex: 0 0 91.66667%;\n    max-width: 91.66667%; }\n  .col-lg-12 {\n    -webkit-box-flex: 0;\n            flex: 0 0 100%;\n    max-width: 100%; }\n  .order-lg-first {\n    -webkit-box-ordinal-group: 0;\n            order: -1; }\n  .order-lg-last {\n    -webkit-box-ordinal-group: 14;\n            order: 13; }\n  .order-lg-0 {\n    -webkit-box-ordinal-group: 1;\n            order: 0; }\n  .order-lg-1 {\n    -webkit-box-ordinal-group: 2;\n            order: 1; }\n  .order-lg-2 {\n    -webkit-box-ordinal-group: 3;\n            order: 2; }\n  .order-lg-3 {\n    -webkit-box-ordinal-group: 4;\n            order: 3; }\n  .order-lg-4 {\n    -webkit-box-ordinal-group: 5;\n            order: 4; }\n  .order-lg-5 {\n    -webkit-box-ordinal-group: 6;\n            order: 5; }\n  .order-lg-6 {\n    -webkit-box-ordinal-group: 7;\n            order: 6; }\n  .order-lg-7 {\n    -webkit-box-ordinal-group: 8;\n            order: 7; }\n  .order-lg-8 {\n    -webkit-box-ordinal-group: 9;\n            order: 8; }\n  .order-lg-9 {\n    -webkit-box-ordinal-group: 10;\n            order: 9; }\n  .order-lg-10 {\n    -webkit-box-ordinal-group: 11;\n            order: 10; }\n  .order-lg-11 {\n    -webkit-box-ordinal-group: 12;\n            order: 11; }\n  .order-lg-12 {\n    -webkit-box-ordinal-group: 13;\n            order: 12; }\n  .offset-lg-0 {\n    margin-left: 0; }\n  .offset-lg-1 {\n    margin-left: 8.33333%; }\n  .offset-lg-2 {\n    margin-left: 16.66667%; }\n  .offset-lg-3 {\n    margin-left: 25%; }\n  .offset-lg-4 {\n    margin-left: 33.33333%; }\n  .offset-lg-5 {\n    margin-left: 41.66667%; }\n  .offset-lg-6 {\n    margin-left: 50%; }\n  .offset-lg-7 {\n    margin-left: 58.33333%; }\n  .offset-lg-8 {\n    margin-left: 66.66667%; }\n  .offset-lg-9 {\n    margin-left: 75%; }\n  .offset-lg-10 {\n    margin-left: 83.33333%; }\n  .offset-lg-11 {\n    margin-left: 91.66667%; } }\n\n@media (min-width: 1200px) {\n  .col-xl {\n    flex-basis: 0;\n    -webkit-box-flex: 1;\n            flex-grow: 1;\n    max-width: 100%; }\n  .col-xl-auto {\n    -webkit-box-flex: 0;\n            flex: 0 0 auto;\n    width: auto;\n    max-width: none; }\n  .col-xl-1 {\n    -webkit-box-flex: 0;\n            flex: 0 0 8.33333%;\n    max-width: 8.33333%; }\n  .col-xl-2 {\n    -webkit-box-flex: 0;\n            flex: 0 0 16.66667%;\n    max-width: 16.66667%; }\n  .col-xl-3 {\n    -webkit-box-flex: 0;\n            flex: 0 0 25%;\n    max-width: 25%; }\n  .col-xl-4 {\n    -webkit-box-flex: 0;\n            flex: 0 0 33.33333%;\n    max-width: 33.33333%; }\n  .col-xl-5 {\n    -webkit-box-flex: 0;\n            flex: 0 0 41.66667%;\n    max-width: 41.66667%; }\n  .col-xl-6 {\n    -webkit-box-flex: 0;\n            flex: 0 0 50%;\n    max-width: 50%; }\n  .col-xl-7 {\n    -webkit-box-flex: 0;\n            flex: 0 0 58.33333%;\n    max-width: 58.33333%; }\n  .col-xl-8 {\n    -webkit-box-flex: 0;\n            flex: 0 0 66.66667%;\n    max-width: 66.66667%; }\n  .col-xl-9 {\n    -webkit-box-flex: 0;\n            flex: 0 0 75%;\n    max-width: 75%; }\n  .col-xl-10 {\n    -webkit-box-flex: 0;\n            flex: 0 0 83.33333%;\n    max-width: 83.33333%; }\n  .col-xl-11 {\n    -webkit-box-flex: 0;\n            flex: 0 0 91.66667%;\n    max-width: 91.66667%; }\n  .col-xl-12 {\n    -webkit-box-flex: 0;\n            flex: 0 0 100%;\n    max-width: 100%; }\n  .order-xl-first {\n    -webkit-box-ordinal-group: 0;\n            order: -1; }\n  .order-xl-last {\n    -webkit-box-ordinal-group: 14;\n            order: 13; }\n  .order-xl-0 {\n    -webkit-box-ordinal-group: 1;\n            order: 0; }\n  .order-xl-1 {\n    -webkit-box-ordinal-group: 2;\n            order: 1; }\n  .order-xl-2 {\n    -webkit-box-ordinal-group: 3;\n            order: 2; }\n  .order-xl-3 {\n    -webkit-box-ordinal-group: 4;\n            order: 3; }\n  .order-xl-4 {\n    -webkit-box-ordinal-group: 5;\n            order: 4; }\n  .order-xl-5 {\n    -webkit-box-ordinal-group: 6;\n            order: 5; }\n  .order-xl-6 {\n    -webkit-box-ordinal-group: 7;\n            order: 6; }\n  .order-xl-7 {\n    -webkit-box-ordinal-group: 8;\n            order: 7; }\n  .order-xl-8 {\n    -webkit-box-ordinal-group: 9;\n            order: 8; }\n  .order-xl-9 {\n    -webkit-box-ordinal-group: 10;\n            order: 9; }\n  .order-xl-10 {\n    -webkit-box-ordinal-group: 11;\n            order: 10; }\n  .order-xl-11 {\n    -webkit-box-ordinal-group: 12;\n            order: 11; }\n  .order-xl-12 {\n    -webkit-box-ordinal-group: 13;\n            order: 12; }\n  .offset-xl-0 {\n    margin-left: 0; }\n  .offset-xl-1 {\n    margin-left: 8.33333%; }\n  .offset-xl-2 {\n    margin-left: 16.66667%; }\n  .offset-xl-3 {\n    margin-left: 25%; }\n  .offset-xl-4 {\n    margin-left: 33.33333%; }\n  .offset-xl-5 {\n    margin-left: 41.66667%; }\n  .offset-xl-6 {\n    margin-left: 50%; }\n  .offset-xl-7 {\n    margin-left: 58.33333%; }\n  .offset-xl-8 {\n    margin-left: 66.66667%; }\n  .offset-xl-9 {\n    margin-left: 75%; }\n  .offset-xl-10 {\n    margin-left: 83.33333%; }\n  .offset-xl-11 {\n    margin-left: 91.66667%; } }\n\n.table {\n  width: 100%;\n  margin-bottom: 1rem;\n  background-color: transparent; }\n  .table th,\n  .table td {\n    padding: 1rem;\n    vertical-align: top;\n    border-top: 1px solid #e9ecef; }\n  .table thead th {\n    vertical-align: bottom;\n    border-bottom: 2px solid #e9ecef; }\n  .table tbody + tbody {\n    border-top: 2px solid #e9ecef; }\n  .table .table {\n    background-color: #f8f9fe; }\n\n.table-sm th,\n.table-sm td {\n  padding: 0.5rem; }\n\n.table-bordered {\n  border: 1px solid #e9ecef; }\n  .table-bordered th,\n  .table-bordered td {\n    border: 1px solid #e9ecef; }\n  .table-bordered thead th,\n  .table-bordered thead td {\n    border-bottom-width: 2px; }\n\n.table-borderless th,\n.table-borderless td,\n.table-borderless thead th,\n.table-borderless tbody + tbody {\n  border: 0; }\n\n.table-striped tbody tr:nth-of-type(odd) {\n  background-color: rgba(0, 0, 0, 0.05); }\n\n.table-hover tbody tr:hover {\n  background-color: #f6f9fc; }\n\n.table-primary,\n.table-primary > th,\n.table-primary > td {\n  background-color: #d2d8f7; }\n\n.table-hover .table-primary:hover {\n  background-color: #bcc5f3; }\n  .table-hover .table-primary:hover > td,\n  .table-hover .table-primary:hover > th {\n    background-color: #bcc5f3; }\n\n.table-secondary,\n.table-secondary > th,\n.table-secondary > td {\n  background-color: #fdfefe; }\n\n.table-hover .table-secondary:hover {\n  background-color: #ecf6f6; }\n  .table-hover .table-secondary:hover > td,\n  .table-hover .table-secondary:hover > th {\n    background-color: #ecf6f6; }\n\n.table-success,\n.table-success > th,\n.table-success > td {\n  background-color: #c4f1de; }\n\n.table-hover .table-success:hover {\n  background-color: #afecd2; }\n  .table-hover .table-success:hover > td,\n  .table-hover .table-success:hover > th {\n    background-color: #afecd2; }\n\n.table-info,\n.table-info > th,\n.table-info > td {\n  background-color: #bcf1fb; }\n\n.table-hover .table-info:hover {\n  background-color: #a4ecfa; }\n  .table-hover .table-info:hover > td,\n  .table-hover .table-info:hover > th {\n    background-color: #a4ecfa; }\n\n.table-warning,\n.table-warning > th,\n.table-warning > td {\n  background-color: #fed3ca; }\n\n.table-hover .table-warning:hover {\n  background-color: #febeb1; }\n  .table-hover .table-warning:hover > td,\n  .table-hover .table-warning:hover > th {\n    background-color: #febeb1; }\n\n.table-danger,\n.table-danger > th,\n.table-danger > td {\n  background-color: #fcc7d1; }\n\n.table-hover .table-danger:hover {\n  background-color: #fbafbd; }\n  .table-hover .table-danger:hover > td,\n  .table-hover .table-danger:hover > th {\n    background-color: #fbafbd; }\n\n.table-light,\n.table-light > th,\n.table-light > td {\n  background-color: #e8eaed; }\n\n.table-hover .table-light:hover {\n  background-color: #dadde2; }\n  .table-hover .table-light:hover > td,\n  .table-hover .table-light:hover > th {\n    background-color: #dadde2; }\n\n.table-dark,\n.table-dark > th,\n.table-dark > td {\n  background-color: #c1c2c3; }\n\n.table-hover .table-dark:hover {\n  background-color: #b4b5b6; }\n  .table-hover .table-dark:hover > td,\n  .table-hover .table-dark:hover > th {\n    background-color: #b4b5b6; }\n\n.table-default,\n.table-default > th,\n.table-default > td {\n  background-color: #bec4cd; }\n\n.table-hover .table-default:hover {\n  background-color: #b0b7c2; }\n  .table-hover .table-default:hover > td,\n  .table-hover .table-default:hover > th {\n    background-color: #b0b7c2; }\n\n.table-white,\n.table-white > th,\n.table-white > td {\n  background-color: white; }\n\n.table-hover .table-white:hover {\n  background-color: #f2f2f2; }\n  .table-hover .table-white:hover > td,\n  .table-hover .table-white:hover > th {\n    background-color: #f2f2f2; }\n\n.table-neutral,\n.table-neutral > th,\n.table-neutral > td {\n  background-color: white; }\n\n.table-hover .table-neutral:hover {\n  background-color: #f2f2f2; }\n  .table-hover .table-neutral:hover > td,\n  .table-hover .table-neutral:hover > th {\n    background-color: #f2f2f2; }\n\n.table-darker,\n.table-darker > th,\n.table-darker > td {\n  background-color: #b8b8b8; }\n\n.table-hover .table-darker:hover {\n  background-color: #ababab; }\n  .table-hover .table-darker:hover > td,\n  .table-hover .table-darker:hover > th {\n    background-color: #ababab; }\n\n.table-active,\n.table-active > th,\n.table-active > td {\n  background-color: #f6f9fc; }\n\n.table-hover .table-active:hover {\n  background-color: #e3ecf6; }\n  .table-hover .table-active:hover > td,\n  .table-hover .table-active:hover > th {\n    background-color: #e3ecf6; }\n\n.table .thead-dark th {\n  color: #f8f9fe;\n  background-color: #172b4d;\n  border-color: #1f3a68; }\n\n.table .thead-light th {\n  color: #8898aa;\n  background-color: #f6f9fc;\n  border-color: #e9ecef; }\n\n.table-dark {\n  color: #f8f9fe;\n  background-color: #172b4d; }\n  .table-dark th,\n  .table-dark td,\n  .table-dark thead th {\n    border-color: #1f3a68; }\n  .table-dark.table-bordered {\n    border: 0; }\n  .table-dark.table-striped tbody tr:nth-of-type(odd) {\n    background-color: rgba(255, 255, 255, 0.05); }\n  .table-dark.table-hover tbody tr:hover {\n    background-color: rgba(255, 255, 255, 0.075); }\n\n@media (max-width: 575.98px) {\n  .table-responsive-sm {\n    display: block;\n    width: 100%;\n    overflow-x: auto;\n    -webkit-overflow-scrolling: touch;\n    -ms-overflow-style: -ms-autohiding-scrollbar; }\n    .table-responsive-sm > .table-bordered {\n      border: 0; } }\n\n@media (max-width: 767.98px) {\n  .table-responsive-md {\n    display: block;\n    width: 100%;\n    overflow-x: auto;\n    -webkit-overflow-scrolling: touch;\n    -ms-overflow-style: -ms-autohiding-scrollbar; }\n    .table-responsive-md > .table-bordered {\n      border: 0; } }\n\n@media (max-width: 991.98px) {\n  .table-responsive-lg {\n    display: block;\n    width: 100%;\n    overflow-x: auto;\n    -webkit-overflow-scrolling: touch;\n    -ms-overflow-style: -ms-autohiding-scrollbar; }\n    .table-responsive-lg > .table-bordered {\n      border: 0; } }\n\n@media (max-width: 1199.98px) {\n  .table-responsive-xl {\n    display: block;\n    width: 100%;\n    overflow-x: auto;\n    -webkit-overflow-scrolling: touch;\n    -ms-overflow-style: -ms-autohiding-scrollbar; }\n    .table-responsive-xl > .table-bordered {\n      border: 0; } }\n\n.table-responsive {\n  display: block;\n  width: 100%;\n  overflow-x: auto;\n  -webkit-overflow-scrolling: touch;\n  -ms-overflow-style: -ms-autohiding-scrollbar; }\n  .table-responsive > .table-bordered {\n    border: 0; }\n\n.form-control {\n  display: block;\n  width: 100%;\n  height: calc(2.75rem + 2px);\n  padding: 0.625rem 0.75rem;\n  font-size: 1rem;\n  line-height: 1.5;\n  color: #8898aa;\n  background-color: #fff;\n  background-clip: padding-box;\n  border: 1px solid #cad1d7;\n  border-radius: 0.375rem;\n  box-shadow: none;\n  -webkit-transition: all 0.2s cubic-bezier(0.68, -0.55, 0.265, 1.55);\n  transition: all 0.2s cubic-bezier(0.68, -0.55, 0.265, 1.55); }\n  @media screen and (prefers-reduced-motion: reduce) {\n    .form-control {\n      -webkit-transition: none;\n      transition: none; } }\n  .form-control::-ms-expand {\n    background-color: transparent;\n    border: 0; }\n  .form-control:focus {\n    color: #8898aa;\n    background-color: #fff;\n    border-color: rgba(50, 151, 211, 0.25);\n    outline: 0;\n    box-shadow: none, none; }\n  .form-control::-webkit-input-placeholder {\n    color: #adb5bd;\n    opacity: 1; }\n  .form-control::-moz-placeholder {\n    color: #adb5bd;\n    opacity: 1; }\n  .form-control::-ms-input-placeholder {\n    color: #adb5bd;\n    opacity: 1; }\n  .form-control::placeholder {\n    color: #adb5bd;\n    opacity: 1; }\n  .form-control:disabled, .form-control[readonly] {\n    background-color: #e9ecef;\n    opacity: 1; }\n\nselect.form-control:focus::-ms-value {\n  color: #8898aa;\n  background-color: #fff; }\n\n.form-control-file,\n.form-control-range {\n  display: block;\n  width: 100%; }\n\n.col-form-label {\n  padding-top: calc(0.625rem + 1px);\n  padding-bottom: calc(0.625rem + 1px);\n  margin-bottom: 0;\n  font-size: inherit;\n  line-height: 1.5; }\n\n.col-form-label-lg {\n  padding-top: calc(0.875rem + 1px);\n  padding-bottom: calc(0.875rem + 1px);\n  font-size: 1.25rem;\n  line-height: 1.5; }\n\n.col-form-label-sm {\n  padding-top: calc(0.25rem + 1px);\n  padding-bottom: calc(0.25rem + 1px);\n  font-size: 0.875rem;\n  line-height: 1.5; }\n\n.form-control-plaintext {\n  display: block;\n  width: 100%;\n  padding-top: 0.625rem;\n  padding-bottom: 0.625rem;\n  margin-bottom: 0;\n  line-height: 1.5;\n  color: #525f7f;\n  background-color: transparent;\n  border: solid transparent;\n  border-width: 1px 0; }\n  .form-control-plaintext.form-control-sm, .form-control-plaintext.form-control-lg {\n    padding-right: 0;\n    padding-left: 0; }\n\n.form-control-sm {\n  height: calc(1.8125rem + 2px);\n  padding: 0.25rem 0.5rem;\n  font-size: 0.875rem;\n  line-height: 1.5;\n  border-radius: 0.25rem; }\n\n.form-control-lg {\n  height: calc(3.625rem + 2px);\n  padding: 0.875rem 1rem;\n  font-size: 1.25rem;\n  line-height: 1.5;\n  border-radius: 0.4375rem; }\n\nselect.form-control[size], select.form-control[multiple] {\n  height: auto; }\n\ntextarea.form-control {\n  height: auto; }\n\n.form-group {\n  margin-bottom: 1.5rem; }\n\n.form-text {\n  display: block;\n  margin-top: 0.25rem; }\n\n.form-row {\n  display: -webkit-box;\n  display: flex;\n  flex-wrap: wrap;\n  margin-right: -5px;\n  margin-left: -5px; }\n  .form-row > .col,\n  .form-row > [class*=\"col-\"] {\n    padding-right: 5px;\n    padding-left: 5px; }\n\n.form-check {\n  position: relative;\n  display: block;\n  padding-left: 1.25rem; }\n\n.form-check-input {\n  position: absolute;\n  margin-top: 0.3rem;\n  margin-left: -1.25rem; }\n  .form-check-input:disabled ~ .form-check-label {\n    color: #8898aa; }\n\n.form-check-label {\n  margin-bottom: 0; }\n\n.form-check-inline {\n  display: -webkit-inline-box;\n  display: inline-flex;\n  -webkit-box-align: center;\n          align-items: center;\n  padding-left: 0;\n  margin-right: 0.75rem; }\n  .form-check-inline .form-check-input {\n    position: static;\n    margin-top: 0;\n    margin-right: 0.3125rem;\n    margin-left: 0; }\n\n.valid-feedback {\n  display: none;\n  width: 100%;\n  margin-top: 0.25rem;\n  font-size: 80%;\n  color: #2dce89; }\n\n.valid-tooltip {\n  position: absolute;\n  top: 100%;\n  z-index: 5;\n  display: none;\n  max-width: 100%;\n  padding: .5rem;\n  margin-top: .1rem;\n  font-size: .875rem;\n  line-height: 1;\n  color: #fff;\n  background-color: rgba(45, 206, 137, 0.8);\n  border-radius: .2rem; }\n\n.was-validated .form-control:valid, .form-control.is-valid, .was-validated\n.custom-select:valid,\n.custom-select.is-valid {\n  border-color: #2dce89; }\n  .was-validated .form-control:valid:focus, .form-control.is-valid:focus, .was-validated\n  .custom-select:valid:focus,\n  .custom-select.is-valid:focus {\n    border-color: #2dce89; }\n  .was-validated .form-control:valid ~ .valid-feedback,\n  .was-validated .form-control:valid ~ .valid-tooltip, .form-control.is-valid ~ .valid-feedback,\n  .form-control.is-valid ~ .valid-tooltip, .was-validated\n  .custom-select:valid ~ .valid-feedback,\n  .was-validated\n  .custom-select:valid ~ .valid-tooltip,\n  .custom-select.is-valid ~ .valid-feedback,\n  .custom-select.is-valid ~ .valid-tooltip {\n    display: block; }\n\n.was-validated .form-check-input:valid ~ .form-check-label, .form-check-input.is-valid ~ .form-check-label {\n  color: #2dce89; }\n\n.was-validated .form-check-input:valid ~ .valid-feedback,\n.was-validated .form-check-input:valid ~ .valid-tooltip, .form-check-input.is-valid ~ .valid-feedback,\n.form-check-input.is-valid ~ .valid-tooltip {\n  display: block; }\n\n.was-validated .custom-control-input:valid ~ .custom-control-label, .custom-control-input.is-valid ~ .custom-control-label {\n  color: #2dce89; }\n  .was-validated .custom-control-input:valid ~ .custom-control-label::before, .custom-control-input.is-valid ~ .custom-control-label::before {\n    background-color: #93e7c3;\n    border-color: #93e7c3; }\n\n.was-validated .custom-control-input:valid ~ .valid-feedback,\n.was-validated .custom-control-input:valid ~ .valid-tooltip, .custom-control-input.is-valid ~ .valid-feedback,\n.custom-control-input.is-valid ~ .valid-tooltip {\n  display: block; }\n\n.was-validated .custom-control-input:valid:checked ~ .custom-control-label::before, .custom-control-input.is-valid:checked ~ .custom-control-label::before {\n  background-color: #54daa1;\n  border-color: #93e7c3; }\n\n.was-validated .custom-control-input:valid:focus ~ .custom-control-label::before, .custom-control-input.is-valid:focus ~ .custom-control-label::before {\n  box-shadow: 0 0 0 1px #f8f9fe, 0 0 0 0 rgba(45, 206, 137, 0.25); }\n\n.was-validated .custom-file-input:valid ~ .custom-file-label, .custom-file-input.is-valid ~ .custom-file-label {\n  border-color: #2dce89; }\n  .was-validated .custom-file-input:valid ~ .custom-file-label::before, .custom-file-input.is-valid ~ .custom-file-label::before {\n    border-color: inherit; }\n\n.was-validated .custom-file-input:valid ~ .valid-feedback,\n.was-validated .custom-file-input:valid ~ .valid-tooltip, .custom-file-input.is-valid ~ .valid-feedback,\n.custom-file-input.is-valid ~ .valid-tooltip {\n  display: block; }\n\n.was-validated .custom-file-input:valid:focus ~ .custom-file-label, .custom-file-input.is-valid:focus ~ .custom-file-label {\n  box-shadow: 0 0 0 0 rgba(45, 206, 137, 0.25); }\n\n.invalid-feedback {\n  display: none;\n  width: 100%;\n  margin-top: 0.25rem;\n  font-size: 80%;\n  color: #fb6340; }\n\n.invalid-tooltip {\n  position: absolute;\n  top: 100%;\n  z-index: 5;\n  display: none;\n  max-width: 100%;\n  padding: .5rem;\n  margin-top: .1rem;\n  font-size: .875rem;\n  line-height: 1;\n  color: #fff;\n  background-color: rgba(251, 99, 64, 0.8);\n  border-radius: .2rem; }\n\n.was-validated .form-control:invalid, .form-control.is-invalid, .was-validated\n.custom-select:invalid,\n.custom-select.is-invalid {\n  border-color: #fb6340; }\n  .was-validated .form-control:invalid:focus, .form-control.is-invalid:focus, .was-validated\n  .custom-select:invalid:focus,\n  .custom-select.is-invalid:focus {\n    border-color: #fb6340; }\n  .was-validated .form-control:invalid ~ .invalid-feedback,\n  .was-validated .form-control:invalid ~ .invalid-tooltip, .form-control.is-invalid ~ .invalid-feedback,\n  .form-control.is-invalid ~ .invalid-tooltip, .was-validated\n  .custom-select:invalid ~ .invalid-feedback,\n  .was-validated\n  .custom-select:invalid ~ .invalid-tooltip,\n  .custom-select.is-invalid ~ .invalid-feedback,\n  .custom-select.is-invalid ~ .invalid-tooltip {\n    display: block; }\n\n.was-validated .form-check-input:invalid ~ .form-check-label, .form-check-input.is-invalid ~ .form-check-label {\n  color: #fb6340; }\n\n.was-validated .form-check-input:invalid ~ .invalid-feedback,\n.was-validated .form-check-input:invalid ~ .invalid-tooltip, .form-check-input.is-invalid ~ .invalid-feedback,\n.form-check-input.is-invalid ~ .invalid-tooltip {\n  display: block; }\n\n.was-validated .custom-control-input:invalid ~ .custom-control-label, .custom-control-input.is-invalid ~ .custom-control-label {\n  color: #fb6340; }\n  .was-validated .custom-control-input:invalid ~ .custom-control-label::before, .custom-control-input.is-invalid ~ .custom-control-label::before {\n    background-color: #fec9bd;\n    border-color: #fec9bd; }\n\n.was-validated .custom-control-input:invalid ~ .invalid-feedback,\n.was-validated .custom-control-input:invalid ~ .invalid-tooltip, .custom-control-input.is-invalid ~ .invalid-feedback,\n.custom-control-input.is-invalid ~ .invalid-tooltip {\n  display: block; }\n\n.was-validated .custom-control-input:invalid:checked ~ .custom-control-label::before, .custom-control-input.is-invalid:checked ~ .custom-control-label::before {\n  background-color: #fc8c72;\n  border-color: #fec9bd; }\n\n.was-validated .custom-control-input:invalid:focus ~ .custom-control-label::before, .custom-control-input.is-invalid:focus ~ .custom-control-label::before {\n  box-shadow: 0 0 0 1px #f8f9fe, 0 0 0 0 rgba(251, 99, 64, 0.25); }\n\n.was-validated .custom-file-input:invalid ~ .custom-file-label, .custom-file-input.is-invalid ~ .custom-file-label {\n  border-color: #fb6340; }\n  .was-validated .custom-file-input:invalid ~ .custom-file-label::before, .custom-file-input.is-invalid ~ .custom-file-label::before {\n    border-color: inherit; }\n\n.was-validated .custom-file-input:invalid ~ .invalid-feedback,\n.was-validated .custom-file-input:invalid ~ .invalid-tooltip, .custom-file-input.is-invalid ~ .invalid-feedback,\n.custom-file-input.is-invalid ~ .invalid-tooltip {\n  display: block; }\n\n.was-validated .custom-file-input:invalid:focus ~ .custom-file-label, .custom-file-input.is-invalid:focus ~ .custom-file-label {\n  box-shadow: 0 0 0 0 rgba(251, 99, 64, 0.25); }\n\n.form-inline {\n  display: -webkit-box;\n  display: flex;\n  -webkit-box-orient: horizontal;\n  -webkit-box-direction: normal;\n          flex-flow: row wrap;\n  -webkit-box-align: center;\n          align-items: center; }\n  .form-inline .form-check {\n    width: 100%; }\n  @media (min-width: 576px) {\n    .form-inline label {\n      display: -webkit-box;\n      display: flex;\n      -webkit-box-align: center;\n              align-items: center;\n      -webkit-box-pack: center;\n              justify-content: center;\n      margin-bottom: 0; }\n    .form-inline .form-group {\n      display: -webkit-box;\n      display: flex;\n      -webkit-box-flex: 0;\n              flex: 0 0 auto;\n      -webkit-box-orient: horizontal;\n      -webkit-box-direction: normal;\n              flex-flow: row wrap;\n      -webkit-box-align: center;\n              align-items: center;\n      margin-bottom: 0; }\n    .form-inline .form-control {\n      display: inline-block;\n      width: auto;\n      vertical-align: middle; }\n    .form-inline .form-control-plaintext {\n      display: inline-block; }\n    .form-inline .input-group,\n    .form-inline .custom-select {\n      width: auto; }\n    .form-inline .form-check {\n      display: -webkit-box;\n      display: flex;\n      -webkit-box-align: center;\n              align-items: center;\n      -webkit-box-pack: center;\n              justify-content: center;\n      width: auto;\n      padding-left: 0; }\n    .form-inline .form-check-input {\n      position: relative;\n      margin-top: 0;\n      margin-right: 0.25rem;\n      margin-left: 0; }\n    .form-inline .custom-control {\n      -webkit-box-align: center;\n              align-items: center;\n      -webkit-box-pack: center;\n              justify-content: center; }\n    .form-inline .custom-control-label {\n      margin-bottom: 0; } }\n\n.btn {\n  display: inline-block;\n  font-weight: 600;\n  text-align: center;\n  white-space: nowrap;\n  vertical-align: middle;\n  -webkit-user-select: none;\n     -moz-user-select: none;\n      -ms-user-select: none;\n          user-select: none;\n  border: 1px solid transparent;\n  padding: 0.625rem 1.25rem;\n  font-size: 1rem;\n  line-height: 1.5;\n  border-radius: 0.375rem;\n  -webkit-transition: color 0.15s ease-in-out, background-color 0.15s ease-in-out, border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;\n  transition: color 0.15s ease-in-out, background-color 0.15s ease-in-out, border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out; }\n  @media screen and (prefers-reduced-motion: reduce) {\n    .btn {\n      -webkit-transition: none;\n      transition: none; } }\n  .btn:hover, .btn:focus {\n    text-decoration: none; }\n  .btn:focus, .btn.focus {\n    outline: 0;\n    box-shadow: 0 7px 14px rgba(50, 50, 93, 0.1), 0 3px 6px rgba(0, 0, 0, 0.08); }\n  .btn.disabled, .btn:disabled {\n    opacity: 0.65;\n    box-shadow: none; }\n  .btn:not(:disabled):not(.disabled) {\n    cursor: pointer; }\n  .btn:not(:disabled):not(.disabled):active, .btn:not(:disabled):not(.disabled).active {\n    box-shadow: none; }\n    .btn:not(:disabled):not(.disabled):active:focus, .btn:not(:disabled):not(.disabled).active:focus {\n      box-shadow: 0 7px 14px rgba(50, 50, 93, 0.1), 0 3px 6px rgba(0, 0, 0, 0.08), none; }\n\na.btn.disabled,\nfieldset:disabled a.btn {\n  pointer-events: none; }\n\n.btn-primary {\n  color: #fff;\n  background-color: #5e72e4;\n  border-color: #5e72e4;\n  box-shadow: 0 4px 6px rgba(50, 50, 93, 0.11), 0 1px 3px rgba(0, 0, 0, 0.08); }\n  .btn-primary:hover {\n    color: #fff;\n    background-color: #5e72e4;\n    border-color: #5e72e4; }\n  .btn-primary:focus, .btn-primary.focus {\n    box-shadow: 0 4px 6px rgba(50, 50, 93, 0.11), 0 1px 3px rgba(0, 0, 0, 0.08), 0 0 0 0 rgba(94, 114, 228, 0.5); }\n  .btn-primary.disabled, .btn-primary:disabled {\n    color: #fff;\n    background-color: #5e72e4;\n    border-color: #5e72e4; }\n  .btn-primary:not(:disabled):not(.disabled):active, .btn-primary:not(:disabled):not(.disabled).active,\n  .show > .btn-primary.dropdown-toggle {\n    color: #fff;\n    background-color: #324cdd;\n    border-color: #5e72e4; }\n    .btn-primary:not(:disabled):not(.disabled):active:focus, .btn-primary:not(:disabled):not(.disabled).active:focus,\n    .show > .btn-primary.dropdown-toggle:focus {\n      box-shadow: none, 0 0 0 0 rgba(94, 114, 228, 0.5); }\n\n.btn-secondary {\n  color: #212529;\n  background-color: #f7fafc;\n  border-color: #f7fafc;\n  box-shadow: 0 4px 6px rgba(50, 50, 93, 0.11), 0 1px 3px rgba(0, 0, 0, 0.08); }\n  .btn-secondary:hover {\n    color: #212529;\n    background-color: #f7fafc;\n    border-color: #f7fafc; }\n  .btn-secondary:focus, .btn-secondary.focus {\n    box-shadow: 0 4px 6px rgba(50, 50, 93, 0.11), 0 1px 3px rgba(0, 0, 0, 0.08), 0 0 0 0 rgba(247, 250, 252, 0.5); }\n  .btn-secondary.disabled, .btn-secondary:disabled {\n    color: #212529;\n    background-color: #f7fafc;\n    border-color: #f7fafc; }\n  .btn-secondary:not(:disabled):not(.disabled):active, .btn-secondary:not(:disabled):not(.disabled).active,\n  .show > .btn-secondary.dropdown-toggle {\n    color: #212529;\n    background-color: #d2e3ee;\n    border-color: #f7fafc; }\n    .btn-secondary:not(:disabled):not(.disabled):active:focus, .btn-secondary:not(:disabled):not(.disabled).active:focus,\n    .show > .btn-secondary.dropdown-toggle:focus {\n      box-shadow: none, 0 0 0 0 rgba(247, 250, 252, 0.5); }\n\n.btn-success {\n  color: #fff;\n  background-color: #2dce89;\n  border-color: #2dce89;\n  box-shadow: 0 4px 6px rgba(50, 50, 93, 0.11), 0 1px 3px rgba(0, 0, 0, 0.08); }\n  .btn-success:hover {\n    color: #fff;\n    background-color: #2dce89;\n    border-color: #2dce89; }\n  .btn-success:focus, .btn-success.focus {\n    box-shadow: 0 4px 6px rgba(50, 50, 93, 0.11), 0 1px 3px rgba(0, 0, 0, 0.08), 0 0 0 0 rgba(45, 206, 137, 0.5); }\n  .btn-success.disabled, .btn-success:disabled {\n    color: #fff;\n    background-color: #2dce89;\n    border-color: #2dce89; }\n  .btn-success:not(:disabled):not(.disabled):active, .btn-success:not(:disabled):not(.disabled).active,\n  .show > .btn-success.dropdown-toggle {\n    color: #fff;\n    background-color: #24a46d;\n    border-color: #2dce89; }\n    .btn-success:not(:disabled):not(.disabled):active:focus, .btn-success:not(:disabled):not(.disabled).active:focus,\n    .show > .btn-success.dropdown-toggle:focus {\n      box-shadow: none, 0 0 0 0 rgba(45, 206, 137, 0.5); }\n\n.btn-info {\n  color: #fff;\n  background-color: #11cdef;\n  border-color: #11cdef;\n  box-shadow: 0 4px 6px rgba(50, 50, 93, 0.11), 0 1px 3px rgba(0, 0, 0, 0.08); }\n  .btn-info:hover {\n    color: #fff;\n    background-color: #11cdef;\n    border-color: #11cdef; }\n  .btn-info:focus, .btn-info.focus {\n    box-shadow: 0 4px 6px rgba(50, 50, 93, 0.11), 0 1px 3px rgba(0, 0, 0, 0.08), 0 0 0 0 rgba(17, 205, 239, 0.5); }\n  .btn-info.disabled, .btn-info:disabled {\n    color: #fff;\n    background-color: #11cdef;\n    border-color: #11cdef; }\n  .btn-info:not(:disabled):not(.disabled):active, .btn-info:not(:disabled):not(.disabled).active,\n  .show > .btn-info.dropdown-toggle {\n    color: #fff;\n    background-color: #0da5c0;\n    border-color: #11cdef; }\n    .btn-info:not(:disabled):not(.disabled):active:focus, .btn-info:not(:disabled):not(.disabled).active:focus,\n    .show > .btn-info.dropdown-toggle:focus {\n      box-shadow: none, 0 0 0 0 rgba(17, 205, 239, 0.5); }\n\n.btn-warning {\n  color: #fff;\n  background-color: #fb6340;\n  border-color: #fb6340;\n  box-shadow: 0 4px 6px rgba(50, 50, 93, 0.11), 0 1px 3px rgba(0, 0, 0, 0.08); }\n  .btn-warning:hover {\n    color: #fff;\n    background-color: #fb6340;\n    border-color: #fb6340; }\n  .btn-warning:focus, .btn-warning.focus {\n    box-shadow: 0 4px 6px rgba(50, 50, 93, 0.11), 0 1px 3px rgba(0, 0, 0, 0.08), 0 0 0 0 rgba(251, 99, 64, 0.5); }\n  .btn-warning.disabled, .btn-warning:disabled {\n    color: #fff;\n    background-color: #fb6340;\n    border-color: #fb6340; }\n  .btn-warning:not(:disabled):not(.disabled):active, .btn-warning:not(:disabled):not(.disabled).active,\n  .show > .btn-warning.dropdown-toggle {\n    color: #fff;\n    background-color: #fa3a0e;\n    border-color: #fb6340; }\n    .btn-warning:not(:disabled):not(.disabled):active:focus, .btn-warning:not(:disabled):not(.disabled).active:focus,\n    .show > .btn-warning.dropdown-toggle:focus {\n      box-shadow: none, 0 0 0 0 rgba(251, 99, 64, 0.5); }\n\n.btn-danger {\n  color: #fff;\n  background-color: #f5365c;\n  border-color: #f5365c;\n  box-shadow: 0 4px 6px rgba(50, 50, 93, 0.11), 0 1px 3px rgba(0, 0, 0, 0.08); }\n  .btn-danger:hover {\n    color: #fff;\n    background-color: #f5365c;\n    border-color: #f5365c; }\n  .btn-danger:focus, .btn-danger.focus {\n    box-shadow: 0 4px 6px rgba(50, 50, 93, 0.11), 0 1px 3px rgba(0, 0, 0, 0.08), 0 0 0 0 rgba(245, 54, 92, 0.5); }\n  .btn-danger.disabled, .btn-danger:disabled {\n    color: #fff;\n    background-color: #f5365c;\n    border-color: #f5365c; }\n  .btn-danger:not(:disabled):not(.disabled):active, .btn-danger:not(:disabled):not(.disabled).active,\n  .show > .btn-danger.dropdown-toggle {\n    color: #fff;\n    background-color: #ec0c38;\n    border-color: #f5365c; }\n    .btn-danger:not(:disabled):not(.disabled):active:focus, .btn-danger:not(:disabled):not(.disabled).active:focus,\n    .show > .btn-danger.dropdown-toggle:focus {\n      box-shadow: none, 0 0 0 0 rgba(245, 54, 92, 0.5); }\n\n.btn-light {\n  color: #fff;\n  background-color: #adb5bd;\n  border-color: #adb5bd;\n  box-shadow: 0 4px 6px rgba(50, 50, 93, 0.11), 0 1px 3px rgba(0, 0, 0, 0.08); }\n  .btn-light:hover {\n    color: #fff;\n    background-color: #adb5bd;\n    border-color: #adb5bd; }\n  .btn-light:focus, .btn-light.focus {\n    box-shadow: 0 4px 6px rgba(50, 50, 93, 0.11), 0 1px 3px rgba(0, 0, 0, 0.08), 0 0 0 0 rgba(173, 181, 189, 0.5); }\n  .btn-light.disabled, .btn-light:disabled {\n    color: #fff;\n    background-color: #adb5bd;\n    border-color: #adb5bd; }\n  .btn-light:not(:disabled):not(.disabled):active, .btn-light:not(:disabled):not(.disabled).active,\n  .show > .btn-light.dropdown-toggle {\n    color: #fff;\n    background-color: #919ca6;\n    border-color: #adb5bd; }\n    .btn-light:not(:disabled):not(.disabled):active:focus, .btn-light:not(:disabled):not(.disabled).active:focus,\n    .show > .btn-light.dropdown-toggle:focus {\n      box-shadow: none, 0 0 0 0 rgba(173, 181, 189, 0.5); }\n\n.btn-dark {\n  color: #fff;\n  background-color: #212529;\n  border-color: #212529;\n  box-shadow: 0 4px 6px rgba(50, 50, 93, 0.11), 0 1px 3px rgba(0, 0, 0, 0.08); }\n  .btn-dark:hover {\n    color: #fff;\n    background-color: #212529;\n    border-color: #212529; }\n  .btn-dark:focus, .btn-dark.focus {\n    box-shadow: 0 4px 6px rgba(50, 50, 93, 0.11), 0 1px 3px rgba(0, 0, 0, 0.08), 0 0 0 0 rgba(33, 37, 41, 0.5); }\n  .btn-dark.disabled, .btn-dark:disabled {\n    color: #fff;\n    background-color: #212529;\n    border-color: #212529; }\n  .btn-dark:not(:disabled):not(.disabled):active, .btn-dark:not(:disabled):not(.disabled).active,\n  .show > .btn-dark.dropdown-toggle {\n    color: #fff;\n    background-color: #0a0c0d;\n    border-color: #212529; }\n    .btn-dark:not(:disabled):not(.disabled):active:focus, .btn-dark:not(:disabled):not(.disabled).active:focus,\n    .show > .btn-dark.dropdown-toggle:focus {\n      box-shadow: none, 0 0 0 0 rgba(33, 37, 41, 0.5); }\n\n.btn-default {\n  color: #fff;\n  background-color: #172b4d;\n  border-color: #172b4d;\n  box-shadow: 0 4px 6px rgba(50, 50, 93, 0.11), 0 1px 3px rgba(0, 0, 0, 0.08); }\n  .btn-default:hover {\n    color: #fff;\n    background-color: #172b4d;\n    border-color: #172b4d; }\n  .btn-default:focus, .btn-default.focus {\n    box-shadow: 0 4px 6px rgba(50, 50, 93, 0.11), 0 1px 3px rgba(0, 0, 0, 0.08), 0 0 0 0 rgba(23, 43, 77, 0.5); }\n  .btn-default.disabled, .btn-default:disabled {\n    color: #fff;\n    background-color: #172b4d;\n    border-color: #172b4d; }\n  .btn-default:not(:disabled):not(.disabled):active, .btn-default:not(:disabled):not(.disabled).active,\n  .show > .btn-default.dropdown-toggle {\n    color: #fff;\n    background-color: #0b1526;\n    border-color: #172b4d; }\n    .btn-default:not(:disabled):not(.disabled):active:focus, .btn-default:not(:disabled):not(.disabled).active:focus,\n    .show > .btn-default.dropdown-toggle:focus {\n      box-shadow: none, 0 0 0 0 rgba(23, 43, 77, 0.5); }\n\n.btn-white {\n  color: #212529;\n  background-color: #fff;\n  border-color: #fff;\n  box-shadow: 0 4px 6px rgba(50, 50, 93, 0.11), 0 1px 3px rgba(0, 0, 0, 0.08); }\n  .btn-white:hover {\n    color: #212529;\n    background-color: white;\n    border-color: white; }\n  .btn-white:focus, .btn-white.focus {\n    box-shadow: 0 4px 6px rgba(50, 50, 93, 0.11), 0 1px 3px rgba(0, 0, 0, 0.08), 0 0 0 0 rgba(255, 255, 255, 0.5); }\n  .btn-white.disabled, .btn-white:disabled {\n    color: #212529;\n    background-color: #fff;\n    border-color: #fff; }\n  .btn-white:not(:disabled):not(.disabled):active, .btn-white:not(:disabled):not(.disabled).active,\n  .show > .btn-white.dropdown-toggle {\n    color: #212529;\n    background-color: #e6e6e6;\n    border-color: white; }\n    .btn-white:not(:disabled):not(.disabled):active:focus, .btn-white:not(:disabled):not(.disabled).active:focus,\n    .show > .btn-white.dropdown-toggle:focus {\n      box-shadow: none, 0 0 0 0 rgba(255, 255, 255, 0.5); }\n\n.btn-neutral {\n  color: #212529;\n  background-color: #fff;\n  border-color: #fff;\n  box-shadow: 0 4px 6px rgba(50, 50, 93, 0.11), 0 1px 3px rgba(0, 0, 0, 0.08); }\n  .btn-neutral:hover {\n    color: #212529;\n    background-color: white;\n    border-color: white; }\n  .btn-neutral:focus, .btn-neutral.focus {\n    box-shadow: 0 4px 6px rgba(50, 50, 93, 0.11), 0 1px 3px rgba(0, 0, 0, 0.08), 0 0 0 0 rgba(255, 255, 255, 0.5); }\n  .btn-neutral.disabled, .btn-neutral:disabled {\n    color: #212529;\n    background-color: #fff;\n    border-color: #fff; }\n  .btn-neutral:not(:disabled):not(.disabled):active, .btn-neutral:not(:disabled):not(.disabled).active,\n  .show > .btn-neutral.dropdown-toggle {\n    color: #212529;\n    background-color: #e6e6e6;\n    border-color: white; }\n    .btn-neutral:not(:disabled):not(.disabled):active:focus, .btn-neutral:not(:disabled):not(.disabled).active:focus,\n    .show > .btn-neutral.dropdown-toggle:focus {\n      box-shadow: none, 0 0 0 0 rgba(255, 255, 255, 0.5); }\n\n.btn-darker {\n  color: #fff;\n  background-color: black;\n  border-color: black;\n  box-shadow: 0 4px 6px rgba(50, 50, 93, 0.11), 0 1px 3px rgba(0, 0, 0, 0.08); }\n  .btn-darker:hover {\n    color: #fff;\n    background-color: black;\n    border-color: black; }\n  .btn-darker:focus, .btn-darker.focus {\n    box-shadow: 0 4px 6px rgba(50, 50, 93, 0.11), 0 1px 3px rgba(0, 0, 0, 0.08), 0 0 0 0 rgba(0, 0, 0, 0.5); }\n  .btn-darker.disabled, .btn-darker:disabled {\n    color: #fff;\n    background-color: black;\n    border-color: black; }\n  .btn-darker:not(:disabled):not(.disabled):active, .btn-darker:not(:disabled):not(.disabled).active,\n  .show > .btn-darker.dropdown-toggle {\n    color: #fff;\n    background-color: black;\n    border-color: black; }\n    .btn-darker:not(:disabled):not(.disabled):active:focus, .btn-darker:not(:disabled):not(.disabled).active:focus,\n    .show > .btn-darker.dropdown-toggle:focus {\n      box-shadow: none, 0 0 0 0 rgba(0, 0, 0, 0.5); }\n\n.btn-outline-primary {\n  color: #5e72e4;\n  background-color: transparent;\n  background-image: none;\n  border-color: #5e72e4; }\n  .btn-outline-primary:hover {\n    color: #fff;\n    background-color: #5e72e4;\n    border-color: #5e72e4; }\n  .btn-outline-primary:focus, .btn-outline-primary.focus {\n    box-shadow: 0 0 0 0 rgba(94, 114, 228, 0.5); }\n  .btn-outline-primary.disabled, .btn-outline-primary:disabled {\n    color: #5e72e4;\n    background-color: transparent; }\n  .btn-outline-primary:not(:disabled):not(.disabled):active, .btn-outline-primary:not(:disabled):not(.disabled).active,\n  .show > .btn-outline-primary.dropdown-toggle {\n    color: #fff;\n    background-color: #5e72e4;\n    border-color: #5e72e4; }\n    .btn-outline-primary:not(:disabled):not(.disabled):active:focus, .btn-outline-primary:not(:disabled):not(.disabled).active:focus,\n    .show > .btn-outline-primary.dropdown-toggle:focus {\n      box-shadow: 0 0 0 0 rgba(94, 114, 228, 0.5); }\n\n.btn-outline-secondary {\n  color: #f7fafc;\n  background-color: transparent;\n  background-image: none;\n  border-color: #f7fafc; }\n  .btn-outline-secondary:hover {\n    color: #212529;\n    background-color: #f7fafc;\n    border-color: #f7fafc; }\n  .btn-outline-secondary:focus, .btn-outline-secondary.focus {\n    box-shadow: 0 0 0 0 rgba(247, 250, 252, 0.5); }\n  .btn-outline-secondary.disabled, .btn-outline-secondary:disabled {\n    color: #f7fafc;\n    background-color: transparent; }\n  .btn-outline-secondary:not(:disabled):not(.disabled):active, .btn-outline-secondary:not(:disabled):not(.disabled).active,\n  .show > .btn-outline-secondary.dropdown-toggle {\n    color: #212529;\n    background-color: #f7fafc;\n    border-color: #f7fafc; }\n    .btn-outline-secondary:not(:disabled):not(.disabled):active:focus, .btn-outline-secondary:not(:disabled):not(.disabled).active:focus,\n    .show > .btn-outline-secondary.dropdown-toggle:focus {\n      box-shadow: 0 0 0 0 rgba(247, 250, 252, 0.5); }\n\n.btn-outline-success {\n  color: #2dce89;\n  background-color: transparent;\n  background-image: none;\n  border-color: #2dce89; }\n  .btn-outline-success:hover {\n    color: #fff;\n    background-color: #2dce89;\n    border-color: #2dce89; }\n  .btn-outline-success:focus, .btn-outline-success.focus {\n    box-shadow: 0 0 0 0 rgba(45, 206, 137, 0.5); }\n  .btn-outline-success.disabled, .btn-outline-success:disabled {\n    color: #2dce89;\n    background-color: transparent; }\n  .btn-outline-success:not(:disabled):not(.disabled):active, .btn-outline-success:not(:disabled):not(.disabled).active,\n  .show > .btn-outline-success.dropdown-toggle {\n    color: #fff;\n    background-color: #2dce89;\n    border-color: #2dce89; }\n    .btn-outline-success:not(:disabled):not(.disabled):active:focus, .btn-outline-success:not(:disabled):not(.disabled).active:focus,\n    .show > .btn-outline-success.dropdown-toggle:focus {\n      box-shadow: 0 0 0 0 rgba(45, 206, 137, 0.5); }\n\n.btn-outline-info {\n  color: #11cdef;\n  background-color: transparent;\n  background-image: none;\n  border-color: #11cdef; }\n  .btn-outline-info:hover {\n    color: #fff;\n    background-color: #11cdef;\n    border-color: #11cdef; }\n  .btn-outline-info:focus, .btn-outline-info.focus {\n    box-shadow: 0 0 0 0 rgba(17, 205, 239, 0.5); }\n  .btn-outline-info.disabled, .btn-outline-info:disabled {\n    color: #11cdef;\n    background-color: transparent; }\n  .btn-outline-info:not(:disabled):not(.disabled):active, .btn-outline-info:not(:disabled):not(.disabled).active,\n  .show > .btn-outline-info.dropdown-toggle {\n    color: #fff;\n    background-color: #11cdef;\n    border-color: #11cdef; }\n    .btn-outline-info:not(:disabled):not(.disabled):active:focus, .btn-outline-info:not(:disabled):not(.disabled).active:focus,\n    .show > .btn-outline-info.dropdown-toggle:focus {\n      box-shadow: 0 0 0 0 rgba(17, 205, 239, 0.5); }\n\n.btn-outline-warning {\n  color: #fb6340;\n  background-color: transparent;\n  background-image: none;\n  border-color: #fb6340; }\n  .btn-outline-warning:hover {\n    color: #fff;\n    background-color: #fb6340;\n    border-color: #fb6340; }\n  .btn-outline-warning:focus, .btn-outline-warning.focus {\n    box-shadow: 0 0 0 0 rgba(251, 99, 64, 0.5); }\n  .btn-outline-warning.disabled, .btn-outline-warning:disabled {\n    color: #fb6340;\n    background-color: transparent; }\n  .btn-outline-warning:not(:disabled):not(.disabled):active, .btn-outline-warning:not(:disabled):not(.disabled).active,\n  .show > .btn-outline-warning.dropdown-toggle {\n    color: #fff;\n    background-color: #fb6340;\n    border-color: #fb6340; }\n    .btn-outline-warning:not(:disabled):not(.disabled):active:focus, .btn-outline-warning:not(:disabled):not(.disabled).active:focus,\n    .show > .btn-outline-warning.dropdown-toggle:focus {\n      box-shadow: 0 0 0 0 rgba(251, 99, 64, 0.5); }\n\n.btn-outline-danger {\n  color: #f5365c;\n  background-color: transparent;\n  background-image: none;\n  border-color: #f5365c; }\n  .btn-outline-danger:hover {\n    color: #fff;\n    background-color: #f5365c;\n    border-color: #f5365c; }\n  .btn-outline-danger:focus, .btn-outline-danger.focus {\n    box-shadow: 0 0 0 0 rgba(245, 54, 92, 0.5); }\n  .btn-outline-danger.disabled, .btn-outline-danger:disabled {\n    color: #f5365c;\n    background-color: transparent; }\n  .btn-outline-danger:not(:disabled):not(.disabled):active, .btn-outline-danger:not(:disabled):not(.disabled).active,\n  .show > .btn-outline-danger.dropdown-toggle {\n    color: #fff;\n    background-color: #f5365c;\n    border-color: #f5365c; }\n    .btn-outline-danger:not(:disabled):not(.disabled):active:focus, .btn-outline-danger:not(:disabled):not(.disabled).active:focus,\n    .show > .btn-outline-danger.dropdown-toggle:focus {\n      box-shadow: 0 0 0 0 rgba(245, 54, 92, 0.5); }\n\n.btn-outline-light {\n  color: #adb5bd;\n  background-color: transparent;\n  background-image: none;\n  border-color: #adb5bd; }\n  .btn-outline-light:hover {\n    color: #fff;\n    background-color: #adb5bd;\n    border-color: #adb5bd; }\n  .btn-outline-light:focus, .btn-outline-light.focus {\n    box-shadow: 0 0 0 0 rgba(173, 181, 189, 0.5); }\n  .btn-outline-light.disabled, .btn-outline-light:disabled {\n    color: #adb5bd;\n    background-color: transparent; }\n  .btn-outline-light:not(:disabled):not(.disabled):active, .btn-outline-light:not(:disabled):not(.disabled).active,\n  .show > .btn-outline-light.dropdown-toggle {\n    color: #fff;\n    background-color: #adb5bd;\n    border-color: #adb5bd; }\n    .btn-outline-light:not(:disabled):not(.disabled):active:focus, .btn-outline-light:not(:disabled):not(.disabled).active:focus,\n    .show > .btn-outline-light.dropdown-toggle:focus {\n      box-shadow: 0 0 0 0 rgba(173, 181, 189, 0.5); }\n\n.btn-outline-dark {\n  color: #212529;\n  background-color: transparent;\n  background-image: none;\n  border-color: #212529; }\n  .btn-outline-dark:hover {\n    color: #fff;\n    background-color: #212529;\n    border-color: #212529; }\n  .btn-outline-dark:focus, .btn-outline-dark.focus {\n    box-shadow: 0 0 0 0 rgba(33, 37, 41, 0.5); }\n  .btn-outline-dark.disabled, .btn-outline-dark:disabled {\n    color: #212529;\n    background-color: transparent; }\n  .btn-outline-dark:not(:disabled):not(.disabled):active, .btn-outline-dark:not(:disabled):not(.disabled).active,\n  .show > .btn-outline-dark.dropdown-toggle {\n    color: #fff;\n    background-color: #212529;\n    border-color: #212529; }\n    .btn-outline-dark:not(:disabled):not(.disabled):active:focus, .btn-outline-dark:not(:disabled):not(.disabled).active:focus,\n    .show > .btn-outline-dark.dropdown-toggle:focus {\n      box-shadow: 0 0 0 0 rgba(33, 37, 41, 0.5); }\n\n.btn-outline-default {\n  color: #172b4d;\n  background-color: transparent;\n  background-image: none;\n  border-color: #172b4d; }\n  .btn-outline-default:hover {\n    color: #fff;\n    background-color: #172b4d;\n    border-color: #172b4d; }\n  .btn-outline-default:focus, .btn-outline-default.focus {\n    box-shadow: 0 0 0 0 rgba(23, 43, 77, 0.5); }\n  .btn-outline-default.disabled, .btn-outline-default:disabled {\n    color: #172b4d;\n    background-color: transparent; }\n  .btn-outline-default:not(:disabled):not(.disabled):active, .btn-outline-default:not(:disabled):not(.disabled).active,\n  .show > .btn-outline-default.dropdown-toggle {\n    color: #fff;\n    background-color: #172b4d;\n    border-color: #172b4d; }\n    .btn-outline-default:not(:disabled):not(.disabled):active:focus, .btn-outline-default:not(:disabled):not(.disabled).active:focus,\n    .show > .btn-outline-default.dropdown-toggle:focus {\n      box-shadow: 0 0 0 0 rgba(23, 43, 77, 0.5); }\n\n.btn-outline-white {\n  color: #fff;\n  background-color: transparent;\n  background-image: none;\n  border-color: #fff; }\n  .btn-outline-white:hover {\n    color: #212529;\n    background-color: #fff;\n    border-color: #fff; }\n  .btn-outline-white:focus, .btn-outline-white.focus {\n    box-shadow: 0 0 0 0 rgba(255, 255, 255, 0.5); }\n  .btn-outline-white.disabled, .btn-outline-white:disabled {\n    color: #fff;\n    background-color: transparent; }\n  .btn-outline-white:not(:disabled):not(.disabled):active, .btn-outline-white:not(:disabled):not(.disabled).active,\n  .show > .btn-outline-white.dropdown-toggle {\n    color: #212529;\n    background-color: #fff;\n    border-color: #fff; }\n    .btn-outline-white:not(:disabled):not(.disabled):active:focus, .btn-outline-white:not(:disabled):not(.disabled).active:focus,\n    .show > .btn-outline-white.dropdown-toggle:focus {\n      box-shadow: 0 0 0 0 rgba(255, 255, 255, 0.5); }\n\n.btn-outline-neutral {\n  color: #fff;\n  background-color: transparent;\n  background-image: none;\n  border-color: #fff; }\n  .btn-outline-neutral:hover {\n    color: #212529;\n    background-color: #fff;\n    border-color: #fff; }\n  .btn-outline-neutral:focus, .btn-outline-neutral.focus {\n    box-shadow: 0 0 0 0 rgba(255, 255, 255, 0.5); }\n  .btn-outline-neutral.disabled, .btn-outline-neutral:disabled {\n    color: #fff;\n    background-color: transparent; }\n  .btn-outline-neutral:not(:disabled):not(.disabled):active, .btn-outline-neutral:not(:disabled):not(.disabled).active,\n  .show > .btn-outline-neutral.dropdown-toggle {\n    color: #212529;\n    background-color: #fff;\n    border-color: #fff; }\n    .btn-outline-neutral:not(:disabled):not(.disabled):active:focus, .btn-outline-neutral:not(:disabled):not(.disabled).active:focus,\n    .show > .btn-outline-neutral.dropdown-toggle:focus {\n      box-shadow: 0 0 0 0 rgba(255, 255, 255, 0.5); }\n\n.btn-outline-darker {\n  color: black;\n  background-color: transparent;\n  background-image: none;\n  border-color: black; }\n  .btn-outline-darker:hover {\n    color: #fff;\n    background-color: black;\n    border-color: black; }\n  .btn-outline-darker:focus, .btn-outline-darker.focus {\n    box-shadow: 0 0 0 0 rgba(0, 0, 0, 0.5); }\n  .btn-outline-darker.disabled, .btn-outline-darker:disabled {\n    color: black;\n    background-color: transparent; }\n  .btn-outline-darker:not(:disabled):not(.disabled):active, .btn-outline-darker:not(:disabled):not(.disabled).active,\n  .show > .btn-outline-darker.dropdown-toggle {\n    color: #fff;\n    background-color: black;\n    border-color: black; }\n    .btn-outline-darker:not(:disabled):not(.disabled):active:focus, .btn-outline-darker:not(:disabled):not(.disabled).active:focus,\n    .show > .btn-outline-darker.dropdown-toggle:focus {\n      box-shadow: 0 0 0 0 rgba(0, 0, 0, 0.5); }\n\n.btn-link {\n  font-weight: 400;\n  color: #5e72e4;\n  background-color: transparent; }\n  .btn-link:hover {\n    color: #233dd2;\n    text-decoration: none;\n    background-color: transparent;\n    border-color: transparent; }\n  .btn-link:focus, .btn-link.focus {\n    text-decoration: none;\n    border-color: transparent;\n    box-shadow: none; }\n  .btn-link:disabled, .btn-link.disabled {\n    color: #8898aa;\n    pointer-events: none; }\n\n.btn-lg, .btn-group-lg > .btn {\n  padding: 0.875rem 1rem;\n  font-size: 1.25rem;\n  line-height: 1.5;\n  border-radius: 0.4375rem; }\n\n.btn-sm, .btn-group-sm > .btn {\n  padding: 0.25rem 0.5rem;\n  font-size: 0.875rem;\n  line-height: 1.5;\n  border-radius: 0.375rem; }\n\n.btn-block {\n  display: block;\n  width: 100%; }\n  .btn-block + .btn-block {\n    margin-top: 0.5rem; }\n\ninput[type=\"submit\"].btn-block,\ninput[type=\"reset\"].btn-block,\ninput[type=\"button\"].btn-block {\n  width: 100%; }\n\n.fade {\n  -webkit-transition: opacity 0.15s linear;\n  transition: opacity 0.15s linear; }\n  @media screen and (prefers-reduced-motion: reduce) {\n    .fade {\n      -webkit-transition: none;\n      transition: none; } }\n  .fade:not(.show) {\n    opacity: 0; }\n\n.collapse:not(.show) {\n  display: none; }\n\n.collapsing {\n  position: relative;\n  height: 0;\n  overflow: hidden;\n  -webkit-transition: height 0.35s ease;\n  transition: height 0.35s ease; }\n  @media screen and (prefers-reduced-motion: reduce) {\n    .collapsing {\n      -webkit-transition: none;\n      transition: none; } }\n\n.dropup,\n.dropright,\n.dropdown,\n.dropleft {\n  position: relative; }\n\n.dropdown-toggle::after {\n  display: inline-block;\n  width: 0;\n  height: 0;\n  margin-left: 0.255em;\n  vertical-align: 0.255em;\n  content: \"\";\n  border-top: 0.3em solid;\n  border-right: 0.3em solid transparent;\n  border-bottom: 0;\n  border-left: 0.3em solid transparent; }\n\n.dropdown-toggle:empty::after {\n  margin-left: 0; }\n\n.dropdown-menu {\n  position: absolute;\n  top: 100%;\n  left: 0;\n  z-index: 1000;\n  display: none;\n  float: left;\n  min-width: 10rem;\n  padding: 0.5rem 0;\n  margin: 0.125rem 0 0;\n  font-size: 1rem;\n  color: #525f7f;\n  text-align: left;\n  list-style: none;\n  background-color: #fff;\n  background-clip: padding-box;\n  border: 0 solid rgba(0, 0, 0, 0.15);\n  border-radius: 0.4375rem;\n  box-shadow: 0 50px 100px rgba(50, 50, 93, 0.1), 0 15px 35px rgba(50, 50, 93, 0.15), 0 5px 15px rgba(0, 0, 0, 0.1); }\n\n.dropdown-menu-right {\n  right: 0;\n  left: auto; }\n\n.dropup .dropdown-menu {\n  top: auto;\n  bottom: 100%;\n  margin-top: 0;\n  margin-bottom: 0.125rem; }\n\n.dropup .dropdown-toggle::after {\n  display: inline-block;\n  width: 0;\n  height: 0;\n  margin-left: 0.255em;\n  vertical-align: 0.255em;\n  content: \"\";\n  border-top: 0;\n  border-right: 0.3em solid transparent;\n  border-bottom: 0.3em solid;\n  border-left: 0.3em solid transparent; }\n\n.dropup .dropdown-toggle:empty::after {\n  margin-left: 0; }\n\n.dropright .dropdown-menu {\n  top: 0;\n  right: auto;\n  left: 100%;\n  margin-top: 0;\n  margin-left: 0.125rem; }\n\n.dropright .dropdown-toggle::after {\n  display: inline-block;\n  width: 0;\n  height: 0;\n  margin-left: 0.255em;\n  vertical-align: 0.255em;\n  content: \"\";\n  border-top: 0.3em solid transparent;\n  border-right: 0;\n  border-bottom: 0.3em solid transparent;\n  border-left: 0.3em solid; }\n\n.dropright .dropdown-toggle:empty::after {\n  margin-left: 0; }\n\n.dropright .dropdown-toggle::after {\n  vertical-align: 0; }\n\n.dropleft .dropdown-menu {\n  top: 0;\n  right: 100%;\n  left: auto;\n  margin-top: 0;\n  margin-right: 0.125rem; }\n\n.dropleft .dropdown-toggle::after {\n  display: inline-block;\n  width: 0;\n  height: 0;\n  margin-left: 0.255em;\n  vertical-align: 0.255em;\n  content: \"\"; }\n\n.dropleft .dropdown-toggle::after {\n  display: none; }\n\n.dropleft .dropdown-toggle::before {\n  display: inline-block;\n  width: 0;\n  height: 0;\n  margin-right: 0.255em;\n  vertical-align: 0.255em;\n  content: \"\";\n  border-top: 0.3em solid transparent;\n  border-right: 0.3em solid;\n  border-bottom: 0.3em solid transparent; }\n\n.dropleft .dropdown-toggle:empty::after {\n  margin-left: 0; }\n\n.dropleft .dropdown-toggle::before {\n  vertical-align: 0; }\n\n.dropdown-menu[x-placement^=\"top\"], .dropdown-menu[x-placement^=\"right\"], .dropdown-menu[x-placement^=\"bottom\"], .dropdown-menu[x-placement^=\"left\"] {\n  right: auto;\n  bottom: auto; }\n\n.dropdown-divider {\n  height: 0;\n  margin: 0.5rem 0;\n  overflow: hidden;\n  border-top: 1px solid #e9ecef; }\n\n.dropdown-item {\n  display: block;\n  width: 100%;\n  padding: 0.25rem 1.5rem;\n  clear: both;\n  font-weight: 400;\n  color: #212529;\n  text-align: inherit;\n  white-space: nowrap;\n  background-color: transparent;\n  border: 0; }\n  .dropdown-item:hover, .dropdown-item:focus {\n    color: #16181b;\n    text-decoration: none;\n    background-color: #f6f9fc; }\n  .dropdown-item.active, .dropdown-item:active {\n    color: #fff;\n    text-decoration: none;\n    background-color: #5e72e4; }\n  .dropdown-item.disabled, .dropdown-item:disabled {\n    color: #8898aa;\n    background-color: transparent; }\n\n.dropdown-menu.show {\n  display: block; }\n\n.dropdown-header {\n  display: block;\n  padding: 0.5rem 1.5rem;\n  margin-bottom: 0;\n  font-size: 0.875rem;\n  color: #8898aa;\n  white-space: nowrap; }\n\n.dropdown-item-text {\n  display: block;\n  padding: 0.25rem 1.5rem;\n  color: #212529; }\n\n.btn-group,\n.btn-group-vertical {\n  position: relative;\n  display: -webkit-inline-box;\n  display: inline-flex;\n  vertical-align: middle; }\n  .btn-group > .btn,\n  .btn-group-vertical > .btn {\n    position: relative;\n    -webkit-box-flex: 0;\n            flex: 0 1 auto; }\n    .btn-group > .btn:hover,\n    .btn-group-vertical > .btn:hover {\n      z-index: 1; }\n    .btn-group > .btn:focus, .btn-group > .btn:active, .btn-group > .btn.active,\n    .btn-group-vertical > .btn:focus,\n    .btn-group-vertical > .btn:active,\n    .btn-group-vertical > .btn.active {\n      z-index: 1; }\n  .btn-group .btn + .btn,\n  .btn-group .btn + .btn-group,\n  .btn-group .btn-group + .btn,\n  .btn-group .btn-group + .btn-group,\n  .btn-group-vertical .btn + .btn,\n  .btn-group-vertical .btn + .btn-group,\n  .btn-group-vertical .btn-group + .btn,\n  .btn-group-vertical .btn-group + .btn-group {\n    margin-left: -1px; }\n\n.btn-toolbar {\n  display: -webkit-box;\n  display: flex;\n  flex-wrap: wrap;\n  -webkit-box-pack: start;\n          justify-content: flex-start; }\n  .btn-toolbar .input-group {\n    width: auto; }\n\n.btn-group > .btn:first-child {\n  margin-left: 0; }\n\n.btn-group > .btn:not(:last-child):not(.dropdown-toggle),\n.btn-group > .btn-group:not(:last-child) > .btn {\n  border-top-right-radius: 0;\n  border-bottom-right-radius: 0; }\n\n.btn-group > .btn:not(:first-child),\n.btn-group > .btn-group:not(:first-child) > .btn {\n  border-top-left-radius: 0;\n  border-bottom-left-radius: 0; }\n\n.dropdown-toggle-split {\n  padding-right: 0.9375rem;\n  padding-left: 0.9375rem; }\n  .dropdown-toggle-split::after,\n  .dropup .dropdown-toggle-split::after,\n  .dropright .dropdown-toggle-split::after {\n    margin-left: 0; }\n  .dropleft .dropdown-toggle-split::before {\n    margin-right: 0; }\n\n.btn-sm + .dropdown-toggle-split, .btn-group-sm > .btn + .dropdown-toggle-split {\n  padding-right: 0.375rem;\n  padding-left: 0.375rem; }\n\n.btn-lg + .dropdown-toggle-split, .btn-group-lg > .btn + .dropdown-toggle-split {\n  padding-right: 0.75rem;\n  padding-left: 0.75rem; }\n\n.btn-group.show .dropdown-toggle {\n  box-shadow: none; }\n  .btn-group.show .dropdown-toggle.btn-link {\n    box-shadow: none; }\n\n.btn-group-vertical {\n  -webkit-box-orient: vertical;\n  -webkit-box-direction: normal;\n          flex-direction: column;\n  -webkit-box-align: start;\n          align-items: flex-start;\n  -webkit-box-pack: center;\n          justify-content: center; }\n  .btn-group-vertical .btn,\n  .btn-group-vertical .btn-group {\n    width: 100%; }\n  .btn-group-vertical > .btn + .btn,\n  .btn-group-vertical > .btn + .btn-group,\n  .btn-group-vertical > .btn-group + .btn,\n  .btn-group-vertical > .btn-group + .btn-group {\n    margin-top: -1px;\n    margin-left: 0; }\n  .btn-group-vertical > .btn:not(:last-child):not(.dropdown-toggle),\n  .btn-group-vertical > .btn-group:not(:last-child) > .btn {\n    border-bottom-right-radius: 0;\n    border-bottom-left-radius: 0; }\n  .btn-group-vertical > .btn:not(:first-child),\n  .btn-group-vertical > .btn-group:not(:first-child) > .btn {\n    border-top-left-radius: 0;\n    border-top-right-radius: 0; }\n\n.btn-group-toggle > .btn,\n.btn-group-toggle > .btn-group > .btn {\n  margin-bottom: 0; }\n  .btn-group-toggle > .btn input[type=\"radio\"],\n  .btn-group-toggle > .btn input[type=\"checkbox\"],\n  .btn-group-toggle > .btn-group > .btn input[type=\"radio\"],\n  .btn-group-toggle > .btn-group > .btn input[type=\"checkbox\"] {\n    position: absolute;\n    clip: rect(0, 0, 0, 0);\n    pointer-events: none; }\n\n.input-group {\n  position: relative;\n  display: -webkit-box;\n  display: flex;\n  flex-wrap: wrap;\n  -webkit-box-align: stretch;\n          align-items: stretch;\n  width: 100%; }\n  .input-group > .form-control,\n  .input-group > .custom-select,\n  .input-group > .custom-file {\n    position: relative;\n    -webkit-box-flex: 1;\n            flex: 1 1 auto;\n    width: 1%;\n    margin-bottom: 0; }\n    .input-group > .form-control + .form-control,\n    .input-group > .form-control + .custom-select,\n    .input-group > .form-control + .custom-file,\n    .input-group > .custom-select + .form-control,\n    .input-group > .custom-select + .custom-select,\n    .input-group > .custom-select + .custom-file,\n    .input-group > .custom-file + .form-control,\n    .input-group > .custom-file + .custom-select,\n    .input-group > .custom-file + .custom-file {\n      margin-left: -1px; }\n  .input-group > .form-control:focus,\n  .input-group > .custom-select:focus,\n  .input-group > .custom-file .custom-file-input:focus ~ .custom-file-label {\n    z-index: 3; }\n  .input-group > .custom-file .custom-file-input:focus {\n    z-index: 4; }\n  .input-group > .form-control:not(:last-child),\n  .input-group > .custom-select:not(:last-child) {\n    border-top-right-radius: 0;\n    border-bottom-right-radius: 0; }\n  .input-group > .form-control:not(:first-child),\n  .input-group > .custom-select:not(:first-child) {\n    border-top-left-radius: 0;\n    border-bottom-left-radius: 0; }\n  .input-group > .custom-file {\n    display: -webkit-box;\n    display: flex;\n    -webkit-box-align: center;\n            align-items: center; }\n    .input-group > .custom-file:not(:last-child) .custom-file-label,\n    .input-group > .custom-file:not(:last-child) .custom-file-label::after {\n      border-top-right-radius: 0;\n      border-bottom-right-radius: 0; }\n    .input-group > .custom-file:not(:first-child) .custom-file-label {\n      border-top-left-radius: 0;\n      border-bottom-left-radius: 0; }\n\n.input-group-prepend,\n.input-group-append {\n  display: -webkit-box;\n  display: flex; }\n  .input-group-prepend .btn,\n  .input-group-append .btn {\n    position: relative;\n    z-index: 2; }\n  .input-group-prepend .btn + .btn,\n  .input-group-prepend .btn + .input-group-text,\n  .input-group-prepend .input-group-text + .input-group-text,\n  .input-group-prepend .input-group-text + .btn,\n  .input-group-append .btn + .btn,\n  .input-group-append .btn + .input-group-text,\n  .input-group-append .input-group-text + .input-group-text,\n  .input-group-append .input-group-text + .btn {\n    margin-left: -1px; }\n\n.input-group-prepend {\n  margin-right: -1px; }\n\n.input-group-append {\n  margin-left: -1px; }\n\n.input-group-text {\n  display: -webkit-box;\n  display: flex;\n  -webkit-box-align: center;\n          align-items: center;\n  padding: 0.625rem 0.75rem;\n  margin-bottom: 0;\n  font-size: 1rem;\n  font-weight: 400;\n  line-height: 1.5;\n  color: #adb5bd;\n  text-align: center;\n  white-space: nowrap;\n  background-color: #fff;\n  border: 1px solid #cad1d7;\n  border-radius: 0.375rem; }\n  .input-group-text input[type=\"radio\"],\n  .input-group-text input[type=\"checkbox\"] {\n    margin-top: 0; }\n\n.input-group-lg > .form-control,\n.input-group-lg > .input-group-prepend > .input-group-text,\n.input-group-lg > .input-group-append > .input-group-text,\n.input-group-lg > .input-group-prepend > .btn,\n.input-group-lg > .input-group-append > .btn {\n  height: calc(3.625rem + 2px);\n  padding: 0.875rem 1rem;\n  font-size: 1.25rem;\n  line-height: 1.5;\n  border-radius: 0.4375rem; }\n\n.input-group-sm > .form-control,\n.input-group-sm > .input-group-prepend > .input-group-text,\n.input-group-sm > .input-group-append > .input-group-text,\n.input-group-sm > .input-group-prepend > .btn,\n.input-group-sm > .input-group-append > .btn {\n  height: calc(1.8125rem + 2px);\n  padding: 0.25rem 0.5rem;\n  font-size: 0.875rem;\n  line-height: 1.5;\n  border-radius: 0.25rem; }\n\n.input-group > .input-group-prepend > .btn,\n.input-group > .input-group-prepend > .input-group-text,\n.input-group > .input-group-append:not(:last-child) > .btn,\n.input-group > .input-group-append:not(:last-child) > .input-group-text,\n.input-group > .input-group-append:last-child > .btn:not(:last-child):not(.dropdown-toggle),\n.input-group > .input-group-append:last-child > .input-group-text:not(:last-child) {\n  border-top-right-radius: 0;\n  border-bottom-right-radius: 0; }\n\n.input-group > .input-group-append > .btn,\n.input-group > .input-group-append > .input-group-text,\n.input-group > .input-group-prepend:not(:first-child) > .btn,\n.input-group > .input-group-prepend:not(:first-child) > .input-group-text,\n.input-group > .input-group-prepend:first-child > .btn:not(:first-child),\n.input-group > .input-group-prepend:first-child > .input-group-text:not(:first-child) {\n  border-top-left-radius: 0;\n  border-bottom-left-radius: 0; }\n\n.custom-control {\n  position: relative;\n  display: block;\n  min-height: 1.5rem;\n  padding-left: 1.75rem; }\n\n.custom-control-inline {\n  display: -webkit-inline-box;\n  display: inline-flex;\n  margin-right: 1rem; }\n\n.custom-control-input {\n  position: absolute;\n  z-index: -1;\n  opacity: 0; }\n  .custom-control-input:checked ~ .custom-control-label::before {\n    color: #fff;\n    background-color: #5e72e4;\n    box-shadow: none; }\n  .custom-control-input:focus ~ .custom-control-label::before {\n    box-shadow: none; }\n  .custom-control-input:active ~ .custom-control-label::before {\n    color: #fff;\n    background-color: #5e72e4;\n    box-shadow: none; }\n  .custom-control-input:disabled ~ .custom-control-label {\n    color: #8898aa; }\n    .custom-control-input:disabled ~ .custom-control-label::before {\n      background-color: #e9ecef; }\n\n.custom-control-label {\n  position: relative;\n  margin-bottom: 0; }\n  .custom-control-label::before {\n    position: absolute;\n    top: 0.125rem;\n    left: -1.75rem;\n    display: block;\n    width: 1.25rem;\n    height: 1.25rem;\n    pointer-events: none;\n    content: \"\";\n    -webkit-user-select: none;\n       -moz-user-select: none;\n        -ms-user-select: none;\n            user-select: none;\n    background-color: #fff;\n    box-shadow: none; }\n  .custom-control-label::after {\n    position: absolute;\n    top: 0.125rem;\n    left: -1.75rem;\n    display: block;\n    width: 1.25rem;\n    height: 1.25rem;\n    content: \"\";\n    background-repeat: no-repeat;\n    background-position: center center;\n    background-size: 50% 50%; }\n\n.custom-checkbox .custom-control-label::before {\n  border-radius: 0.25rem; }\n\n.custom-checkbox .custom-control-input:checked ~ .custom-control-label::before {\n  background-color: #5e72e4; }\n\n.custom-checkbox .custom-control-input:checked ~ .custom-control-label::after {\n  background-image: url(\"data:image/svg+xml;charset=utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 8 8'%3E%3Cpath fill='%23fff' d='M6.564.75l-3.59 3.612-1.538-1.55L0 4.26 2.974 7.25 8 2.193z'/%3E%3C/svg%3E\"); }\n\n.custom-checkbox .custom-control-input:indeterminate ~ .custom-control-label::before {\n  background-color: #5e72e4;\n  box-shadow: none; }\n\n.custom-checkbox .custom-control-input:indeterminate ~ .custom-control-label::after {\n  background-image: url(\"data:image/svg+xml;charset=utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 4 4'%3E%3Cpath stroke='%23fff' d='M0 2h4'/%3E%3C/svg%3E\"); }\n\n.custom-checkbox .custom-control-input:disabled:checked ~ .custom-control-label::before {\n  background-color: rgba(94, 114, 228, 0.5); }\n\n.custom-checkbox .custom-control-input:disabled:indeterminate ~ .custom-control-label::before {\n  background-color: rgba(94, 114, 228, 0.5); }\n\n.custom-radio .custom-control-label::before {\n  border-radius: 50%; }\n\n.custom-radio .custom-control-input:checked ~ .custom-control-label::before {\n  background-color: #5e72e4; }\n\n.custom-radio .custom-control-input:checked ~ .custom-control-label::after {\n  background-image: url(\"data:image/svg+xml;charset=utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='-4 -4 8 8'%3E%3Ccircle r='3' fill='%23fff'/%3E%3C/svg%3E\"); }\n\n.custom-radio .custom-control-input:disabled:checked ~ .custom-control-label::before {\n  background-color: rgba(94, 114, 228, 0.5); }\n\n.custom-select {\n  display: inline-block;\n  width: 100%;\n  height: calc(2.75rem + 2px);\n  padding: 0.375rem 1.75rem 0.375rem 0.75rem;\n  line-height: 1.5;\n  color: #8898aa;\n  vertical-align: middle;\n  background: #fff url(\"data:image/svg+xml;charset=utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 4 5'%3E%3Cpath fill='%2332325d' d='M2 0L0 2h4zm0 5L0 3h4z'/%3E%3C/svg%3E\") no-repeat right 0.75rem center;\n  background-size: 8px 10px;\n  border: 1px solid #cad1d7;\n  border-radius: 0.375rem;\n  box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.075);\n  -webkit-appearance: none;\n     -moz-appearance: none;\n          appearance: none; }\n  .custom-select:focus {\n    border-color: rgba(50, 151, 211, 0.25);\n    outline: 0;\n    box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.075), 0 0 0 0 rgba(50, 151, 211, 0.5); }\n    .custom-select:focus::-ms-value {\n      color: #8898aa;\n      background-color: #fff; }\n  .custom-select[multiple], .custom-select[size]:not([size=\"1\"]) {\n    height: auto;\n    padding-right: 0.75rem;\n    background-image: none; }\n  .custom-select:disabled {\n    color: #8898aa;\n    background-color: #e9ecef; }\n  .custom-select::-ms-expand {\n    opacity: 0; }\n\n.custom-select-sm {\n  height: calc(1.8125rem + 2px);\n  padding-top: 0.375rem;\n  padding-bottom: 0.375rem;\n  font-size: 75%; }\n\n.custom-select-lg {\n  height: calc(3.625rem + 2px);\n  padding-top: 0.375rem;\n  padding-bottom: 0.375rem;\n  font-size: 125%; }\n\n.custom-file {\n  position: relative;\n  display: inline-block;\n  width: 100%;\n  height: calc(2.75rem + 2px);\n  margin-bottom: 0; }\n\n.custom-file-input {\n  position: relative;\n  z-index: 2;\n  width: 100%;\n  height: calc(2.75rem + 2px);\n  margin: 0;\n  opacity: 0; }\n  .custom-file-input:focus ~ .custom-file-label {\n    border-color: rgba(50, 151, 211, 0.25);\n    box-shadow: none; }\n    .custom-file-input:focus ~ .custom-file-label::after {\n      border-color: rgba(50, 151, 211, 0.25); }\n  .custom-file-input:disabled ~ .custom-file-label {\n    background-color: #e9ecef; }\n  .custom-file-input:lang(en) ~ .custom-file-label::after {\n    content: \"Browse\"; }\n\n.custom-file-label {\n  position: absolute;\n  top: 0;\n  right: 0;\n  left: 0;\n  z-index: 1;\n  height: calc(2.75rem + 2px);\n  padding: 0.625rem 0.75rem;\n  line-height: 1.5;\n  color: #8898aa;\n  background-color: #fff;\n  border: 1px solid #cad1d7;\n  border-radius: 0.375rem;\n  box-shadow: none; }\n  .custom-file-label::after {\n    position: absolute;\n    top: 0;\n    right: 0;\n    bottom: 0;\n    z-index: 3;\n    display: block;\n    height: 2.75rem;\n    padding: 0.625rem 0.75rem;\n    line-height: 1.5;\n    color: #8898aa;\n    content: \"Browse\";\n    background-color: #fff;\n    border-left: 1px solid #cad1d7;\n    border-radius: 0 0.375rem 0.375rem 0; }\n\n.custom-range {\n  width: 100%;\n  padding-left: 0;\n  background-color: transparent;\n  -webkit-appearance: none;\n     -moz-appearance: none;\n          appearance: none; }\n  .custom-range:focus {\n    outline: none; }\n    .custom-range:focus::-webkit-slider-thumb {\n      box-shadow: 0 0 0 1px #f8f9fe, none; }\n    .custom-range:focus::-moz-range-thumb {\n      box-shadow: 0 0 0 1px #f8f9fe, none; }\n    .custom-range:focus::-ms-thumb {\n      box-shadow: 0 0 0 1px #f8f9fe, none; }\n  .custom-range::-moz-focus-outer {\n    border: 0; }\n  .custom-range::-webkit-slider-thumb {\n    width: 1rem;\n    height: 1rem;\n    margin-top: -0.25rem;\n    background-color: #5e72e4;\n    border: 0;\n    border-radius: 1rem;\n    box-shadow: 0 0.1rem 0.25rem rgba(0, 0, 0, 0.1);\n    -webkit-transition: background-color 0.15s ease-in-out, border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;\n    transition: background-color 0.15s ease-in-out, border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;\n    -webkit-appearance: none;\n            appearance: none; }\n    @media screen and (prefers-reduced-motion: reduce) {\n      .custom-range::-webkit-slider-thumb {\n        -webkit-transition: none;\n        transition: none; } }\n    .custom-range::-webkit-slider-thumb:active {\n      background-color: #f7f8fe; }\n  .custom-range::-webkit-slider-runnable-track {\n    width: 100%;\n    height: 0.5rem;\n    color: transparent;\n    cursor: pointer;\n    background-color: #dee2e6;\n    border-color: transparent;\n    border-radius: 1rem;\n    box-shadow: inset 0 0.25rem 0.25rem rgba(0, 0, 0, 0.1); }\n  .custom-range::-moz-range-thumb {\n    width: 1rem;\n    height: 1rem;\n    background-color: #5e72e4;\n    border: 0;\n    border-radius: 1rem;\n    box-shadow: 0 0.1rem 0.25rem rgba(0, 0, 0, 0.1);\n    -webkit-transition: background-color 0.15s ease-in-out, border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;\n    transition: background-color 0.15s ease-in-out, border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;\n    -moz-appearance: none;\n         appearance: none; }\n    @media screen and (prefers-reduced-motion: reduce) {\n      .custom-range::-moz-range-thumb {\n        -webkit-transition: none;\n        transition: none; } }\n    .custom-range::-moz-range-thumb:active {\n      background-color: #f7f8fe; }\n  .custom-range::-moz-range-track {\n    width: 100%;\n    height: 0.5rem;\n    color: transparent;\n    cursor: pointer;\n    background-color: #dee2e6;\n    border-color: transparent;\n    border-radius: 1rem;\n    box-shadow: inset 0 0.25rem 0.25rem rgba(0, 0, 0, 0.1); }\n  .custom-range::-ms-thumb {\n    width: 1rem;\n    height: 1rem;\n    margin-top: 0;\n    margin-right: 0;\n    margin-left: 0;\n    background-color: #5e72e4;\n    border: 0;\n    border-radius: 1rem;\n    box-shadow: 0 0.1rem 0.25rem rgba(0, 0, 0, 0.1);\n    -webkit-transition: background-color 0.15s ease-in-out, border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;\n    transition: background-color 0.15s ease-in-out, border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;\n    appearance: none; }\n    @media screen and (prefers-reduced-motion: reduce) {\n      .custom-range::-ms-thumb {\n        -webkit-transition: none;\n        transition: none; } }\n    .custom-range::-ms-thumb:active {\n      background-color: #f7f8fe; }\n  .custom-range::-ms-track {\n    width: 100%;\n    height: 0.5rem;\n    color: transparent;\n    cursor: pointer;\n    background-color: transparent;\n    border-color: transparent;\n    border-width: 0.5rem;\n    box-shadow: inset 0 0.25rem 0.25rem rgba(0, 0, 0, 0.1); }\n  .custom-range::-ms-fill-lower {\n    background-color: #dee2e6;\n    border-radius: 1rem; }\n  .custom-range::-ms-fill-upper {\n    margin-right: 15px;\n    background-color: #dee2e6;\n    border-radius: 1rem; }\n\n.custom-control-label::before,\n.custom-file-label,\n.custom-select {\n  -webkit-transition: background-color 0.15s ease-in-out, border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;\n  transition: background-color 0.15s ease-in-out, border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out; }\n  @media screen and (prefers-reduced-motion: reduce) {\n    .custom-control-label::before,\n    .custom-file-label,\n    .custom-select {\n      -webkit-transition: none;\n      transition: none; } }\n\n.nav {\n  display: -webkit-box;\n  display: flex;\n  flex-wrap: wrap;\n  padding-left: 0;\n  margin-bottom: 0;\n  list-style: none; }\n\n.nav-link {\n  display: block;\n  padding: 0.25rem 0.75rem; }\n  .nav-link:hover, .nav-link:focus {\n    text-decoration: none; }\n  .nav-link.disabled {\n    color: #8898aa; }\n\n.nav-tabs {\n  border-bottom: 1px solid #dee2e6; }\n  .nav-tabs .nav-item {\n    margin-bottom: -1px; }\n  .nav-tabs .nav-link {\n    border: 1px solid transparent;\n    border-top-left-radius: 0.375rem;\n    border-top-right-radius: 0.375rem; }\n    .nav-tabs .nav-link:hover, .nav-tabs .nav-link:focus {\n      border-color: #e9ecef #e9ecef #dee2e6; }\n    .nav-tabs .nav-link.disabled {\n      color: #8898aa;\n      background-color: transparent;\n      border-color: transparent; }\n  .nav-tabs .nav-link.active,\n  .nav-tabs .nav-item.show .nav-link {\n    color: #525f7f;\n    background-color: #f8f9fe;\n    border-color: #dee2e6 #dee2e6 #f8f9fe; }\n  .nav-tabs .dropdown-menu {\n    margin-top: -1px;\n    border-top-left-radius: 0;\n    border-top-right-radius: 0; }\n\n.nav-pills .nav-link {\n  border-radius: 0.375rem; }\n\n.nav-pills .nav-link.active,\n.nav-pills .show > .nav-link {\n  color: #fff;\n  background-color: #5e72e4; }\n\n.nav-fill .nav-item {\n  -webkit-box-flex: 1;\n          flex: 1 1 auto;\n  text-align: center; }\n\n.nav-justified .nav-item {\n  flex-basis: 0;\n  -webkit-box-flex: 1;\n          flex-grow: 1;\n  text-align: center; }\n\n.tab-content > .tab-pane {\n  display: none; }\n\n.tab-content > .active {\n  display: block; }\n\n.navbar {\n  position: relative;\n  display: -webkit-box;\n  display: flex;\n  flex-wrap: wrap;\n  -webkit-box-align: center;\n          align-items: center;\n  -webkit-box-pack: justify;\n          justify-content: space-between;\n  padding: 1rem 1rem; }\n  .navbar > .container,\n  .navbar > .container-fluid {\n    display: -webkit-box;\n    display: flex;\n    flex-wrap: wrap;\n    -webkit-box-align: center;\n            align-items: center;\n    -webkit-box-pack: justify;\n            justify-content: space-between; }\n\n.navbar-brand {\n  display: inline-block;\n  padding-top: 0.0625rem;\n  padding-bottom: 0.0625rem;\n  margin-right: 1rem;\n  font-size: 1.25rem;\n  line-height: inherit;\n  white-space: nowrap; }\n  .navbar-brand:hover, .navbar-brand:focus {\n    text-decoration: none; }\n\n.navbar-nav {\n  display: -webkit-box;\n  display: flex;\n  -webkit-box-orient: vertical;\n  -webkit-box-direction: normal;\n          flex-direction: column;\n  padding-left: 0;\n  margin-bottom: 0;\n  list-style: none; }\n  .navbar-nav .nav-link {\n    padding-right: 0;\n    padding-left: 0; }\n  .navbar-nav .dropdown-menu {\n    position: static;\n    float: none; }\n\n.navbar-text {\n  display: inline-block;\n  padding-top: 0.25rem;\n  padding-bottom: 0.25rem; }\n\n.navbar-collapse {\n  flex-basis: 100%;\n  -webkit-box-flex: 1;\n          flex-grow: 1;\n  -webkit-box-align: center;\n          align-items: center; }\n\n.navbar-toggler {\n  padding: 0.25rem 0.75rem;\n  font-size: 1.25rem;\n  line-height: 1;\n  background-color: transparent;\n  border: 1px solid transparent;\n  border-radius: 0.375rem; }\n  .navbar-toggler:hover, .navbar-toggler:focus {\n    text-decoration: none; }\n  .navbar-toggler:not(:disabled):not(.disabled) {\n    cursor: pointer; }\n\n.navbar-toggler-icon {\n  display: inline-block;\n  width: 1.5em;\n  height: 1.5em;\n  vertical-align: middle;\n  content: \"\";\n  background: no-repeat center center;\n  background-size: 100% 100%; }\n\n@media (max-width: 575.98px) {\n  .navbar-expand-sm > .container,\n  .navbar-expand-sm > .container-fluid {\n    padding-right: 0;\n    padding-left: 0; } }\n\n@media (min-width: 576px) {\n  .navbar-expand-sm {\n    -webkit-box-orient: horizontal;\n    -webkit-box-direction: normal;\n            flex-flow: row nowrap;\n    -webkit-box-pack: start;\n            justify-content: flex-start; }\n    .navbar-expand-sm .navbar-nav {\n      -webkit-box-orient: horizontal;\n      -webkit-box-direction: normal;\n              flex-direction: row; }\n      .navbar-expand-sm .navbar-nav .dropdown-menu {\n        position: absolute; }\n      .navbar-expand-sm .navbar-nav .nav-link {\n        padding-right: 1rem;\n        padding-left: 1rem; }\n    .navbar-expand-sm > .container,\n    .navbar-expand-sm > .container-fluid {\n      flex-wrap: nowrap; }\n    .navbar-expand-sm .navbar-collapse {\n      display: -webkit-box !important;\n      display: flex !important;\n      flex-basis: auto; }\n    .navbar-expand-sm .navbar-toggler {\n      display: none; } }\n\n@media (max-width: 767.98px) {\n  .navbar-expand-md > .container,\n  .navbar-expand-md > .container-fluid {\n    padding-right: 0;\n    padding-left: 0; } }\n\n@media (min-width: 768px) {\n  .navbar-expand-md {\n    -webkit-box-orient: horizontal;\n    -webkit-box-direction: normal;\n            flex-flow: row nowrap;\n    -webkit-box-pack: start;\n            justify-content: flex-start; }\n    .navbar-expand-md .navbar-nav {\n      -webkit-box-orient: horizontal;\n      -webkit-box-direction: normal;\n              flex-direction: row; }\n      .navbar-expand-md .navbar-nav .dropdown-menu {\n        position: absolute; }\n      .navbar-expand-md .navbar-nav .nav-link {\n        padding-right: 1rem;\n        padding-left: 1rem; }\n    .navbar-expand-md > .container,\n    .navbar-expand-md > .container-fluid {\n      flex-wrap: nowrap; }\n    .navbar-expand-md .navbar-collapse {\n      display: -webkit-box !important;\n      display: flex !important;\n      flex-basis: auto; }\n    .navbar-expand-md .navbar-toggler {\n      display: none; } }\n\n@media (max-width: 991.98px) {\n  .navbar-expand-lg > .container,\n  .navbar-expand-lg > .container-fluid {\n    padding-right: 0;\n    padding-left: 0; } }\n\n@media (min-width: 992px) {\n  .navbar-expand-lg {\n    -webkit-box-orient: horizontal;\n    -webkit-box-direction: normal;\n            flex-flow: row nowrap;\n    -webkit-box-pack: start;\n            justify-content: flex-start; }\n    .navbar-expand-lg .navbar-nav {\n      -webkit-box-orient: horizontal;\n      -webkit-box-direction: normal;\n              flex-direction: row; }\n      .navbar-expand-lg .navbar-nav .dropdown-menu {\n        position: absolute; }\n      .navbar-expand-lg .navbar-nav .nav-link {\n        padding-right: 1rem;\n        padding-left: 1rem; }\n    .navbar-expand-lg > .container,\n    .navbar-expand-lg > .container-fluid {\n      flex-wrap: nowrap; }\n    .navbar-expand-lg .navbar-collapse {\n      display: -webkit-box !important;\n      display: flex !important;\n      flex-basis: auto; }\n    .navbar-expand-lg .navbar-toggler {\n      display: none; } }\n\n@media (max-width: 1199.98px) {\n  .navbar-expand-xl > .container,\n  .navbar-expand-xl > .container-fluid {\n    padding-right: 0;\n    padding-left: 0; } }\n\n@media (min-width: 1200px) {\n  .navbar-expand-xl {\n    -webkit-box-orient: horizontal;\n    -webkit-box-direction: normal;\n            flex-flow: row nowrap;\n    -webkit-box-pack: start;\n            justify-content: flex-start; }\n    .navbar-expand-xl .navbar-nav {\n      -webkit-box-orient: horizontal;\n      -webkit-box-direction: normal;\n              flex-direction: row; }\n      .navbar-expand-xl .navbar-nav .dropdown-menu {\n        position: absolute; }\n      .navbar-expand-xl .navbar-nav .nav-link {\n        padding-right: 1rem;\n        padding-left: 1rem; }\n    .navbar-expand-xl > .container,\n    .navbar-expand-xl > .container-fluid {\n      flex-wrap: nowrap; }\n    .navbar-expand-xl .navbar-collapse {\n      display: -webkit-box !important;\n      display: flex !important;\n      flex-basis: auto; }\n    .navbar-expand-xl .navbar-toggler {\n      display: none; } }\n\n.navbar-expand {\n  -webkit-box-orient: horizontal;\n  -webkit-box-direction: normal;\n          flex-flow: row nowrap;\n  -webkit-box-pack: start;\n          justify-content: flex-start; }\n  .navbar-expand > .container,\n  .navbar-expand > .container-fluid {\n    padding-right: 0;\n    padding-left: 0; }\n  .navbar-expand .navbar-nav {\n    -webkit-box-orient: horizontal;\n    -webkit-box-direction: normal;\n            flex-direction: row; }\n    .navbar-expand .navbar-nav .dropdown-menu {\n      position: absolute; }\n    .navbar-expand .navbar-nav .nav-link {\n      padding-right: 1rem;\n      padding-left: 1rem; }\n  .navbar-expand > .container,\n  .navbar-expand > .container-fluid {\n    flex-wrap: nowrap; }\n  .navbar-expand .navbar-collapse {\n    display: -webkit-box !important;\n    display: flex !important;\n    flex-basis: auto; }\n  .navbar-expand .navbar-toggler {\n    display: none; }\n\n.navbar-light .navbar-brand {\n  color: rgba(0, 0, 0, 0.9); }\n  .navbar-light .navbar-brand:hover, .navbar-light .navbar-brand:focus {\n    color: rgba(0, 0, 0, 0.9); }\n\n.navbar-light .navbar-nav .nav-link {\n  color: rgba(0, 0, 0, 0.5); }\n  .navbar-light .navbar-nav .nav-link:hover, .navbar-light .navbar-nav .nav-link:focus {\n    color: rgba(0, 0, 0, 0.7); }\n  .navbar-light .navbar-nav .nav-link.disabled {\n    color: rgba(0, 0, 0, 0.3); }\n\n.navbar-light .navbar-nav .show > .nav-link,\n.navbar-light .navbar-nav .active > .nav-link,\n.navbar-light .navbar-nav .nav-link.show,\n.navbar-light .navbar-nav .nav-link.active {\n  color: rgba(0, 0, 0, 0.9); }\n\n.navbar-light .navbar-toggler {\n  color: rgba(0, 0, 0, 0.5);\n  border-color: transparent; }\n\n.navbar-light .navbar-toggler-icon {\n  background-image: url(\"data:image/svg+xml;charset=utf8,%3Csvg viewBox='0 0 30 30' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath stroke='rgba(0, 0, 0, 0.5)' stroke-width='2' stroke-linecap='round' stroke-miterlimit='10' d='M4 7h22M4 15h22M4 23h22'/%3E%3C/svg%3E\"); }\n\n.navbar-light .navbar-text {\n  color: rgba(0, 0, 0, 0.5); }\n  .navbar-light .navbar-text a {\n    color: rgba(0, 0, 0, 0.9); }\n    .navbar-light .navbar-text a:hover, .navbar-light .navbar-text a:focus {\n      color: rgba(0, 0, 0, 0.9); }\n\n.navbar-dark .navbar-brand {\n  color: rgba(255, 255, 255, 0.65); }\n  .navbar-dark .navbar-brand:hover, .navbar-dark .navbar-brand:focus {\n    color: rgba(255, 255, 255, 0.65); }\n\n.navbar-dark .navbar-nav .nav-link {\n  color: rgba(255, 255, 255, 0.95); }\n  .navbar-dark .navbar-nav .nav-link:hover, .navbar-dark .navbar-nav .nav-link:focus {\n    color: rgba(255, 255, 255, 0.65); }\n  .navbar-dark .navbar-nav .nav-link.disabled {\n    color: rgba(255, 255, 255, 0.25); }\n\n.navbar-dark .navbar-nav .show > .nav-link,\n.navbar-dark .navbar-nav .active > .nav-link,\n.navbar-dark .navbar-nav .nav-link.show,\n.navbar-dark .navbar-nav .nav-link.active {\n  color: rgba(255, 255, 255, 0.65); }\n\n.navbar-dark .navbar-toggler {\n  color: rgba(255, 255, 255, 0.95);\n  border-color: transparent; }\n\n.navbar-dark .navbar-toggler-icon {\n  background-image: url(\"data:image/svg+xml;charset=utf8,%3Csvg viewBox='0 0 30 30' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath stroke='rgba(255, 255, 255, 0.95)' stroke-width='2' stroke-linecap='round' stroke-miterlimit='10' d='M4 7h22M4 15h22M4 23h22'/%3E%3C/svg%3E\"); }\n\n.navbar-dark .navbar-text {\n  color: rgba(255, 255, 255, 0.95); }\n  .navbar-dark .navbar-text a {\n    color: rgba(255, 255, 255, 0.65); }\n    .navbar-dark .navbar-text a:hover, .navbar-dark .navbar-text a:focus {\n      color: rgba(255, 255, 255, 0.65); }\n\n.card {\n  position: relative;\n  display: -webkit-box;\n  display: flex;\n  -webkit-box-orient: vertical;\n  -webkit-box-direction: normal;\n          flex-direction: column;\n  min-width: 0;\n  word-wrap: break-word;\n  background-color: #fff;\n  background-clip: border-box;\n  border: 1px solid rgba(0, 0, 0, 0.05);\n  border-radius: 0.375rem; }\n  .card > hr {\n    margin-right: 0;\n    margin-left: 0; }\n  .card > .list-group:first-child .list-group-item:first-child {\n    border-top-left-radius: 0.375rem;\n    border-top-right-radius: 0.375rem; }\n  .card > .list-group:last-child .list-group-item:last-child {\n    border-bottom-right-radius: 0.375rem;\n    border-bottom-left-radius: 0.375rem; }\n\n.card-body {\n  -webkit-box-flex: 1;\n          flex: 1 1 auto;\n  padding: 1.5rem; }\n\n.card-title {\n  margin-bottom: 1.25rem; }\n\n.card-subtitle {\n  margin-top: -0.625rem;\n  margin-bottom: 0; }\n\n.card-text:last-child {\n  margin-bottom: 0; }\n\n.card-link:hover {\n  text-decoration: none; }\n\n.card-link + .card-link {\n  margin-left: 1.5rem; }\n\n.card-header {\n  padding: 1.25rem 1.5rem;\n  margin-bottom: 0;\n  background-color: #fff;\n  border-bottom: 1px solid rgba(0, 0, 0, 0.05); }\n  .card-header:first-child {\n    border-radius: calc(0.375rem - 1px) calc(0.375rem - 1px) 0 0; }\n  .card-header + .list-group .list-group-item:first-child {\n    border-top: 0; }\n\n.card-footer {\n  padding: 1.25rem 1.5rem;\n  background-color: #fff;\n  border-top: 1px solid rgba(0, 0, 0, 0.05); }\n  .card-footer:last-child {\n    border-radius: 0 0 calc(0.375rem - 1px) calc(0.375rem - 1px); }\n\n.card-header-tabs {\n  margin-right: -0.75rem;\n  margin-bottom: -1.25rem;\n  margin-left: -0.75rem;\n  border-bottom: 0; }\n\n.card-header-pills {\n  margin-right: -0.75rem;\n  margin-left: -0.75rem; }\n\n.card-img-overlay {\n  position: absolute;\n  top: 0;\n  right: 0;\n  bottom: 0;\n  left: 0;\n  padding: 1.25rem; }\n\n.card-img {\n  width: 100%;\n  border-radius: calc(0.375rem - 1px); }\n\n.card-img-top {\n  width: 100%;\n  border-top-left-radius: calc(0.375rem - 1px);\n  border-top-right-radius: calc(0.375rem - 1px); }\n\n.card-img-bottom {\n  width: 100%;\n  border-bottom-right-radius: calc(0.375rem - 1px);\n  border-bottom-left-radius: calc(0.375rem - 1px); }\n\n.card-deck {\n  display: -webkit-box;\n  display: flex;\n  -webkit-box-orient: vertical;\n  -webkit-box-direction: normal;\n          flex-direction: column; }\n  .card-deck .card {\n    margin-bottom: 15px; }\n  @media (min-width: 576px) {\n    .card-deck {\n      -webkit-box-orient: horizontal;\n      -webkit-box-direction: normal;\n              flex-flow: row wrap;\n      margin-right: -15px;\n      margin-left: -15px; }\n      .card-deck .card {\n        display: -webkit-box;\n        display: flex;\n        -webkit-box-flex: 1;\n                flex: 1 0 0%;\n        -webkit-box-orient: vertical;\n        -webkit-box-direction: normal;\n                flex-direction: column;\n        margin-right: 15px;\n        margin-bottom: 0;\n        margin-left: 15px; } }\n\n.card-group {\n  display: -webkit-box;\n  display: flex;\n  -webkit-box-orient: vertical;\n  -webkit-box-direction: normal;\n          flex-direction: column; }\n  .card-group > .card {\n    margin-bottom: 15px; }\n  @media (min-width: 576px) {\n    .card-group {\n      -webkit-box-orient: horizontal;\n      -webkit-box-direction: normal;\n              flex-flow: row wrap; }\n      .card-group > .card {\n        -webkit-box-flex: 1;\n                flex: 1 0 0%;\n        margin-bottom: 0; }\n        .card-group > .card + .card {\n          margin-left: 0;\n          border-left: 0; }\n        .card-group > .card:first-child {\n          border-top-right-radius: 0;\n          border-bottom-right-radius: 0; }\n          .card-group > .card:first-child .card-img-top,\n          .card-group > .card:first-child .card-header {\n            border-top-right-radius: 0; }\n          .card-group > .card:first-child .card-img-bottom,\n          .card-group > .card:first-child .card-footer {\n            border-bottom-right-radius: 0; }\n        .card-group > .card:last-child {\n          border-top-left-radius: 0;\n          border-bottom-left-radius: 0; }\n          .card-group > .card:last-child .card-img-top,\n          .card-group > .card:last-child .card-header {\n            border-top-left-radius: 0; }\n          .card-group > .card:last-child .card-img-bottom,\n          .card-group > .card:last-child .card-footer {\n            border-bottom-left-radius: 0; }\n        .card-group > .card:only-child {\n          border-radius: 0.375rem; }\n          .card-group > .card:only-child .card-img-top,\n          .card-group > .card:only-child .card-header {\n            border-top-left-radius: 0.375rem;\n            border-top-right-radius: 0.375rem; }\n          .card-group > .card:only-child .card-img-bottom,\n          .card-group > .card:only-child .card-footer {\n            border-bottom-right-radius: 0.375rem;\n            border-bottom-left-radius: 0.375rem; }\n        .card-group > .card:not(:first-child):not(:last-child):not(:only-child) {\n          border-radius: 0; }\n          .card-group > .card:not(:first-child):not(:last-child):not(:only-child) .card-img-top,\n          .card-group > .card:not(:first-child):not(:last-child):not(:only-child) .card-img-bottom,\n          .card-group > .card:not(:first-child):not(:last-child):not(:only-child) .card-header,\n          .card-group > .card:not(:first-child):not(:last-child):not(:only-child) .card-footer {\n            border-radius: 0; } }\n\n.card-columns .card {\n  margin-bottom: 1.25rem; }\n\n@media (min-width: 576px) {\n  .card-columns {\n    -webkit-column-count: 3;\n       -moz-column-count: 3;\n            column-count: 3;\n    -webkit-column-gap: 1.25rem;\n       -moz-column-gap: 1.25rem;\n            column-gap: 1.25rem;\n    orphans: 1;\n    widows: 1; }\n    .card-columns .card {\n      display: inline-block;\n      width: 100%; } }\n\n.accordion .card:not(:first-of-type):not(:last-of-type) {\n  border-bottom: 0;\n  border-radius: 0; }\n\n.accordion .card:not(:first-of-type) .card-header:first-child {\n  border-radius: 0; }\n\n.accordion .card:first-of-type {\n  border-bottom: 0;\n  border-bottom-right-radius: 0;\n  border-bottom-left-radius: 0; }\n\n.accordion .card:last-of-type {\n  border-top-left-radius: 0;\n  border-top-right-radius: 0; }\n\n.breadcrumb {\n  display: -webkit-box;\n  display: flex;\n  flex-wrap: wrap;\n  padding: 0.75rem 1rem;\n  margin-bottom: 1rem;\n  list-style: none;\n  background-color: #e9ecef;\n  border-radius: 0.375rem; }\n\n.breadcrumb-item + .breadcrumb-item {\n  padding-left: 0.5rem; }\n  .breadcrumb-item + .breadcrumb-item::before {\n    display: inline-block;\n    padding-right: 0.5rem;\n    color: #8898aa;\n    content: \"/\"; }\n\n.breadcrumb-item + .breadcrumb-item:hover::before {\n  text-decoration: underline; }\n\n.breadcrumb-item + .breadcrumb-item:hover::before {\n  text-decoration: none; }\n\n.breadcrumb-item.active {\n  color: #8898aa; }\n\n.pagination {\n  display: -webkit-box;\n  display: flex;\n  padding-left: 0;\n  list-style: none;\n  border-radius: 0.375rem; }\n\n.page-link {\n  position: relative;\n  display: block;\n  padding: 0.5rem 0.75rem;\n  margin-left: -1px;\n  line-height: 1.25;\n  color: #8898aa;\n  background-color: #fff;\n  border: 1px solid #dee2e6; }\n  .page-link:hover {\n    z-index: 2;\n    color: #8898aa;\n    text-decoration: none;\n    background-color: #dee2e6;\n    border-color: #dee2e6; }\n  .page-link:focus {\n    z-index: 2;\n    outline: 0;\n    box-shadow: none; }\n  .page-link:not(:disabled):not(.disabled) {\n    cursor: pointer; }\n\n.page-item:first-child .page-link {\n  margin-left: 0;\n  border-top-left-radius: 0.375rem;\n  border-bottom-left-radius: 0.375rem; }\n\n.page-item:last-child .page-link {\n  border-top-right-radius: 0.375rem;\n  border-bottom-right-radius: 0.375rem; }\n\n.page-item.active .page-link {\n  z-index: 1;\n  color: #fff;\n  background-color: #5e72e4;\n  border-color: #5e72e4; }\n\n.page-item.disabled .page-link {\n  color: #8898aa;\n  pointer-events: none;\n  cursor: auto;\n  background-color: #fff;\n  border-color: #dee2e6; }\n\n.pagination-lg .page-link {\n  padding: 0.75rem 1.5rem;\n  font-size: 1.25rem;\n  line-height: 1.5; }\n\n.pagination-lg .page-item:first-child .page-link {\n  border-top-left-radius: 0.4375rem;\n  border-bottom-left-radius: 0.4375rem; }\n\n.pagination-lg .page-item:last-child .page-link {\n  border-top-right-radius: 0.4375rem;\n  border-bottom-right-radius: 0.4375rem; }\n\n.pagination-sm .page-link {\n  padding: 0.25rem 0.5rem;\n  font-size: 0.875rem;\n  line-height: 1.5; }\n\n.pagination-sm .page-item:first-child .page-link {\n  border-top-left-radius: 0.25rem;\n  border-bottom-left-radius: 0.25rem; }\n\n.pagination-sm .page-item:last-child .page-link {\n  border-top-right-radius: 0.25rem;\n  border-bottom-right-radius: 0.25rem; }\n\n.badge {\n  display: inline-block;\n  padding: 0.35rem 0.375rem;\n  font-size: 66%;\n  font-weight: 600;\n  line-height: 1;\n  text-align: center;\n  white-space: nowrap;\n  vertical-align: baseline;\n  border-radius: 0.375rem; }\n  .badge:empty {\n    display: none; }\n\n.btn .badge {\n  position: relative;\n  top: -1px; }\n\n.badge-pill {\n  padding-right: 0.875em;\n  padding-left: 0.875em;\n  border-radius: 10rem; }\n\n.badge-primary {\n  color: #2643e9;\n  background-color: rgba(203, 210, 246, 0.5); }\n  .badge-primary[href]:hover, .badge-primary[href]:focus {\n    color: #fff;\n    text-decoration: none;\n    background-color: #324cdd; }\n\n.badge-secondary {\n  color: #cfe3f1;\n  background-color: rgba(255, 255, 255, 0.5); }\n  .badge-secondary[href]:hover, .badge-secondary[href]:focus {\n    color: #212529;\n    text-decoration: none;\n    background-color: #d2e3ee; }\n\n.badge-success {\n  color: #1aae6f;\n  background-color: rgba(147, 231, 195, 0.5); }\n  .badge-success[href]:hover, .badge-success[href]:focus {\n    color: #fff;\n    text-decoration: none;\n    background-color: #24a46d; }\n\n.badge-info {\n  color: #03acca;\n  background-color: rgba(136, 230, 247, 0.5); }\n  .badge-info[href]:hover, .badge-info[href]:focus {\n    color: #fff;\n    text-decoration: none;\n    background-color: #0da5c0; }\n\n.badge-warning {\n  color: #ff3709;\n  background-color: rgba(254, 201, 189, 0.5); }\n  .badge-warning[href]:hover, .badge-warning[href]:focus {\n    color: #fff;\n    text-decoration: none;\n    background-color: #fa3a0e; }\n\n.badge-danger {\n  color: #f80031;\n  background-color: rgba(251, 175, 190, 0.5); }\n  .badge-danger[href]:hover, .badge-danger[href]:focus {\n    color: #fff;\n    text-decoration: none;\n    background-color: #ec0c38; }\n\n.badge-light {\n  color: #879cb0;\n  background-color: rgba(244, 245, 246, 0.5); }\n  .badge-light[href]:hover, .badge-light[href]:focus {\n    color: #fff;\n    text-decoration: none;\n    background-color: #919ca6; }\n\n.badge-dark {\n  color: #090c0e;\n  background-color: rgba(90, 101, 112, 0.5); }\n  .badge-dark[href]:hover, .badge-dark[href]:focus {\n    color: #fff;\n    text-decoration: none;\n    background-color: #0a0c0d; }\n\n.badge-default {\n  color: #091428;\n  background-color: rgba(52, 98, 175, 0.5); }\n  .badge-default[href]:hover, .badge-default[href]:focus {\n    color: #fff;\n    text-decoration: none;\n    background-color: #0b1526; }\n\n.badge-white {\n  color: #e8e3e3;\n  background-color: rgba(255, 255, 255, 0.5); }\n  .badge-white[href]:hover, .badge-white[href]:focus {\n    color: #212529;\n    text-decoration: none;\n    background-color: #e6e6e6; }\n\n.badge-neutral {\n  color: #e8e3e3;\n  background-color: rgba(255, 255, 255, 0.5); }\n  .badge-neutral[href]:hover, .badge-neutral[href]:focus {\n    color: #212529;\n    text-decoration: none;\n    background-color: #e6e6e6; }\n\n.badge-darker {\n  color: black;\n  background-color: rgba(64, 64, 64, 0.5); }\n  .badge-darker[href]:hover, .badge-darker[href]:focus {\n    color: #fff;\n    text-decoration: none;\n    background-color: black; }\n\n.jumbotron {\n  padding: 2rem 1rem;\n  margin-bottom: 2rem;\n  background-color: #e9ecef;\n  border-radius: 0.4375rem; }\n  @media (min-width: 576px) {\n    .jumbotron {\n      padding: 4rem 2rem; } }\n\n.jumbotron-fluid {\n  padding-right: 0;\n  padding-left: 0;\n  border-radius: 0; }\n\n.alert {\n  position: relative;\n  padding: 1rem 1.5rem;\n  margin-bottom: 1rem;\n  border: 1px solid transparent;\n  border-radius: 0.375rem; }\n\n.alert-heading {\n  color: inherit; }\n\n.alert-link {\n  font-weight: 600; }\n\n.alert-dismissible {\n  padding-right: 4.5rem; }\n  .alert-dismissible .close {\n    position: absolute;\n    top: 0;\n    right: 0;\n    padding: 1rem 1.5rem;\n    color: inherit; }\n\n.alert-primary {\n  color: #fff;\n  background-color: #7889e8;\n  border-color: #7889e8; }\n  .alert-primary hr {\n    border-top-color: #6276e4; }\n  .alert-primary .alert-link {\n    color: #324cdd; }\n\n.alert-secondary {\n  color: #212529;\n  background-color: #f8fbfc;\n  border-color: #f8fbfc; }\n  .alert-secondary hr {\n    border-top-color: #e6f1f4; }\n  .alert-secondary .alert-link {\n    color: #d2e3ee; }\n\n.alert-success {\n  color: #fff;\n  background-color: #4fd69c;\n  border-color: #4fd69c; }\n  .alert-success hr {\n    border-top-color: #3ad190; }\n  .alert-success .alert-link {\n    color: #24a46d; }\n\n.alert-info {\n  color: #fff;\n  background-color: #37d5f2;\n  border-color: #37d5f2; }\n  .alert-info hr {\n    border-top-color: #1fd0f0; }\n  .alert-info .alert-link {\n    color: #0da5c0; }\n\n.alert-warning {\n  color: #fff;\n  background-color: #fc7c5f;\n  border-color: #fc7c5f; }\n  .alert-warning hr {\n    border-top-color: #fc6846; }\n  .alert-warning .alert-link {\n    color: #fa3a0e; }\n\n.alert-danger {\n  color: #fff;\n  background-color: #f75676;\n  border-color: #f75676; }\n  .alert-danger hr {\n    border-top-color: #f63e62; }\n  .alert-danger .alert-link {\n    color: #ec0c38; }\n\n.alert-light {\n  color: #fff;\n  background-color: #bac1c8;\n  border-color: #bac1c8; }\n  .alert-light hr {\n    border-top-color: #acb4bd; }\n  .alert-light .alert-link {\n    color: #919ca6; }\n\n.alert-dark {\n  color: #fff;\n  background-color: #45484b;\n  border-color: #45484b; }\n  .alert-dark hr {\n    border-top-color: #393b3e; }\n  .alert-dark .alert-link {\n    color: #0a0c0d; }\n\n.alert-default {\n  color: #fff;\n  background-color: #3c4d69;\n  border-color: #3c4d69; }\n  .alert-default hr {\n    border-top-color: #334159; }\n  .alert-default .alert-link {\n    color: #0b1526; }\n\n.alert-white {\n  color: #212529;\n  background-color: white;\n  border-color: white; }\n  .alert-white hr {\n    border-top-color: #f2f2f2; }\n  .alert-white .alert-link {\n    color: #e6e6e6; }\n\n.alert-neutral {\n  color: #212529;\n  background-color: white;\n  border-color: white; }\n  .alert-neutral hr {\n    border-top-color: #f2f2f2; }\n  .alert-neutral .alert-link {\n    color: #e6e6e6; }\n\n.alert-darker {\n  color: #fff;\n  background-color: #292929;\n  border-color: #292929; }\n  .alert-darker hr {\n    border-top-color: #1c1c1c; }\n  .alert-darker .alert-link {\n    color: black; }\n\n@-webkit-keyframes progress-bar-stripes {\n  from {\n    background-position: 1rem 0; }\n  to {\n    background-position: 0 0; } }\n\n@keyframes progress-bar-stripes {\n  from {\n    background-position: 1rem 0; }\n  to {\n    background-position: 0 0; } }\n\n.progress {\n  display: -webkit-box;\n  display: flex;\n  height: 1rem;\n  overflow: hidden;\n  font-size: 0.75rem;\n  background-color: #e9ecef;\n  border-radius: 0.375rem;\n  box-shadow: inset 0 0.1rem 0.1rem rgba(0, 0, 0, 0.1); }\n\n.progress-bar {\n  display: -webkit-box;\n  display: flex;\n  -webkit-box-orient: vertical;\n  -webkit-box-direction: normal;\n          flex-direction: column;\n  -webkit-box-pack: center;\n          justify-content: center;\n  color: #fff;\n  text-align: center;\n  white-space: nowrap;\n  background-color: #5e72e4;\n  -webkit-transition: width 0.6s ease;\n  transition: width 0.6s ease; }\n  @media screen and (prefers-reduced-motion: reduce) {\n    .progress-bar {\n      -webkit-transition: none;\n      transition: none; } }\n\n.progress-bar-striped {\n  background-image: -webkit-linear-gradient(45deg, rgba(255, 255, 255, 0.15) 25%, transparent 25%, transparent 50%, rgba(255, 255, 255, 0.15) 50%, rgba(255, 255, 255, 0.15) 75%, transparent 75%, transparent);\n  background-image: linear-gradient(45deg, rgba(255, 255, 255, 0.15) 25%, transparent 25%, transparent 50%, rgba(255, 255, 255, 0.15) 50%, rgba(255, 255, 255, 0.15) 75%, transparent 75%, transparent);\n  background-size: 1rem 1rem; }\n\n.progress-bar-animated {\n  -webkit-animation: progress-bar-stripes 1s linear infinite;\n          animation: progress-bar-stripes 1s linear infinite; }\n\n.media {\n  display: -webkit-box;\n  display: flex;\n  -webkit-box-align: start;\n          align-items: flex-start; }\n\n.media-body {\n  -webkit-box-flex: 1;\n          flex: 1; }\n\n.list-group {\n  display: -webkit-box;\n  display: flex;\n  -webkit-box-orient: vertical;\n  -webkit-box-direction: normal;\n          flex-direction: column;\n  padding-left: 0;\n  margin-bottom: 0; }\n\n.list-group-item-action {\n  width: 100%;\n  color: #525f7f;\n  text-align: inherit; }\n  .list-group-item-action:hover, .list-group-item-action:focus {\n    color: #525f7f;\n    text-decoration: none;\n    background-color: #f6f9fc; }\n  .list-group-item-action:active {\n    color: #525f7f;\n    background-color: #e9ecef; }\n\n.list-group-item {\n  position: relative;\n  display: block;\n  padding: 1rem 1rem;\n  margin-bottom: -1px;\n  background-color: #fff;\n  border: 1px solid #e9ecef; }\n  .list-group-item:first-child {\n    border-top-left-radius: 0.375rem;\n    border-top-right-radius: 0.375rem; }\n  .list-group-item:last-child {\n    margin-bottom: 0;\n    border-bottom-right-radius: 0.375rem;\n    border-bottom-left-radius: 0.375rem; }\n  .list-group-item:hover, .list-group-item:focus {\n    z-index: 1;\n    text-decoration: none; }\n  .list-group-item.disabled, .list-group-item:disabled {\n    color: #8898aa;\n    background-color: #fff; }\n  .list-group-item.active {\n    z-index: 2;\n    color: #fff;\n    background-color: #5e72e4;\n    border-color: #5e72e4; }\n\n.list-group-flush .list-group-item {\n  border-right: 0;\n  border-left: 0;\n  border-radius: 0; }\n\n.list-group-flush:first-child .list-group-item:first-child {\n  border-top: 0; }\n\n.list-group-flush:last-child .list-group-item:last-child {\n  border-bottom: 0; }\n\n.list-group-item-primary {\n  color: #313b77;\n  background-color: #d2d8f7; }\n  .list-group-item-primary.list-group-item-action:hover, .list-group-item-primary.list-group-item-action:focus {\n    color: #313b77;\n    background-color: #bcc5f3; }\n  .list-group-item-primary.list-group-item-action.active {\n    color: #fff;\n    background-color: #313b77;\n    border-color: #313b77; }\n\n.list-group-item-secondary {\n  color: #808283;\n  background-color: #fdfefe; }\n  .list-group-item-secondary.list-group-item-action:hover, .list-group-item-secondary.list-group-item-action:focus {\n    color: #808283;\n    background-color: #ecf6f6; }\n  .list-group-item-secondary.list-group-item-action.active {\n    color: #fff;\n    background-color: #808283;\n    border-color: #808283; }\n\n.list-group-item-success {\n  color: #176b47;\n  background-color: #c4f1de; }\n  .list-group-item-success.list-group-item-action:hover, .list-group-item-success.list-group-item-action:focus {\n    color: #176b47;\n    background-color: #afecd2; }\n  .list-group-item-success.list-group-item-action.active {\n    color: #fff;\n    background-color: #176b47;\n    border-color: #176b47; }\n\n.list-group-item-info {\n  color: #096b7c;\n  background-color: #bcf1fb; }\n  .list-group-item-info.list-group-item-action:hover, .list-group-item-info.list-group-item-action:focus {\n    color: #096b7c;\n    background-color: #a4ecfa; }\n  .list-group-item-info.list-group-item-action.active {\n    color: #fff;\n    background-color: #096b7c;\n    border-color: #096b7c; }\n\n.list-group-item-warning {\n  color: #833321;\n  background-color: #fed3ca; }\n  .list-group-item-warning.list-group-item-action:hover, .list-group-item-warning.list-group-item-action:focus {\n    color: #833321;\n    background-color: #febeb1; }\n  .list-group-item-warning.list-group-item-action.active {\n    color: #fff;\n    background-color: #833321;\n    border-color: #833321; }\n\n.list-group-item-danger {\n  color: #7f1c30;\n  background-color: #fcc7d1; }\n  .list-group-item-danger.list-group-item-action:hover, .list-group-item-danger.list-group-item-action:focus {\n    color: #7f1c30;\n    background-color: #fbafbd; }\n  .list-group-item-danger.list-group-item-action.active {\n    color: #fff;\n    background-color: #7f1c30;\n    border-color: #7f1c30; }\n\n.list-group-item-light {\n  color: #5a5e62;\n  background-color: #e8eaed; }\n  .list-group-item-light.list-group-item-action:hover, .list-group-item-light.list-group-item-action:focus {\n    color: #5a5e62;\n    background-color: #dadde2; }\n  .list-group-item-light.list-group-item-action.active {\n    color: #fff;\n    background-color: #5a5e62;\n    border-color: #5a5e62; }\n\n.list-group-item-dark {\n  color: #111315;\n  background-color: #c1c2c3; }\n  .list-group-item-dark.list-group-item-action:hover, .list-group-item-dark.list-group-item-action:focus {\n    color: #111315;\n    background-color: #b4b5b6; }\n  .list-group-item-dark.list-group-item-action.active {\n    color: #fff;\n    background-color: #111315;\n    border-color: #111315; }\n\n.list-group-item-default {\n  color: #0c1628;\n  background-color: #bec4cd; }\n  .list-group-item-default.list-group-item-action:hover, .list-group-item-default.list-group-item-action:focus {\n    color: #0c1628;\n    background-color: #b0b7c2; }\n  .list-group-item-default.list-group-item-action.active {\n    color: #fff;\n    background-color: #0c1628;\n    border-color: #0c1628; }\n\n.list-group-item-white {\n  color: #858585;\n  background-color: white; }\n  .list-group-item-white.list-group-item-action:hover, .list-group-item-white.list-group-item-action:focus {\n    color: #858585;\n    background-color: #f2f2f2; }\n  .list-group-item-white.list-group-item-action.active {\n    color: #fff;\n    background-color: #858585;\n    border-color: #858585; }\n\n.list-group-item-neutral {\n  color: #858585;\n  background-color: white; }\n  .list-group-item-neutral.list-group-item-action:hover, .list-group-item-neutral.list-group-item-action:focus {\n    color: #858585;\n    background-color: #f2f2f2; }\n  .list-group-item-neutral.list-group-item-action.active {\n    color: #fff;\n    background-color: #858585;\n    border-color: #858585; }\n\n.list-group-item-darker {\n  color: black;\n  background-color: #b8b8b8; }\n  .list-group-item-darker.list-group-item-action:hover, .list-group-item-darker.list-group-item-action:focus {\n    color: black;\n    background-color: #ababab; }\n  .list-group-item-darker.list-group-item-action.active {\n    color: #fff;\n    background-color: black;\n    border-color: black; }\n\n.close {\n  float: right;\n  font-size: 1.5rem;\n  font-weight: 600;\n  line-height: 1;\n  color: rgba(0, 0, 0, 0.6);\n  text-shadow: none;\n  opacity: .5; }\n  .close:not(:disabled):not(.disabled) {\n    cursor: pointer; }\n    .close:not(:disabled):not(.disabled):hover, .close:not(:disabled):not(.disabled):focus {\n      color: rgba(0, 0, 0, 0.6);\n      text-decoration: none;\n      opacity: .75; }\n\nbutton.close {\n  padding: 0;\n  background-color: transparent;\n  border: 0;\n  -webkit-appearance: none; }\n\n.modal-open {\n  overflow: hidden; }\n  .modal-open .modal {\n    overflow-x: hidden;\n    overflow-y: auto; }\n\n.modal {\n  position: fixed;\n  top: 0;\n  right: 0;\n  bottom: 0;\n  left: 0;\n  z-index: 1050;\n  display: none;\n  overflow: hidden;\n  outline: 0; }\n\n.modal-dialog {\n  position: relative;\n  width: auto;\n  margin: 0.5rem;\n  pointer-events: none; }\n  .modal.fade .modal-dialog {\n    -webkit-transition: -webkit-transform 0.3s ease-out;\n    transition: -webkit-transform 0.3s ease-out;\n    transition: transform 0.3s ease-out;\n    transition: transform 0.3s ease-out, -webkit-transform 0.3s ease-out;\n    -webkit-transform: translate(0, -25%);\n            transform: translate(0, -25%); }\n    @media screen and (prefers-reduced-motion: reduce) {\n      .modal.fade .modal-dialog {\n        -webkit-transition: none;\n        transition: none; } }\n  .modal.show .modal-dialog {\n    -webkit-transform: translate(0, 0);\n            transform: translate(0, 0); }\n\n.modal-dialog-centered {\n  display: -webkit-box;\n  display: flex;\n  -webkit-box-align: center;\n          align-items: center;\n  min-height: calc(100% - (0.5rem * 2)); }\n  .modal-dialog-centered::before {\n    display: block;\n    height: calc(100vh - (0.5rem * 2));\n    content: \"\"; }\n\n.modal-content {\n  position: relative;\n  display: -webkit-box;\n  display: flex;\n  -webkit-box-orient: vertical;\n  -webkit-box-direction: normal;\n          flex-direction: column;\n  width: 100%;\n  pointer-events: auto;\n  background-color: #fff;\n  background-clip: padding-box;\n  border: 0 solid rgba(0, 0, 0, 0.2);\n  border-radius: 0.4375rem;\n  box-shadow: 0 15px 35px rgba(50, 50, 93, 0.2), 0 5px 15px rgba(0, 0, 0, 0.17);\n  outline: 0; }\n\n.modal-backdrop {\n  position: fixed;\n  top: 0;\n  right: 0;\n  bottom: 0;\n  left: 0;\n  z-index: 1040;\n  background-color: #000; }\n  .modal-backdrop.fade {\n    opacity: 0; }\n  .modal-backdrop.show {\n    opacity: 0.16; }\n\n.modal-header {\n  display: -webkit-box;\n  display: flex;\n  -webkit-box-align: start;\n          align-items: flex-start;\n  -webkit-box-pack: justify;\n          justify-content: space-between;\n  padding: 1.25rem;\n  border-bottom: 0 solid #e9ecef;\n  border-top-left-radius: 0.4375rem;\n  border-top-right-radius: 0.4375rem; }\n  .modal-header .close {\n    padding: 1.25rem;\n    margin: -1.25rem -1.25rem -1.25rem auto; }\n\n.modal-title {\n  margin-bottom: 0;\n  line-height: 1.1; }\n\n.modal-body {\n  position: relative;\n  -webkit-box-flex: 1;\n          flex: 1 1 auto;\n  padding: 1.5rem; }\n\n.modal-footer {\n  display: -webkit-box;\n  display: flex;\n  -webkit-box-align: center;\n          align-items: center;\n  -webkit-box-pack: end;\n          justify-content: flex-end;\n  padding: 1.5rem;\n  border-top: 0 solid #e9ecef; }\n  .modal-footer > :not(:first-child) {\n    margin-left: .25rem; }\n  .modal-footer > :not(:last-child) {\n    margin-right: .25rem; }\n\n.modal-scrollbar-measure {\n  position: absolute;\n  top: -9999px;\n  width: 50px;\n  height: 50px;\n  overflow: scroll; }\n\n@media (min-width: 576px) {\n  .modal-dialog {\n    max-width: 500px;\n    margin: 1.75rem auto; }\n  .modal-dialog-centered {\n    min-height: calc(100% - (1.75rem * 2)); }\n    .modal-dialog-centered::before {\n      height: calc(100vh - (1.75rem * 2)); }\n  .modal-content {\n    box-shadow: 0 15px 35px rgba(50, 50, 93, 0.2), 0 5px 15px rgba(0, 0, 0, 0.17); }\n  .modal-sm {\n    max-width: 380px; } }\n\n@media (min-width: 992px) {\n  .modal-lg {\n    max-width: 800px; } }\n\n.tooltip {\n  position: absolute;\n  z-index: 1070;\n  display: block;\n  margin: 0;\n  font-family: Open Sans, sans-serif;\n  font-style: normal;\n  font-weight: 400;\n  line-height: 1.5;\n  text-align: left;\n  text-align: start;\n  text-decoration: none;\n  text-shadow: none;\n  text-transform: none;\n  letter-spacing: normal;\n  word-break: normal;\n  word-spacing: normal;\n  white-space: normal;\n  line-break: auto;\n  font-size: 0.875rem;\n  word-wrap: break-word;\n  opacity: 0; }\n  .tooltip.show {\n    opacity: 0.9; }\n  .tooltip .arrow {\n    position: absolute;\n    display: block;\n    width: 0.8rem;\n    height: 0.4rem; }\n    .tooltip .arrow::before {\n      position: absolute;\n      content: \"\";\n      border-color: transparent;\n      border-style: solid; }\n\n.bs-tooltip-top, .bs-tooltip-auto[x-placement^=\"top\"] {\n  padding: 0.4rem 0; }\n  .bs-tooltip-top .arrow, .bs-tooltip-auto[x-placement^=\"top\"] .arrow {\n    bottom: 0; }\n    .bs-tooltip-top .arrow::before, .bs-tooltip-auto[x-placement^=\"top\"] .arrow::before {\n      top: 0;\n      border-width: 0.4rem 0.4rem 0;\n      border-top-color: #000; }\n\n.bs-tooltip-right, .bs-tooltip-auto[x-placement^=\"right\"] {\n  padding: 0 0.4rem; }\n  .bs-tooltip-right .arrow, .bs-tooltip-auto[x-placement^=\"right\"] .arrow {\n    left: 0;\n    width: 0.4rem;\n    height: 0.8rem; }\n    .bs-tooltip-right .arrow::before, .bs-tooltip-auto[x-placement^=\"right\"] .arrow::before {\n      right: 0;\n      border-width: 0.4rem 0.4rem 0.4rem 0;\n      border-right-color: #000; }\n\n.bs-tooltip-bottom, .bs-tooltip-auto[x-placement^=\"bottom\"] {\n  padding: 0.4rem 0; }\n  .bs-tooltip-bottom .arrow, .bs-tooltip-auto[x-placement^=\"bottom\"] .arrow {\n    top: 0; }\n    .bs-tooltip-bottom .arrow::before, .bs-tooltip-auto[x-placement^=\"bottom\"] .arrow::before {\n      bottom: 0;\n      border-width: 0 0.4rem 0.4rem;\n      border-bottom-color: #000; }\n\n.bs-tooltip-left, .bs-tooltip-auto[x-placement^=\"left\"] {\n  padding: 0 0.4rem; }\n  .bs-tooltip-left .arrow, .bs-tooltip-auto[x-placement^=\"left\"] .arrow {\n    right: 0;\n    width: 0.4rem;\n    height: 0.8rem; }\n    .bs-tooltip-left .arrow::before, .bs-tooltip-auto[x-placement^=\"left\"] .arrow::before {\n      left: 0;\n      border-width: 0.4rem 0 0.4rem 0.4rem;\n      border-left-color: #000; }\n\n.tooltip-inner {\n  max-width: 200px;\n  padding: 0.25rem 0.5rem;\n  color: #fff;\n  text-align: center;\n  background-color: #000;\n  border-radius: 0.375rem; }\n\n.popover {\n  position: absolute;\n  top: 0;\n  left: 0;\n  z-index: 1060;\n  display: block;\n  max-width: 276px;\n  font-family: Open Sans, sans-serif;\n  font-style: normal;\n  font-weight: 400;\n  line-height: 1.5;\n  text-align: left;\n  text-align: start;\n  text-decoration: none;\n  text-shadow: none;\n  text-transform: none;\n  letter-spacing: normal;\n  word-break: normal;\n  word-spacing: normal;\n  white-space: normal;\n  line-break: auto;\n  font-size: 0.875rem;\n  word-wrap: break-word;\n  background-color: #fff;\n  background-clip: padding-box;\n  border: 1px solid rgba(0, 0, 0, 0.05);\n  border-radius: 0.4375rem;\n  box-shadow: 0px 0.5rem 2rem 0px rgba(0, 0, 0, 0.2); }\n  .popover .arrow {\n    position: absolute;\n    display: block;\n    width: 1.5rem;\n    height: 0.75rem;\n    margin: 0 0.4375rem; }\n    .popover .arrow::before, .popover .arrow::after {\n      position: absolute;\n      display: block;\n      content: \"\";\n      border-color: transparent;\n      border-style: solid; }\n\n.bs-popover-top, .bs-popover-auto[x-placement^=\"top\"] {\n  margin-bottom: 0.75rem; }\n  .bs-popover-top .arrow, .bs-popover-auto[x-placement^=\"top\"] .arrow {\n    bottom: calc((0.75rem + 1px) * -1); }\n  .bs-popover-top .arrow::before, .bs-popover-auto[x-placement^=\"top\"] .arrow::before,\n  .bs-popover-top .arrow::after,\n  .bs-popover-auto[x-placement^=\"top\"] .arrow::after {\n    border-width: 0.75rem 0.75rem 0; }\n  .bs-popover-top .arrow::before, .bs-popover-auto[x-placement^=\"top\"] .arrow::before {\n    bottom: 0;\n    border-top-color: transparent; }\n  \n  .bs-popover-top .arrow::after,\n  .bs-popover-auto[x-placement^=\"top\"] .arrow::after {\n    bottom: 1px;\n    border-top-color: #fff; }\n\n.bs-popover-right, .bs-popover-auto[x-placement^=\"right\"] {\n  margin-left: 0.75rem; }\n  .bs-popover-right .arrow, .bs-popover-auto[x-placement^=\"right\"] .arrow {\n    left: calc((0.75rem + 1px) * -1);\n    width: 0.75rem;\n    height: 1.5rem;\n    margin: 0.4375rem 0; }\n  .bs-popover-right .arrow::before, .bs-popover-auto[x-placement^=\"right\"] .arrow::before,\n  .bs-popover-right .arrow::after,\n  .bs-popover-auto[x-placement^=\"right\"] .arrow::after {\n    border-width: 0.75rem 0.75rem 0.75rem 0; }\n  .bs-popover-right .arrow::before, .bs-popover-auto[x-placement^=\"right\"] .arrow::before {\n    left: 0;\n    border-right-color: transparent; }\n  \n  .bs-popover-right .arrow::after,\n  .bs-popover-auto[x-placement^=\"right\"] .arrow::after {\n    left: 1px;\n    border-right-color: #fff; }\n\n.bs-popover-bottom, .bs-popover-auto[x-placement^=\"bottom\"] {\n  margin-top: 0.75rem; }\n  .bs-popover-bottom .arrow, .bs-popover-auto[x-placement^=\"bottom\"] .arrow {\n    top: calc((0.75rem + 1px) * -1); }\n  .bs-popover-bottom .arrow::before, .bs-popover-auto[x-placement^=\"bottom\"] .arrow::before,\n  .bs-popover-bottom .arrow::after,\n  .bs-popover-auto[x-placement^=\"bottom\"] .arrow::after {\n    border-width: 0 0.75rem 0.75rem 0.75rem; }\n  .bs-popover-bottom .arrow::before, .bs-popover-auto[x-placement^=\"bottom\"] .arrow::before {\n    top: 0;\n    border-bottom-color: transparent; }\n  \n  .bs-popover-bottom .arrow::after,\n  .bs-popover-auto[x-placement^=\"bottom\"] .arrow::after {\n    top: 1px;\n    border-bottom-color: #fff; }\n  .bs-popover-bottom .popover-header::before, .bs-popover-auto[x-placement^=\"bottom\"] .popover-header::before {\n    position: absolute;\n    top: 0;\n    left: 50%;\n    display: block;\n    width: 1.5rem;\n    margin-left: -0.75rem;\n    content: \"\";\n    border-bottom: 1px solid #fff; }\n\n.bs-popover-left, .bs-popover-auto[x-placement^=\"left\"] {\n  margin-right: 0.75rem; }\n  .bs-popover-left .arrow, .bs-popover-auto[x-placement^=\"left\"] .arrow {\n    right: calc((0.75rem + 1px) * -1);\n    width: 0.75rem;\n    height: 1.5rem;\n    margin: 0.4375rem 0; }\n  .bs-popover-left .arrow::before, .bs-popover-auto[x-placement^=\"left\"] .arrow::before,\n  .bs-popover-left .arrow::after,\n  .bs-popover-auto[x-placement^=\"left\"] .arrow::after {\n    border-width: 0.75rem 0 0.75rem 0.75rem; }\n  .bs-popover-left .arrow::before, .bs-popover-auto[x-placement^=\"left\"] .arrow::before {\n    right: 0;\n    border-left-color: transparent; }\n  \n  .bs-popover-left .arrow::after,\n  .bs-popover-auto[x-placement^=\"left\"] .arrow::after {\n    right: 1px;\n    border-left-color: #fff; }\n\n.popover-header {\n  padding: 0.5rem 0.95rem;\n  margin-bottom: 0;\n  font-size: 1rem;\n  color: #32325d;\n  background-color: #fff;\n  border-bottom: 1px solid #f2f2f2;\n  border-top-left-radius: calc(0.4375rem - 1px);\n  border-top-right-radius: calc(0.4375rem - 1px); }\n  .popover-header:empty {\n    display: none; }\n\n.popover-body {\n  padding: 0.5rem 0.95rem;\n  color: #525f7f; }\n\n.carousel {\n  position: relative; }\n\n.carousel-inner {\n  position: relative;\n  width: 100%;\n  overflow: hidden; }\n\n.carousel-item {\n  position: relative;\n  display: none;\n  -webkit-box-align: center;\n          align-items: center;\n  width: 100%;\n  -webkit-backface-visibility: hidden;\n          backface-visibility: hidden;\n  -webkit-perspective: 1000px;\n          perspective: 1000px; }\n\n.carousel-item.active,\n.carousel-item-next,\n.carousel-item-prev {\n  display: block;\n  -webkit-transition: -webkit-transform 0.6s ease;\n  transition: -webkit-transform 0.6s ease;\n  transition: transform 0.6s ease;\n  transition: transform 0.6s ease, -webkit-transform 0.6s ease; }\n  @media screen and (prefers-reduced-motion: reduce) {\n    .carousel-item.active,\n    .carousel-item-next,\n    .carousel-item-prev {\n      -webkit-transition: none;\n      transition: none; } }\n\n.carousel-item-next,\n.carousel-item-prev {\n  position: absolute;\n  top: 0; }\n\n.carousel-item-next.carousel-item-left,\n.carousel-item-prev.carousel-item-right {\n  -webkit-transform: translateX(0);\n          transform: translateX(0); }\n  @supports ((-webkit-transform-style: preserve-3d) or (transform-style: preserve-3d)) {\n    .carousel-item-next.carousel-item-left,\n    .carousel-item-prev.carousel-item-right {\n      -webkit-transform: translate3d(0, 0, 0);\n              transform: translate3d(0, 0, 0); } }\n\n.carousel-item-next,\n.active.carousel-item-right {\n  -webkit-transform: translateX(100%);\n          transform: translateX(100%); }\n  @supports ((-webkit-transform-style: preserve-3d) or (transform-style: preserve-3d)) {\n    .carousel-item-next,\n    .active.carousel-item-right {\n      -webkit-transform: translate3d(100%, 0, 0);\n              transform: translate3d(100%, 0, 0); } }\n\n.carousel-item-prev,\n.active.carousel-item-left {\n  -webkit-transform: translateX(-100%);\n          transform: translateX(-100%); }\n  @supports ((-webkit-transform-style: preserve-3d) or (transform-style: preserve-3d)) {\n    .carousel-item-prev,\n    .active.carousel-item-left {\n      -webkit-transform: translate3d(-100%, 0, 0);\n              transform: translate3d(-100%, 0, 0); } }\n\n.carousel-fade .carousel-item {\n  opacity: 0;\n  -webkit-transition-duration: .6s;\n          transition-duration: .6s;\n  -webkit-transition-property: opacity;\n  transition-property: opacity; }\n\n.carousel-fade .carousel-item.active,\n.carousel-fade .carousel-item-next.carousel-item-left,\n.carousel-fade .carousel-item-prev.carousel-item-right {\n  opacity: 1; }\n\n.carousel-fade .active.carousel-item-left,\n.carousel-fade .active.carousel-item-right {\n  opacity: 0; }\n\n.carousel-fade .carousel-item-next,\n.carousel-fade .carousel-item-prev,\n.carousel-fade .carousel-item.active,\n.carousel-fade .active.carousel-item-left,\n.carousel-fade .active.carousel-item-prev {\n  -webkit-transform: translateX(0);\n          transform: translateX(0); }\n  @supports ((-webkit-transform-style: preserve-3d) or (transform-style: preserve-3d)) {\n    .carousel-fade .carousel-item-next,\n    .carousel-fade .carousel-item-prev,\n    .carousel-fade .carousel-item.active,\n    .carousel-fade .active.carousel-item-left,\n    .carousel-fade .active.carousel-item-prev {\n      -webkit-transform: translate3d(0, 0, 0);\n              transform: translate3d(0, 0, 0); } }\n\n.carousel-control-prev,\n.carousel-control-next {\n  position: absolute;\n  top: 0;\n  bottom: 0;\n  display: -webkit-box;\n  display: flex;\n  -webkit-box-align: center;\n          align-items: center;\n  -webkit-box-pack: center;\n          justify-content: center;\n  width: 15%;\n  color: #fff;\n  text-align: center;\n  opacity: 0.5; }\n  .carousel-control-prev:hover, .carousel-control-prev:focus,\n  .carousel-control-next:hover,\n  .carousel-control-next:focus {\n    color: #fff;\n    text-decoration: none;\n    outline: 0;\n    opacity: .9; }\n\n.carousel-control-prev {\n  left: 0; }\n\n.carousel-control-next {\n  right: 0; }\n\n.carousel-control-prev-icon,\n.carousel-control-next-icon {\n  display: inline-block;\n  width: 20px;\n  height: 20px;\n  background: transparent no-repeat center center;\n  background-size: 100% 100%; }\n\n.carousel-control-prev-icon {\n  background-image: url(\"data:image/svg+xml;charset=utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='%23fff' viewBox='0 0 8 8'%3E%3Cpath d='M5.25 0l-4 4 4 4 1.5-1.5-2.5-2.5 2.5-2.5-1.5-1.5z'/%3E%3C/svg%3E\"); }\n\n.carousel-control-next-icon {\n  background-image: url(\"data:image/svg+xml;charset=utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='%23fff' viewBox='0 0 8 8'%3E%3Cpath d='M2.75 0l-1.5 1.5 2.5 2.5-2.5 2.5 1.5 1.5 4-4-4-4z'/%3E%3C/svg%3E\"); }\n\n.carousel-indicators {\n  position: absolute;\n  right: 0;\n  bottom: 10px;\n  left: 0;\n  z-index: 15;\n  display: -webkit-box;\n  display: flex;\n  -webkit-box-pack: center;\n          justify-content: center;\n  padding-left: 0;\n  margin-right: 15%;\n  margin-left: 15%;\n  list-style: none; }\n  .carousel-indicators li {\n    position: relative;\n    -webkit-box-flex: 0;\n            flex: 0 1 auto;\n    width: 30px;\n    height: 3px;\n    margin-right: 3px;\n    margin-left: 3px;\n    text-indent: -999px;\n    cursor: pointer;\n    background-color: rgba(255, 255, 255, 0.5); }\n    .carousel-indicators li::before {\n      position: absolute;\n      top: -10px;\n      left: 0;\n      display: inline-block;\n      width: 100%;\n      height: 10px;\n      content: \"\"; }\n    .carousel-indicators li::after {\n      position: absolute;\n      bottom: -10px;\n      left: 0;\n      display: inline-block;\n      width: 100%;\n      height: 10px;\n      content: \"\"; }\n  .carousel-indicators .active {\n    background-color: #fff; }\n\n.carousel-caption {\n  position: absolute;\n  right: 15%;\n  bottom: 20px;\n  left: 15%;\n  z-index: 10;\n  padding-top: 20px;\n  padding-bottom: 20px;\n  color: #fff;\n  text-align: center; }\n\n.align-baseline {\n  vertical-align: baseline !important; }\n\n.align-top {\n  vertical-align: top !important; }\n\n.align-middle {\n  vertical-align: middle !important; }\n\n.align-bottom {\n  vertical-align: bottom !important; }\n\n.align-text-bottom {\n  vertical-align: text-bottom !important; }\n\n.align-text-top {\n  vertical-align: text-top !important; }\n\n.bg-primary {\n  background-color: #5e72e4 !important; }\n\na.bg-primary:hover, a.bg-primary:focus,\nbutton.bg-primary:hover,\nbutton.bg-primary:focus {\n  background-color: #324cdd !important; }\n\n.bg-secondary {\n  background-color: #f7fafc !important; }\n\na.bg-secondary:hover, a.bg-secondary:focus,\nbutton.bg-secondary:hover,\nbutton.bg-secondary:focus {\n  background-color: #d2e3ee !important; }\n\n.bg-success {\n  background-color: #2dce89 !important; }\n\na.bg-success:hover, a.bg-success:focus,\nbutton.bg-success:hover,\nbutton.bg-success:focus {\n  background-color: #24a46d !important; }\n\n.bg-info {\n  background-color: #11cdef !important; }\n\na.bg-info:hover, a.bg-info:focus,\nbutton.bg-info:hover,\nbutton.bg-info:focus {\n  background-color: #0da5c0 !important; }\n\n.bg-warning {\n  background-color: #fb6340 !important; }\n\na.bg-warning:hover, a.bg-warning:focus,\nbutton.bg-warning:hover,\nbutton.bg-warning:focus {\n  background-color: #fa3a0e !important; }\n\n.bg-danger {\n  background-color: #f5365c !important; }\n\na.bg-danger:hover, a.bg-danger:focus,\nbutton.bg-danger:hover,\nbutton.bg-danger:focus {\n  background-color: #ec0c38 !important; }\n\n.bg-light {\n  background-color: #adb5bd !important; }\n\na.bg-light:hover, a.bg-light:focus,\nbutton.bg-light:hover,\nbutton.bg-light:focus {\n  background-color: #919ca6 !important; }\n\n.bg-dark {\n  background-color: #212529 !important; }\n\na.bg-dark:hover, a.bg-dark:focus,\nbutton.bg-dark:hover,\nbutton.bg-dark:focus {\n  background-color: #0a0c0d !important; }\n\n.bg-default {\n  background-color: #172b4d !important; }\n\na.bg-default:hover, a.bg-default:focus,\nbutton.bg-default:hover,\nbutton.bg-default:focus {\n  background-color: #0b1526 !important; }\n\n.bg-white {\n  background-color: #fff !important; }\n\na.bg-white:hover, a.bg-white:focus,\nbutton.bg-white:hover,\nbutton.bg-white:focus {\n  background-color: #e6e6e6 !important; }\n\n.bg-neutral {\n  background-color: #fff !important; }\n\na.bg-neutral:hover, a.bg-neutral:focus,\nbutton.bg-neutral:hover,\nbutton.bg-neutral:focus {\n  background-color: #e6e6e6 !important; }\n\n.bg-darker {\n  background-color: black !important; }\n\na.bg-darker:hover, a.bg-darker:focus,\nbutton.bg-darker:hover,\nbutton.bg-darker:focus {\n  background-color: black !important; }\n\n.bg-white {\n  background-color: #fff !important; }\n\n.bg-transparent {\n  background-color: transparent !important; }\n\n.border {\n  border: 1px solid #e9ecef !important; }\n\n.border-top {\n  border-top: 1px solid #e9ecef !important; }\n\n.border-right {\n  border-right: 1px solid #e9ecef !important; }\n\n.border-bottom {\n  border-bottom: 1px solid #e9ecef !important; }\n\n.border-left {\n  border-left: 1px solid #e9ecef !important; }\n\n.border-0 {\n  border: 0 !important; }\n\n.border-top-0 {\n  border-top: 0 !important; }\n\n.border-right-0 {\n  border-right: 0 !important; }\n\n.border-bottom-0 {\n  border-bottom: 0 !important; }\n\n.border-left-0 {\n  border-left: 0 !important; }\n\n.border-primary {\n  border-color: #5e72e4 !important; }\n\n.border-secondary {\n  border-color: #f7fafc !important; }\n\n.border-success {\n  border-color: #2dce89 !important; }\n\n.border-info {\n  border-color: #11cdef !important; }\n\n.border-warning {\n  border-color: #fb6340 !important; }\n\n.border-danger {\n  border-color: #f5365c !important; }\n\n.border-light {\n  border-color: #adb5bd !important; }\n\n.border-dark {\n  border-color: #212529 !important; }\n\n.border-default {\n  border-color: #172b4d !important; }\n\n.border-white {\n  border-color: #fff !important; }\n\n.border-neutral {\n  border-color: #fff !important; }\n\n.border-darker {\n  border-color: black !important; }\n\n.border-white {\n  border-color: #fff !important; }\n\n.rounded {\n  border-radius: 0.375rem !important; }\n\n.rounded-top {\n  border-top-left-radius: 0.375rem !important;\n  border-top-right-radius: 0.375rem !important; }\n\n.rounded-right {\n  border-top-right-radius: 0.375rem !important;\n  border-bottom-right-radius: 0.375rem !important; }\n\n.rounded-bottom {\n  border-bottom-right-radius: 0.375rem !important;\n  border-bottom-left-radius: 0.375rem !important; }\n\n.rounded-left {\n  border-top-left-radius: 0.375rem !important;\n  border-bottom-left-radius: 0.375rem !important; }\n\n.rounded-circle {\n  border-radius: 50% !important; }\n\n.rounded-0 {\n  border-radius: 0 !important; }\n\n.clearfix::after {\n  display: block;\n  clear: both;\n  content: \"\"; }\n\n.d-none {\n  display: none !important; }\n\n.d-inline {\n  display: inline !important; }\n\n.d-inline-block {\n  display: inline-block !important; }\n\n.d-block {\n  display: block !important; }\n\n.d-table {\n  display: table !important; }\n\n.d-table-row {\n  display: table-row !important; }\n\n.d-table-cell {\n  display: table-cell !important; }\n\n.d-flex {\n  display: -webkit-box !important;\n  display: flex !important; }\n\n.d-inline-flex {\n  display: -webkit-inline-box !important;\n  display: inline-flex !important; }\n\n@media (min-width: 576px) {\n  .d-sm-none {\n    display: none !important; }\n  .d-sm-inline {\n    display: inline !important; }\n  .d-sm-inline-block {\n    display: inline-block !important; }\n  .d-sm-block {\n    display: block !important; }\n  .d-sm-table {\n    display: table !important; }\n  .d-sm-table-row {\n    display: table-row !important; }\n  .d-sm-table-cell {\n    display: table-cell !important; }\n  .d-sm-flex {\n    display: -webkit-box !important;\n    display: flex !important; }\n  .d-sm-inline-flex {\n    display: -webkit-inline-box !important;\n    display: inline-flex !important; } }\n\n@media (min-width: 768px) {\n  .d-md-none {\n    display: none !important; }\n  .d-md-inline {\n    display: inline !important; }\n  .d-md-inline-block {\n    display: inline-block !important; }\n  .d-md-block {\n    display: block !important; }\n  .d-md-table {\n    display: table !important; }\n  .d-md-table-row {\n    display: table-row !important; }\n  .d-md-table-cell {\n    display: table-cell !important; }\n  .d-md-flex {\n    display: -webkit-box !important;\n    display: flex !important; }\n  .d-md-inline-flex {\n    display: -webkit-inline-box !important;\n    display: inline-flex !important; } }\n\n@media (min-width: 992px) {\n  .d-lg-none {\n    display: none !important; }\n  .d-lg-inline {\n    display: inline !important; }\n  .d-lg-inline-block {\n    display: inline-block !important; }\n  .d-lg-block {\n    display: block !important; }\n  .d-lg-table {\n    display: table !important; }\n  .d-lg-table-row {\n    display: table-row !important; }\n  .d-lg-table-cell {\n    display: table-cell !important; }\n  .d-lg-flex {\n    display: -webkit-box !important;\n    display: flex !important; }\n  .d-lg-inline-flex {\n    display: -webkit-inline-box !important;\n    display: inline-flex !important; } }\n\n@media (min-width: 1200px) {\n  .d-xl-none {\n    display: none !important; }\n  .d-xl-inline {\n    display: inline !important; }\n  .d-xl-inline-block {\n    display: inline-block !important; }\n  .d-xl-block {\n    display: block !important; }\n  .d-xl-table {\n    display: table !important; }\n  .d-xl-table-row {\n    display: table-row !important; }\n  .d-xl-table-cell {\n    display: table-cell !important; }\n  .d-xl-flex {\n    display: -webkit-box !important;\n    display: flex !important; }\n  .d-xl-inline-flex {\n    display: -webkit-inline-box !important;\n    display: inline-flex !important; } }\n\n@media print {\n  .d-print-none {\n    display: none !important; }\n  .d-print-inline {\n    display: inline !important; }\n  .d-print-inline-block {\n    display: inline-block !important; }\n  .d-print-block {\n    display: block !important; }\n  .d-print-table {\n    display: table !important; }\n  .d-print-table-row {\n    display: table-row !important; }\n  .d-print-table-cell {\n    display: table-cell !important; }\n  .d-print-flex {\n    display: -webkit-box !important;\n    display: flex !important; }\n  .d-print-inline-flex {\n    display: -webkit-inline-box !important;\n    display: inline-flex !important; } }\n\n.embed-responsive {\n  position: relative;\n  display: block;\n  width: 100%;\n  padding: 0;\n  overflow: hidden; }\n  .embed-responsive::before {\n    display: block;\n    content: \"\"; }\n  .embed-responsive .embed-responsive-item,\n  .embed-responsive iframe,\n  .embed-responsive embed,\n  .embed-responsive object,\n  .embed-responsive video {\n    position: absolute;\n    top: 0;\n    bottom: 0;\n    left: 0;\n    width: 100%;\n    height: 100%;\n    border: 0; }\n\n.embed-responsive-21by9::before {\n  padding-top: 42.85714%; }\n\n.embed-responsive-16by9::before {\n  padding-top: 56.25%; }\n\n.embed-responsive-4by3::before {\n  padding-top: 75%; }\n\n.embed-responsive-1by1::before {\n  padding-top: 100%; }\n\n.flex-row {\n  -webkit-box-orient: horizontal !important;\n  -webkit-box-direction: normal !important;\n          flex-direction: row !important; }\n\n.flex-column {\n  -webkit-box-orient: vertical !important;\n  -webkit-box-direction: normal !important;\n          flex-direction: column !important; }\n\n.flex-row-reverse {\n  -webkit-box-orient: horizontal !important;\n  -webkit-box-direction: reverse !important;\n          flex-direction: row-reverse !important; }\n\n.flex-column-reverse {\n  -webkit-box-orient: vertical !important;\n  -webkit-box-direction: reverse !important;\n          flex-direction: column-reverse !important; }\n\n.flex-wrap {\n  flex-wrap: wrap !important; }\n\n.flex-nowrap {\n  flex-wrap: nowrap !important; }\n\n.flex-wrap-reverse {\n  flex-wrap: wrap-reverse !important; }\n\n.flex-fill {\n  -webkit-box-flex: 1 !important;\n          flex: 1 1 auto !important; }\n\n.flex-grow-0 {\n  -webkit-box-flex: 0 !important;\n          flex-grow: 0 !important; }\n\n.flex-grow-1 {\n  -webkit-box-flex: 1 !important;\n          flex-grow: 1 !important; }\n\n.flex-shrink-0 {\n  flex-shrink: 0 !important; }\n\n.flex-shrink-1 {\n  flex-shrink: 1 !important; }\n\n.justify-content-start {\n  -webkit-box-pack: start !important;\n          justify-content: flex-start !important; }\n\n.justify-content-end {\n  -webkit-box-pack: end !important;\n          justify-content: flex-end !important; }\n\n.justify-content-center {\n  -webkit-box-pack: center !important;\n          justify-content: center !important; }\n\n.justify-content-between {\n  -webkit-box-pack: justify !important;\n          justify-content: space-between !important; }\n\n.justify-content-around {\n  justify-content: space-around !important; }\n\n.align-items-start {\n  -webkit-box-align: start !important;\n          align-items: flex-start !important; }\n\n.align-items-end {\n  -webkit-box-align: end !important;\n          align-items: flex-end !important; }\n\n.align-items-center {\n  -webkit-box-align: center !important;\n          align-items: center !important; }\n\n.align-items-baseline {\n  -webkit-box-align: baseline !important;\n          align-items: baseline !important; }\n\n.align-items-stretch {\n  -webkit-box-align: stretch !important;\n          align-items: stretch !important; }\n\n.align-content-start {\n  align-content: flex-start !important; }\n\n.align-content-end {\n  align-content: flex-end !important; }\n\n.align-content-center {\n  align-content: center !important; }\n\n.align-content-between {\n  align-content: space-between !important; }\n\n.align-content-around {\n  align-content: space-around !important; }\n\n.align-content-stretch {\n  align-content: stretch !important; }\n\n.align-self-auto {\n  align-self: auto !important; }\n\n.align-self-start {\n  align-self: flex-start !important; }\n\n.align-self-end {\n  align-self: flex-end !important; }\n\n.align-self-center {\n  align-self: center !important; }\n\n.align-self-baseline {\n  align-self: baseline !important; }\n\n.align-self-stretch {\n  align-self: stretch !important; }\n\n@media (min-width: 576px) {\n  .flex-sm-row {\n    -webkit-box-orient: horizontal !important;\n    -webkit-box-direction: normal !important;\n            flex-direction: row !important; }\n  .flex-sm-column {\n    -webkit-box-orient: vertical !important;\n    -webkit-box-direction: normal !important;\n            flex-direction: column !important; }\n  .flex-sm-row-reverse {\n    -webkit-box-orient: horizontal !important;\n    -webkit-box-direction: reverse !important;\n            flex-direction: row-reverse !important; }\n  .flex-sm-column-reverse {\n    -webkit-box-orient: vertical !important;\n    -webkit-box-direction: reverse !important;\n            flex-direction: column-reverse !important; }\n  .flex-sm-wrap {\n    flex-wrap: wrap !important; }\n  .flex-sm-nowrap {\n    flex-wrap: nowrap !important; }\n  .flex-sm-wrap-reverse {\n    flex-wrap: wrap-reverse !important; }\n  .flex-sm-fill {\n    -webkit-box-flex: 1 !important;\n            flex: 1 1 auto !important; }\n  .flex-sm-grow-0 {\n    -webkit-box-flex: 0 !important;\n            flex-grow: 0 !important; }\n  .flex-sm-grow-1 {\n    -webkit-box-flex: 1 !important;\n            flex-grow: 1 !important; }\n  .flex-sm-shrink-0 {\n    flex-shrink: 0 !important; }\n  .flex-sm-shrink-1 {\n    flex-shrink: 1 !important; }\n  .justify-content-sm-start {\n    -webkit-box-pack: start !important;\n            justify-content: flex-start !important; }\n  .justify-content-sm-end {\n    -webkit-box-pack: end !important;\n            justify-content: flex-end !important; }\n  .justify-content-sm-center {\n    -webkit-box-pack: center !important;\n            justify-content: center !important; }\n  .justify-content-sm-between {\n    -webkit-box-pack: justify !important;\n            justify-content: space-between !important; }\n  .justify-content-sm-around {\n    justify-content: space-around !important; }\n  .align-items-sm-start {\n    -webkit-box-align: start !important;\n            align-items: flex-start !important; }\n  .align-items-sm-end {\n    -webkit-box-align: end !important;\n            align-items: flex-end !important; }\n  .align-items-sm-center {\n    -webkit-box-align: center !important;\n            align-items: center !important; }\n  .align-items-sm-baseline {\n    -webkit-box-align: baseline !important;\n            align-items: baseline !important; }\n  .align-items-sm-stretch {\n    -webkit-box-align: stretch !important;\n            align-items: stretch !important; }\n  .align-content-sm-start {\n    align-content: flex-start !important; }\n  .align-content-sm-end {\n    align-content: flex-end !important; }\n  .align-content-sm-center {\n    align-content: center !important; }\n  .align-content-sm-between {\n    align-content: space-between !important; }\n  .align-content-sm-around {\n    align-content: space-around !important; }\n  .align-content-sm-stretch {\n    align-content: stretch !important; }\n  .align-self-sm-auto {\n    align-self: auto !important; }\n  .align-self-sm-start {\n    align-self: flex-start !important; }\n  .align-self-sm-end {\n    align-self: flex-end !important; }\n  .align-self-sm-center {\n    align-self: center !important; }\n  .align-self-sm-baseline {\n    align-self: baseline !important; }\n  .align-self-sm-stretch {\n    align-self: stretch !important; } }\n\n@media (min-width: 768px) {\n  .flex-md-row {\n    -webkit-box-orient: horizontal !important;\n    -webkit-box-direction: normal !important;\n            flex-direction: row !important; }\n  .flex-md-column {\n    -webkit-box-orient: vertical !important;\n    -webkit-box-direction: normal !important;\n            flex-direction: column !important; }\n  .flex-md-row-reverse {\n    -webkit-box-orient: horizontal !important;\n    -webkit-box-direction: reverse !important;\n            flex-direction: row-reverse !important; }\n  .flex-md-column-reverse {\n    -webkit-box-orient: vertical !important;\n    -webkit-box-direction: reverse !important;\n            flex-direction: column-reverse !important; }\n  .flex-md-wrap {\n    flex-wrap: wrap !important; }\n  .flex-md-nowrap {\n    flex-wrap: nowrap !important; }\n  .flex-md-wrap-reverse {\n    flex-wrap: wrap-reverse !important; }\n  .flex-md-fill {\n    -webkit-box-flex: 1 !important;\n            flex: 1 1 auto !important; }\n  .flex-md-grow-0 {\n    -webkit-box-flex: 0 !important;\n            flex-grow: 0 !important; }\n  .flex-md-grow-1 {\n    -webkit-box-flex: 1 !important;\n            flex-grow: 1 !important; }\n  .flex-md-shrink-0 {\n    flex-shrink: 0 !important; }\n  .flex-md-shrink-1 {\n    flex-shrink: 1 !important; }\n  .justify-content-md-start {\n    -webkit-box-pack: start !important;\n            justify-content: flex-start !important; }\n  .justify-content-md-end {\n    -webkit-box-pack: end !important;\n            justify-content: flex-end !important; }\n  .justify-content-md-center {\n    -webkit-box-pack: center !important;\n            justify-content: center !important; }\n  .justify-content-md-between {\n    -webkit-box-pack: justify !important;\n            justify-content: space-between !important; }\n  .justify-content-md-around {\n    justify-content: space-around !important; }\n  .align-items-md-start {\n    -webkit-box-align: start !important;\n            align-items: flex-start !important; }\n  .align-items-md-end {\n    -webkit-box-align: end !important;\n            align-items: flex-end !important; }\n  .align-items-md-center {\n    -webkit-box-align: center !important;\n            align-items: center !important; }\n  .align-items-md-baseline {\n    -webkit-box-align: baseline !important;\n            align-items: baseline !important; }\n  .align-items-md-stretch {\n    -webkit-box-align: stretch !important;\n            align-items: stretch !important; }\n  .align-content-md-start {\n    align-content: flex-start !important; }\n  .align-content-md-end {\n    align-content: flex-end !important; }\n  .align-content-md-center {\n    align-content: center !important; }\n  .align-content-md-between {\n    align-content: space-between !important; }\n  .align-content-md-around {\n    align-content: space-around !important; }\n  .align-content-md-stretch {\n    align-content: stretch !important; }\n  .align-self-md-auto {\n    align-self: auto !important; }\n  .align-self-md-start {\n    align-self: flex-start !important; }\n  .align-self-md-end {\n    align-self: flex-end !important; }\n  .align-self-md-center {\n    align-self: center !important; }\n  .align-self-md-baseline {\n    align-self: baseline !important; }\n  .align-self-md-stretch {\n    align-self: stretch !important; } }\n\n@media (min-width: 992px) {\n  .flex-lg-row {\n    -webkit-box-orient: horizontal !important;\n    -webkit-box-direction: normal !important;\n            flex-direction: row !important; }\n  .flex-lg-column {\n    -webkit-box-orient: vertical !important;\n    -webkit-box-direction: normal !important;\n            flex-direction: column !important; }\n  .flex-lg-row-reverse {\n    -webkit-box-orient: horizontal !important;\n    -webkit-box-direction: reverse !important;\n            flex-direction: row-reverse !important; }\n  .flex-lg-column-reverse {\n    -webkit-box-orient: vertical !important;\n    -webkit-box-direction: reverse !important;\n            flex-direction: column-reverse !important; }\n  .flex-lg-wrap {\n    flex-wrap: wrap !important; }\n  .flex-lg-nowrap {\n    flex-wrap: nowrap !important; }\n  .flex-lg-wrap-reverse {\n    flex-wrap: wrap-reverse !important; }\n  .flex-lg-fill {\n    -webkit-box-flex: 1 !important;\n            flex: 1 1 auto !important; }\n  .flex-lg-grow-0 {\n    -webkit-box-flex: 0 !important;\n            flex-grow: 0 !important; }\n  .flex-lg-grow-1 {\n    -webkit-box-flex: 1 !important;\n            flex-grow: 1 !important; }\n  .flex-lg-shrink-0 {\n    flex-shrink: 0 !important; }\n  .flex-lg-shrink-1 {\n    flex-shrink: 1 !important; }\n  .justify-content-lg-start {\n    -webkit-box-pack: start !important;\n            justify-content: flex-start !important; }\n  .justify-content-lg-end {\n    -webkit-box-pack: end !important;\n            justify-content: flex-end !important; }\n  .justify-content-lg-center {\n    -webkit-box-pack: center !important;\n            justify-content: center !important; }\n  .justify-content-lg-between {\n    -webkit-box-pack: justify !important;\n            justify-content: space-between !important; }\n  .justify-content-lg-around {\n    justify-content: space-around !important; }\n  .align-items-lg-start {\n    -webkit-box-align: start !important;\n            align-items: flex-start !important; }\n  .align-items-lg-end {\n    -webkit-box-align: end !important;\n            align-items: flex-end !important; }\n  .align-items-lg-center {\n    -webkit-box-align: center !important;\n            align-items: center !important; }\n  .align-items-lg-baseline {\n    -webkit-box-align: baseline !important;\n            align-items: baseline !important; }\n  .align-items-lg-stretch {\n    -webkit-box-align: stretch !important;\n            align-items: stretch !important; }\n  .align-content-lg-start {\n    align-content: flex-start !important; }\n  .align-content-lg-end {\n    align-content: flex-end !important; }\n  .align-content-lg-center {\n    align-content: center !important; }\n  .align-content-lg-between {\n    align-content: space-between !important; }\n  .align-content-lg-around {\n    align-content: space-around !important; }\n  .align-content-lg-stretch {\n    align-content: stretch !important; }\n  .align-self-lg-auto {\n    align-self: auto !important; }\n  .align-self-lg-start {\n    align-self: flex-start !important; }\n  .align-self-lg-end {\n    align-self: flex-end !important; }\n  .align-self-lg-center {\n    align-self: center !important; }\n  .align-self-lg-baseline {\n    align-self: baseline !important; }\n  .align-self-lg-stretch {\n    align-self: stretch !important; } }\n\n@media (min-width: 1200px) {\n  .flex-xl-row {\n    -webkit-box-orient: horizontal !important;\n    -webkit-box-direction: normal !important;\n            flex-direction: row !important; }\n  .flex-xl-column {\n    -webkit-box-orient: vertical !important;\n    -webkit-box-direction: normal !important;\n            flex-direction: column !important; }\n  .flex-xl-row-reverse {\n    -webkit-box-orient: horizontal !important;\n    -webkit-box-direction: reverse !important;\n            flex-direction: row-reverse !important; }\n  .flex-xl-column-reverse {\n    -webkit-box-orient: vertical !important;\n    -webkit-box-direction: reverse !important;\n            flex-direction: column-reverse !important; }\n  .flex-xl-wrap {\n    flex-wrap: wrap !important; }\n  .flex-xl-nowrap {\n    flex-wrap: nowrap !important; }\n  .flex-xl-wrap-reverse {\n    flex-wrap: wrap-reverse !important; }\n  .flex-xl-fill {\n    -webkit-box-flex: 1 !important;\n            flex: 1 1 auto !important; }\n  .flex-xl-grow-0 {\n    -webkit-box-flex: 0 !important;\n            flex-grow: 0 !important; }\n  .flex-xl-grow-1 {\n    -webkit-box-flex: 1 !important;\n            flex-grow: 1 !important; }\n  .flex-xl-shrink-0 {\n    flex-shrink: 0 !important; }\n  .flex-xl-shrink-1 {\n    flex-shrink: 1 !important; }\n  .justify-content-xl-start {\n    -webkit-box-pack: start !important;\n            justify-content: flex-start !important; }\n  .justify-content-xl-end {\n    -webkit-box-pack: end !important;\n            justify-content: flex-end !important; }\n  .justify-content-xl-center {\n    -webkit-box-pack: center !important;\n            justify-content: center !important; }\n  .justify-content-xl-between {\n    -webkit-box-pack: justify !important;\n            justify-content: space-between !important; }\n  .justify-content-xl-around {\n    justify-content: space-around !important; }\n  .align-items-xl-start {\n    -webkit-box-align: start !important;\n            align-items: flex-start !important; }\n  .align-items-xl-end {\n    -webkit-box-align: end !important;\n            align-items: flex-end !important; }\n  .align-items-xl-center {\n    -webkit-box-align: center !important;\n            align-items: center !important; }\n  .align-items-xl-baseline {\n    -webkit-box-align: baseline !important;\n            align-items: baseline !important; }\n  .align-items-xl-stretch {\n    -webkit-box-align: stretch !important;\n            align-items: stretch !important; }\n  .align-content-xl-start {\n    align-content: flex-start !important; }\n  .align-content-xl-end {\n    align-content: flex-end !important; }\n  .align-content-xl-center {\n    align-content: center !important; }\n  .align-content-xl-between {\n    align-content: space-between !important; }\n  .align-content-xl-around {\n    align-content: space-around !important; }\n  .align-content-xl-stretch {\n    align-content: stretch !important; }\n  .align-self-xl-auto {\n    align-self: auto !important; }\n  .align-self-xl-start {\n    align-self: flex-start !important; }\n  .align-self-xl-end {\n    align-self: flex-end !important; }\n  .align-self-xl-center {\n    align-self: center !important; }\n  .align-self-xl-baseline {\n    align-self: baseline !important; }\n  .align-self-xl-stretch {\n    align-self: stretch !important; } }\n\n.float-left {\n  float: left !important; }\n\n.float-right {\n  float: right !important; }\n\n.float-none {\n  float: none !important; }\n\n@media (min-width: 576px) {\n  .float-sm-left {\n    float: left !important; }\n  .float-sm-right {\n    float: right !important; }\n  .float-sm-none {\n    float: none !important; } }\n\n@media (min-width: 768px) {\n  .float-md-left {\n    float: left !important; }\n  .float-md-right {\n    float: right !important; }\n  .float-md-none {\n    float: none !important; } }\n\n@media (min-width: 992px) {\n  .float-lg-left {\n    float: left !important; }\n  .float-lg-right {\n    float: right !important; }\n  .float-lg-none {\n    float: none !important; } }\n\n@media (min-width: 1200px) {\n  .float-xl-left {\n    float: left !important; }\n  .float-xl-right {\n    float: right !important; }\n  .float-xl-none {\n    float: none !important; } }\n\n.position-static {\n  position: static !important; }\n\n.position-relative {\n  position: relative !important; }\n\n.position-absolute {\n  position: absolute !important; }\n\n.position-fixed {\n  position: fixed !important; }\n\n.position-sticky {\n  position: -webkit-sticky !important;\n  position: sticky !important; }\n\n.fixed-top {\n  position: fixed;\n  top: 0;\n  right: 0;\n  left: 0;\n  z-index: 1030; }\n\n.fixed-bottom {\n  position: fixed;\n  right: 0;\n  bottom: 0;\n  left: 0;\n  z-index: 1030; }\n\n@supports ((position: -webkit-sticky) or (position: sticky)) {\n  .sticky-top {\n    position: -webkit-sticky;\n    position: sticky;\n    top: 0;\n    z-index: 1020; } }\n\n.sr-only {\n  position: absolute;\n  width: 1px;\n  height: 1px;\n  padding: 0;\n  overflow: hidden;\n  clip: rect(0, 0, 0, 0);\n  white-space: nowrap;\n  border: 0; }\n\n.sr-only-focusable:active, .sr-only-focusable:focus {\n  position: static;\n  width: auto;\n  height: auto;\n  overflow: visible;\n  clip: auto;\n  white-space: normal; }\n\n.shadow-sm {\n  box-shadow: 0 0 0.5rem rgba(136, 152, 170, 0.075) !important; }\n\n.shadow, .card-profile-image img {\n  box-shadow: 0 0 2rem 0 rgba(136, 152, 170, 0.15) !important; }\n\n.shadow-lg {\n  box-shadow: 0 0 3rem rgba(136, 152, 170, 0.175) !important; }\n\n.shadow-none {\n  box-shadow: none !important; }\n\n.w-25 {\n  width: 25% !important; }\n\n.w-50 {\n  width: 50% !important; }\n\n.w-75 {\n  width: 75% !important; }\n\n.w-100 {\n  width: 100% !important; }\n\n.w-auto {\n  width: auto !important; }\n\n.h-25 {\n  height: 25% !important; }\n\n.h-50 {\n  height: 50% !important; }\n\n.h-75 {\n  height: 75% !important; }\n\n.h-100 {\n  height: 100% !important; }\n\n.h-auto {\n  height: auto !important; }\n\n.mw-100 {\n  max-width: 100% !important; }\n\n.mh-100 {\n  max-height: 100% !important; }\n\n.m-0 {\n  margin: 0 !important; }\n\n.mt-0,\n.my-0 {\n  margin-top: 0 !important; }\n\n.mr-0,\n.mx-0 {\n  margin-right: 0 !important; }\n\n.mb-0,\n.my-0 {\n  margin-bottom: 0 !important; }\n\n.ml-0,\n.mx-0 {\n  margin-left: 0 !important; }\n\n.m-1 {\n  margin: 0.25rem !important; }\n\n.mt-1,\n.my-1 {\n  margin-top: 0.25rem !important; }\n\n.mr-1,\n.mx-1 {\n  margin-right: 0.25rem !important; }\n\n.mb-1,\n.my-1 {\n  margin-bottom: 0.25rem !important; }\n\n.ml-1,\n.mx-1 {\n  margin-left: 0.25rem !important; }\n\n.m-2 {\n  margin: 0.5rem !important; }\n\n.mt-2,\n.my-2 {\n  margin-top: 0.5rem !important; }\n\n.mr-2,\n.mx-2 {\n  margin-right: 0.5rem !important; }\n\n.mb-2,\n.my-2 {\n  margin-bottom: 0.5rem !important; }\n\n.ml-2,\n.mx-2 {\n  margin-left: 0.5rem !important; }\n\n.m-3 {\n  margin: 1rem !important; }\n\n.mt-3,\n.my-3 {\n  margin-top: 1rem !important; }\n\n.mr-3,\n.mx-3 {\n  margin-right: 1rem !important; }\n\n.mb-3,\n.my-3 {\n  margin-bottom: 1rem !important; }\n\n.ml-3,\n.mx-3 {\n  margin-left: 1rem !important; }\n\n.m-4 {\n  margin: 1.5rem !important; }\n\n.mt-4,\n.my-4 {\n  margin-top: 1.5rem !important; }\n\n.mr-4,\n.mx-4 {\n  margin-right: 1.5rem !important; }\n\n.mb-4,\n.my-4 {\n  margin-bottom: 1.5rem !important; }\n\n.ml-4,\n.mx-4 {\n  margin-left: 1.5rem !important; }\n\n.m-5 {\n  margin: 3rem !important; }\n\n.mt-5,\n.my-5 {\n  margin-top: 3rem !important; }\n\n.mr-5,\n.mx-5 {\n  margin-right: 3rem !important; }\n\n.mb-5,\n.my-5 {\n  margin-bottom: 3rem !important; }\n\n.ml-5,\n.mx-5 {\n  margin-left: 3rem !important; }\n\n.m--9 {\n  margin: -10rem !important; }\n\n.mt--9,\n.my--9 {\n  margin-top: -10rem !important; }\n\n.mr--9,\n.mx--9 {\n  margin-right: -10rem !important; }\n\n.mb--9,\n.my--9 {\n  margin-bottom: -10rem !important; }\n\n.ml--9,\n.mx--9 {\n  margin-left: -10rem !important; }\n\n.m--8 {\n  margin: -8rem !important; }\n\n.mt--8,\n.my--8 {\n  margin-top: -8rem !important; }\n\n.mr--8,\n.mx--8 {\n  margin-right: -8rem !important; }\n\n.mb--8,\n.my--8 {\n  margin-bottom: -8rem !important; }\n\n.ml--8,\n.mx--8 {\n  margin-left: -8rem !important; }\n\n.m--7 {\n  margin: -6rem !important; }\n\n.mt--7,\n.my--7 {\n  margin-top: -6rem !important; }\n\n.mr--7,\n.mx--7 {\n  margin-right: -6rem !important; }\n\n.mb--7,\n.my--7 {\n  margin-bottom: -6rem !important; }\n\n.ml--7,\n.mx--7 {\n  margin-left: -6rem !important; }\n\n.m--6 {\n  margin: -4.5rem !important; }\n\n.mt--6,\n.my--6 {\n  margin-top: -4.5rem !important; }\n\n.mr--6,\n.mx--6 {\n  margin-right: -4.5rem !important; }\n\n.mb--6,\n.my--6 {\n  margin-bottom: -4.5rem !important; }\n\n.ml--6,\n.mx--6 {\n  margin-left: -4.5rem !important; }\n\n.m--5 {\n  margin: -3rem !important; }\n\n.mt--5,\n.my--5 {\n  margin-top: -3rem !important; }\n\n.mr--5,\n.mx--5 {\n  margin-right: -3rem !important; }\n\n.mb--5,\n.my--5 {\n  margin-bottom: -3rem !important; }\n\n.ml--5,\n.mx--5 {\n  margin-left: -3rem !important; }\n\n.m--4 {\n  margin: -1.5rem !important; }\n\n.mt--4,\n.my--4 {\n  margin-top: -1.5rem !important; }\n\n.mr--4,\n.mx--4 {\n  margin-right: -1.5rem !important; }\n\n.mb--4,\n.my--4 {\n  margin-bottom: -1.5rem !important; }\n\n.ml--4,\n.mx--4 {\n  margin-left: -1.5rem !important; }\n\n.m--3 {\n  margin: -1rem !important; }\n\n.mt--3,\n.my--3 {\n  margin-top: -1rem !important; }\n\n.mr--3,\n.mx--3 {\n  margin-right: -1rem !important; }\n\n.mb--3,\n.my--3 {\n  margin-bottom: -1rem !important; }\n\n.ml--3,\n.mx--3 {\n  margin-left: -1rem !important; }\n\n.m--2 {\n  margin: -0.5rem !important; }\n\n.mt--2,\n.my--2 {\n  margin-top: -0.5rem !important; }\n\n.mr--2,\n.mx--2 {\n  margin-right: -0.5rem !important; }\n\n.mb--2,\n.my--2 {\n  margin-bottom: -0.5rem !important; }\n\n.ml--2,\n.mx--2 {\n  margin-left: -0.5rem !important; }\n\n.m--1 {\n  margin: -0.25rem !important; }\n\n.mt--1,\n.my--1 {\n  margin-top: -0.25rem !important; }\n\n.mr--1,\n.mx--1 {\n  margin-right: -0.25rem !important; }\n\n.mb--1,\n.my--1 {\n  margin-bottom: -0.25rem !important; }\n\n.ml--1,\n.mx--1 {\n  margin-left: -0.25rem !important; }\n\n.m-6 {\n  margin: 4.5rem !important; }\n\n.mt-6,\n.my-6 {\n  margin-top: 4.5rem !important; }\n\n.mr-6,\n.mx-6 {\n  margin-right: 4.5rem !important; }\n\n.mb-6,\n.my-6 {\n  margin-bottom: 4.5rem !important; }\n\n.ml-6,\n.mx-6 {\n  margin-left: 4.5rem !important; }\n\n.m-7 {\n  margin: 6rem !important; }\n\n.mt-7,\n.my-7 {\n  margin-top: 6rem !important; }\n\n.mr-7,\n.mx-7 {\n  margin-right: 6rem !important; }\n\n.mb-7,\n.my-7 {\n  margin-bottom: 6rem !important; }\n\n.ml-7,\n.mx-7 {\n  margin-left: 6rem !important; }\n\n.m-8 {\n  margin: 8rem !important; }\n\n.mt-8,\n.my-8 {\n  margin-top: 8rem !important; }\n\n.mr-8,\n.mx-8 {\n  margin-right: 8rem !important; }\n\n.mb-8,\n.my-8 {\n  margin-bottom: 8rem !important; }\n\n.ml-8,\n.mx-8 {\n  margin-left: 8rem !important; }\n\n.m-9 {\n  margin: 10rem !important; }\n\n.mt-9,\n.my-9 {\n  margin-top: 10rem !important; }\n\n.mr-9,\n.mx-9 {\n  margin-right: 10rem !important; }\n\n.mb-9,\n.my-9 {\n  margin-bottom: 10rem !important; }\n\n.ml-9,\n.mx-9 {\n  margin-left: 10rem !important; }\n\n.p-0 {\n  padding: 0 !important; }\n\n.pt-0,\n.py-0 {\n  padding-top: 0 !important; }\n\n.pr-0,\n.px-0 {\n  padding-right: 0 !important; }\n\n.pb-0,\n.py-0 {\n  padding-bottom: 0 !important; }\n\n.pl-0,\n.px-0 {\n  padding-left: 0 !important; }\n\n.p-1 {\n  padding: 0.25rem !important; }\n\n.pt-1,\n.py-1 {\n  padding-top: 0.25rem !important; }\n\n.pr-1,\n.px-1 {\n  padding-right: 0.25rem !important; }\n\n.pb-1,\n.py-1 {\n  padding-bottom: 0.25rem !important; }\n\n.pl-1,\n.px-1 {\n  padding-left: 0.25rem !important; }\n\n.p-2 {\n  padding: 0.5rem !important; }\n\n.pt-2,\n.py-2 {\n  padding-top: 0.5rem !important; }\n\n.pr-2,\n.px-2 {\n  padding-right: 0.5rem !important; }\n\n.pb-2,\n.py-2 {\n  padding-bottom: 0.5rem !important; }\n\n.pl-2,\n.px-2 {\n  padding-left: 0.5rem !important; }\n\n.p-3 {\n  padding: 1rem !important; }\n\n.pt-3,\n.py-3 {\n  padding-top: 1rem !important; }\n\n.pr-3,\n.px-3 {\n  padding-right: 1rem !important; }\n\n.pb-3,\n.py-3 {\n  padding-bottom: 1rem !important; }\n\n.pl-3,\n.px-3 {\n  padding-left: 1rem !important; }\n\n.p-4 {\n  padding: 1.5rem !important; }\n\n.pt-4,\n.py-4 {\n  padding-top: 1.5rem !important; }\n\n.pr-4,\n.px-4 {\n  padding-right: 1.5rem !important; }\n\n.pb-4,\n.py-4 {\n  padding-bottom: 1.5rem !important; }\n\n.pl-4,\n.px-4 {\n  padding-left: 1.5rem !important; }\n\n.p-5 {\n  padding: 3rem !important; }\n\n.pt-5,\n.py-5 {\n  padding-top: 3rem !important; }\n\n.pr-5,\n.px-5 {\n  padding-right: 3rem !important; }\n\n.pb-5,\n.py-5 {\n  padding-bottom: 3rem !important; }\n\n.pl-5,\n.px-5 {\n  padding-left: 3rem !important; }\n\n.p--9 {\n  padding: -10rem !important; }\n\n.pt--9,\n.py--9 {\n  padding-top: -10rem !important; }\n\n.pr--9,\n.px--9 {\n  padding-right: -10rem !important; }\n\n.pb--9,\n.py--9 {\n  padding-bottom: -10rem !important; }\n\n.pl--9,\n.px--9 {\n  padding-left: -10rem !important; }\n\n.p--8 {\n  padding: -8rem !important; }\n\n.pt--8,\n.py--8 {\n  padding-top: -8rem !important; }\n\n.pr--8,\n.px--8 {\n  padding-right: -8rem !important; }\n\n.pb--8,\n.py--8 {\n  padding-bottom: -8rem !important; }\n\n.pl--8,\n.px--8 {\n  padding-left: -8rem !important; }\n\n.p--7 {\n  padding: -6rem !important; }\n\n.pt--7,\n.py--7 {\n  padding-top: -6rem !important; }\n\n.pr--7,\n.px--7 {\n  padding-right: -6rem !important; }\n\n.pb--7,\n.py--7 {\n  padding-bottom: -6rem !important; }\n\n.pl--7,\n.px--7 {\n  padding-left: -6rem !important; }\n\n.p--6 {\n  padding: -4.5rem !important; }\n\n.pt--6,\n.py--6 {\n  padding-top: -4.5rem !important; }\n\n.pr--6,\n.px--6 {\n  padding-right: -4.5rem !important; }\n\n.pb--6,\n.py--6 {\n  padding-bottom: -4.5rem !important; }\n\n.pl--6,\n.px--6 {\n  padding-left: -4.5rem !important; }\n\n.p--5 {\n  padding: -3rem !important; }\n\n.pt--5,\n.py--5 {\n  padding-top: -3rem !important; }\n\n.pr--5,\n.px--5 {\n  padding-right: -3rem !important; }\n\n.pb--5,\n.py--5 {\n  padding-bottom: -3rem !important; }\n\n.pl--5,\n.px--5 {\n  padding-left: -3rem !important; }\n\n.p--4 {\n  padding: -1.5rem !important; }\n\n.pt--4,\n.py--4 {\n  padding-top: -1.5rem !important; }\n\n.pr--4,\n.px--4 {\n  padding-right: -1.5rem !important; }\n\n.pb--4,\n.py--4 {\n  padding-bottom: -1.5rem !important; }\n\n.pl--4,\n.px--4 {\n  padding-left: -1.5rem !important; }\n\n.p--3 {\n  padding: -1rem !important; }\n\n.pt--3,\n.py--3 {\n  padding-top: -1rem !important; }\n\n.pr--3,\n.px--3 {\n  padding-right: -1rem !important; }\n\n.pb--3,\n.py--3 {\n  padding-bottom: -1rem !important; }\n\n.pl--3,\n.px--3 {\n  padding-left: -1rem !important; }\n\n.p--2 {\n  padding: -0.5rem !important; }\n\n.pt--2,\n.py--2 {\n  padding-top: -0.5rem !important; }\n\n.pr--2,\n.px--2 {\n  padding-right: -0.5rem !important; }\n\n.pb--2,\n.py--2 {\n  padding-bottom: -0.5rem !important; }\n\n.pl--2,\n.px--2 {\n  padding-left: -0.5rem !important; }\n\n.p--1 {\n  padding: -0.25rem !important; }\n\n.pt--1,\n.py--1 {\n  padding-top: -0.25rem !important; }\n\n.pr--1,\n.px--1 {\n  padding-right: -0.25rem !important; }\n\n.pb--1,\n.py--1 {\n  padding-bottom: -0.25rem !important; }\n\n.pl--1,\n.px--1 {\n  padding-left: -0.25rem !important; }\n\n.p-6 {\n  padding: 4.5rem !important; }\n\n.pt-6,\n.py-6 {\n  padding-top: 4.5rem !important; }\n\n.pr-6,\n.px-6 {\n  padding-right: 4.5rem !important; }\n\n.pb-6,\n.py-6 {\n  padding-bottom: 4.5rem !important; }\n\n.pl-6,\n.px-6 {\n  padding-left: 4.5rem !important; }\n\n.p-7 {\n  padding: 6rem !important; }\n\n.pt-7,\n.py-7 {\n  padding-top: 6rem !important; }\n\n.pr-7,\n.px-7 {\n  padding-right: 6rem !important; }\n\n.pb-7,\n.py-7 {\n  padding-bottom: 6rem !important; }\n\n.pl-7,\n.px-7 {\n  padding-left: 6rem !important; }\n\n.p-8 {\n  padding: 8rem !important; }\n\n.pt-8,\n.py-8 {\n  padding-top: 8rem !important; }\n\n.pr-8,\n.px-8 {\n  padding-right: 8rem !important; }\n\n.pb-8,\n.py-8 {\n  padding-bottom: 8rem !important; }\n\n.pl-8,\n.px-8 {\n  padding-left: 8rem !important; }\n\n.p-9 {\n  padding: 10rem !important; }\n\n.pt-9,\n.py-9 {\n  padding-top: 10rem !important; }\n\n.pr-9,\n.px-9 {\n  padding-right: 10rem !important; }\n\n.pb-9,\n.py-9 {\n  padding-bottom: 10rem !important; }\n\n.pl-9,\n.px-9 {\n  padding-left: 10rem !important; }\n\n.m-auto {\n  margin: auto !important; }\n\n.mt-auto,\n.my-auto {\n  margin-top: auto !important; }\n\n.mr-auto,\n.mx-auto {\n  margin-right: auto !important; }\n\n.mb-auto,\n.my-auto {\n  margin-bottom: auto !important; }\n\n.ml-auto,\n.mx-auto {\n  margin-left: auto !important; }\n\n@media (min-width: 576px) {\n  .m-sm-0 {\n    margin: 0 !important; }\n  .mt-sm-0,\n  .my-sm-0 {\n    margin-top: 0 !important; }\n  .mr-sm-0,\n  .mx-sm-0 {\n    margin-right: 0 !important; }\n  .mb-sm-0,\n  .my-sm-0 {\n    margin-bottom: 0 !important; }\n  .ml-sm-0,\n  .mx-sm-0 {\n    margin-left: 0 !important; }\n  .m-sm-1 {\n    margin: 0.25rem !important; }\n  .mt-sm-1,\n  .my-sm-1 {\n    margin-top: 0.25rem !important; }\n  .mr-sm-1,\n  .mx-sm-1 {\n    margin-right: 0.25rem !important; }\n  .mb-sm-1,\n  .my-sm-1 {\n    margin-bottom: 0.25rem !important; }\n  .ml-sm-1,\n  .mx-sm-1 {\n    margin-left: 0.25rem !important; }\n  .m-sm-2 {\n    margin: 0.5rem !important; }\n  .mt-sm-2,\n  .my-sm-2 {\n    margin-top: 0.5rem !important; }\n  .mr-sm-2,\n  .mx-sm-2 {\n    margin-right: 0.5rem !important; }\n  .mb-sm-2,\n  .my-sm-2 {\n    margin-bottom: 0.5rem !important; }\n  .ml-sm-2,\n  .mx-sm-2 {\n    margin-left: 0.5rem !important; }\n  .m-sm-3 {\n    margin: 1rem !important; }\n  .mt-sm-3,\n  .my-sm-3 {\n    margin-top: 1rem !important; }\n  .mr-sm-3,\n  .mx-sm-3 {\n    margin-right: 1rem !important; }\n  .mb-sm-3,\n  .my-sm-3 {\n    margin-bottom: 1rem !important; }\n  .ml-sm-3,\n  .mx-sm-3 {\n    margin-left: 1rem !important; }\n  .m-sm-4 {\n    margin: 1.5rem !important; }\n  .mt-sm-4,\n  .my-sm-4 {\n    margin-top: 1.5rem !important; }\n  .mr-sm-4,\n  .mx-sm-4 {\n    margin-right: 1.5rem !important; }\n  .mb-sm-4,\n  .my-sm-4 {\n    margin-bottom: 1.5rem !important; }\n  .ml-sm-4,\n  .mx-sm-4 {\n    margin-left: 1.5rem !important; }\n  .m-sm-5 {\n    margin: 3rem !important; }\n  .mt-sm-5,\n  .my-sm-5 {\n    margin-top: 3rem !important; }\n  .mr-sm-5,\n  .mx-sm-5 {\n    margin-right: 3rem !important; }\n  .mb-sm-5,\n  .my-sm-5 {\n    margin-bottom: 3rem !important; }\n  .ml-sm-5,\n  .mx-sm-5 {\n    margin-left: 3rem !important; }\n  .m-sm--9 {\n    margin: -10rem !important; }\n  .mt-sm--9,\n  .my-sm--9 {\n    margin-top: -10rem !important; }\n  .mr-sm--9,\n  .mx-sm--9 {\n    margin-right: -10rem !important; }\n  .mb-sm--9,\n  .my-sm--9 {\n    margin-bottom: -10rem !important; }\n  .ml-sm--9,\n  .mx-sm--9 {\n    margin-left: -10rem !important; }\n  .m-sm--8 {\n    margin: -8rem !important; }\n  .mt-sm--8,\n  .my-sm--8 {\n    margin-top: -8rem !important; }\n  .mr-sm--8,\n  .mx-sm--8 {\n    margin-right: -8rem !important; }\n  .mb-sm--8,\n  .my-sm--8 {\n    margin-bottom: -8rem !important; }\n  .ml-sm--8,\n  .mx-sm--8 {\n    margin-left: -8rem !important; }\n  .m-sm--7 {\n    margin: -6rem !important; }\n  .mt-sm--7,\n  .my-sm--7 {\n    margin-top: -6rem !important; }\n  .mr-sm--7,\n  .mx-sm--7 {\n    margin-right: -6rem !important; }\n  .mb-sm--7,\n  .my-sm--7 {\n    margin-bottom: -6rem !important; }\n  .ml-sm--7,\n  .mx-sm--7 {\n    margin-left: -6rem !important; }\n  .m-sm--6 {\n    margin: -4.5rem !important; }\n  .mt-sm--6,\n  .my-sm--6 {\n    margin-top: -4.5rem !important; }\n  .mr-sm--6,\n  .mx-sm--6 {\n    margin-right: -4.5rem !important; }\n  .mb-sm--6,\n  .my-sm--6 {\n    margin-bottom: -4.5rem !important; }\n  .ml-sm--6,\n  .mx-sm--6 {\n    margin-left: -4.5rem !important; }\n  .m-sm--5 {\n    margin: -3rem !important; }\n  .mt-sm--5,\n  .my-sm--5 {\n    margin-top: -3rem !important; }\n  .mr-sm--5,\n  .mx-sm--5 {\n    margin-right: -3rem !important; }\n  .mb-sm--5,\n  .my-sm--5 {\n    margin-bottom: -3rem !important; }\n  .ml-sm--5,\n  .mx-sm--5 {\n    margin-left: -3rem !important; }\n  .m-sm--4 {\n    margin: -1.5rem !important; }\n  .mt-sm--4,\n  .my-sm--4 {\n    margin-top: -1.5rem !important; }\n  .mr-sm--4,\n  .mx-sm--4 {\n    margin-right: -1.5rem !important; }\n  .mb-sm--4,\n  .my-sm--4 {\n    margin-bottom: -1.5rem !important; }\n  .ml-sm--4,\n  .mx-sm--4 {\n    margin-left: -1.5rem !important; }\n  .m-sm--3 {\n    margin: -1rem !important; }\n  .mt-sm--3,\n  .my-sm--3 {\n    margin-top: -1rem !important; }\n  .mr-sm--3,\n  .mx-sm--3 {\n    margin-right: -1rem !important; }\n  .mb-sm--3,\n  .my-sm--3 {\n    margin-bottom: -1rem !important; }\n  .ml-sm--3,\n  .mx-sm--3 {\n    margin-left: -1rem !important; }\n  .m-sm--2 {\n    margin: -0.5rem !important; }\n  .mt-sm--2,\n  .my-sm--2 {\n    margin-top: -0.5rem !important; }\n  .mr-sm--2,\n  .mx-sm--2 {\n    margin-right: -0.5rem !important; }\n  .mb-sm--2,\n  .my-sm--2 {\n    margin-bottom: -0.5rem !important; }\n  .ml-sm--2,\n  .mx-sm--2 {\n    margin-left: -0.5rem !important; }\n  .m-sm--1 {\n    margin: -0.25rem !important; }\n  .mt-sm--1,\n  .my-sm--1 {\n    margin-top: -0.25rem !important; }\n  .mr-sm--1,\n  .mx-sm--1 {\n    margin-right: -0.25rem !important; }\n  .mb-sm--1,\n  .my-sm--1 {\n    margin-bottom: -0.25rem !important; }\n  .ml-sm--1,\n  .mx-sm--1 {\n    margin-left: -0.25rem !important; }\n  .m-sm-6 {\n    margin: 4.5rem !important; }\n  .mt-sm-6,\n  .my-sm-6 {\n    margin-top: 4.5rem !important; }\n  .mr-sm-6,\n  .mx-sm-6 {\n    margin-right: 4.5rem !important; }\n  .mb-sm-6,\n  .my-sm-6 {\n    margin-bottom: 4.5rem !important; }\n  .ml-sm-6,\n  .mx-sm-6 {\n    margin-left: 4.5rem !important; }\n  .m-sm-7 {\n    margin: 6rem !important; }\n  .mt-sm-7,\n  .my-sm-7 {\n    margin-top: 6rem !important; }\n  .mr-sm-7,\n  .mx-sm-7 {\n    margin-right: 6rem !important; }\n  .mb-sm-7,\n  .my-sm-7 {\n    margin-bottom: 6rem !important; }\n  .ml-sm-7,\n  .mx-sm-7 {\n    margin-left: 6rem !important; }\n  .m-sm-8 {\n    margin: 8rem !important; }\n  .mt-sm-8,\n  .my-sm-8 {\n    margin-top: 8rem !important; }\n  .mr-sm-8,\n  .mx-sm-8 {\n    margin-right: 8rem !important; }\n  .mb-sm-8,\n  .my-sm-8 {\n    margin-bottom: 8rem !important; }\n  .ml-sm-8,\n  .mx-sm-8 {\n    margin-left: 8rem !important; }\n  .m-sm-9 {\n    margin: 10rem !important; }\n  .mt-sm-9,\n  .my-sm-9 {\n    margin-top: 10rem !important; }\n  .mr-sm-9,\n  .mx-sm-9 {\n    margin-right: 10rem !important; }\n  .mb-sm-9,\n  .my-sm-9 {\n    margin-bottom: 10rem !important; }\n  .ml-sm-9,\n  .mx-sm-9 {\n    margin-left: 10rem !important; }\n  .p-sm-0 {\n    padding: 0 !important; }\n  .pt-sm-0,\n  .py-sm-0 {\n    padding-top: 0 !important; }\n  .pr-sm-0,\n  .px-sm-0 {\n    padding-right: 0 !important; }\n  .pb-sm-0,\n  .py-sm-0 {\n    padding-bottom: 0 !important; }\n  .pl-sm-0,\n  .px-sm-0 {\n    padding-left: 0 !important; }\n  .p-sm-1 {\n    padding: 0.25rem !important; }\n  .pt-sm-1,\n  .py-sm-1 {\n    padding-top: 0.25rem !important; }\n  .pr-sm-1,\n  .px-sm-1 {\n    padding-right: 0.25rem !important; }\n  .pb-sm-1,\n  .py-sm-1 {\n    padding-bottom: 0.25rem !important; }\n  .pl-sm-1,\n  .px-sm-1 {\n    padding-left: 0.25rem !important; }\n  .p-sm-2 {\n    padding: 0.5rem !important; }\n  .pt-sm-2,\n  .py-sm-2 {\n    padding-top: 0.5rem !important; }\n  .pr-sm-2,\n  .px-sm-2 {\n    padding-right: 0.5rem !important; }\n  .pb-sm-2,\n  .py-sm-2 {\n    padding-bottom: 0.5rem !important; }\n  .pl-sm-2,\n  .px-sm-2 {\n    padding-left: 0.5rem !important; }\n  .p-sm-3 {\n    padding: 1rem !important; }\n  .pt-sm-3,\n  .py-sm-3 {\n    padding-top: 1rem !important; }\n  .pr-sm-3,\n  .px-sm-3 {\n    padding-right: 1rem !important; }\n  .pb-sm-3,\n  .py-sm-3 {\n    padding-bottom: 1rem !important; }\n  .pl-sm-3,\n  .px-sm-3 {\n    padding-left: 1rem !important; }\n  .p-sm-4 {\n    padding: 1.5rem !important; }\n  .pt-sm-4,\n  .py-sm-4 {\n    padding-top: 1.5rem !important; }\n  .pr-sm-4,\n  .px-sm-4 {\n    padding-right: 1.5rem !important; }\n  .pb-sm-4,\n  .py-sm-4 {\n    padding-bottom: 1.5rem !important; }\n  .pl-sm-4,\n  .px-sm-4 {\n    padding-left: 1.5rem !important; }\n  .p-sm-5 {\n    padding: 3rem !important; }\n  .pt-sm-5,\n  .py-sm-5 {\n    padding-top: 3rem !important; }\n  .pr-sm-5,\n  .px-sm-5 {\n    padding-right: 3rem !important; }\n  .pb-sm-5,\n  .py-sm-5 {\n    padding-bottom: 3rem !important; }\n  .pl-sm-5,\n  .px-sm-5 {\n    padding-left: 3rem !important; }\n  .p-sm--9 {\n    padding: -10rem !important; }\n  .pt-sm--9,\n  .py-sm--9 {\n    padding-top: -10rem !important; }\n  .pr-sm--9,\n  .px-sm--9 {\n    padding-right: -10rem !important; }\n  .pb-sm--9,\n  .py-sm--9 {\n    padding-bottom: -10rem !important; }\n  .pl-sm--9,\n  .px-sm--9 {\n    padding-left: -10rem !important; }\n  .p-sm--8 {\n    padding: -8rem !important; }\n  .pt-sm--8,\n  .py-sm--8 {\n    padding-top: -8rem !important; }\n  .pr-sm--8,\n  .px-sm--8 {\n    padding-right: -8rem !important; }\n  .pb-sm--8,\n  .py-sm--8 {\n    padding-bottom: -8rem !important; }\n  .pl-sm--8,\n  .px-sm--8 {\n    padding-left: -8rem !important; }\n  .p-sm--7 {\n    padding: -6rem !important; }\n  .pt-sm--7,\n  .py-sm--7 {\n    padding-top: -6rem !important; }\n  .pr-sm--7,\n  .px-sm--7 {\n    padding-right: -6rem !important; }\n  .pb-sm--7,\n  .py-sm--7 {\n    padding-bottom: -6rem !important; }\n  .pl-sm--7,\n  .px-sm--7 {\n    padding-left: -6rem !important; }\n  .p-sm--6 {\n    padding: -4.5rem !important; }\n  .pt-sm--6,\n  .py-sm--6 {\n    padding-top: -4.5rem !important; }\n  .pr-sm--6,\n  .px-sm--6 {\n    padding-right: -4.5rem !important; }\n  .pb-sm--6,\n  .py-sm--6 {\n    padding-bottom: -4.5rem !important; }\n  .pl-sm--6,\n  .px-sm--6 {\n    padding-left: -4.5rem !important; }\n  .p-sm--5 {\n    padding: -3rem !important; }\n  .pt-sm--5,\n  .py-sm--5 {\n    padding-top: -3rem !important; }\n  .pr-sm--5,\n  .px-sm--5 {\n    padding-right: -3rem !important; }\n  .pb-sm--5,\n  .py-sm--5 {\n    padding-bottom: -3rem !important; }\n  .pl-sm--5,\n  .px-sm--5 {\n    padding-left: -3rem !important; }\n  .p-sm--4 {\n    padding: -1.5rem !important; }\n  .pt-sm--4,\n  .py-sm--4 {\n    padding-top: -1.5rem !important; }\n  .pr-sm--4,\n  .px-sm--4 {\n    padding-right: -1.5rem !important; }\n  .pb-sm--4,\n  .py-sm--4 {\n    padding-bottom: -1.5rem !important; }\n  .pl-sm--4,\n  .px-sm--4 {\n    padding-left: -1.5rem !important; }\n  .p-sm--3 {\n    padding: -1rem !important; }\n  .pt-sm--3,\n  .py-sm--3 {\n    padding-top: -1rem !important; }\n  .pr-sm--3,\n  .px-sm--3 {\n    padding-right: -1rem !important; }\n  .pb-sm--3,\n  .py-sm--3 {\n    padding-bottom: -1rem !important; }\n  .pl-sm--3,\n  .px-sm--3 {\n    padding-left: -1rem !important; }\n  .p-sm--2 {\n    padding: -0.5rem !important; }\n  .pt-sm--2,\n  .py-sm--2 {\n    padding-top: -0.5rem !important; }\n  .pr-sm--2,\n  .px-sm--2 {\n    padding-right: -0.5rem !important; }\n  .pb-sm--2,\n  .py-sm--2 {\n    padding-bottom: -0.5rem !important; }\n  .pl-sm--2,\n  .px-sm--2 {\n    padding-left: -0.5rem !important; }\n  .p-sm--1 {\n    padding: -0.25rem !important; }\n  .pt-sm--1,\n  .py-sm--1 {\n    padding-top: -0.25rem !important; }\n  .pr-sm--1,\n  .px-sm--1 {\n    padding-right: -0.25rem !important; }\n  .pb-sm--1,\n  .py-sm--1 {\n    padding-bottom: -0.25rem !important; }\n  .pl-sm--1,\n  .px-sm--1 {\n    padding-left: -0.25rem !important; }\n  .p-sm-6 {\n    padding: 4.5rem !important; }\n  .pt-sm-6,\n  .py-sm-6 {\n    padding-top: 4.5rem !important; }\n  .pr-sm-6,\n  .px-sm-6 {\n    padding-right: 4.5rem !important; }\n  .pb-sm-6,\n  .py-sm-6 {\n    padding-bottom: 4.5rem !important; }\n  .pl-sm-6,\n  .px-sm-6 {\n    padding-left: 4.5rem !important; }\n  .p-sm-7 {\n    padding: 6rem !important; }\n  .pt-sm-7,\n  .py-sm-7 {\n    padding-top: 6rem !important; }\n  .pr-sm-7,\n  .px-sm-7 {\n    padding-right: 6rem !important; }\n  .pb-sm-7,\n  .py-sm-7 {\n    padding-bottom: 6rem !important; }\n  .pl-sm-7,\n  .px-sm-7 {\n    padding-left: 6rem !important; }\n  .p-sm-8 {\n    padding: 8rem !important; }\n  .pt-sm-8,\n  .py-sm-8 {\n    padding-top: 8rem !important; }\n  .pr-sm-8,\n  .px-sm-8 {\n    padding-right: 8rem !important; }\n  .pb-sm-8,\n  .py-sm-8 {\n    padding-bottom: 8rem !important; }\n  .pl-sm-8,\n  .px-sm-8 {\n    padding-left: 8rem !important; }\n  .p-sm-9 {\n    padding: 10rem !important; }\n  .pt-sm-9,\n  .py-sm-9 {\n    padding-top: 10rem !important; }\n  .pr-sm-9,\n  .px-sm-9 {\n    padding-right: 10rem !important; }\n  .pb-sm-9,\n  .py-sm-9 {\n    padding-bottom: 10rem !important; }\n  .pl-sm-9,\n  .px-sm-9 {\n    padding-left: 10rem !important; }\n  .m-sm-auto {\n    margin: auto !important; }\n  .mt-sm-auto,\n  .my-sm-auto {\n    margin-top: auto !important; }\n  .mr-sm-auto,\n  .mx-sm-auto {\n    margin-right: auto !important; }\n  .mb-sm-auto,\n  .my-sm-auto {\n    margin-bottom: auto !important; }\n  .ml-sm-auto,\n  .mx-sm-auto {\n    margin-left: auto !important; } }\n\n@media (min-width: 768px) {\n  .m-md-0 {\n    margin: 0 !important; }\n  .mt-md-0,\n  .my-md-0 {\n    margin-top: 0 !important; }\n  .mr-md-0,\n  .mx-md-0 {\n    margin-right: 0 !important; }\n  .mb-md-0,\n  .my-md-0 {\n    margin-bottom: 0 !important; }\n  .ml-md-0,\n  .mx-md-0 {\n    margin-left: 0 !important; }\n  .m-md-1 {\n    margin: 0.25rem !important; }\n  .mt-md-1,\n  .my-md-1 {\n    margin-top: 0.25rem !important; }\n  .mr-md-1,\n  .mx-md-1 {\n    margin-right: 0.25rem !important; }\n  .mb-md-1,\n  .my-md-1 {\n    margin-bottom: 0.25rem !important; }\n  .ml-md-1,\n  .mx-md-1 {\n    margin-left: 0.25rem !important; }\n  .m-md-2 {\n    margin: 0.5rem !important; }\n  .mt-md-2,\n  .my-md-2 {\n    margin-top: 0.5rem !important; }\n  .mr-md-2,\n  .mx-md-2 {\n    margin-right: 0.5rem !important; }\n  .mb-md-2,\n  .my-md-2 {\n    margin-bottom: 0.5rem !important; }\n  .ml-md-2,\n  .mx-md-2 {\n    margin-left: 0.5rem !important; }\n  .m-md-3 {\n    margin: 1rem !important; }\n  .mt-md-3,\n  .my-md-3 {\n    margin-top: 1rem !important; }\n  .mr-md-3,\n  .mx-md-3 {\n    margin-right: 1rem !important; }\n  .mb-md-3,\n  .my-md-3 {\n    margin-bottom: 1rem !important; }\n  .ml-md-3,\n  .mx-md-3 {\n    margin-left: 1rem !important; }\n  .m-md-4 {\n    margin: 1.5rem !important; }\n  .mt-md-4,\n  .my-md-4 {\n    margin-top: 1.5rem !important; }\n  .mr-md-4,\n  .mx-md-4 {\n    margin-right: 1.5rem !important; }\n  .mb-md-4,\n  .my-md-4 {\n    margin-bottom: 1.5rem !important; }\n  .ml-md-4,\n  .mx-md-4 {\n    margin-left: 1.5rem !important; }\n  .m-md-5 {\n    margin: 3rem !important; }\n  .mt-md-5,\n  .my-md-5 {\n    margin-top: 3rem !important; }\n  .mr-md-5,\n  .mx-md-5 {\n    margin-right: 3rem !important; }\n  .mb-md-5,\n  .my-md-5 {\n    margin-bottom: 3rem !important; }\n  .ml-md-5,\n  .mx-md-5 {\n    margin-left: 3rem !important; }\n  .m-md--9 {\n    margin: -10rem !important; }\n  .mt-md--9,\n  .my-md--9 {\n    margin-top: -10rem !important; }\n  .mr-md--9,\n  .mx-md--9 {\n    margin-right: -10rem !important; }\n  .mb-md--9,\n  .my-md--9 {\n    margin-bottom: -10rem !important; }\n  .ml-md--9,\n  .mx-md--9 {\n    margin-left: -10rem !important; }\n  .m-md--8 {\n    margin: -8rem !important; }\n  .mt-md--8,\n  .my-md--8 {\n    margin-top: -8rem !important; }\n  .mr-md--8,\n  .mx-md--8 {\n    margin-right: -8rem !important; }\n  .mb-md--8,\n  .my-md--8 {\n    margin-bottom: -8rem !important; }\n  .ml-md--8,\n  .mx-md--8 {\n    margin-left: -8rem !important; }\n  .m-md--7 {\n    margin: -6rem !important; }\n  .mt-md--7,\n  .my-md--7 {\n    margin-top: -6rem !important; }\n  .mr-md--7,\n  .mx-md--7 {\n    margin-right: -6rem !important; }\n  .mb-md--7,\n  .my-md--7 {\n    margin-bottom: -6rem !important; }\n  .ml-md--7,\n  .mx-md--7 {\n    margin-left: -6rem !important; }\n  .m-md--6 {\n    margin: -4.5rem !important; }\n  .mt-md--6,\n  .my-md--6 {\n    margin-top: -4.5rem !important; }\n  .mr-md--6,\n  .mx-md--6 {\n    margin-right: -4.5rem !important; }\n  .mb-md--6,\n  .my-md--6 {\n    margin-bottom: -4.5rem !important; }\n  .ml-md--6,\n  .mx-md--6 {\n    margin-left: -4.5rem !important; }\n  .m-md--5 {\n    margin: -3rem !important; }\n  .mt-md--5,\n  .my-md--5 {\n    margin-top: -3rem !important; }\n  .mr-md--5,\n  .mx-md--5 {\n    margin-right: -3rem !important; }\n  .mb-md--5,\n  .my-md--5 {\n    margin-bottom: -3rem !important; }\n  .ml-md--5,\n  .mx-md--5 {\n    margin-left: -3rem !important; }\n  .m-md--4 {\n    margin: -1.5rem !important; }\n  .mt-md--4,\n  .my-md--4 {\n    margin-top: -1.5rem !important; }\n  .mr-md--4,\n  .mx-md--4 {\n    margin-right: -1.5rem !important; }\n  .mb-md--4,\n  .my-md--4 {\n    margin-bottom: -1.5rem !important; }\n  .ml-md--4,\n  .mx-md--4 {\n    margin-left: -1.5rem !important; }\n  .m-md--3 {\n    margin: -1rem !important; }\n  .mt-md--3,\n  .my-md--3 {\n    margin-top: -1rem !important; }\n  .mr-md--3,\n  .mx-md--3 {\n    margin-right: -1rem !important; }\n  .mb-md--3,\n  .my-md--3 {\n    margin-bottom: -1rem !important; }\n  .ml-md--3,\n  .mx-md--3 {\n    margin-left: -1rem !important; }\n  .m-md--2 {\n    margin: -0.5rem !important; }\n  .mt-md--2,\n  .my-md--2 {\n    margin-top: -0.5rem !important; }\n  .mr-md--2,\n  .mx-md--2 {\n    margin-right: -0.5rem !important; }\n  .mb-md--2,\n  .my-md--2 {\n    margin-bottom: -0.5rem !important; }\n  .ml-md--2,\n  .mx-md--2 {\n    margin-left: -0.5rem !important; }\n  .m-md--1 {\n    margin: -0.25rem !important; }\n  .mt-md--1,\n  .my-md--1 {\n    margin-top: -0.25rem !important; }\n  .mr-md--1,\n  .mx-md--1 {\n    margin-right: -0.25rem !important; }\n  .mb-md--1,\n  .my-md--1 {\n    margin-bottom: -0.25rem !important; }\n  .ml-md--1,\n  .mx-md--1 {\n    margin-left: -0.25rem !important; }\n  .m-md-6 {\n    margin: 4.5rem !important; }\n  .mt-md-6,\n  .my-md-6 {\n    margin-top: 4.5rem !important; }\n  .mr-md-6,\n  .mx-md-6 {\n    margin-right: 4.5rem !important; }\n  .mb-md-6,\n  .my-md-6 {\n    margin-bottom: 4.5rem !important; }\n  .ml-md-6,\n  .mx-md-6 {\n    margin-left: 4.5rem !important; }\n  .m-md-7 {\n    margin: 6rem !important; }\n  .mt-md-7,\n  .my-md-7 {\n    margin-top: 6rem !important; }\n  .mr-md-7,\n  .mx-md-7 {\n    margin-right: 6rem !important; }\n  .mb-md-7,\n  .my-md-7 {\n    margin-bottom: 6rem !important; }\n  .ml-md-7,\n  .mx-md-7 {\n    margin-left: 6rem !important; }\n  .m-md-8 {\n    margin: 8rem !important; }\n  .mt-md-8,\n  .my-md-8 {\n    margin-top: 8rem !important; }\n  .mr-md-8,\n  .mx-md-8 {\n    margin-right: 8rem !important; }\n  .mb-md-8,\n  .my-md-8 {\n    margin-bottom: 8rem !important; }\n  .ml-md-8,\n  .mx-md-8 {\n    margin-left: 8rem !important; }\n  .m-md-9 {\n    margin: 10rem !important; }\n  .mt-md-9,\n  .my-md-9 {\n    margin-top: 10rem !important; }\n  .mr-md-9,\n  .mx-md-9 {\n    margin-right: 10rem !important; }\n  .mb-md-9,\n  .my-md-9 {\n    margin-bottom: 10rem !important; }\n  .ml-md-9,\n  .mx-md-9 {\n    margin-left: 10rem !important; }\n  .p-md-0 {\n    padding: 0 !important; }\n  .pt-md-0,\n  .py-md-0 {\n    padding-top: 0 !important; }\n  .pr-md-0,\n  .px-md-0 {\n    padding-right: 0 !important; }\n  .pb-md-0,\n  .py-md-0 {\n    padding-bottom: 0 !important; }\n  .pl-md-0,\n  .px-md-0 {\n    padding-left: 0 !important; }\n  .p-md-1 {\n    padding: 0.25rem !important; }\n  .pt-md-1,\n  .py-md-1 {\n    padding-top: 0.25rem !important; }\n  .pr-md-1,\n  .px-md-1 {\n    padding-right: 0.25rem !important; }\n  .pb-md-1,\n  .py-md-1 {\n    padding-bottom: 0.25rem !important; }\n  .pl-md-1,\n  .px-md-1 {\n    padding-left: 0.25rem !important; }\n  .p-md-2 {\n    padding: 0.5rem !important; }\n  .pt-md-2,\n  .py-md-2 {\n    padding-top: 0.5rem !important; }\n  .pr-md-2,\n  .px-md-2 {\n    padding-right: 0.5rem !important; }\n  .pb-md-2,\n  .py-md-2 {\n    padding-bottom: 0.5rem !important; }\n  .pl-md-2,\n  .px-md-2 {\n    padding-left: 0.5rem !important; }\n  .p-md-3 {\n    padding: 1rem !important; }\n  .pt-md-3,\n  .py-md-3 {\n    padding-top: 1rem !important; }\n  .pr-md-3,\n  .px-md-3 {\n    padding-right: 1rem !important; }\n  .pb-md-3,\n  .py-md-3 {\n    padding-bottom: 1rem !important; }\n  .pl-md-3,\n  .px-md-3 {\n    padding-left: 1rem !important; }\n  .p-md-4 {\n    padding: 1.5rem !important; }\n  .pt-md-4,\n  .py-md-4 {\n    padding-top: 1.5rem !important; }\n  .pr-md-4,\n  .px-md-4 {\n    padding-right: 1.5rem !important; }\n  .pb-md-4,\n  .py-md-4 {\n    padding-bottom: 1.5rem !important; }\n  .pl-md-4,\n  .px-md-4 {\n    padding-left: 1.5rem !important; }\n  .p-md-5 {\n    padding: 3rem !important; }\n  .pt-md-5,\n  .py-md-5 {\n    padding-top: 3rem !important; }\n  .pr-md-5,\n  .px-md-5 {\n    padding-right: 3rem !important; }\n  .pb-md-5,\n  .py-md-5 {\n    padding-bottom: 3rem !important; }\n  .pl-md-5,\n  .px-md-5 {\n    padding-left: 3rem !important; }\n  .p-md--9 {\n    padding: -10rem !important; }\n  .pt-md--9,\n  .py-md--9 {\n    padding-top: -10rem !important; }\n  .pr-md--9,\n  .px-md--9 {\n    padding-right: -10rem !important; }\n  .pb-md--9,\n  .py-md--9 {\n    padding-bottom: -10rem !important; }\n  .pl-md--9,\n  .px-md--9 {\n    padding-left: -10rem !important; }\n  .p-md--8 {\n    padding: -8rem !important; }\n  .pt-md--8,\n  .py-md--8 {\n    padding-top: -8rem !important; }\n  .pr-md--8,\n  .px-md--8 {\n    padding-right: -8rem !important; }\n  .pb-md--8,\n  .py-md--8 {\n    padding-bottom: -8rem !important; }\n  .pl-md--8,\n  .px-md--8 {\n    padding-left: -8rem !important; }\n  .p-md--7 {\n    padding: -6rem !important; }\n  .pt-md--7,\n  .py-md--7 {\n    padding-top: -6rem !important; }\n  .pr-md--7,\n  .px-md--7 {\n    padding-right: -6rem !important; }\n  .pb-md--7,\n  .py-md--7 {\n    padding-bottom: -6rem !important; }\n  .pl-md--7,\n  .px-md--7 {\n    padding-left: -6rem !important; }\n  .p-md--6 {\n    padding: -4.5rem !important; }\n  .pt-md--6,\n  .py-md--6 {\n    padding-top: -4.5rem !important; }\n  .pr-md--6,\n  .px-md--6 {\n    padding-right: -4.5rem !important; }\n  .pb-md--6,\n  .py-md--6 {\n    padding-bottom: -4.5rem !important; }\n  .pl-md--6,\n  .px-md--6 {\n    padding-left: -4.5rem !important; }\n  .p-md--5 {\n    padding: -3rem !important; }\n  .pt-md--5,\n  .py-md--5 {\n    padding-top: -3rem !important; }\n  .pr-md--5,\n  .px-md--5 {\n    padding-right: -3rem !important; }\n  .pb-md--5,\n  .py-md--5 {\n    padding-bottom: -3rem !important; }\n  .pl-md--5,\n  .px-md--5 {\n    padding-left: -3rem !important; }\n  .p-md--4 {\n    padding: -1.5rem !important; }\n  .pt-md--4,\n  .py-md--4 {\n    padding-top: -1.5rem !important; }\n  .pr-md--4,\n  .px-md--4 {\n    padding-right: -1.5rem !important; }\n  .pb-md--4,\n  .py-md--4 {\n    padding-bottom: -1.5rem !important; }\n  .pl-md--4,\n  .px-md--4 {\n    padding-left: -1.5rem !important; }\n  .p-md--3 {\n    padding: -1rem !important; }\n  .pt-md--3,\n  .py-md--3 {\n    padding-top: -1rem !important; }\n  .pr-md--3,\n  .px-md--3 {\n    padding-right: -1rem !important; }\n  .pb-md--3,\n  .py-md--3 {\n    padding-bottom: -1rem !important; }\n  .pl-md--3,\n  .px-md--3 {\n    padding-left: -1rem !important; }\n  .p-md--2 {\n    padding: -0.5rem !important; }\n  .pt-md--2,\n  .py-md--2 {\n    padding-top: -0.5rem !important; }\n  .pr-md--2,\n  .px-md--2 {\n    padding-right: -0.5rem !important; }\n  .pb-md--2,\n  .py-md--2 {\n    padding-bottom: -0.5rem !important; }\n  .pl-md--2,\n  .px-md--2 {\n    padding-left: -0.5rem !important; }\n  .p-md--1 {\n    padding: -0.25rem !important; }\n  .pt-md--1,\n  .py-md--1 {\n    padding-top: -0.25rem !important; }\n  .pr-md--1,\n  .px-md--1 {\n    padding-right: -0.25rem !important; }\n  .pb-md--1,\n  .py-md--1 {\n    padding-bottom: -0.25rem !important; }\n  .pl-md--1,\n  .px-md--1 {\n    padding-left: -0.25rem !important; }\n  .p-md-6 {\n    padding: 4.5rem !important; }\n  .pt-md-6,\n  .py-md-6 {\n    padding-top: 4.5rem !important; }\n  .pr-md-6,\n  .px-md-6 {\n    padding-right: 4.5rem !important; }\n  .pb-md-6,\n  .py-md-6 {\n    padding-bottom: 4.5rem !important; }\n  .pl-md-6,\n  .px-md-6 {\n    padding-left: 4.5rem !important; }\n  .p-md-7 {\n    padding: 6rem !important; }\n  .pt-md-7,\n  .py-md-7 {\n    padding-top: 6rem !important; }\n  .pr-md-7,\n  .px-md-7 {\n    padding-right: 6rem !important; }\n  .pb-md-7,\n  .py-md-7 {\n    padding-bottom: 6rem !important; }\n  .pl-md-7,\n  .px-md-7 {\n    padding-left: 6rem !important; }\n  .p-md-8 {\n    padding: 8rem !important; }\n  .pt-md-8,\n  .py-md-8 {\n    padding-top: 8rem !important; }\n  .pr-md-8,\n  .px-md-8 {\n    padding-right: 8rem !important; }\n  .pb-md-8,\n  .py-md-8 {\n    padding-bottom: 8rem !important; }\n  .pl-md-8,\n  .px-md-8 {\n    padding-left: 8rem !important; }\n  .p-md-9 {\n    padding: 10rem !important; }\n  .pt-md-9,\n  .py-md-9 {\n    padding-top: 10rem !important; }\n  .pr-md-9,\n  .px-md-9 {\n    padding-right: 10rem !important; }\n  .pb-md-9,\n  .py-md-9 {\n    padding-bottom: 10rem !important; }\n  .pl-md-9,\n  .px-md-9 {\n    padding-left: 10rem !important; }\n  .m-md-auto {\n    margin: auto !important; }\n  .mt-md-auto,\n  .my-md-auto {\n    margin-top: auto !important; }\n  .mr-md-auto,\n  .mx-md-auto {\n    margin-right: auto !important; }\n  .mb-md-auto,\n  .my-md-auto {\n    margin-bottom: auto !important; }\n  .ml-md-auto,\n  .mx-md-auto {\n    margin-left: auto !important; } }\n\n@media (min-width: 992px) {\n  .m-lg-0 {\n    margin: 0 !important; }\n  .mt-lg-0,\n  .my-lg-0 {\n    margin-top: 0 !important; }\n  .mr-lg-0,\n  .mx-lg-0 {\n    margin-right: 0 !important; }\n  .mb-lg-0,\n  .my-lg-0 {\n    margin-bottom: 0 !important; }\n  .ml-lg-0,\n  .mx-lg-0 {\n    margin-left: 0 !important; }\n  .m-lg-1 {\n    margin: 0.25rem !important; }\n  .mt-lg-1,\n  .my-lg-1 {\n    margin-top: 0.25rem !important; }\n  .mr-lg-1,\n  .mx-lg-1 {\n    margin-right: 0.25rem !important; }\n  .mb-lg-1,\n  .my-lg-1 {\n    margin-bottom: 0.25rem !important; }\n  .ml-lg-1,\n  .mx-lg-1 {\n    margin-left: 0.25rem !important; }\n  .m-lg-2 {\n    margin: 0.5rem !important; }\n  .mt-lg-2,\n  .my-lg-2 {\n    margin-top: 0.5rem !important; }\n  .mr-lg-2,\n  .mx-lg-2 {\n    margin-right: 0.5rem !important; }\n  .mb-lg-2,\n  .my-lg-2 {\n    margin-bottom: 0.5rem !important; }\n  .ml-lg-2,\n  .mx-lg-2 {\n    margin-left: 0.5rem !important; }\n  .m-lg-3 {\n    margin: 1rem !important; }\n  .mt-lg-3,\n  .my-lg-3 {\n    margin-top: 1rem !important; }\n  .mr-lg-3,\n  .mx-lg-3 {\n    margin-right: 1rem !important; }\n  .mb-lg-3,\n  .my-lg-3 {\n    margin-bottom: 1rem !important; }\n  .ml-lg-3,\n  .mx-lg-3 {\n    margin-left: 1rem !important; }\n  .m-lg-4 {\n    margin: 1.5rem !important; }\n  .mt-lg-4,\n  .my-lg-4 {\n    margin-top: 1.5rem !important; }\n  .mr-lg-4,\n  .mx-lg-4 {\n    margin-right: 1.5rem !important; }\n  .mb-lg-4,\n  .my-lg-4 {\n    margin-bottom: 1.5rem !important; }\n  .ml-lg-4,\n  .mx-lg-4 {\n    margin-left: 1.5rem !important; }\n  .m-lg-5 {\n    margin: 3rem !important; }\n  .mt-lg-5,\n  .my-lg-5 {\n    margin-top: 3rem !important; }\n  .mr-lg-5,\n  .mx-lg-5 {\n    margin-right: 3rem !important; }\n  .mb-lg-5,\n  .my-lg-5 {\n    margin-bottom: 3rem !important; }\n  .ml-lg-5,\n  .mx-lg-5 {\n    margin-left: 3rem !important; }\n  .m-lg--9 {\n    margin: -10rem !important; }\n  .mt-lg--9,\n  .my-lg--9 {\n    margin-top: -10rem !important; }\n  .mr-lg--9,\n  .mx-lg--9 {\n    margin-right: -10rem !important; }\n  .mb-lg--9,\n  .my-lg--9 {\n    margin-bottom: -10rem !important; }\n  .ml-lg--9,\n  .mx-lg--9 {\n    margin-left: -10rem !important; }\n  .m-lg--8 {\n    margin: -8rem !important; }\n  .mt-lg--8,\n  .my-lg--8 {\n    margin-top: -8rem !important; }\n  .mr-lg--8,\n  .mx-lg--8 {\n    margin-right: -8rem !important; }\n  .mb-lg--8,\n  .my-lg--8 {\n    margin-bottom: -8rem !important; }\n  .ml-lg--8,\n  .mx-lg--8 {\n    margin-left: -8rem !important; }\n  .m-lg--7 {\n    margin: -6rem !important; }\n  .mt-lg--7,\n  .my-lg--7 {\n    margin-top: -6rem !important; }\n  .mr-lg--7,\n  .mx-lg--7 {\n    margin-right: -6rem !important; }\n  .mb-lg--7,\n  .my-lg--7 {\n    margin-bottom: -6rem !important; }\n  .ml-lg--7,\n  .mx-lg--7 {\n    margin-left: -6rem !important; }\n  .m-lg--6 {\n    margin: -4.5rem !important; }\n  .mt-lg--6,\n  .my-lg--6 {\n    margin-top: -4.5rem !important; }\n  .mr-lg--6,\n  .mx-lg--6 {\n    margin-right: -4.5rem !important; }\n  .mb-lg--6,\n  .my-lg--6 {\n    margin-bottom: -4.5rem !important; }\n  .ml-lg--6,\n  .mx-lg--6 {\n    margin-left: -4.5rem !important; }\n  .m-lg--5 {\n    margin: -3rem !important; }\n  .mt-lg--5,\n  .my-lg--5 {\n    margin-top: -3rem !important; }\n  .mr-lg--5,\n  .mx-lg--5 {\n    margin-right: -3rem !important; }\n  .mb-lg--5,\n  .my-lg--5 {\n    margin-bottom: -3rem !important; }\n  .ml-lg--5,\n  .mx-lg--5 {\n    margin-left: -3rem !important; }\n  .m-lg--4 {\n    margin: -1.5rem !important; }\n  .mt-lg--4,\n  .my-lg--4 {\n    margin-top: -1.5rem !important; }\n  .mr-lg--4,\n  .mx-lg--4 {\n    margin-right: -1.5rem !important; }\n  .mb-lg--4,\n  .my-lg--4 {\n    margin-bottom: -1.5rem !important; }\n  .ml-lg--4,\n  .mx-lg--4 {\n    margin-left: -1.5rem !important; }\n  .m-lg--3 {\n    margin: -1rem !important; }\n  .mt-lg--3,\n  .my-lg--3 {\n    margin-top: -1rem !important; }\n  .mr-lg--3,\n  .mx-lg--3 {\n    margin-right: -1rem !important; }\n  .mb-lg--3,\n  .my-lg--3 {\n    margin-bottom: -1rem !important; }\n  .ml-lg--3,\n  .mx-lg--3 {\n    margin-left: -1rem !important; }\n  .m-lg--2 {\n    margin: -0.5rem !important; }\n  .mt-lg--2,\n  .my-lg--2 {\n    margin-top: -0.5rem !important; }\n  .mr-lg--2,\n  .mx-lg--2 {\n    margin-right: -0.5rem !important; }\n  .mb-lg--2,\n  .my-lg--2 {\n    margin-bottom: -0.5rem !important; }\n  .ml-lg--2,\n  .mx-lg--2 {\n    margin-left: -0.5rem !important; }\n  .m-lg--1 {\n    margin: -0.25rem !important; }\n  .mt-lg--1,\n  .my-lg--1 {\n    margin-top: -0.25rem !important; }\n  .mr-lg--1,\n  .mx-lg--1 {\n    margin-right: -0.25rem !important; }\n  .mb-lg--1,\n  .my-lg--1 {\n    margin-bottom: -0.25rem !important; }\n  .ml-lg--1,\n  .mx-lg--1 {\n    margin-left: -0.25rem !important; }\n  .m-lg-6 {\n    margin: 4.5rem !important; }\n  .mt-lg-6,\n  .my-lg-6 {\n    margin-top: 4.5rem !important; }\n  .mr-lg-6,\n  .mx-lg-6 {\n    margin-right: 4.5rem !important; }\n  .mb-lg-6,\n  .my-lg-6 {\n    margin-bottom: 4.5rem !important; }\n  .ml-lg-6,\n  .mx-lg-6 {\n    margin-left: 4.5rem !important; }\n  .m-lg-7 {\n    margin: 6rem !important; }\n  .mt-lg-7,\n  .my-lg-7 {\n    margin-top: 6rem !important; }\n  .mr-lg-7,\n  .mx-lg-7 {\n    margin-right: 6rem !important; }\n  .mb-lg-7,\n  .my-lg-7 {\n    margin-bottom: 6rem !important; }\n  .ml-lg-7,\n  .mx-lg-7 {\n    margin-left: 6rem !important; }\n  .m-lg-8 {\n    margin: 8rem !important; }\n  .mt-lg-8,\n  .my-lg-8 {\n    margin-top: 8rem !important; }\n  .mr-lg-8,\n  .mx-lg-8 {\n    margin-right: 8rem !important; }\n  .mb-lg-8,\n  .my-lg-8 {\n    margin-bottom: 8rem !important; }\n  .ml-lg-8,\n  .mx-lg-8 {\n    margin-left: 8rem !important; }\n  .m-lg-9 {\n    margin: 10rem !important; }\n  .mt-lg-9,\n  .my-lg-9 {\n    margin-top: 10rem !important; }\n  .mr-lg-9,\n  .mx-lg-9 {\n    margin-right: 10rem !important; }\n  .mb-lg-9,\n  .my-lg-9 {\n    margin-bottom: 10rem !important; }\n  .ml-lg-9,\n  .mx-lg-9 {\n    margin-left: 10rem !important; }\n  .p-lg-0 {\n    padding: 0 !important; }\n  .pt-lg-0,\n  .py-lg-0 {\n    padding-top: 0 !important; }\n  .pr-lg-0,\n  .px-lg-0 {\n    padding-right: 0 !important; }\n  .pb-lg-0,\n  .py-lg-0 {\n    padding-bottom: 0 !important; }\n  .pl-lg-0,\n  .px-lg-0 {\n    padding-left: 0 !important; }\n  .p-lg-1 {\n    padding: 0.25rem !important; }\n  .pt-lg-1,\n  .py-lg-1 {\n    padding-top: 0.25rem !important; }\n  .pr-lg-1,\n  .px-lg-1 {\n    padding-right: 0.25rem !important; }\n  .pb-lg-1,\n  .py-lg-1 {\n    padding-bottom: 0.25rem !important; }\n  .pl-lg-1,\n  .px-lg-1 {\n    padding-left: 0.25rem !important; }\n  .p-lg-2 {\n    padding: 0.5rem !important; }\n  .pt-lg-2,\n  .py-lg-2 {\n    padding-top: 0.5rem !important; }\n  .pr-lg-2,\n  .px-lg-2 {\n    padding-right: 0.5rem !important; }\n  .pb-lg-2,\n  .py-lg-2 {\n    padding-bottom: 0.5rem !important; }\n  .pl-lg-2,\n  .px-lg-2 {\n    padding-left: 0.5rem !important; }\n  .p-lg-3 {\n    padding: 1rem !important; }\n  .pt-lg-3,\n  .py-lg-3 {\n    padding-top: 1rem !important; }\n  .pr-lg-3,\n  .px-lg-3 {\n    padding-right: 1rem !important; }\n  .pb-lg-3,\n  .py-lg-3 {\n    padding-bottom: 1rem !important; }\n  .pl-lg-3,\n  .px-lg-3 {\n    padding-left: 1rem !important; }\n  .p-lg-4 {\n    padding: 1.5rem !important; }\n  .pt-lg-4,\n  .py-lg-4 {\n    padding-top: 1.5rem !important; }\n  .pr-lg-4,\n  .px-lg-4 {\n    padding-right: 1.5rem !important; }\n  .pb-lg-4,\n  .py-lg-4 {\n    padding-bottom: 1.5rem !important; }\n  .pl-lg-4,\n  .px-lg-4 {\n    padding-left: 1.5rem !important; }\n  .p-lg-5 {\n    padding: 3rem !important; }\n  .pt-lg-5,\n  .py-lg-5 {\n    padding-top: 3rem !important; }\n  .pr-lg-5,\n  .px-lg-5 {\n    padding-right: 3rem !important; }\n  .pb-lg-5,\n  .py-lg-5 {\n    padding-bottom: 3rem !important; }\n  .pl-lg-5,\n  .px-lg-5 {\n    padding-left: 3rem !important; }\n  .p-lg--9 {\n    padding: -10rem !important; }\n  .pt-lg--9,\n  .py-lg--9 {\n    padding-top: -10rem !important; }\n  .pr-lg--9,\n  .px-lg--9 {\n    padding-right: -10rem !important; }\n  .pb-lg--9,\n  .py-lg--9 {\n    padding-bottom: -10rem !important; }\n  .pl-lg--9,\n  .px-lg--9 {\n    padding-left: -10rem !important; }\n  .p-lg--8 {\n    padding: -8rem !important; }\n  .pt-lg--8,\n  .py-lg--8 {\n    padding-top: -8rem !important; }\n  .pr-lg--8,\n  .px-lg--8 {\n    padding-right: -8rem !important; }\n  .pb-lg--8,\n  .py-lg--8 {\n    padding-bottom: -8rem !important; }\n  .pl-lg--8,\n  .px-lg--8 {\n    padding-left: -8rem !important; }\n  .p-lg--7 {\n    padding: -6rem !important; }\n  .pt-lg--7,\n  .py-lg--7 {\n    padding-top: -6rem !important; }\n  .pr-lg--7,\n  .px-lg--7 {\n    padding-right: -6rem !important; }\n  .pb-lg--7,\n  .py-lg--7 {\n    padding-bottom: -6rem !important; }\n  .pl-lg--7,\n  .px-lg--7 {\n    padding-left: -6rem !important; }\n  .p-lg--6 {\n    padding: -4.5rem !important; }\n  .pt-lg--6,\n  .py-lg--6 {\n    padding-top: -4.5rem !important; }\n  .pr-lg--6,\n  .px-lg--6 {\n    padding-right: -4.5rem !important; }\n  .pb-lg--6,\n  .py-lg--6 {\n    padding-bottom: -4.5rem !important; }\n  .pl-lg--6,\n  .px-lg--6 {\n    padding-left: -4.5rem !important; }\n  .p-lg--5 {\n    padding: -3rem !important; }\n  .pt-lg--5,\n  .py-lg--5 {\n    padding-top: -3rem !important; }\n  .pr-lg--5,\n  .px-lg--5 {\n    padding-right: -3rem !important; }\n  .pb-lg--5,\n  .py-lg--5 {\n    padding-bottom: -3rem !important; }\n  .pl-lg--5,\n  .px-lg--5 {\n    padding-left: -3rem !important; }\n  .p-lg--4 {\n    padding: -1.5rem !important; }\n  .pt-lg--4,\n  .py-lg--4 {\n    padding-top: -1.5rem !important; }\n  .pr-lg--4,\n  .px-lg--4 {\n    padding-right: -1.5rem !important; }\n  .pb-lg--4,\n  .py-lg--4 {\n    padding-bottom: -1.5rem !important; }\n  .pl-lg--4,\n  .px-lg--4 {\n    padding-left: -1.5rem !important; }\n  .p-lg--3 {\n    padding: -1rem !important; }\n  .pt-lg--3,\n  .py-lg--3 {\n    padding-top: -1rem !important; }\n  .pr-lg--3,\n  .px-lg--3 {\n    padding-right: -1rem !important; }\n  .pb-lg--3,\n  .py-lg--3 {\n    padding-bottom: -1rem !important; }\n  .pl-lg--3,\n  .px-lg--3 {\n    padding-left: -1rem !important; }\n  .p-lg--2 {\n    padding: -0.5rem !important; }\n  .pt-lg--2,\n  .py-lg--2 {\n    padding-top: -0.5rem !important; }\n  .pr-lg--2,\n  .px-lg--2 {\n    padding-right: -0.5rem !important; }\n  .pb-lg--2,\n  .py-lg--2 {\n    padding-bottom: -0.5rem !important; }\n  .pl-lg--2,\n  .px-lg--2 {\n    padding-left: -0.5rem !important; }\n  .p-lg--1 {\n    padding: -0.25rem !important; }\n  .pt-lg--1,\n  .py-lg--1 {\n    padding-top: -0.25rem !important; }\n  .pr-lg--1,\n  .px-lg--1 {\n    padding-right: -0.25rem !important; }\n  .pb-lg--1,\n  .py-lg--1 {\n    padding-bottom: -0.25rem !important; }\n  .pl-lg--1,\n  .px-lg--1 {\n    padding-left: -0.25rem !important; }\n  .p-lg-6 {\n    padding: 4.5rem !important; }\n  .pt-lg-6,\n  .py-lg-6 {\n    padding-top: 4.5rem !important; }\n  .pr-lg-6,\n  .px-lg-6 {\n    padding-right: 4.5rem !important; }\n  .pb-lg-6,\n  .py-lg-6 {\n    padding-bottom: 4.5rem !important; }\n  .pl-lg-6,\n  .px-lg-6 {\n    padding-left: 4.5rem !important; }\n  .p-lg-7 {\n    padding: 6rem !important; }\n  .pt-lg-7,\n  .py-lg-7 {\n    padding-top: 6rem !important; }\n  .pr-lg-7,\n  .px-lg-7 {\n    padding-right: 6rem !important; }\n  .pb-lg-7,\n  .py-lg-7 {\n    padding-bottom: 6rem !important; }\n  .pl-lg-7,\n  .px-lg-7 {\n    padding-left: 6rem !important; }\n  .p-lg-8 {\n    padding: 8rem !important; }\n  .pt-lg-8,\n  .py-lg-8 {\n    padding-top: 8rem !important; }\n  .pr-lg-8,\n  .px-lg-8 {\n    padding-right: 8rem !important; }\n  .pb-lg-8,\n  .py-lg-8 {\n    padding-bottom: 8rem !important; }\n  .pl-lg-8,\n  .px-lg-8 {\n    padding-left: 8rem !important; }\n  .p-lg-9 {\n    padding: 10rem !important; }\n  .pt-lg-9,\n  .py-lg-9 {\n    padding-top: 10rem !important; }\n  .pr-lg-9,\n  .px-lg-9 {\n    padding-right: 10rem !important; }\n  .pb-lg-9,\n  .py-lg-9 {\n    padding-bottom: 10rem !important; }\n  .pl-lg-9,\n  .px-lg-9 {\n    padding-left: 10rem !important; }\n  .m-lg-auto {\n    margin: auto !important; }\n  .mt-lg-auto,\n  .my-lg-auto {\n    margin-top: auto !important; }\n  .mr-lg-auto,\n  .mx-lg-auto {\n    margin-right: auto !important; }\n  .mb-lg-auto,\n  .my-lg-auto {\n    margin-bottom: auto !important; }\n  .ml-lg-auto,\n  .mx-lg-auto {\n    margin-left: auto !important; } }\n\n@media (min-width: 1200px) {\n  .m-xl-0 {\n    margin: 0 !important; }\n  .mt-xl-0,\n  .my-xl-0 {\n    margin-top: 0 !important; }\n  .mr-xl-0,\n  .mx-xl-0 {\n    margin-right: 0 !important; }\n  .mb-xl-0,\n  .my-xl-0 {\n    margin-bottom: 0 !important; }\n  .ml-xl-0,\n  .mx-xl-0 {\n    margin-left: 0 !important; }\n  .m-xl-1 {\n    margin: 0.25rem !important; }\n  .mt-xl-1,\n  .my-xl-1 {\n    margin-top: 0.25rem !important; }\n  .mr-xl-1,\n  .mx-xl-1 {\n    margin-right: 0.25rem !important; }\n  .mb-xl-1,\n  .my-xl-1 {\n    margin-bottom: 0.25rem !important; }\n  .ml-xl-1,\n  .mx-xl-1 {\n    margin-left: 0.25rem !important; }\n  .m-xl-2 {\n    margin: 0.5rem !important; }\n  .mt-xl-2,\n  .my-xl-2 {\n    margin-top: 0.5rem !important; }\n  .mr-xl-2,\n  .mx-xl-2 {\n    margin-right: 0.5rem !important; }\n  .mb-xl-2,\n  .my-xl-2 {\n    margin-bottom: 0.5rem !important; }\n  .ml-xl-2,\n  .mx-xl-2 {\n    margin-left: 0.5rem !important; }\n  .m-xl-3 {\n    margin: 1rem !important; }\n  .mt-xl-3,\n  .my-xl-3 {\n    margin-top: 1rem !important; }\n  .mr-xl-3,\n  .mx-xl-3 {\n    margin-right: 1rem !important; }\n  .mb-xl-3,\n  .my-xl-3 {\n    margin-bottom: 1rem !important; }\n  .ml-xl-3,\n  .mx-xl-3 {\n    margin-left: 1rem !important; }\n  .m-xl-4 {\n    margin: 1.5rem !important; }\n  .mt-xl-4,\n  .my-xl-4 {\n    margin-top: 1.5rem !important; }\n  .mr-xl-4,\n  .mx-xl-4 {\n    margin-right: 1.5rem !important; }\n  .mb-xl-4,\n  .my-xl-4 {\n    margin-bottom: 1.5rem !important; }\n  .ml-xl-4,\n  .mx-xl-4 {\n    margin-left: 1.5rem !important; }\n  .m-xl-5 {\n    margin: 3rem !important; }\n  .mt-xl-5,\n  .my-xl-5 {\n    margin-top: 3rem !important; }\n  .mr-xl-5,\n  .mx-xl-5 {\n    margin-right: 3rem !important; }\n  .mb-xl-5,\n  .my-xl-5 {\n    margin-bottom: 3rem !important; }\n  .ml-xl-5,\n  .mx-xl-5 {\n    margin-left: 3rem !important; }\n  .m-xl--9 {\n    margin: -10rem !important; }\n  .mt-xl--9,\n  .my-xl--9 {\n    margin-top: -10rem !important; }\n  .mr-xl--9,\n  .mx-xl--9 {\n    margin-right: -10rem !important; }\n  .mb-xl--9,\n  .my-xl--9 {\n    margin-bottom: -10rem !important; }\n  .ml-xl--9,\n  .mx-xl--9 {\n    margin-left: -10rem !important; }\n  .m-xl--8 {\n    margin: -8rem !important; }\n  .mt-xl--8,\n  .my-xl--8 {\n    margin-top: -8rem !important; }\n  .mr-xl--8,\n  .mx-xl--8 {\n    margin-right: -8rem !important; }\n  .mb-xl--8,\n  .my-xl--8 {\n    margin-bottom: -8rem !important; }\n  .ml-xl--8,\n  .mx-xl--8 {\n    margin-left: -8rem !important; }\n  .m-xl--7 {\n    margin: -6rem !important; }\n  .mt-xl--7,\n  .my-xl--7 {\n    margin-top: -6rem !important; }\n  .mr-xl--7,\n  .mx-xl--7 {\n    margin-right: -6rem !important; }\n  .mb-xl--7,\n  .my-xl--7 {\n    margin-bottom: -6rem !important; }\n  .ml-xl--7,\n  .mx-xl--7 {\n    margin-left: -6rem !important; }\n  .m-xl--6 {\n    margin: -4.5rem !important; }\n  .mt-xl--6,\n  .my-xl--6 {\n    margin-top: -4.5rem !important; }\n  .mr-xl--6,\n  .mx-xl--6 {\n    margin-right: -4.5rem !important; }\n  .mb-xl--6,\n  .my-xl--6 {\n    margin-bottom: -4.5rem !important; }\n  .ml-xl--6,\n  .mx-xl--6 {\n    margin-left: -4.5rem !important; }\n  .m-xl--5 {\n    margin: -3rem !important; }\n  .mt-xl--5,\n  .my-xl--5 {\n    margin-top: -3rem !important; }\n  .mr-xl--5,\n  .mx-xl--5 {\n    margin-right: -3rem !important; }\n  .mb-xl--5,\n  .my-xl--5 {\n    margin-bottom: -3rem !important; }\n  .ml-xl--5,\n  .mx-xl--5 {\n    margin-left: -3rem !important; }\n  .m-xl--4 {\n    margin: -1.5rem !important; }\n  .mt-xl--4,\n  .my-xl--4 {\n    margin-top: -1.5rem !important; }\n  .mr-xl--4,\n  .mx-xl--4 {\n    margin-right: -1.5rem !important; }\n  .mb-xl--4,\n  .my-xl--4 {\n    margin-bottom: -1.5rem !important; }\n  .ml-xl--4,\n  .mx-xl--4 {\n    margin-left: -1.5rem !important; }\n  .m-xl--3 {\n    margin: -1rem !important; }\n  .mt-xl--3,\n  .my-xl--3 {\n    margin-top: -1rem !important; }\n  .mr-xl--3,\n  .mx-xl--3 {\n    margin-right: -1rem !important; }\n  .mb-xl--3,\n  .my-xl--3 {\n    margin-bottom: -1rem !important; }\n  .ml-xl--3,\n  .mx-xl--3 {\n    margin-left: -1rem !important; }\n  .m-xl--2 {\n    margin: -0.5rem !important; }\n  .mt-xl--2,\n  .my-xl--2 {\n    margin-top: -0.5rem !important; }\n  .mr-xl--2,\n  .mx-xl--2 {\n    margin-right: -0.5rem !important; }\n  .mb-xl--2,\n  .my-xl--2 {\n    margin-bottom: -0.5rem !important; }\n  .ml-xl--2,\n  .mx-xl--2 {\n    margin-left: -0.5rem !important; }\n  .m-xl--1 {\n    margin: -0.25rem !important; }\n  .mt-xl--1,\n  .my-xl--1 {\n    margin-top: -0.25rem !important; }\n  .mr-xl--1,\n  .mx-xl--1 {\n    margin-right: -0.25rem !important; }\n  .mb-xl--1,\n  .my-xl--1 {\n    margin-bottom: -0.25rem !important; }\n  .ml-xl--1,\n  .mx-xl--1 {\n    margin-left: -0.25rem !important; }\n  .m-xl-6 {\n    margin: 4.5rem !important; }\n  .mt-xl-6,\n  .my-xl-6 {\n    margin-top: 4.5rem !important; }\n  .mr-xl-6,\n  .mx-xl-6 {\n    margin-right: 4.5rem !important; }\n  .mb-xl-6,\n  .my-xl-6 {\n    margin-bottom: 4.5rem !important; }\n  .ml-xl-6,\n  .mx-xl-6 {\n    margin-left: 4.5rem !important; }\n  .m-xl-7 {\n    margin: 6rem !important; }\n  .mt-xl-7,\n  .my-xl-7 {\n    margin-top: 6rem !important; }\n  .mr-xl-7,\n  .mx-xl-7 {\n    margin-right: 6rem !important; }\n  .mb-xl-7,\n  .my-xl-7 {\n    margin-bottom: 6rem !important; }\n  .ml-xl-7,\n  .mx-xl-7 {\n    margin-left: 6rem !important; }\n  .m-xl-8 {\n    margin: 8rem !important; }\n  .mt-xl-8,\n  .my-xl-8 {\n    margin-top: 8rem !important; }\n  .mr-xl-8,\n  .mx-xl-8 {\n    margin-right: 8rem !important; }\n  .mb-xl-8,\n  .my-xl-8 {\n    margin-bottom: 8rem !important; }\n  .ml-xl-8,\n  .mx-xl-8 {\n    margin-left: 8rem !important; }\n  .m-xl-9 {\n    margin: 10rem !important; }\n  .mt-xl-9,\n  .my-xl-9 {\n    margin-top: 10rem !important; }\n  .mr-xl-9,\n  .mx-xl-9 {\n    margin-right: 10rem !important; }\n  .mb-xl-9,\n  .my-xl-9 {\n    margin-bottom: 10rem !important; }\n  .ml-xl-9,\n  .mx-xl-9 {\n    margin-left: 10rem !important; }\n  .p-xl-0 {\n    padding: 0 !important; }\n  .pt-xl-0,\n  .py-xl-0 {\n    padding-top: 0 !important; }\n  .pr-xl-0,\n  .px-xl-0 {\n    padding-right: 0 !important; }\n  .pb-xl-0,\n  .py-xl-0 {\n    padding-bottom: 0 !important; }\n  .pl-xl-0,\n  .px-xl-0 {\n    padding-left: 0 !important; }\n  .p-xl-1 {\n    padding: 0.25rem !important; }\n  .pt-xl-1,\n  .py-xl-1 {\n    padding-top: 0.25rem !important; }\n  .pr-xl-1,\n  .px-xl-1 {\n    padding-right: 0.25rem !important; }\n  .pb-xl-1,\n  .py-xl-1 {\n    padding-bottom: 0.25rem !important; }\n  .pl-xl-1,\n  .px-xl-1 {\n    padding-left: 0.25rem !important; }\n  .p-xl-2 {\n    padding: 0.5rem !important; }\n  .pt-xl-2,\n  .py-xl-2 {\n    padding-top: 0.5rem !important; }\n  .pr-xl-2,\n  .px-xl-2 {\n    padding-right: 0.5rem !important; }\n  .pb-xl-2,\n  .py-xl-2 {\n    padding-bottom: 0.5rem !important; }\n  .pl-xl-2,\n  .px-xl-2 {\n    padding-left: 0.5rem !important; }\n  .p-xl-3 {\n    padding: 1rem !important; }\n  .pt-xl-3,\n  .py-xl-3 {\n    padding-top: 1rem !important; }\n  .pr-xl-3,\n  .px-xl-3 {\n    padding-right: 1rem !important; }\n  .pb-xl-3,\n  .py-xl-3 {\n    padding-bottom: 1rem !important; }\n  .pl-xl-3,\n  .px-xl-3 {\n    padding-left: 1rem !important; }\n  .p-xl-4 {\n    padding: 1.5rem !important; }\n  .pt-xl-4,\n  .py-xl-4 {\n    padding-top: 1.5rem !important; }\n  .pr-xl-4,\n  .px-xl-4 {\n    padding-right: 1.5rem !important; }\n  .pb-xl-4,\n  .py-xl-4 {\n    padding-bottom: 1.5rem !important; }\n  .pl-xl-4,\n  .px-xl-4 {\n    padding-left: 1.5rem !important; }\n  .p-xl-5 {\n    padding: 3rem !important; }\n  .pt-xl-5,\n  .py-xl-5 {\n    padding-top: 3rem !important; }\n  .pr-xl-5,\n  .px-xl-5 {\n    padding-right: 3rem !important; }\n  .pb-xl-5,\n  .py-xl-5 {\n    padding-bottom: 3rem !important; }\n  .pl-xl-5,\n  .px-xl-5 {\n    padding-left: 3rem !important; }\n  .p-xl--9 {\n    padding: -10rem !important; }\n  .pt-xl--9,\n  .py-xl--9 {\n    padding-top: -10rem !important; }\n  .pr-xl--9,\n  .px-xl--9 {\n    padding-right: -10rem !important; }\n  .pb-xl--9,\n  .py-xl--9 {\n    padding-bottom: -10rem !important; }\n  .pl-xl--9,\n  .px-xl--9 {\n    padding-left: -10rem !important; }\n  .p-xl--8 {\n    padding: -8rem !important; }\n  .pt-xl--8,\n  .py-xl--8 {\n    padding-top: -8rem !important; }\n  .pr-xl--8,\n  .px-xl--8 {\n    padding-right: -8rem !important; }\n  .pb-xl--8,\n  .py-xl--8 {\n    padding-bottom: -8rem !important; }\n  .pl-xl--8,\n  .px-xl--8 {\n    padding-left: -8rem !important; }\n  .p-xl--7 {\n    padding: -6rem !important; }\n  .pt-xl--7,\n  .py-xl--7 {\n    padding-top: -6rem !important; }\n  .pr-xl--7,\n  .px-xl--7 {\n    padding-right: -6rem !important; }\n  .pb-xl--7,\n  .py-xl--7 {\n    padding-bottom: -6rem !important; }\n  .pl-xl--7,\n  .px-xl--7 {\n    padding-left: -6rem !important; }\n  .p-xl--6 {\n    padding: -4.5rem !important; }\n  .pt-xl--6,\n  .py-xl--6 {\n    padding-top: -4.5rem !important; }\n  .pr-xl--6,\n  .px-xl--6 {\n    padding-right: -4.5rem !important; }\n  .pb-xl--6,\n  .py-xl--6 {\n    padding-bottom: -4.5rem !important; }\n  .pl-xl--6,\n  .px-xl--6 {\n    padding-left: -4.5rem !important; }\n  .p-xl--5 {\n    padding: -3rem !important; }\n  .pt-xl--5,\n  .py-xl--5 {\n    padding-top: -3rem !important; }\n  .pr-xl--5,\n  .px-xl--5 {\n    padding-right: -3rem !important; }\n  .pb-xl--5,\n  .py-xl--5 {\n    padding-bottom: -3rem !important; }\n  .pl-xl--5,\n  .px-xl--5 {\n    padding-left: -3rem !important; }\n  .p-xl--4 {\n    padding: -1.5rem !important; }\n  .pt-xl--4,\n  .py-xl--4 {\n    padding-top: -1.5rem !important; }\n  .pr-xl--4,\n  .px-xl--4 {\n    padding-right: -1.5rem !important; }\n  .pb-xl--4,\n  .py-xl--4 {\n    padding-bottom: -1.5rem !important; }\n  .pl-xl--4,\n  .px-xl--4 {\n    padding-left: -1.5rem !important; }\n  .p-xl--3 {\n    padding: -1rem !important; }\n  .pt-xl--3,\n  .py-xl--3 {\n    padding-top: -1rem !important; }\n  .pr-xl--3,\n  .px-xl--3 {\n    padding-right: -1rem !important; }\n  .pb-xl--3,\n  .py-xl--3 {\n    padding-bottom: -1rem !important; }\n  .pl-xl--3,\n  .px-xl--3 {\n    padding-left: -1rem !important; }\n  .p-xl--2 {\n    padding: -0.5rem !important; }\n  .pt-xl--2,\n  .py-xl--2 {\n    padding-top: -0.5rem !important; }\n  .pr-xl--2,\n  .px-xl--2 {\n    padding-right: -0.5rem !important; }\n  .pb-xl--2,\n  .py-xl--2 {\n    padding-bottom: -0.5rem !important; }\n  .pl-xl--2,\n  .px-xl--2 {\n    padding-left: -0.5rem !important; }\n  .p-xl--1 {\n    padding: -0.25rem !important; }\n  .pt-xl--1,\n  .py-xl--1 {\n    padding-top: -0.25rem !important; }\n  .pr-xl--1,\n  .px-xl--1 {\n    padding-right: -0.25rem !important; }\n  .pb-xl--1,\n  .py-xl--1 {\n    padding-bottom: -0.25rem !important; }\n  .pl-xl--1,\n  .px-xl--1 {\n    padding-left: -0.25rem !important; }\n  .p-xl-6 {\n    padding: 4.5rem !important; }\n  .pt-xl-6,\n  .py-xl-6 {\n    padding-top: 4.5rem !important; }\n  .pr-xl-6,\n  .px-xl-6 {\n    padding-right: 4.5rem !important; }\n  .pb-xl-6,\n  .py-xl-6 {\n    padding-bottom: 4.5rem !important; }\n  .pl-xl-6,\n  .px-xl-6 {\n    padding-left: 4.5rem !important; }\n  .p-xl-7 {\n    padding: 6rem !important; }\n  .pt-xl-7,\n  .py-xl-7 {\n    padding-top: 6rem !important; }\n  .pr-xl-7,\n  .px-xl-7 {\n    padding-right: 6rem !important; }\n  .pb-xl-7,\n  .py-xl-7 {\n    padding-bottom: 6rem !important; }\n  .pl-xl-7,\n  .px-xl-7 {\n    padding-left: 6rem !important; }\n  .p-xl-8 {\n    padding: 8rem !important; }\n  .pt-xl-8,\n  .py-xl-8 {\n    padding-top: 8rem !important; }\n  .pr-xl-8,\n  .px-xl-8 {\n    padding-right: 8rem !important; }\n  .pb-xl-8,\n  .py-xl-8 {\n    padding-bottom: 8rem !important; }\n  .pl-xl-8,\n  .px-xl-8 {\n    padding-left: 8rem !important; }\n  .p-xl-9 {\n    padding: 10rem !important; }\n  .pt-xl-9,\n  .py-xl-9 {\n    padding-top: 10rem !important; }\n  .pr-xl-9,\n  .px-xl-9 {\n    padding-right: 10rem !important; }\n  .pb-xl-9,\n  .py-xl-9 {\n    padding-bottom: 10rem !important; }\n  .pl-xl-9,\n  .px-xl-9 {\n    padding-left: 10rem !important; }\n  .m-xl-auto {\n    margin: auto !important; }\n  .mt-xl-auto,\n  .my-xl-auto {\n    margin-top: auto !important; }\n  .mr-xl-auto,\n  .mx-xl-auto {\n    margin-right: auto !important; }\n  .mb-xl-auto,\n  .my-xl-auto {\n    margin-bottom: auto !important; }\n  .ml-xl-auto,\n  .mx-xl-auto {\n    margin-left: auto !important; } }\n\n.text-monospace {\n  font-family: SFMono-Regular, Menlo, Monaco, Consolas, \"Liberation Mono\", \"Courier New\", monospace; }\n\n.text-justify {\n  text-align: justify !important; }\n\n.text-nowrap {\n  white-space: nowrap !important; }\n\n.text-truncate {\n  overflow: hidden;\n  text-overflow: ellipsis;\n  white-space: nowrap; }\n\n.text-left {\n  text-align: left !important; }\n\n.text-right {\n  text-align: right !important; }\n\n.text-center {\n  text-align: center !important; }\n\n@media (min-width: 576px) {\n  .text-sm-left {\n    text-align: left !important; }\n  .text-sm-right {\n    text-align: right !important; }\n  .text-sm-center {\n    text-align: center !important; } }\n\n@media (min-width: 768px) {\n  .text-md-left {\n    text-align: left !important; }\n  .text-md-right {\n    text-align: right !important; }\n  .text-md-center {\n    text-align: center !important; } }\n\n@media (min-width: 992px) {\n  .text-lg-left {\n    text-align: left !important; }\n  .text-lg-right {\n    text-align: right !important; }\n  .text-lg-center {\n    text-align: center !important; } }\n\n@media (min-width: 1200px) {\n  .text-xl-left {\n    text-align: left !important; }\n  .text-xl-right {\n    text-align: right !important; }\n  .text-xl-center {\n    text-align: center !important; } }\n\n.text-lowercase {\n  text-transform: lowercase !important; }\n\n.text-uppercase {\n  text-transform: uppercase !important; }\n\n.text-capitalize {\n  text-transform: capitalize !important; }\n\n.font-weight-light {\n  font-weight: 300 !important; }\n\n.font-weight-normal {\n  font-weight: 400 !important; }\n\n.font-weight-bold {\n  font-weight: 600 !important; }\n\n.font-italic {\n  font-style: italic !important; }\n\n.text-white {\n  color: #fff !important; }\n\n.text-primary {\n  color: #5e72e4 !important; }\n\na.text-primary:hover, a.text-primary:focus {\n  color: #324cdd !important; }\n\n.text-secondary {\n  color: #f7fafc !important; }\n\na.text-secondary:hover, a.text-secondary:focus {\n  color: #d2e3ee !important; }\n\n.text-success {\n  color: #2dce89 !important; }\n\na.text-success:hover, a.text-success:focus {\n  color: #24a46d !important; }\n\n.text-info {\n  color: #11cdef !important; }\n\na.text-info:hover, a.text-info:focus {\n  color: #0da5c0 !important; }\n\n.text-warning {\n  color: #fb6340 !important; }\n\na.text-warning:hover, a.text-warning:focus {\n  color: #fa3a0e !important; }\n\n.text-danger {\n  color: #f5365c !important; }\n\na.text-danger:hover, a.text-danger:focus {\n  color: #ec0c38 !important; }\n\n.text-light {\n  color: #adb5bd !important; }\n\na.text-light:hover, a.text-light:focus {\n  color: #919ca6 !important; }\n\n.text-dark {\n  color: #212529 !important; }\n\na.text-dark:hover, a.text-dark:focus {\n  color: #0a0c0d !important; }\n\n.text-default {\n  color: #172b4d !important; }\n\na.text-default:hover, a.text-default:focus {\n  color: #0b1526 !important; }\n\n.text-white {\n  color: #fff !important; }\n\na.text-white:hover, a.text-white:focus {\n  color: #e6e6e6 !important; }\n\n.text-neutral {\n  color: #fff !important; }\n\na.text-neutral:hover, a.text-neutral:focus {\n  color: #e6e6e6 !important; }\n\n.text-darker {\n  color: black !important; }\n\na.text-darker:hover, a.text-darker:focus {\n  color: black !important; }\n\n.text-body {\n  color: #525f7f !important; }\n\n.text-muted {\n  color: #8898aa !important; }\n\n.text-black-50 {\n  color: rgba(0, 0, 0, 0.5) !important; }\n\n.text-white-50 {\n  color: rgba(255, 255, 255, 0.5) !important; }\n\n.text-hide {\n  font: 0/0 a;\n  color: transparent;\n  text-shadow: none;\n  background-color: transparent;\n  border: 0; }\n\n.visible {\n  visibility: visible !important; }\n\n.invisible {\n  visibility: hidden !important; }\n\n@media print {\n  *,\n  *::before,\n  *::after {\n    text-shadow: none !important;\n    box-shadow: none !important; }\n  a:not(.btn) {\n    text-decoration: underline; }\n  abbr[title]::after {\n    content: \" (\" attr(title) \")\"; }\n  pre {\n    white-space: pre-wrap !important; }\n  pre,\n  blockquote {\n    border: 1px solid #adb5bd;\n    page-break-inside: avoid; }\n  thead {\n    display: table-header-group; }\n  tr,\n  img {\n    page-break-inside: avoid; }\n  p,\n  h2,\n  h3 {\n    orphans: 3;\n    widows: 3; }\n  h2,\n  h3 {\n    page-break-after: avoid; }\n  @page {\n    size: a3; }\n  body {\n    min-width: 992px !important; }\n  .container {\n    min-width: 992px !important; }\n  .navbar {\n    display: none; }\n  .badge {\n    border: 1px solid #000; }\n  .table {\n    border-collapse: collapse !important; }\n    .table td,\n    .table th {\n      background-color: #fff !important; }\n  .table-bordered th,\n  .table-bordered td {\n    border: 1px solid #dee2e6 !important; }\n  .table-dark {\n    color: inherit; }\n    .table-dark th,\n    .table-dark td,\n    .table-dark thead th,\n    .table-dark tbody + tbody {\n      border-color: #e9ecef; }\n  .table .thead-dark th {\n    color: inherit;\n    border-color: #e9ecef; } }\n\niframe {\n  border: 0; }\n\nfigcaption,\nfigure,\nmain {\n  display: block; }\n\nmain {\n  overflow: hidden; }\n\n.bg-blue {\n  background-color: #5e72e4 !important; }\n\na.bg-blue:hover, a.bg-blue:focus,\nbutton.bg-blue:hover,\nbutton.bg-blue:focus {\n  background-color: #324cdd !important; }\n\n.bg-indigo {\n  background-color: #5603ad !important; }\n\na.bg-indigo:hover, a.bg-indigo:focus,\nbutton.bg-indigo:hover,\nbutton.bg-indigo:focus {\n  background-color: #3d027b !important; }\n\n.bg-purple {\n  background-color: #8965e0 !important; }\n\na.bg-purple:hover, a.bg-purple:focus,\nbutton.bg-purple:hover,\nbutton.bg-purple:focus {\n  background-color: #683bd7 !important; }\n\n.bg-pink {\n  background-color: #f3a4b5 !important; }\n\na.bg-pink:hover, a.bg-pink:focus,\nbutton.bg-pink:hover,\nbutton.bg-pink:focus {\n  background-color: #ed7790 !important; }\n\n.bg-red {\n  background-color: #f5365c !important; }\n\na.bg-red:hover, a.bg-red:focus,\nbutton.bg-red:hover,\nbutton.bg-red:focus {\n  background-color: #ec0c38 !important; }\n\n.bg-orange {\n  background-color: #fb6340 !important; }\n\na.bg-orange:hover, a.bg-orange:focus,\nbutton.bg-orange:hover,\nbutton.bg-orange:focus {\n  background-color: #fa3a0e !important; }\n\n.bg-yellow {\n  background-color: #ffd600 !important; }\n\na.bg-yellow:hover, a.bg-yellow:focus,\nbutton.bg-yellow:hover,\nbutton.bg-yellow:focus {\n  background-color: #ccab00 !important; }\n\n.bg-green {\n  background-color: #2dce89 !important; }\n\na.bg-green:hover, a.bg-green:focus,\nbutton.bg-green:hover,\nbutton.bg-green:focus {\n  background-color: #24a46d !important; }\n\n.bg-teal {\n  background-color: #11cdef !important; }\n\na.bg-teal:hover, a.bg-teal:focus,\nbutton.bg-teal:hover,\nbutton.bg-teal:focus {\n  background-color: #0da5c0 !important; }\n\n.bg-cyan {\n  background-color: #2bffc6 !important; }\n\na.bg-cyan:hover, a.bg-cyan:focus,\nbutton.bg-cyan:hover,\nbutton.bg-cyan:focus {\n  background-color: #00f7b5 !important; }\n\n.bg-white {\n  background-color: #fff !important; }\n\na.bg-white:hover, a.bg-white:focus,\nbutton.bg-white:hover,\nbutton.bg-white:focus {\n  background-color: #e6e6e6 !important; }\n\n.bg-gray {\n  background-color: #8898aa !important; }\n\na.bg-gray:hover, a.bg-gray:focus,\nbutton.bg-gray:hover,\nbutton.bg-gray:focus {\n  background-color: #6a7e95 !important; }\n\n.bg-gray-dark {\n  background-color: #32325d !important; }\n\na.bg-gray-dark:hover, a.bg-gray-dark:focus,\nbutton.bg-gray-dark:hover,\nbutton.bg-gray-dark:focus {\n  background-color: #20203c !important; }\n\n.bg-light {\n  background-color: #ced4da !important; }\n\na.bg-light:hover, a.bg-light:focus,\nbutton.bg-light:hover,\nbutton.bg-light:focus {\n  background-color: #b1bbc4 !important; }\n\n.bg-lighter {\n  background-color: #e9ecef !important; }\n\na.bg-lighter:hover, a.bg-lighter:focus,\nbutton.bg-lighter:hover,\nbutton.bg-lighter:focus {\n  background-color: #cbd3da !important; }\n\n.bg-gradient-primary {\n  background: -webkit-linear-gradient(3deg, #5e72e4 0, #825ee4 100%) !important;\n  background: linear-gradient(87deg, #5e72e4 0, #825ee4 100%) !important; }\n\n.bg-gradient-secondary {\n  background: -webkit-linear-gradient(3deg, #f7fafc 0, #f7f8fc 100%) !important;\n  background: linear-gradient(87deg, #f7fafc 0, #f7f8fc 100%) !important; }\n\n.bg-gradient-success {\n  background: -webkit-linear-gradient(3deg, #2dce89 0, #2dcecc 100%) !important;\n  background: linear-gradient(87deg, #2dce89 0, #2dcecc 100%) !important; }\n\n.bg-gradient-info {\n  background: -webkit-linear-gradient(3deg, #11cdef 0, #1171ef 100%) !important;\n  background: linear-gradient(87deg, #11cdef 0, #1171ef 100%) !important; }\n\n.bg-gradient-warning {\n  background: -webkit-linear-gradient(3deg, #fb6340 0, #fbb140 100%) !important;\n  background: linear-gradient(87deg, #fb6340 0, #fbb140 100%) !important; }\n\n.bg-gradient-danger {\n  background: -webkit-linear-gradient(3deg, #f5365c 0, #f56036 100%) !important;\n  background: linear-gradient(87deg, #f5365c 0, #f56036 100%) !important; }\n\n.bg-gradient-light {\n  background: -webkit-linear-gradient(3deg, #adb5bd 0, #adaebd 100%) !important;\n  background: linear-gradient(87deg, #adb5bd 0, #adaebd 100%) !important; }\n\n.bg-gradient-dark {\n  background: -webkit-linear-gradient(3deg, #212529 0, #212229 100%) !important;\n  background: linear-gradient(87deg, #212529 0, #212229 100%) !important; }\n\n.bg-gradient-default {\n  background: -webkit-linear-gradient(3deg, #172b4d 0, #1a174d 100%) !important;\n  background: linear-gradient(87deg, #172b4d 0, #1a174d 100%) !important; }\n\n.bg-gradient-white {\n  background: -webkit-linear-gradient(3deg, #fff 0, white 100%) !important;\n  background: linear-gradient(87deg, #fff 0, white 100%) !important; }\n\n.bg-gradient-neutral {\n  background: -webkit-linear-gradient(3deg, #fff 0, white 100%) !important;\n  background: linear-gradient(87deg, #fff 0, white 100%) !important; }\n\n.bg-gradient-darker {\n  background: -webkit-linear-gradient(3deg, black 0, black 100%) !important;\n  background: linear-gradient(87deg, black 0, black 100%) !important; }\n\n.bg-gradient-blue {\n  background: -webkit-linear-gradient(3deg, #5e72e4 0, #825ee4 100%) !important;\n  background: linear-gradient(87deg, #5e72e4 0, #825ee4 100%) !important; }\n\n.bg-gradient-indigo {\n  background: -webkit-linear-gradient(3deg, #5603ad 0, #9d03ad 100%) !important;\n  background: linear-gradient(87deg, #5603ad 0, #9d03ad 100%) !important; }\n\n.bg-gradient-purple {\n  background: -webkit-linear-gradient(3deg, #8965e0 0, #bc65e0 100%) !important;\n  background: linear-gradient(87deg, #8965e0 0, #bc65e0 100%) !important; }\n\n.bg-gradient-pink {\n  background: -webkit-linear-gradient(3deg, #f3a4b5 0, #f3b4a4 100%) !important;\n  background: linear-gradient(87deg, #f3a4b5 0, #f3b4a4 100%) !important; }\n\n.bg-gradient-red {\n  background: -webkit-linear-gradient(3deg, #f5365c 0, #f56036 100%) !important;\n  background: linear-gradient(87deg, #f5365c 0, #f56036 100%) !important; }\n\n.bg-gradient-orange {\n  background: -webkit-linear-gradient(3deg, #fb6340 0, #fbb140 100%) !important;\n  background: linear-gradient(87deg, #fb6340 0, #fbb140 100%) !important; }\n\n.bg-gradient-yellow {\n  background: -webkit-linear-gradient(3deg, #ffd600 0, #beff00 100%) !important;\n  background: linear-gradient(87deg, #ffd600 0, #beff00 100%) !important; }\n\n.bg-gradient-green {\n  background: -webkit-linear-gradient(3deg, #2dce89 0, #2dcecc 100%) !important;\n  background: linear-gradient(87deg, #2dce89 0, #2dcecc 100%) !important; }\n\n.bg-gradient-teal {\n  background: -webkit-linear-gradient(3deg, #11cdef 0, #1171ef 100%) !important;\n  background: linear-gradient(87deg, #11cdef 0, #1171ef 100%) !important; }\n\n.bg-gradient-cyan {\n  background: -webkit-linear-gradient(3deg, #2bffc6 0, #2be0ff 100%) !important;\n  background: linear-gradient(87deg, #2bffc6 0, #2be0ff 100%) !important; }\n\n.bg-gradient-white {\n  background: -webkit-linear-gradient(3deg, #fff 0, white 100%) !important;\n  background: linear-gradient(87deg, #fff 0, white 100%) !important; }\n\n.bg-gradient-gray {\n  background: -webkit-linear-gradient(3deg, #8898aa 0, #888aaa 100%) !important;\n  background: linear-gradient(87deg, #8898aa 0, #888aaa 100%) !important; }\n\n.bg-gradient-gray-dark {\n  background: -webkit-linear-gradient(3deg, #32325d 0, #44325d 100%) !important;\n  background: linear-gradient(87deg, #32325d 0, #44325d 100%) !important; }\n\n.bg-gradient-light {\n  background: -webkit-linear-gradient(3deg, #ced4da 0, #cecfda 100%) !important;\n  background: linear-gradient(87deg, #ced4da 0, #cecfda 100%) !important; }\n\n.bg-gradient-lighter {\n  background: -webkit-linear-gradient(3deg, #e9ecef 0, #e9eaef 100%) !important;\n  background: linear-gradient(87deg, #e9ecef 0, #e9eaef 100%) !important; }\n\n.bg-translucent-primary {\n  background-color: rgba(63, 87, 223, 0.6) !important; }\n\na.bg-translucent-primary:hover, a.bg-translucent-primary:focus,\nbutton.bg-translucent-primary:hover,\nbutton.bg-translucent-primary:focus {\n  background-color: rgba(42, 68, 219, 0.6) !important; }\n\n.bg-translucent-secondary {\n  background-color: rgba(221, 234, 242, 0.6) !important; }\n\na.bg-translucent-secondary:hover, a.bg-translucent-secondary:focus,\nbutton.bg-translucent-secondary:hover,\nbutton.bg-translucent-secondary:focus {\n  background-color: rgba(202, 222, 235, 0.6) !important; }\n\n.bg-translucent-success {\n  background-color: rgba(39, 177, 118, 0.6) !important; }\n\na.bg-translucent-success:hover, a.bg-translucent-success:focus,\nbutton.bg-translucent-success:hover,\nbutton.bg-translucent-success:focus {\n  background-color: rgba(34, 156, 104, 0.6) !important; }\n\n.bg-translucent-info {\n  background-color: rgba(14, 177, 206, 0.6) !important; }\n\na.bg-translucent-info:hover, a.bg-translucent-info:focus,\nbutton.bg-translucent-info:hover,\nbutton.bg-translucent-info:focus {\n  background-color: rgba(12, 156, 183, 0.6) !important; }\n\n.bg-translucent-warning {\n  background-color: rgba(250, 70, 29, 0.6) !important; }\n\na.bg-translucent-warning:hover, a.bg-translucent-warning:focus,\nbutton.bg-translucent-warning:hover,\nbutton.bg-translucent-warning:focus {\n  background-color: rgba(249, 51, 5, 0.6) !important; }\n\n.bg-translucent-danger {\n  background-color: rgba(243, 20, 64, 0.6) !important; }\n\na.bg-translucent-danger:hover, a.bg-translucent-danger:focus,\nbutton.bg-translucent-danger:hover,\nbutton.bg-translucent-danger:focus {\n  background-color: rgba(227, 11, 54, 0.6) !important; }\n\n.bg-translucent-light {\n  background-color: rgba(153, 163, 173, 0.6) !important; }\n\na.bg-translucent-light:hover, a.bg-translucent-light:focus,\nbutton.bg-translucent-light:hover,\nbutton.bg-translucent-light:focus {\n  background-color: rgba(139, 150, 162, 0.6) !important; }\n\n.bg-translucent-dark {\n  background-color: rgba(17, 19, 21, 0.6) !important; }\n\na.bg-translucent-dark:hover, a.bg-translucent-dark:focus,\nbutton.bg-translucent-dark:hover,\nbutton.bg-translucent-dark:focus {\n  background-color: rgba(6, 6, 7, 0.6) !important; }\n\n.bg-translucent-default {\n  background-color: rgba(15, 28, 50, 0.6) !important; }\n\na.bg-translucent-default:hover, a.bg-translucent-default:focus,\nbutton.bg-translucent-default:hover,\nbutton.bg-translucent-default:focus {\n  background-color: rgba(9, 17, 30, 0.6) !important; }\n\n.bg-translucent-white {\n  background-color: rgba(237, 237, 237, 0.6) !important; }\n\na.bg-translucent-white:hover, a.bg-translucent-white:focus,\nbutton.bg-translucent-white:hover,\nbutton.bg-translucent-white:focus {\n  background-color: rgba(224, 224, 224, 0.6) !important; }\n\n.bg-translucent-neutral {\n  background-color: rgba(237, 237, 237, 0.6) !important; }\n\na.bg-translucent-neutral:hover, a.bg-translucent-neutral:focus,\nbutton.bg-translucent-neutral:hover,\nbutton.bg-translucent-neutral:focus {\n  background-color: rgba(224, 224, 224, 0.6) !important; }\n\n.bg-translucent-darker {\n  background-color: rgba(0, 0, 0, 0.6) !important; }\n\na.bg-translucent-darker:hover, a.bg-translucent-darker:focus,\nbutton.bg-translucent-darker:hover,\nbutton.bg-translucent-darker:focus {\n  background-color: rgba(0, 0, 0, 0.6) !important; }\n\n.section-primary {\n  background-color: #f8f9fe !important; }\n\na.section-primary:hover, a.section-primary:focus,\nbutton.section-primary:hover,\nbutton.section-primary:focus {\n  background-color: #cbd3f8 !important; }\n\n.section-secondary {\n  background-color: #f7fafc !important; }\n\na.section-secondary:hover, a.section-secondary:focus,\nbutton.section-secondary:hover,\nbutton.section-secondary:focus {\n  background-color: #d2e3ee !important; }\n\n.section-light {\n  background-color: #ced4da !important; }\n\na.section-light:hover, a.section-light:focus,\nbutton.section-light:hover,\nbutton.section-light:focus {\n  background-color: #b1bbc4 !important; }\n\n.section-dark {\n  background-color: #212529 !important; }\n\na.section-dark:hover, a.section-dark:focus,\nbutton.section-dark:hover,\nbutton.section-dark:focus {\n  background-color: #0a0c0d !important; }\n\n.section-darker {\n  background-color: black !important; }\n\na.section-darker:hover, a.section-darker:focus,\nbutton.section-darker:hover,\nbutton.section-darker:focus {\n  background-color: black !important; }\n\n.bg-gradient-primary {\n  background: -webkit-linear-gradient(3deg, #5e72e4 0, #825ee4 100%) !important;\n  background: linear-gradient(87deg, #5e72e4 0, #825ee4 100%) !important; }\n\n.bg-gradient-secondary {\n  background: -webkit-linear-gradient(3deg, #f7fafc 0, #f7f8fc 100%) !important;\n  background: linear-gradient(87deg, #f7fafc 0, #f7f8fc 100%) !important; }\n\n.bg-gradient-success {\n  background: -webkit-linear-gradient(3deg, #2dce89 0, #2dcecc 100%) !important;\n  background: linear-gradient(87deg, #2dce89 0, #2dcecc 100%) !important; }\n\n.bg-gradient-info {\n  background: -webkit-linear-gradient(3deg, #11cdef 0, #1171ef 100%) !important;\n  background: linear-gradient(87deg, #11cdef 0, #1171ef 100%) !important; }\n\n.bg-gradient-warning {\n  background: -webkit-linear-gradient(3deg, #fb6340 0, #fbb140 100%) !important;\n  background: linear-gradient(87deg, #fb6340 0, #fbb140 100%) !important; }\n\n.bg-gradient-danger {\n  background: -webkit-linear-gradient(3deg, #f5365c 0, #f56036 100%) !important;\n  background: linear-gradient(87deg, #f5365c 0, #f56036 100%) !important; }\n\n.bg-gradient-light {\n  background: -webkit-linear-gradient(3deg, #adb5bd 0, #adaebd 100%) !important;\n  background: linear-gradient(87deg, #adb5bd 0, #adaebd 100%) !important; }\n\n.bg-gradient-dark {\n  background: -webkit-linear-gradient(3deg, #212529 0, #212229 100%) !important;\n  background: linear-gradient(87deg, #212529 0, #212229 100%) !important; }\n\n.bg-gradient-default {\n  background: -webkit-linear-gradient(3deg, #172b4d 0, #1a174d 100%) !important;\n  background: linear-gradient(87deg, #172b4d 0, #1a174d 100%) !important; }\n\n.bg-gradient-white {\n  background: -webkit-linear-gradient(3deg, #fff 0, white 100%) !important;\n  background: linear-gradient(87deg, #fff 0, white 100%) !important; }\n\n.bg-gradient-neutral {\n  background: -webkit-linear-gradient(3deg, #fff 0, white 100%) !important;\n  background: linear-gradient(87deg, #fff 0, white 100%) !important; }\n\n.bg-gradient-darker {\n  background: -webkit-linear-gradient(3deg, black 0, black 100%) !important;\n  background: linear-gradient(87deg, black 0, black 100%) !important; }\n\n.fill-primary {\n  fill: #5e72e4; }\n\n.stroke-primary {\n  stroke: #5e72e4; }\n\n.fill-secondary {\n  fill: #f7fafc; }\n\n.stroke-secondary {\n  stroke: #f7fafc; }\n\n.fill-success {\n  fill: #2dce89; }\n\n.stroke-success {\n  stroke: #2dce89; }\n\n.fill-info {\n  fill: #11cdef; }\n\n.stroke-info {\n  stroke: #11cdef; }\n\n.fill-warning {\n  fill: #fb6340; }\n\n.stroke-warning {\n  stroke: #fb6340; }\n\n.fill-danger {\n  fill: #f5365c; }\n\n.stroke-danger {\n  stroke: #f5365c; }\n\n.fill-light {\n  fill: #adb5bd; }\n\n.stroke-light {\n  stroke: #adb5bd; }\n\n.fill-dark {\n  fill: #212529; }\n\n.stroke-dark {\n  stroke: #212529; }\n\n.fill-default {\n  fill: #172b4d; }\n\n.stroke-default {\n  stroke: #172b4d; }\n\n.fill-white {\n  fill: #fff; }\n\n.stroke-white {\n  stroke: #fff; }\n\n.fill-neutral {\n  fill: #fff; }\n\n.stroke-neutral {\n  stroke: #fff; }\n\n.fill-darker {\n  fill: black; }\n\n.stroke-darker {\n  stroke: black; }\n\n.fill-opacity-8 {\n  fill-opacity: .8; }\n\n.floating {\n  -webkit-animation: floating 3s ease infinite;\n          animation: floating 3s ease infinite;\n  will-change: transform; }\n  .floating:hover {\n    -webkit-animation-play-state: paused;\n            animation-play-state: paused; }\n\n.floating-lg {\n  -webkit-animation: floating-lg 3s ease infinite;\n          animation: floating-lg 3s ease infinite; }\n\n.floating-sm {\n  -webkit-animation: floating-sm 3s ease infinite;\n          animation: floating-sm 3s ease infinite; }\n\n@-webkit-keyframes floating-lg {\n  0% {\n    -webkit-transform: translateY(0px);\n            transform: translateY(0px); }\n  50% {\n    -webkit-transform: translateY(15px);\n            transform: translateY(15px); }\n  100% {\n    -webkit-transform: translateY(0px);\n            transform: translateY(0px); } }\n\n@keyframes floating-lg {\n  0% {\n    -webkit-transform: translateY(0px);\n            transform: translateY(0px); }\n  50% {\n    -webkit-transform: translateY(15px);\n            transform: translateY(15px); }\n  100% {\n    -webkit-transform: translateY(0px);\n            transform: translateY(0px); } }\n\n@-webkit-keyframes floating {\n  0% {\n    -webkit-transform: translateY(0px);\n            transform: translateY(0px); }\n  50% {\n    -webkit-transform: translateY(10px);\n            transform: translateY(10px); }\n  100% {\n    -webkit-transform: translateY(0px);\n            transform: translateY(0px); } }\n\n@keyframes floating {\n  0% {\n    -webkit-transform: translateY(0px);\n            transform: translateY(0px); }\n  50% {\n    -webkit-transform: translateY(10px);\n            transform: translateY(10px); }\n  100% {\n    -webkit-transform: translateY(0px);\n            transform: translateY(0px); } }\n\n@-webkit-keyframes floating-sm {\n  0% {\n    -webkit-transform: translateY(0px);\n            transform: translateY(0px); }\n  50% {\n    -webkit-transform: translateY(5px);\n            transform: translateY(5px); }\n  100% {\n    -webkit-transform: translateY(0px);\n            transform: translateY(0px); } }\n\n@keyframes floating-sm {\n  0% {\n    -webkit-transform: translateY(0px);\n            transform: translateY(0px); }\n  50% {\n    -webkit-transform: translateY(5px);\n            transform: translateY(5px); }\n  100% {\n    -webkit-transform: translateY(0px);\n            transform: translateY(0px); } }\n\n.floatfix:before, .floatfix:after {\n  content: '';\n  display: table; }\n\n.floatfix:after {\n  clear: both; }\n\n.img-center {\n  display: block;\n  margin-left: auto;\n  margin-right: auto; }\n\n.opacity-1 {\n  opacity: .1 !important; }\n\n.opacity-2 {\n  opacity: .2 !important; }\n\n.opacity-3 {\n  opacity: .3 !important; }\n\n.opacity-4 {\n  opacity: .4 !important; }\n\n.opacity-5 {\n  opacity: .5 !important; }\n\n.opacity-6 {\n  opacity: .6 !important; }\n\n.opacity-7 {\n  opacity: .7 !important; }\n\n.opacity-8 {\n  opacity: .8 !important; }\n\n.opacity-8 {\n  opacity: .9 !important; }\n\n.opacity-10 {\n  opacity: 1 !important; }\n\n.overflow-visible {\n  overflow: visible !important; }\n\n.overflow-hidden {\n  overflow: hidden !important; }\n\n.top-0 {\n  top: 0; }\n\n.right-0 {\n  right: 0; }\n\n.bottom-0 {\n  bottom: 0; }\n\n.left-0 {\n  left: 0; }\n\n.top-1 {\n  top: 0.25rem; }\n\n.right-1 {\n  right: 0.25rem; }\n\n.bottom-1 {\n  bottom: 0.25rem; }\n\n.left-1 {\n  left: 0.25rem; }\n\n.top-2 {\n  top: 0.5rem; }\n\n.right-2 {\n  right: 0.5rem; }\n\n.bottom-2 {\n  bottom: 0.5rem; }\n\n.left-2 {\n  left: 0.5rem; }\n\n.top-3 {\n  top: 1rem; }\n\n.right-3 {\n  right: 1rem; }\n\n.bottom-3 {\n  bottom: 1rem; }\n\n.left-3 {\n  left: 1rem; }\n\n.top-4 {\n  top: 1.5rem; }\n\n.right-4 {\n  right: 1.5rem; }\n\n.bottom-4 {\n  bottom: 1.5rem; }\n\n.left-4 {\n  left: 1.5rem; }\n\n.top-5 {\n  top: 3rem; }\n\n.right-5 {\n  right: 3rem; }\n\n.bottom-5 {\n  bottom: 3rem; }\n\n.left-5 {\n  left: 3rem; }\n\n.top--9 {\n  top: -10rem; }\n\n.right--9 {\n  right: -10rem; }\n\n.bottom--9 {\n  bottom: -10rem; }\n\n.left--9 {\n  left: -10rem; }\n\n.top--8 {\n  top: -8rem; }\n\n.right--8 {\n  right: -8rem; }\n\n.bottom--8 {\n  bottom: -8rem; }\n\n.left--8 {\n  left: -8rem; }\n\n.top--7 {\n  top: -6rem; }\n\n.right--7 {\n  right: -6rem; }\n\n.bottom--7 {\n  bottom: -6rem; }\n\n.left--7 {\n  left: -6rem; }\n\n.top--6 {\n  top: -4.5rem; }\n\n.right--6 {\n  right: -4.5rem; }\n\n.bottom--6 {\n  bottom: -4.5rem; }\n\n.left--6 {\n  left: -4.5rem; }\n\n.top--5 {\n  top: -3rem; }\n\n.right--5 {\n  right: -3rem; }\n\n.bottom--5 {\n  bottom: -3rem; }\n\n.left--5 {\n  left: -3rem; }\n\n.top--4 {\n  top: -1.5rem; }\n\n.right--4 {\n  right: -1.5rem; }\n\n.bottom--4 {\n  bottom: -1.5rem; }\n\n.left--4 {\n  left: -1.5rem; }\n\n.top--3 {\n  top: -1rem; }\n\n.right--3 {\n  right: -1rem; }\n\n.bottom--3 {\n  bottom: -1rem; }\n\n.left--3 {\n  left: -1rem; }\n\n.top--2 {\n  top: -0.5rem; }\n\n.right--2 {\n  right: -0.5rem; }\n\n.bottom--2 {\n  bottom: -0.5rem; }\n\n.left--2 {\n  left: -0.5rem; }\n\n.top--1 {\n  top: -0.25rem; }\n\n.right--1 {\n  right: -0.25rem; }\n\n.bottom--1 {\n  bottom: -0.25rem; }\n\n.left--1 {\n  left: -0.25rem; }\n\n.top-6 {\n  top: 4.5rem; }\n\n.right-6 {\n  right: 4.5rem; }\n\n.bottom-6 {\n  bottom: 4.5rem; }\n\n.left-6 {\n  left: 4.5rem; }\n\n.top-7 {\n  top: 6rem; }\n\n.right-7 {\n  right: 6rem; }\n\n.bottom-7 {\n  bottom: 6rem; }\n\n.left-7 {\n  left: 6rem; }\n\n.top-8 {\n  top: 8rem; }\n\n.right-8 {\n  right: 8rem; }\n\n.bottom-8 {\n  bottom: 8rem; }\n\n.left-8 {\n  left: 8rem; }\n\n.top-9 {\n  top: 10rem; }\n\n.right-9 {\n  right: 10rem; }\n\n.bottom-9 {\n  bottom: 10rem; }\n\n.left-9 {\n  left: 10rem; }\n\n.center {\n  left: 50%;\n  -webkit-transform: translateX(-50%);\n          transform: translateX(-50%); }\n\n.h-100vh {\n  height: 100vh !important; }\n\n.row.row-grid > [class*=\"col-\"] + [class*=\"col-\"] {\n  margin-top: 3rem; }\n\n@media (min-width: 992px) {\n  .row.row-grid > [class*=\"col-lg-\"] + [class*=\"col-lg-\"] {\n    margin-top: 0; } }\n\n@media (min-width: 768px) {\n  .row.row-grid > [class*=\"col-md-\"] + [class*=\"col-md-\"] {\n    margin-top: 0; } }\n\n@media (min-width: 576px) {\n  .row.row-grid > [class*=\"col-sm-\"] + [class*=\"col-sm-\"] {\n    margin-top: 0; } }\n\n.row-grid + .row-grid {\n  margin-top: 3rem; }\n\n@media (min-width: 992px) {\n  .mt--100 {\n    margin-top: -100px !important; }\n  .mr--100 {\n    margin-right: -100px !important; }\n  .mb--100 {\n    margin-bottom: -100px !important; }\n  .ml--100 {\n    margin-left: -100px !important; }\n  .mt--150 {\n    margin-top: -150px !important; }\n  .mb--150 {\n    margin-bottom: -150px !important; }\n  .mt--200 {\n    margin-top: -200px !important; }\n  .mb--200 {\n    margin-bottom: -200px !important; }\n  .mt--300 {\n    margin-top: -300px !important; }\n  .mb--300 {\n    margin-bottom: -300px !important; }\n  .pt-100 {\n    padding-top: 100px !important; }\n  .pb-100 {\n    padding-bottom: 100px !important; }\n  .pt-150 {\n    padding-top: 150px !important; }\n  .pb-150 {\n    padding-bottom: 150px !important; }\n  .pt-200 {\n    padding-top: 200px !important; }\n  .pb-200 {\n    padding-bottom: 200px !important; }\n  .pt-250 {\n    padding-top: 250px !important; }\n  .pb-250 {\n    padding-bottom: 250px !important; }\n  .pt-300 {\n    padding-top: 300px !important; }\n  .pb-300 {\n    padding-bottom: 300px !important; } }\n\n[class*=\"shadow\"] {\n  -webkit-transition: all 0.15s ease;\n  transition: all 0.15s ease; }\n\n.shadow-sm--hover:hover {\n  box-shadow: 0 0 0.5rem rgba(136, 152, 170, 0.075) !important; }\n\n.shadow--hover:hover {\n  box-shadow: 0 0 2rem 0 rgba(136, 152, 170, 0.15) !important; }\n\n.shadow-lg--hover:hover {\n  box-shadow: 0 0 3rem rgba(136, 152, 170, 0.175) !important; }\n\n.shadow-none--hover:hover {\n  box-shadow: none !important; }\n\n.font-weight-300 {\n  font-weight: 300 !important; }\n\n.font-weight-400 {\n  font-weight: 400 !important; }\n\n.font-weight-500 {\n  font-weight: 500 !important; }\n\n.font-weight-600 {\n  font-weight: 600 !important; }\n\n.font-weight-700 {\n  font-weight: 700 !important; }\n\n.font-weight-800 {\n  font-weight: 800 !important; }\n\n.font-weight-900 {\n  font-weight: 900 !important; }\n\n.text-underline {\n  text-decoration: underline; }\n\n.text-through {\n  text-decoration: line-through; }\n\n.text-xs {\n  font-size: 0.75rem !important; }\n\n.text-sm {\n  font-size: 0.875rem !important; }\n\n.text-lg {\n  font-size: 1.25rem !important; }\n\n.text-xl {\n  font-size: 1.5rem !important; }\n\n.lh-100 {\n  line-height: 1; }\n\n.lh-110 {\n  line-height: 1.1; }\n\n.lh-120 {\n  line-height: 1.2; }\n\n.lh-130 {\n  line-height: 1.3; }\n\n.lh-140 {\n  line-height: 1.4; }\n\n.lh-150 {\n  line-height: 1.5; }\n\n.lh-160 {\n  line-height: 1.6; }\n\n.lh-170 {\n  line-height: 1.7; }\n\n.lh-180 {\n  line-height: 1.8; }\n\n.ls-1 {\n  letter-spacing: .0625rem; }\n\n.ls-15 {\n  letter-spacing: .09375rem; }\n\n.ls-2 {\n  letter-spacing: 0.125rem; }\n\n.text-blue {\n  color: #5e72e4 !important; }\n\na.text-blue:hover, a.text-blue:focus {\n  color: #324cdd !important; }\n\n.text-indigo {\n  color: #5603ad !important; }\n\na.text-indigo:hover, a.text-indigo:focus {\n  color: #3d027b !important; }\n\n.text-purple {\n  color: #8965e0 !important; }\n\na.text-purple:hover, a.text-purple:focus {\n  color: #683bd7 !important; }\n\n.text-pink {\n  color: #f3a4b5 !important; }\n\na.text-pink:hover, a.text-pink:focus {\n  color: #ed7790 !important; }\n\n.text-red {\n  color: #f5365c !important; }\n\na.text-red:hover, a.text-red:focus {\n  color: #ec0c38 !important; }\n\n.text-orange {\n  color: #fb6340 !important; }\n\na.text-orange:hover, a.text-orange:focus {\n  color: #fa3a0e !important; }\n\n.text-yellow {\n  color: #ffd600 !important; }\n\na.text-yellow:hover, a.text-yellow:focus {\n  color: #ccab00 !important; }\n\n.text-green {\n  color: #2dce89 !important; }\n\na.text-green:hover, a.text-green:focus {\n  color: #24a46d !important; }\n\n.text-teal {\n  color: #11cdef !important; }\n\na.text-teal:hover, a.text-teal:focus {\n  color: #0da5c0 !important; }\n\n.text-cyan {\n  color: #2bffc6 !important; }\n\na.text-cyan:hover, a.text-cyan:focus {\n  color: #00f7b5 !important; }\n\n.text-white {\n  color: #fff !important; }\n\na.text-white:hover, a.text-white:focus {\n  color: #e6e6e6 !important; }\n\n.text-gray {\n  color: #8898aa !important; }\n\na.text-gray:hover, a.text-gray:focus {\n  color: #6a7e95 !important; }\n\n.text-gray-dark {\n  color: #32325d !important; }\n\na.text-gray-dark:hover, a.text-gray-dark:focus {\n  color: #20203c !important; }\n\n.text-light {\n  color: #ced4da !important; }\n\na.text-light:hover, a.text-light:focus {\n  color: #b1bbc4 !important; }\n\n.text-lighter {\n  color: #e9ecef !important; }\n\na.text-lighter:hover, a.text-lighter:focus {\n  color: #cbd3da !important; }\n\n@media (min-width: 992px) {\n  .transform-perspective-right {\n    -webkit-transform: scale(1) perspective(1040px) rotateY(-11deg) rotateX(2deg) rotate(2deg);\n            transform: scale(1) perspective(1040px) rotateY(-11deg) rotateX(2deg) rotate(2deg); }\n  .transform-perspective-left {\n    -webkit-transform: scale(1) perspective(2000px) rotateY(11deg) rotateX(2deg) rotate(-2deg);\n            transform: scale(1) perspective(2000px) rotateY(11deg) rotateX(2deg) rotate(-2deg); } }\n\n.alert {\n  font-size: 0.875rem; }\n\n.alert-heading {\n  font-weight: 600;\n  font-size: 0.9375rem;\n  margin-top: .15rem; }\n\n.alert-icon {\n  font-size: 1.25rem;\n  margin-right: 1.25rem;\n  display: inline-block;\n  vertical-align: middle; }\n  .alert-icon i.ni {\n    position: relative;\n    top: 1px; }\n\n.alert-text {\n  display: inline-block;\n  vertical-align: middle; }\n\n[class*=\"alert-\"] .alert-link {\n  color: #fff;\n  border-bottom: 1px dotted rgba(255, 255, 255, 0.5); }\n\n.alert-dismissible .close {\n  top: 50%;\n  right: 1.5rem;\n  padding: 0;\n  -webkit-transform: translateY(-50%);\n          transform: translateY(-50%);\n  color: rgba(255, 255, 255, 0.6);\n  opacity: 1; }\n  .alert-dismissible .close:hover, .alert-dismissible .close:focus {\n    color: rgba(255, 255, 255, 0.9);\n    opacity: 1 !important; }\n  @media (max-width: 575.98px) {\n    .alert-dismissible .close {\n      top: 1rem;\n      right: .5rem; } }\n  .alert-dismissible .close > span:not(.sr-only) {\n    font-size: 1.5rem;\n    background-color: transparent;\n    color: rgba(255, 255, 255, 0.6); }\n  .alert-dismissible .close:hover > span:not(.sr-only), .alert-dismissible .close:focus > span:not(.sr-only) {\n    background-color: transparent;\n    color: rgba(255, 255, 255, 0.9); }\n\n.avatar {\n  color: #fff;\n  background-color: #adb5bd;\n  display: -webkit-inline-box;\n  display: inline-flex;\n  -webkit-box-align: center;\n          align-items: center;\n  -webkit-box-pack: center;\n          justify-content: center;\n  font-size: 1rem;\n  border-radius: 50%;\n  height: 48px;\n  width: 48px; }\n  .avatar img {\n    width: 100%;\n    border-radius: 50%; }\n  .avatar + .avatar-content {\n    display: inline-block;\n    margin-left: .75rem; }\n\n.avatar-lg {\n  width: 58px;\n  height: 58px;\n  font-size: 0.875rem; }\n\n.avatar-sm {\n  width: 36px;\n  height: 36px;\n  font-size: 0.875rem; }\n\n.avatar-group .avatar {\n  position: relative;\n  z-index: 2;\n  border: 2px solid #fff; }\n  .avatar-group .avatar:hover {\n    z-index: 3; }\n\n.avatar-group .avatar + .avatar {\n  margin-left: -1rem; }\n\n.badge {\n  text-transform: uppercase; }\n  .badge a {\n    color: #fff; }\n\n.badge-md {\n  padding: .65em 1em; }\n\n.badge-lg {\n  padding: .85em 1.375em; }\n\n.badge-inline {\n  margin-right: .625rem; }\n  .badge-inline + span {\n    top: 2px;\n    position: relative; }\n    .badge-inline + span > a {\n      text-decoration: underline; }\n\n.btn .badge:not(:first-child) {\n  margin-left: .5rem; }\n\n.btn .badge:not(:last-child) {\n  margin-right: .5rem; }\n\n.badge-circle {\n  text-align: center;\n  display: -webkit-inline-box;\n  display: inline-flex;\n  -webkit-box-align: center;\n          align-items: center;\n  -webkit-box-pack: center;\n          justify-content: center;\n  border-radius: 50%;\n  width: 2rem;\n  height: 2rem;\n  font-size: .875rem; }\n\n.badge-dot {\n  padding-left: 0;\n  padding-right: 0;\n  background: transparent;\n  font-weight: 400;\n  font-size: 0.875rem;\n  text-transform: none; }\n  .badge-dot strong {\n    color: #32325d; }\n  .badge-dot i {\n    display: inline-block;\n    vertical-align: middle;\n    width: .375rem;\n    height: .375rem;\n    border-radius: 50%;\n    margin-right: .375rem; }\n  .badge-dot.badge-md i {\n    width: .5rem;\n    height: .5rem; }\n  .badge-dot.badge-lg i {\n    width: .625rem;\n    height: .625rem; }\n\n.btn {\n  position: relative;\n  text-transform: none;\n  -webkit-transition: all 0.15s ease;\n  transition: all 0.15s ease;\n  letter-spacing: 0.025em;\n  font-size: 0.875rem;\n  will-change: transform; }\n  .btn:hover {\n    box-shadow: 0 7px 14px rgba(50, 50, 93, 0.1), 0 3px 6px rgba(0, 0, 0, 0.08);\n    -webkit-transform: translateY(-1px);\n            transform: translateY(-1px); }\n  .btn:not(:last-child) {\n    margin-right: .5rem; }\n  .btn i:not(:first-child),\n  .btn svg:not(:first-child) {\n    margin-left: .5rem; }\n  .btn i:not(:last-child),\n  .btn svg:not(:last-child) {\n    margin-right: .5rem; }\n\n.btn-group .btn,\n.input-group .btn {\n  margin-right: 0;\n  -webkit-transform: translateY(0);\n          transform: translateY(0); }\n\n.btn-sm, .btn-group-sm > .btn {\n  font-size: 0.75rem; }\n\n.btn-lg, .btn-group-lg > .btn {\n  font-size: 0.875rem; }\n\n[class*=\"btn-outline-\"] {\n  border-width: 1px; }\n\n.btn-outline-secondary {\n  color: #4385b1; }\n\n.btn-inner--icon i:not(.fa) {\n  position: relative;\n  top: 2px; }\n\n.btn-link {\n  font-weight: 600;\n  box-shadow: none; }\n  .btn-link:hover {\n    box-shadow: none;\n    -webkit-transform: none;\n            transform: none; }\n\n.btn-neutral {\n  color: #5e72e4; }\n\n.btn-icon .btn-inner--icon img {\n  width: 20px; }\n\n.btn-icon .btn-inner--text:not(:first-child) {\n  margin-left: 0.75em; }\n\n.btn-icon .btn-inner--text:not(:last-child) {\n  margin-right: 0.75em; }\n\n.btn-icon-only {\n  width: 2.375rem;\n  height: 2.375rem;\n  padding: 0; }\n\na.btn-icon-only {\n  line-height: 2.5; }\n\n.btn-icon-only.btn-sm, .btn-group-sm > .btn-icon-only.btn {\n  width: 2rem;\n  height: 2rem; }\n\n.btn-icon-clipboard {\n  margin: 0;\n  padding: 1.5rem;\n  font-size: 1rem;\n  font-weight: 400;\n  line-height: 1.25;\n  color: #32325d;\n  background-color: #f6f9fc;\n  border-radius: 0.375rem;\n  border: 0;\n  text-align: left;\n  font-family: inherit;\n  display: inline-block;\n  vertical-align: middle;\n  text-decoration: none;\n  -moz-appearance: none;\n  cursor: pointer;\n  width: 100%;\n  margin: .5rem 0; }\n  .btn-icon-clipboard:hover {\n    background-color: #fff;\n    box-shadow: rgba(0, 0, 0, 0.1) 0 0 0 1px, rgba(0, 0, 0, 0.1) 0 4px 16px; }\n  .btn-icon-clipboard > div {\n    -webkit-box-align: center;\n            align-items: center;\n    display: -webkit-box;\n    display: flex; }\n  .btn-icon-clipboard i {\n    box-sizing: content-box;\n    color: #5e72e4;\n    vertical-align: middle;\n    font-size: 1.5rem; }\n  .btn-icon-clipboard span {\n    display: inline-block;\n    font-size: 0.875rem;\n    line-height: 1.5;\n    margin-left: 16px;\n    overflow: hidden;\n    white-space: nowrap;\n    text-overflow: ellipsis;\n    vertical-align: middle; }\n\n.btn-facebook {\n  color: #fff;\n  background-color: #3b5999;\n  border-color: #3b5999;\n  box-shadow: 0 4px 6px rgba(50, 50, 93, 0.11), 0 1px 3px rgba(0, 0, 0, 0.08); }\n  .btn-facebook:hover {\n    color: #fff;\n    background-color: #3b5999;\n    border-color: #3b5999; }\n  .btn-facebook:focus, .btn-facebook.focus {\n    box-shadow: 0 4px 6px rgba(50, 50, 93, 0.11), 0 1px 3px rgba(0, 0, 0, 0.08), 0 0 0 0 rgba(59, 89, 153, 0.5); }\n  .btn-facebook.disabled, .btn-facebook:disabled {\n    color: #fff;\n    background-color: #3b5999;\n    border-color: #3b5999; }\n  .btn-facebook:not(:disabled):not(.disabled):active, .btn-facebook:not(:disabled):not(.disabled).active,\n  .show > .btn-facebook.dropdown-toggle {\n    color: #fff;\n    background-color: #2d4474;\n    border-color: #3b5999; }\n    .btn-facebook:not(:disabled):not(.disabled):active:focus, .btn-facebook:not(:disabled):not(.disabled).active:focus,\n    .show > .btn-facebook.dropdown-toggle:focus {\n      box-shadow: none, 0 0 0 0 rgba(59, 89, 153, 0.5); }\n\n.btn-twitter {\n  color: #fff;\n  background-color: #1da1f2;\n  border-color: #1da1f2;\n  box-shadow: 0 4px 6px rgba(50, 50, 93, 0.11), 0 1px 3px rgba(0, 0, 0, 0.08); }\n  .btn-twitter:hover {\n    color: #fff;\n    background-color: #1da1f2;\n    border-color: #1da1f2; }\n  .btn-twitter:focus, .btn-twitter.focus {\n    box-shadow: 0 4px 6px rgba(50, 50, 93, 0.11), 0 1px 3px rgba(0, 0, 0, 0.08), 0 0 0 0 rgba(29, 161, 242, 0.5); }\n  .btn-twitter.disabled, .btn-twitter:disabled {\n    color: #fff;\n    background-color: #1da1f2;\n    border-color: #1da1f2; }\n  .btn-twitter:not(:disabled):not(.disabled):active, .btn-twitter:not(:disabled):not(.disabled).active,\n  .show > .btn-twitter.dropdown-toggle {\n    color: #fff;\n    background-color: #0c85d0;\n    border-color: #1da1f2; }\n    .btn-twitter:not(:disabled):not(.disabled):active:focus, .btn-twitter:not(:disabled):not(.disabled).active:focus,\n    .show > .btn-twitter.dropdown-toggle:focus {\n      box-shadow: none, 0 0 0 0 rgba(29, 161, 242, 0.5); }\n\n.btn-google-plus {\n  color: #fff;\n  background-color: #dd4b39;\n  border-color: #dd4b39;\n  box-shadow: 0 4px 6px rgba(50, 50, 93, 0.11), 0 1px 3px rgba(0, 0, 0, 0.08); }\n  .btn-google-plus:hover {\n    color: #fff;\n    background-color: #dd4b39;\n    border-color: #dd4b39; }\n  .btn-google-plus:focus, .btn-google-plus.focus {\n    box-shadow: 0 4px 6px rgba(50, 50, 93, 0.11), 0 1px 3px rgba(0, 0, 0, 0.08), 0 0 0 0 rgba(221, 75, 57, 0.5); }\n  .btn-google-plus.disabled, .btn-google-plus:disabled {\n    color: #fff;\n    background-color: #dd4b39;\n    border-color: #dd4b39; }\n  .btn-google-plus:not(:disabled):not(.disabled):active, .btn-google-plus:not(:disabled):not(.disabled).active,\n  .show > .btn-google-plus.dropdown-toggle {\n    color: #fff;\n    background-color: #c23321;\n    border-color: #dd4b39; }\n    .btn-google-plus:not(:disabled):not(.disabled):active:focus, .btn-google-plus:not(:disabled):not(.disabled).active:focus,\n    .show > .btn-google-plus.dropdown-toggle:focus {\n      box-shadow: none, 0 0 0 0 rgba(221, 75, 57, 0.5); }\n\n.btn-instagram {\n  color: #fff;\n  background-color: #e4405f;\n  border-color: #e4405f;\n  box-shadow: 0 4px 6px rgba(50, 50, 93, 0.11), 0 1px 3px rgba(0, 0, 0, 0.08); }\n  .btn-instagram:hover {\n    color: #fff;\n    background-color: #e4405f;\n    border-color: #e4405f; }\n  .btn-instagram:focus, .btn-instagram.focus {\n    box-shadow: 0 4px 6px rgba(50, 50, 93, 0.11), 0 1px 3px rgba(0, 0, 0, 0.08), 0 0 0 0 rgba(228, 64, 95, 0.5); }\n  .btn-instagram.disabled, .btn-instagram:disabled {\n    color: #fff;\n    background-color: #e4405f;\n    border-color: #e4405f; }\n  .btn-instagram:not(:disabled):not(.disabled):active, .btn-instagram:not(:disabled):not(.disabled).active,\n  .show > .btn-instagram.dropdown-toggle {\n    color: #fff;\n    background-color: #d31e40;\n    border-color: #e4405f; }\n    .btn-instagram:not(:disabled):not(.disabled):active:focus, .btn-instagram:not(:disabled):not(.disabled).active:focus,\n    .show > .btn-instagram.dropdown-toggle:focus {\n      box-shadow: none, 0 0 0 0 rgba(228, 64, 95, 0.5); }\n\n.btn-pinterest {\n  color: #fff;\n  background-color: #bd081c;\n  border-color: #bd081c;\n  box-shadow: 0 4px 6px rgba(50, 50, 93, 0.11), 0 1px 3px rgba(0, 0, 0, 0.08); }\n  .btn-pinterest:hover {\n    color: #fff;\n    background-color: #bd081c;\n    border-color: #bd081c; }\n  .btn-pinterest:focus, .btn-pinterest.focus {\n    box-shadow: 0 4px 6px rgba(50, 50, 93, 0.11), 0 1px 3px rgba(0, 0, 0, 0.08), 0 0 0 0 rgba(189, 8, 28, 0.5); }\n  .btn-pinterest.disabled, .btn-pinterest:disabled {\n    color: #fff;\n    background-color: #bd081c;\n    border-color: #bd081c; }\n  .btn-pinterest:not(:disabled):not(.disabled):active, .btn-pinterest:not(:disabled):not(.disabled).active,\n  .show > .btn-pinterest.dropdown-toggle {\n    color: #fff;\n    background-color: #8c0615;\n    border-color: #bd081c; }\n    .btn-pinterest:not(:disabled):not(.disabled):active:focus, .btn-pinterest:not(:disabled):not(.disabled).active:focus,\n    .show > .btn-pinterest.dropdown-toggle:focus {\n      box-shadow: none, 0 0 0 0 rgba(189, 8, 28, 0.5); }\n\n.btn-youtube {\n  color: #fff;\n  background-color: #cd201f;\n  border-color: #cd201f;\n  box-shadow: 0 4px 6px rgba(50, 50, 93, 0.11), 0 1px 3px rgba(0, 0, 0, 0.08); }\n  .btn-youtube:hover {\n    color: #fff;\n    background-color: #cd201f;\n    border-color: #cd201f; }\n  .btn-youtube:focus, .btn-youtube.focus {\n    box-shadow: 0 4px 6px rgba(50, 50, 93, 0.11), 0 1px 3px rgba(0, 0, 0, 0.08), 0 0 0 0 rgba(205, 32, 31, 0.5); }\n  .btn-youtube.disabled, .btn-youtube:disabled {\n    color: #fff;\n    background-color: #cd201f;\n    border-color: #cd201f; }\n  .btn-youtube:not(:disabled):not(.disabled):active, .btn-youtube:not(:disabled):not(.disabled).active,\n  .show > .btn-youtube.dropdown-toggle {\n    color: #fff;\n    background-color: #a11918;\n    border-color: #cd201f; }\n    .btn-youtube:not(:disabled):not(.disabled):active:focus, .btn-youtube:not(:disabled):not(.disabled).active:focus,\n    .show > .btn-youtube.dropdown-toggle:focus {\n      box-shadow: none, 0 0 0 0 rgba(205, 32, 31, 0.5); }\n\n.btn-slack {\n  color: #fff;\n  background-color: #3aaf85;\n  border-color: #3aaf85;\n  box-shadow: 0 4px 6px rgba(50, 50, 93, 0.11), 0 1px 3px rgba(0, 0, 0, 0.08); }\n  .btn-slack:hover {\n    color: #fff;\n    background-color: #3aaf85;\n    border-color: #3aaf85; }\n  .btn-slack:focus, .btn-slack.focus {\n    box-shadow: 0 4px 6px rgba(50, 50, 93, 0.11), 0 1px 3px rgba(0, 0, 0, 0.08), 0 0 0 0 rgba(58, 175, 133, 0.5); }\n  .btn-slack.disabled, .btn-slack:disabled {\n    color: #fff;\n    background-color: #3aaf85;\n    border-color: #3aaf85; }\n  .btn-slack:not(:disabled):not(.disabled):active, .btn-slack:not(:disabled):not(.disabled).active,\n  .show > .btn-slack.dropdown-toggle {\n    color: #fff;\n    background-color: #2d8968;\n    border-color: #3aaf85; }\n    .btn-slack:not(:disabled):not(.disabled):active:focus, .btn-slack:not(:disabled):not(.disabled).active:focus,\n    .show > .btn-slack.dropdown-toggle:focus {\n      box-shadow: none, 0 0 0 0 rgba(58, 175, 133, 0.5); }\n\n.btn-dribbble {\n  color: #fff;\n  background-color: #ea4c89;\n  border-color: #ea4c89;\n  box-shadow: 0 4px 6px rgba(50, 50, 93, 0.11), 0 1px 3px rgba(0, 0, 0, 0.08); }\n  .btn-dribbble:hover {\n    color: #fff;\n    background-color: #ea4c89;\n    border-color: #ea4c89; }\n  .btn-dribbble:focus, .btn-dribbble.focus {\n    box-shadow: 0 4px 6px rgba(50, 50, 93, 0.11), 0 1px 3px rgba(0, 0, 0, 0.08), 0 0 0 0 rgba(234, 76, 137, 0.5); }\n  .btn-dribbble.disabled, .btn-dribbble:disabled {\n    color: #fff;\n    background-color: #ea4c89;\n    border-color: #ea4c89; }\n  .btn-dribbble:not(:disabled):not(.disabled):active, .btn-dribbble:not(:disabled):not(.disabled).active,\n  .show > .btn-dribbble.dropdown-toggle {\n    color: #fff;\n    background-color: #e51e6b;\n    border-color: #ea4c89; }\n    .btn-dribbble:not(:disabled):not(.disabled):active:focus, .btn-dribbble:not(:disabled):not(.disabled).active:focus,\n    .show > .btn-dribbble.dropdown-toggle:focus {\n      box-shadow: none, 0 0 0 0 rgba(234, 76, 137, 0.5); }\n\n.btn-github {\n  color: #fff;\n  background-color: #222222;\n  border-color: #222222;\n  box-shadow: 0 4px 6px rgba(50, 50, 93, 0.11), 0 1px 3px rgba(0, 0, 0, 0.08); }\n  .btn-github:hover {\n    color: #fff;\n    background-color: #222222;\n    border-color: #222222; }\n  .btn-github:focus, .btn-github.focus {\n    box-shadow: 0 4px 6px rgba(50, 50, 93, 0.11), 0 1px 3px rgba(0, 0, 0, 0.08), 0 0 0 0 rgba(34, 34, 34, 0.5); }\n  .btn-github.disabled, .btn-github:disabled {\n    color: #fff;\n    background-color: #222222;\n    border-color: #222222; }\n  .btn-github:not(:disabled):not(.disabled):active, .btn-github:not(:disabled):not(.disabled).active,\n  .show > .btn-github.dropdown-toggle {\n    color: #fff;\n    background-color: #090909;\n    border-color: #222222; }\n    .btn-github:not(:disabled):not(.disabled):active:focus, .btn-github:not(:disabled):not(.disabled).active:focus,\n    .show > .btn-github.dropdown-toggle:focus {\n      box-shadow: none, 0 0 0 0 rgba(34, 34, 34, 0.5); }\n\n.card-translucent {\n  background-color: rgba(18, 91, 152, 0.08); }\n\n.card-profile-image {\n  position: relative; }\n  .card-profile-image img {\n    max-width: 180px;\n    border-radius: 0.375rem;\n    -webkit-transform: translate(-50%, -30%);\n            transform: translate(-50%, -30%);\n    position: absolute;\n    left: 50%;\n    -webkit-transition: all 0.15s ease;\n    transition: all 0.15s ease; }\n    .card-profile-image img:hover {\n      -webkit-transform: translate(-50%, -33%);\n              transform: translate(-50%, -33%); }\n\n.card-profile-stats {\n  padding: 1rem 0; }\n  .card-profile-stats > div {\n    text-align: center;\n    margin-right: 1rem;\n    padding: .875rem; }\n    .card-profile-stats > div:last-child {\n      margin-right: 0; }\n    .card-profile-stats > div .heading {\n      font-size: 1.1rem;\n      font-weight: bold;\n      display: block; }\n    .card-profile-stats > div .description {\n      font-size: .875rem;\n      color: #adb5bd; }\n\n.card-profile-actions {\n  padding: .875rem; }\n\n.card-blockquote {\n  padding: 2rem;\n  position: relative; }\n  .card-blockquote .svg-bg {\n    display: block;\n    width: 100%;\n    height: 95px;\n    position: absolute;\n    top: -94px;\n    left: 0; }\n\n.card-lift--hover:hover {\n  -webkit-transform: translateY(-20px);\n          transform: translateY(-20px);\n  -webkit-transition: all 0.15s ease;\n  transition: all 0.15s ease; }\n  @media screen and (prefers-reduced-motion: reduce) {\n    .card-lift--hover:hover {\n      -webkit-transition: none;\n      transition: none; } }\n\n.card-stats .card-body {\n  padding: 1rem 1.5rem; }\n\n.card-stats .card-status-bullet {\n  position: absolute;\n  top: 0;\n  right: 0;\n  -webkit-transform: translate(50%, -50%);\n          transform: translate(50%, -50%); }\n\n.chart {\n  position: relative;\n  height: 350px; }\n\n.chart-sm {\n  height: 230px; }\n\n.chart-legend {\n  display: -webkit-box;\n  display: flex;\n  -webkit-box-pack: center;\n          justify-content: center;\n  margin-top: 2.5rem;\n  font-size: 0.875rem;\n  text-align: center;\n  color: #8898aa; }\n\n.chart-legend-item {\n  display: -webkit-inline-box;\n  display: inline-flex;\n  -webkit-box-align: center;\n          align-items: center; }\n  .chart-legend-item + .chart-legend-item {\n    margin-left: 1rem; }\n\n.chart-legend-indicator {\n  display: inline-block;\n  width: 0.5rem;\n  height: 0.5rem;\n  margin-right: 0.375rem;\n  border-radius: 50%; }\n\n#chart-tooltip {\n  z-index: 0; }\n  #chart-tooltip .arrow {\n    top: 100%;\n    left: 50%;\n    -webkit-transform: translateX(-50%) translateX(-0.5rem);\n            transform: translateX(-50%) translateX(-0.5rem); }\n\n.chart-info-overlay {\n  position: absolute;\n  top: 0;\n  left: 5%;\n  max-width: 350px;\n  padding: 20px;\n  z-index: 1; }\n\n.close {\n  -webkit-transition: all 0.15s ease;\n  transition: all 0.15s ease; }\n  .close > span:not(.sr-only) {\n    background-color: transparent;\n    color: rgba(0, 0, 0, 0.6);\n    line-height: 17px;\n    height: 1.25rem;\n    width: 1.25rem;\n    border-radius: 50%;\n    font-size: 1.25rem;\n    display: block;\n    -webkit-transition: all 0.15s ease;\n    transition: all 0.15s ease; }\n  .close:hover, .close:focus {\n    background-color: transparent;\n    color: rgba(0, 0, 0, 0.9);\n    outline: none; }\n    .close:hover span:not(.sr-only), .close:focus span:not(.sr-only) {\n      background-color: transparent; }\n\n.main-content {\n  position: relative; }\n  .main-content .navbar-top {\n    position: absolute;\n    left: 0;\n    top: 0;\n    width: 100%;\n    z-index: 1;\n    background-color: transparent;\n    padding-left: 0 !important;\n    padding-right: 0 !important; }\n  @media (min-width: 768px) {\n    .main-content .container-fluid {\n      padding-left: 39px !important;\n      padding-right: 39px !important; } }\n\n.navbar-vertical.navbar-expand-xs.fixed-left + .main-content {\n  margin-left: 250px; }\n\n.navbar-vertical.navbar-expand-xs.fixed-right + .main-content {\n  margin-right: 250px; }\n\n@media (min-width: 576px) {\n  .navbar-vertical.navbar-expand-sm.fixed-left + .main-content {\n    margin-left: 250px; }\n  .navbar-vertical.navbar-expand-sm.fixed-right + .main-content {\n    margin-right: 250px; } }\n\n@media (min-width: 768px) {\n  .navbar-vertical.navbar-expand-md.fixed-left + .main-content {\n    margin-left: 250px; }\n  .navbar-vertical.navbar-expand-md.fixed-right + .main-content {\n    margin-right: 250px; } }\n\n@media (min-width: 992px) {\n  .navbar-vertical.navbar-expand-lg.fixed-left + .main-content {\n    margin-left: 250px; }\n  .navbar-vertical.navbar-expand-lg.fixed-right + .main-content {\n    margin-right: 250px; } }\n\n@media (min-width: 1200px) {\n  .navbar-vertical.navbar-expand-xl.fixed-left + .main-content {\n    margin-left: 250px; }\n  .navbar-vertical.navbar-expand-xl.fixed-right + .main-content {\n    margin-right: 250px; } }\n\n.custom-checkbox .custom-control-input ~ .custom-control-label {\n  cursor: pointer;\n  font-size: 0.875rem; }\n\n.custom-checkbox .custom-control-input:checked ~ .custom-control-label::before {\n  border-color: #5e72e4; }\n\n.custom-checkbox .custom-control-input:checked ~ .custom-control-label::after {\n  background-image: url(\"data:image/svg+xml;charset=utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 8 8'%3E%3Cpath fill='%23fff' d='M6.564.75l-3.59 3.612-1.538-1.55L0 4.26 2.974 7.25 8 2.193z'/%3E%3C/svg%3E\"); }\n\n.custom-checkbox .custom-control-input:disabled ~ .custom-control-label::before {\n  border-color: #e9ecef; }\n\n.custom-checkbox .custom-control-input:disabled:checked::before {\n  border-color: rgba(94, 114, 228, 0.5); }\n\n.custom-control-label::before {\n  border: 1px solid #cad1d7;\n  -webkit-transition: all 0.2s cubic-bezier(0.68, -0.55, 0.265, 1.55);\n  transition: all 0.2s cubic-bezier(0.68, -0.55, 0.265, 1.55); }\n\n.custom-control-label span {\n  position: relative;\n  top: 2px; }\n\n.custom-control-label {\n  margin-bottom: 0; }\n\n.custom-control-alternative .custom-control-label::before {\n  border: 0;\n  box-shadow: 0 1px 3px rgba(50, 50, 93, 0.15), 0 1px 0 rgba(0, 0, 0, 0.02); }\n\n.custom-control-alternative .custom-control-input:checked ~ .custom-control-label::before {\n  box-shadow: 0 4px 6px rgba(50, 50, 93, 0.11), 0 1px 3px rgba(0, 0, 0, 0.08); }\n\n.custom-control-alternative .custom-control-input:active ~ .custom-control-label::before,\n.custom-control-alternative .custom-control-input:focus ~ .custom-control-label::before {\n  box-shadow: 0 1px 3px rgba(50, 50, 93, 0.15), 0 1px 0 rgba(0, 0, 0, 0.02); }\n\n.custom-checkbox .custom-control-input ~ .custom-control-label {\n  cursor: pointer;\n  font-size: 0.875rem; }\n\n.custom-checkbox .custom-control-input:checked ~ .custom-control-label::before {\n  border-color: #5e72e4; }\n\n.custom-checkbox .custom-control-input:checked ~ .custom-control-label::after {\n  background-image: url(\"data:image/svg+xml;charset=utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 8 8'%3E%3Cpath fill='%23fff' d='M6.564.75l-3.59 3.612-1.538-1.55L0 4.26 2.974 7.25 8 2.193z'/%3E%3C/svg%3E\"); }\n\n.custom-checkbox .custom-control-input:disabled ~ .custom-control-label::before {\n  border-color: #e9ecef; }\n\n.custom-checkbox .custom-control-input:disabled:checked::before {\n  border-color: rgba(94, 114, 228, 0.5); }\n\n.custom-radio .custom-control-input ~ .custom-control-label {\n  cursor: pointer;\n  font-size: 0.875rem; }\n\n.custom-radio .custom-control-input:checked ~ .custom-control-label::before {\n  border-color: #5e72e4; }\n\n.custom-radio .custom-control-input:checked ~ .custom-control-label::after {\n  background-image: url(\"data:image/svg+xml;charset=utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='-4 -4 8 8'%3E%3Ccircle r='3' fill='%23fff'/%3E%3C/svg%3E\"); }\n\n.custom-radio .custom-control-input:disabled ~ .custom-control-label::before {\n  border-color: #e9ecef; }\n\n.custom-radio .custom-control-input:disabled:checked::before {\n  border-color: rgba(94, 114, 228, 0.5); }\n\n.custom-toggle {\n  position: relative;\n  display: inline-block;\n  width: 50px;\n  height: 1.5rem; }\n  .custom-toggle input {\n    display: none; }\n    .custom-toggle input:checked + .custom-toggle-slider {\n      border: 1px solid #5e72e4; }\n      .custom-toggle input:checked + .custom-toggle-slider:before {\n        background: #5e72e4;\n        -webkit-transform: translateX(1.625rem);\n                transform: translateX(1.625rem); }\n    .custom-toggle input:disabled + .custom-toggle-slider {\n      border: 1px solid #e9ecef; }\n    .custom-toggle input:disabled:checked + .custom-toggle-slider {\n      border: 1px solid #e9ecef; }\n      .custom-toggle input:disabled:checked + .custom-toggle-slider:before {\n        background-color: #8a98eb; }\n\n.custom-toggle-slider {\n  position: absolute;\n  cursor: pointer;\n  top: 0;\n  left: 0;\n  right: 0;\n  bottom: 0;\n  border: 1px solid #cad1d7;\n  border-radius: 34px !important;\n  background-color: transparent; }\n  .custom-toggle-slider:before {\n    position: absolute;\n    content: \"\";\n    height: 18px;\n    width: 18px;\n    left: 2px;\n    bottom: 2px;\n    border-radius: 50% !important;\n    background-color: #e9ecef;\n    -webkit-transition: all 0.2s cubic-bezier(0.68, -0.55, 0.265, 1.55);\n    transition: all 0.2s cubic-bezier(0.68, -0.55, 0.265, 1.55); }\n\n.dropdown,\n.dropup,\n.dropright,\n.dropleft {\n  display: inline-block; }\n\n.dropdown-menu {\n  min-width: 12rem; }\n  .dropdown-menu .dropdown-item {\n    padding: .5rem 1rem;\n    font-size: 0.875rem; }\n    .dropdown-menu .dropdown-item > i,\n    .dropdown-menu .dropdown-item > svg {\n      margin-right: 1rem;\n      font-size: 1rem;\n      vertical-align: -17%; }\n\n.dropdown-header {\n  padding-left: 1rem;\n  padding-right: 1rem;\n  color: #f6f9fc;\n  font-size: .625rem;\n  text-transform: uppercase;\n  font-weight: 700; }\n\n.dropdown-menu a.media > div:first-child {\n  line-height: 1; }\n\n.dropdown-menu a.media p {\n  color: #8898aa; }\n\n.dropdown-menu a.media:hover .heading,\n.dropdown-menu a.media:hover p {\n  color: #172b4d !important; }\n\n.dropdown-menu-sm {\n  min-width: 100px;\n  border: 0.4375rem; }\n\n.dropdown-menu-lg {\n  min-width: 260px;\n  border-radius: 0.4375rem; }\n\n.dropdown-menu-xl {\n  min-width: 450px;\n  border-radius: 0.4375rem; }\n\n.footer {\n  background: #f7fafc;\n  padding: 2.5rem 0; }\n  .footer .col-footer .heading {\n    color: #8898aa;\n    letter-spacing: 0;\n    font-size: 0.875rem;\n    text-transform: uppercase;\n    font-weight: 600;\n    margin-bottom: 1rem; }\n  .footer .nav .nav-item .nav-link,\n  .footer .footer-link {\n    color: #8898aa !important; }\n    .footer .nav .nav-item .nav-link:hover,\n    .footer .footer-link:hover {\n      color: #525f7f !important; }\n  .footer .list-unstyled li a {\n    display: inline-block;\n    padding: .125rem 0;\n    color: #8898aa;\n    font-size: 0.85rem; }\n    .footer .list-unstyled li a:hover {\n      color: #525f7f; }\n  .footer .copyright {\n    font-size: 0.875rem; }\n\n.footer-dark .col-footer .heading {\n  color: #fff; }\n\n.nav-footer .nav-link {\n  font-size: 0.875rem; }\n\n.nav-footer .nav-item:last-child .nav-link {\n  padding-right: 0; }\n\n.footer.has-cards {\n  overflow: hidden;\n  padding-top: 500px;\n  margin-top: -420px;\n  position: relative;\n  background: transparent;\n  pointer-events: none; }\n  .footer.has-cards:before {\n    content: \"\";\n    position: absolute;\n    left: 0;\n    right: 0;\n    top: 600px;\n    height: 2000px;\n    background: #f7fafc;\n    -webkit-transform: skew(0, -8deg);\n            transform: skew(0, -8deg); }\n  .footer.has-cards .container {\n    pointer-events: auto;\n    position: relative; }\n\n.form-control-label {\n  color: #525f7f;\n  font-size: 0.875rem;\n  font-weight: 600; }\n\n.form-control {\n  font-size: 0.875rem; }\n  .form-control:focus::-webkit-input-placeholder {\n    color: #adb5bd; }\n  .form-control:focus::-moz-placeholder {\n    color: #adb5bd; }\n  .form-control:focus::-ms-input-placeholder {\n    color: #adb5bd; }\n  .form-control:focus::placeholder {\n    color: #adb5bd; }\n\ntextarea[resize=\"none\"] {\n  resize: none !important; }\n\ntextarea[resize=\"both\"] {\n  resize: both !important; }\n\ntextarea[resize=\"vertical\"] {\n  resize: vertical !important; }\n\ntextarea[resize=\"horizontal\"] {\n  resize: horizontal !important; }\n\n.form-control-muted {\n  background-color: #F7FAFE;\n  border-color: #F7FAFE;\n  box-shadow: none; }\n  .form-control-muted:focus {\n    background-color: #fcfdff; }\n\n.form-control-alternative {\n  box-shadow: 0 1px 3px rgba(50, 50, 93, 0.15), 0 1px 0 rgba(0, 0, 0, 0.02);\n  border: 0;\n  -webkit-transition: box-shadow .15s ease;\n  transition: box-shadow .15s ease; }\n  .form-control-alternative:focus {\n    box-shadow: 0 4px 6px rgba(50, 50, 93, 0.11), 0 1px 3px rgba(0, 0, 0, 0.08); }\n\n.form-control-lg {\n  font-size: 1rem; }\n\n.has-success,\n.has-danger {\n  position: relative; }\n  .has-success:after,\n  .has-danger:after {\n    width: 19px;\n    height: 19px;\n    line-height: 19px;\n    text-align: center;\n    font-family: 'NucleoIcons';\n    display: inline-block;\n    position: absolute;\n    right: 15px;\n    top: 2px;\n    -webkit-transform: translateY(50%);\n            transform: translateY(50%);\n    border-radius: 50%;\n    font-size: 9px;\n    opacity: 1; }\n\n.has-success:after {\n  content: \"\\EA26\";\n  color: daken(#2dce89, 18%);\n  background-color: #69deac; }\n\n.has-success .form-control {\n  background-color: #fff; }\n  .has-success .form-control:focus {\n    border-color: rgba(50, 151, 211, 0.25); }\n  .has-success .form-control::-webkit-input-placeholder {\n    color: #2dce89; }\n  .has-success .form-control::-moz-placeholder {\n    color: #2dce89; }\n  .has-success .form-control::-ms-input-placeholder {\n    color: #2dce89; }\n  .has-success .form-control::placeholder {\n    color: #2dce89; }\n\n.has-danger:after {\n  content: \"\\EA53\";\n  color: daken(#fb6340, 18%);\n  background-color: #fda08b; }\n\n.has-danger .form-control {\n  background-color: #fff; }\n  .has-danger .form-control:focus {\n    border-color: rgba(50, 151, 211, 0.25); }\n  .has-danger .form-control::-webkit-input-placeholder {\n    color: #fb6340; }\n  .has-danger .form-control::-moz-placeholder {\n    color: #fb6340; }\n  .has-danger .form-control::-ms-input-placeholder {\n    color: #fb6340; }\n  .has-danger .form-control::placeholder {\n    color: #fb6340; }\n\n.input-group {\n  box-shadow: none;\n  border-radius: 0.375rem;\n  -webkit-transition: all 0.15s ease;\n  transition: all 0.15s ease; }\n  .input-group .form-control {\n    box-shadow: none; }\n    .input-group .form-control:not(:first-child) {\n      border-left: 0;\n      padding-left: 0; }\n    .input-group .form-control:not(:last-child) {\n      border-right: 0;\n      padding-right: 0; }\n    .input-group .form-control:focus {\n      box-shadow: none; }\n\n.input-group-text {\n  -webkit-transition: all 0.2s cubic-bezier(0.68, -0.55, 0.265, 1.55);\n  transition: all 0.2s cubic-bezier(0.68, -0.55, 0.265, 1.55); }\n\n.input-group-alternative {\n  box-shadow: 0 1px 3px rgba(50, 50, 93, 0.15), 0 1px 0 rgba(0, 0, 0, 0.02);\n  border: 0;\n  -webkit-transition: box-shadow .15s ease;\n  transition: box-shadow .15s ease; }\n  .input-group-alternative .form-control,\n  .input-group-alternative .input-group-text {\n    border: 0;\n    box-shadow: none; }\n\n.focused .input-group-alternative {\n  box-shadow: 0 4px 6px rgba(50, 50, 93, 0.11), 0 1px 3px rgba(0, 0, 0, 0.08) !important; }\n\n.focused .input-group {\n  box-shadow: none; }\n\n.focused .input-group-text {\n  color: #8898aa;\n  background-color: #fff;\n  border-color: rgba(50, 151, 211, 0.25); }\n\n.focused .form-control {\n  border-color: rgba(50, 151, 211, 0.25); }\n\n.header {\n  position: relative; }\n\n.icon {\n  width: 3rem;\n  height: 3rem; }\n  .icon i, .icon svg {\n    font-size: 2.25rem; }\n  .icon + .icon-text {\n    padding-left: 1rem;\n    width: calc(100% - 3rem - 1); }\n\n.icon-xl {\n  width: 5rem;\n  height: 5rem; }\n  .icon-xl i, .icon-xl svg {\n    font-size: 4.25rem; }\n  .icon-xl + .icon-text {\n    width: calc(100% - $icon-size-xl - 1); }\n\n.icon-lg {\n  width: 4rem;\n  height: 4rem; }\n  .icon-lg i, .icon-lg svg {\n    font-size: 3.25rem; }\n  .icon-lg + .icon-text {\n    width: calc(100% - $icon-size-lg - 1); }\n\n.icon-sm {\n  width: 2rem;\n  height: 2rem; }\n  .icon-sm i, .icon-sm svg {\n    font-size: 1.25rem; }\n  .icon-sm + .icon-text {\n    width: calc(100% - $icon-size-sm - 1); }\n\n.icon-shape {\n  padding: 12px;\n  text-align: center;\n  display: -webkit-inline-box;\n  display: inline-flex;\n  -webkit-box-align: center;\n          align-items: center;\n  -webkit-box-pack: center;\n          justify-content: center;\n  border-radius: 50%; }\n  .icon-shape i, .icon-shape svg {\n    font-size: 1.25rem; }\n  .icon-shape.icon-lg i, .icon-shape.icon-lg svg {\n    font-size: 1.625rem; }\n  .icon-shape.icon-sm i, .icon-shape.icon-sm svg {\n    font-size: .875rem; }\n  .icon-shape svg {\n    width: 30px;\n    height: 30px; }\n\n.icon-shape-primary {\n  color: #2643e9;\n  background-color: rgba(138, 152, 235, 0.5); }\n\n.icon-shape-secondary {\n  color: #cfe3f1;\n  background-color: rgba(255, 255, 255, 0.5); }\n\n.icon-shape-success {\n  color: #1aae6f;\n  background-color: rgba(84, 218, 161, 0.5); }\n\n.icon-shape-info {\n  color: #03acca;\n  background-color: rgba(65, 215, 242, 0.5); }\n\n.icon-shape-warning {\n  color: #ff3709;\n  background-color: rgba(252, 140, 114, 0.5); }\n\n.icon-shape-danger {\n  color: #f80031;\n  background-color: rgba(247, 103, 131, 0.5); }\n\n.icon-shape-light {\n  color: #879cb0;\n  background-color: rgba(201, 207, 212, 0.5); }\n\n.icon-shape-dark {\n  color: #090c0e;\n  background-color: rgba(56, 63, 69, 0.5); }\n\n.icon-shape-default {\n  color: #091428;\n  background-color: rgba(35, 65, 116, 0.5); }\n\n.icon-shape-white {\n  color: #e8e3e3;\n  background-color: rgba(255, 255, 255, 0.5); }\n\n.icon-shape-neutral {\n  color: #e8e3e3;\n  background-color: rgba(255, 255, 255, 0.5); }\n\n.icon-shape-darker {\n  color: black;\n  background-color: rgba(26, 26, 26, 0.5); }\n\n.input-group {\n  box-shadow: none;\n  border-radius: 0.375rem;\n  -webkit-transition: all 0.15s ease;\n  transition: all 0.15s ease; }\n  .input-group .form-control {\n    box-shadow: none; }\n    .input-group .form-control:not(:first-child) {\n      border-left: 0;\n      padding-left: 0; }\n    .input-group .form-control:not(:last-child) {\n      border-right: 0;\n      padding-right: 0; }\n    .input-group .form-control:focus {\n      box-shadow: none; }\n\n.input-group-text {\n  -webkit-transition: all 0.2s cubic-bezier(0.68, -0.55, 0.265, 1.55);\n  transition: all 0.2s cubic-bezier(0.68, -0.55, 0.265, 1.55); }\n\n.input-group-alternative {\n  box-shadow: 0 1px 3px rgba(50, 50, 93, 0.15), 0 1px 0 rgba(0, 0, 0, 0.02);\n  border: 0;\n  -webkit-transition: box-shadow .15s ease;\n  transition: box-shadow .15s ease; }\n  .input-group-alternative .form-control,\n  .input-group-alternative .input-group-text {\n    border: 0;\n    box-shadow: none; }\n\n.focused .input-group-alternative {\n  box-shadow: 0 4px 6px rgba(50, 50, 93, 0.11), 0 1px 3px rgba(0, 0, 0, 0.08) !important; }\n\n.focused .input-group {\n  box-shadow: none; }\n\n.focused .input-group-text {\n  color: #8898aa;\n  background-color: #fff;\n  border-color: rgba(50, 151, 211, 0.25); }\n\n.focused .form-control {\n  border-color: rgba(50, 151, 211, 0.25); }\n\n.list-group-space .list-group-item {\n  margin-bottom: 1.5rem;\n  border-radius: 0.375rem; }\n\n.list-group-img {\n  width: 3rem;\n  height: 3rem;\n  border-radius: 50%;\n  vertical-align: top;\n  margin: -.1rem 1.2rem 0 -.2rem; }\n\n.list-group-content {\n  -webkit-box-flex: 1;\n          flex: 1;\n  min-width: 0; }\n  .list-group-content > p {\n    color: #adb5bd;\n    line-height: 1.5;\n    margin: .2rem 0 0; }\n\n.list-group-heading {\n  font-size: 1rem;\n  color: #32325d; }\n  .list-group-heading > small {\n    float: right;\n    color: #adb5bd;\n    font-weight: 500; }\n\n.map-canvas {\n  position: relative;\n  width: 100%;\n  height: 500px;\n  border-radius: 0.375rem; }\n\n.mask {\n  position: absolute;\n  top: 0;\n  left: 0;\n  width: 100%;\n  height: 100%;\n  -webkit-transition: all 0.15s ease;\n  transition: all 0.15s ease; }\n  @media screen and (prefers-reduced-motion: reduce) {\n    .mask {\n      -webkit-transition: none;\n      transition: none; } }\n\n.modal-fluid .modal-dialog {\n  margin-top: 0;\n  margin-bottom: 0; }\n\n.modal-fluid .modal-content {\n  border-radius: 0; }\n\n.modal-primary .modal-title {\n  color: #fff; }\n\n.modal-primary .modal-header,\n.modal-primary .modal-footer {\n  border-color: rgba(255, 255, 255, 0.075); }\n\n.modal-primary .modal-content {\n  background-color: #5e72e4;\n  color: #fff; }\n  .modal-primary .modal-content .heading {\n    color: #fff; }\n\n.modal-primary .close > span:not(.sr-only) {\n  color: #fff; }\n\n.modal-secondary .modal-title {\n  color: #212529; }\n\n.modal-secondary .modal-header,\n.modal-secondary .modal-footer {\n  border-color: rgba(33, 37, 41, 0.075); }\n\n.modal-secondary .modal-content {\n  background-color: #f7fafc;\n  color: #212529; }\n  .modal-secondary .modal-content .heading {\n    color: #212529; }\n\n.modal-secondary .close > span:not(.sr-only) {\n  color: #fff; }\n\n.modal-success .modal-title {\n  color: #fff; }\n\n.modal-success .modal-header,\n.modal-success .modal-footer {\n  border-color: rgba(255, 255, 255, 0.075); }\n\n.modal-success .modal-content {\n  background-color: #2dce89;\n  color: #fff; }\n  .modal-success .modal-content .heading {\n    color: #fff; }\n\n.modal-success .close > span:not(.sr-only) {\n  color: #fff; }\n\n.modal-info .modal-title {\n  color: #fff; }\n\n.modal-info .modal-header,\n.modal-info .modal-footer {\n  border-color: rgba(255, 255, 255, 0.075); }\n\n.modal-info .modal-content {\n  background-color: #11cdef;\n  color: #fff; }\n  .modal-info .modal-content .heading {\n    color: #fff; }\n\n.modal-info .close > span:not(.sr-only) {\n  color: #fff; }\n\n.modal-warning .modal-title {\n  color: #fff; }\n\n.modal-warning .modal-header,\n.modal-warning .modal-footer {\n  border-color: rgba(255, 255, 255, 0.075); }\n\n.modal-warning .modal-content {\n  background-color: #fb6340;\n  color: #fff; }\n  .modal-warning .modal-content .heading {\n    color: #fff; }\n\n.modal-warning .close > span:not(.sr-only) {\n  color: #fff; }\n\n.modal-danger .modal-title {\n  color: #fff; }\n\n.modal-danger .modal-header,\n.modal-danger .modal-footer {\n  border-color: rgba(255, 255, 255, 0.075); }\n\n.modal-danger .modal-content {\n  background-color: #f5365c;\n  color: #fff; }\n  .modal-danger .modal-content .heading {\n    color: #fff; }\n\n.modal-danger .close > span:not(.sr-only) {\n  color: #fff; }\n\n.modal-light .modal-title {\n  color: #fff; }\n\n.modal-light .modal-header,\n.modal-light .modal-footer {\n  border-color: rgba(255, 255, 255, 0.075); }\n\n.modal-light .modal-content {\n  background-color: #adb5bd;\n  color: #fff; }\n  .modal-light .modal-content .heading {\n    color: #fff; }\n\n.modal-light .close > span:not(.sr-only) {\n  color: #fff; }\n\n.modal-dark .modal-title {\n  color: #fff; }\n\n.modal-dark .modal-header,\n.modal-dark .modal-footer {\n  border-color: rgba(255, 255, 255, 0.075); }\n\n.modal-dark .modal-content {\n  background-color: #212529;\n  color: #fff; }\n  .modal-dark .modal-content .heading {\n    color: #fff; }\n\n.modal-dark .close > span:not(.sr-only) {\n  color: #fff; }\n\n.modal-default .modal-title {\n  color: #fff; }\n\n.modal-default .modal-header,\n.modal-default .modal-footer {\n  border-color: rgba(255, 255, 255, 0.075); }\n\n.modal-default .modal-content {\n  background-color: #172b4d;\n  color: #fff; }\n  .modal-default .modal-content .heading {\n    color: #fff; }\n\n.modal-default .close > span:not(.sr-only) {\n  color: #fff; }\n\n.modal-white .modal-title {\n  color: #212529; }\n\n.modal-white .modal-header,\n.modal-white .modal-footer {\n  border-color: rgba(33, 37, 41, 0.075); }\n\n.modal-white .modal-content {\n  background-color: #fff;\n  color: #212529; }\n  .modal-white .modal-content .heading {\n    color: #212529; }\n\n.modal-white .close > span:not(.sr-only) {\n  color: #fff; }\n\n.modal-neutral .modal-title {\n  color: #212529; }\n\n.modal-neutral .modal-header,\n.modal-neutral .modal-footer {\n  border-color: rgba(33, 37, 41, 0.075); }\n\n.modal-neutral .modal-content {\n  background-color: #fff;\n  color: #212529; }\n  .modal-neutral .modal-content .heading {\n    color: #212529; }\n\n.modal-neutral .close > span:not(.sr-only) {\n  color: #fff; }\n\n.modal-darker .modal-title {\n  color: #fff; }\n\n.modal-darker .modal-header,\n.modal-darker .modal-footer {\n  border-color: rgba(255, 255, 255, 0.075); }\n\n.modal-darker .modal-content {\n  background-color: black;\n  color: #fff; }\n  .modal-darker .modal-content .heading {\n    color: #fff; }\n\n.modal-darker .close > span:not(.sr-only) {\n  color: #fff; }\n\n.nav-wrapper {\n  padding: 1rem 0;\n  border-top-left-radius: 0.375rem;\n  border-top-right-radius: 0.375rem; }\n  .nav-wrapper + .card {\n    border-top-left-radius: 0;\n    border-top-right-radius: 0;\n    border-bottom-right-radius: 0.375rem;\n    border-bottom-left-radius: 0.375rem; }\n\n.nav-link {\n  color: #525f7f; }\n  .nav-link:hover {\n    color: #5e72e4; }\n  .nav-link i.ni {\n    position: relative;\n    top: 2px; }\n\n.nav-pills .nav-item:not(:last-child) {\n  padding-right: 1rem; }\n\n.nav-pills .nav-link {\n  padding: 0.75rem 1rem;\n  color: #5e72e4;\n  font-weight: 500;\n  font-size: 0.875rem;\n  box-shadow: 0 4px 6px rgba(50, 50, 93, 0.11), 0 1px 3px rgba(0, 0, 0, 0.08);\n  background-color: #fff;\n  -webkit-transition: all 0.15s ease;\n  transition: all 0.15s ease; }\n  .nav-pills .nav-link:hover {\n    color: #485fe0; }\n\n.nav-pills .nav-link.active,\n.nav-pills .show > .nav-link {\n  color: #fff;\n  background-color: #5e72e4; }\n\n@media (max-width: 575.98px) {\n  .nav-pills .nav-item {\n    margin-bottom: 1rem; } }\n\n@media (max-width: 767.98px) {\n  .nav-pills:not(.nav-pills-circle) .nav-item {\n    padding-right: 0; } }\n\n.nav-pills-circle .nav-link {\n  text-align: center;\n  height: 60px;\n  width: 60px;\n  padding: 0;\n  line-height: 60px;\n  border-radius: 50%; }\n\n.nav-pills-circle .nav-link-icon i, .nav-pills-circle .nav-link-icon svg {\n  font-size: 1rem; }\n\n.navbar-horizontal .navbar-nav .nav-link {\n  font-size: 0.9rem;\n  font-weight: 400;\n  text-transform: normal;\n  letter-spacing: 0;\n  -webkit-transition: all 0.15s linear;\n  transition: all 0.15s linear; }\n  @media screen and (prefers-reduced-motion: reduce) {\n    .navbar-horizontal .navbar-nav .nav-link {\n      -webkit-transition: none;\n      transition: none; } }\n  .navbar-horizontal .navbar-nav .nav-link .nav-link-inner--text {\n    margin-left: .25rem; }\n\n.navbar-horizontal .navbar-brand {\n  font-size: 0.875rem;\n  font-weight: 600;\n  text-transform: uppercase;\n  font-size: .875rem;\n  letter-spacing: .05px; }\n  .navbar-horizontal .navbar-brand img {\n    height: 30px; }\n\n.navbar-horizontal .navbar-dark .navbar-brand {\n  color: #fff; }\n\n.navbar-horizontal .navbar-light .navbar-brand {\n  color: #32325d; }\n\n.navbar-horizontal .navbar-nav .nav-item .media:not(:last-child) {\n  margin-bottom: 1.5rem; }\n\n@media (min-width: 992px) {\n  .navbar-horizontal .navbar-nav .nav-item {\n    margin-right: .5rem; }\n    .navbar-horizontal .navbar-nav .nav-item [data-toggle=\"dropdown\"]::after {\n      -webkit-transition: all 0.15s ease;\n      transition: all 0.15s ease; }\n    .navbar-horizontal .navbar-nav .nav-item.show [data-toggle=\"dropdown\"]::after {\n      -webkit-transform: rotate(180deg);\n              transform: rotate(180deg); }\n  .navbar-horizontal .navbar-nav .nav-link {\n    padding-top: 1rem;\n    padding-bottom: 1rem;\n    border-radius: 0.375rem; }\n    .navbar-horizontal .navbar-nav .nav-link i {\n      margin-right: .625rem; }\n  .navbar-horizontal .navbar-nav .nav-link-icon {\n    padding-left: .5rem !important;\n    padding-right: .5rem !important;\n    font-size: 1rem;\n    border-radius: 0.375rem; }\n    .navbar-horizontal .navbar-nav .nav-link-icon i {\n      margin-right: 0; } }\n\n.navbar-horizontal .navbar-transparent {\n  position: absolute;\n  top: 0;\n  width: 100%;\n  z-index: 100;\n  background-color: transparent;\n  border: 0;\n  box-shadow: none; }\n  .navbar-horizontal .navbar-transparent .navbar-brand {\n    color: white; }\n  .navbar-horizontal .navbar-transparent .navbar-toggler {\n    color: white; }\n  .navbar-horizontal .navbar-transparent .navbar-toggler-icon {\n    background-image: url(\"data:image/svg+xml;charset=utf8,%3Csvg viewBox='0 0 30 30' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath stroke='rgba(255, 255, 255, 0.95)' stroke-width='2' stroke-linecap='round' stroke-miterlimit='10' d='M4 7h22M4 15h22M4 23h22'/%3E%3C/svg%3E\"); }\n\n@media (min-width: 768px) {\n  .navbar-horizontal .navbar-transparent .navbar-nav .nav-link {\n    color: rgba(255, 255, 255, 0.95); }\n    .navbar-horizontal .navbar-transparent .navbar-nav .nav-link:hover, .navbar-horizontal .navbar-transparent .navbar-nav .nav-link:focus {\n      color: rgba(255, 255, 255, 0.65); }\n    .navbar-horizontal .navbar-transparent .navbar-nav .nav-link.disabled {\n      color: rgba(255, 255, 255, 0.25); }\n  .navbar-horizontal .navbar-transparent .navbar-nav .show > .nav-link,\n  .navbar-horizontal .navbar-transparent .navbar-nav .active > .nav-link,\n  .navbar-horizontal .navbar-transparent .navbar-nav .nav-link.show,\n  .navbar-horizontal .navbar-transparent .navbar-nav .nav-link.active {\n    color: rgba(255, 255, 255, 0.65); }\n  .navbar-horizontal .navbar-transparent .navbar-brand {\n    color: rgba(255, 255, 255, 0.95); }\n    .navbar-horizontal .navbar-transparent .navbar-brand:hover, .navbar-horizontal .navbar-transparent .navbar-brand:focus {\n      color: rgba(255, 255, 255, 0.95); } }\n\n.navbar-vertical {\n  box-shadow: 0 0 2rem 0 rgba(136, 152, 170, 0.15) !important; }\n  .navbar-vertical .navbar {\n    border-width: 0 0 1px 0;\n    border-style: solid; }\n  .navbar-vertical .navbar-light {\n    background-color: transparent;\n    border-color: #f6f9fc; }\n  .navbar-vertical .navbar-brand {\n    margin-right: 0; }\n  .navbar-vertical .navbar-brand-img,\n  .navbar-vertical .navbar-brand > img {\n    max-width: 100%;\n    max-height: 2rem; }\n  @media (min-width: 768px) {\n    .navbar-vertical .navbar-collapse {\n      margin-left: -1rem;\n      margin-right: -1rem;\n      padding-left: 1rem;\n      padding-right: 1rem; }\n      .navbar-vertical .navbar-collapse:before {\n        content: '';\n        display: block;\n        margin: 1rem -1rem; } }\n  .navbar-vertical .navbar-nav {\n    margin-left: -1rem;\n    margin-right: -1rem; }\n    .navbar-vertical .navbar-nav .nav-link {\n      padding-left: 1rem;\n      padding-right: 1rem;\n      font-size: 0.9rem; }\n      .navbar-vertical .navbar-nav .nav-link.active {\n        position: relative; }\n        .navbar-vertical .navbar-nav .nav-link.active:before {\n          content: '';\n          position: absolute;\n          left: 0;\n          top: 0.25rem;\n          bottom: 0.25rem;\n          border-left: 2px solid #5e72e4; }\n      .navbar-vertical .navbar-nav .nav-link > i {\n        min-width: 2.25rem;\n        font-size: .9375rem;\n        line-height: 1.5rem; }\n      .navbar-vertical .navbar-nav .nav-link .dropdown-menu {\n        border: none; }\n        .navbar-vertical .navbar-nav .nav-link .dropdown-menu .dropdown-menu {\n          margin-left: 0.75rem; }\n  .navbar-vertical .navbar-nav .nav-link {\n    display: -webkit-box;\n    display: flex;\n    -webkit-box-align: center;\n            align-items: center; }\n  .navbar-vertical .navbar-nav .nav-link[data-toggle=\"collapse\"]:after {\n    display: inline-block;\n    font-style: normal;\n    font-variant: normal;\n    text-rendering: auto;\n    -webkit-font-smoothing: antialiased;\n    font-family: 'Font Awesome 5 Free';\n    font-weight: 700;\n    content: \"\\F105\";\n    margin-left: auto;\n    color: #8898aa;\n    -webkit-transition: all 0.15s ease;\n    transition: all 0.15s ease; }\n  .navbar-vertical .navbar-nav .nav-link[data-toggle=\"collapse\"][aria-expanded=\"true\"]:after {\n    -webkit-transform: rotate(90deg);\n            transform: rotate(90deg); }\n  .navbar-vertical .navbar-nav .nav .nav-link {\n    padding-left: 3.25rem; }\n  .navbar-vertical .navbar-nav .nav .nav .nav-link {\n    padding-left: 3.75rem; }\n  .navbar-vertical .navbar-heading {\n    padding-top: 0.25rem;\n    padding-bottom: 0.25rem;\n    font-size: 0.75rem;\n    text-transform: uppercase;\n    letter-spacing: .04em; }\n  .navbar-vertical.navbar-expand-xs {\n    display: block;\n    position: fixed;\n    top: 0;\n    bottom: 0;\n    width: 100%;\n    max-width: 250px;\n    padding-left: 1.5rem;\n    padding-right: 1.5rem;\n    overflow-y: auto; }\n    .navbar-vertical.navbar-expand-xs > [class*=\"container\"] {\n      -webkit-box-orient: vertical;\n      -webkit-box-direction: normal;\n              flex-direction: column;\n      -webkit-box-align: stretch;\n              align-items: stretch;\n      min-height: 100%;\n      padding-left: 0;\n      padding-right: 0; }\n      @media all and (-ms-high-contrast: none), (-ms-high-contrast: active) {\n        .navbar-vertical.navbar-expand-xs > [class*=\"container\"] {\n          min-height: none;\n          height: 100%; } }\n    .navbar-vertical.navbar-expand-xs.fixed-left {\n      left: 0;\n      border-width: 0 1px 0 0; }\n    .navbar-vertical.navbar-expand-xs.fixed-right {\n      right: 0;\n      border-width: 0 0 0 1px; }\n    .navbar-vertical.navbar-expand-xs .navbar-collapse {\n      -webkit-box-flex: 1;\n              flex: 1;\n      display: -webkit-box;\n      display: flex;\n      -webkit-box-orient: vertical;\n      -webkit-box-direction: normal;\n              flex-direction: column;\n      -webkit-box-align: stretch;\n              align-items: stretch;\n      margin-left: -1.5rem;\n      margin-right: -1.5rem;\n      padding-left: 1.5rem;\n      padding-right: 1.5rem; }\n      .navbar-vertical.navbar-expand-xs .navbar-collapse > * {\n        min-width: 100%; }\n    .navbar-vertical.navbar-expand-xs .navbar-nav {\n      -webkit-box-orient: vertical;\n      -webkit-box-direction: normal;\n              flex-direction: column;\n      margin-left: -1.5rem;\n      margin-right: -1.5rem; }\n    .navbar-vertical.navbar-expand-xs .navbar-nav .nav-link {\n      padding: 0.65rem 1.5rem; }\n      .navbar-vertical.navbar-expand-xs .navbar-nav .nav-link.active:before {\n        top: 0.25rem;\n        bottom: 0.25rem;\n        left: 0;\n        right: auto;\n        border-left: 2px solid #5e72e4;\n        border-bottom: 0; }\n    .navbar-vertical.navbar-expand-xs .navbar-nav .nav .nav-link {\n      padding-left: 3.75rem; }\n    .navbar-vertical.navbar-expand-xs .navbar-nav .nav .nav .nav-link {\n      padding-left: 4.5rem; }\n    .navbar-vertical.navbar-expand-xs .navbar-brand {\n      display: block;\n      text-align: center;\n      padding-top: 1rem;\n      padding-bottom: 1rem; }\n    .navbar-vertical.navbar-expand-xs .navbar-brand-img {\n      max-height: 2.5rem; }\n    .navbar-vertical.navbar-expand-xs .navbar-user {\n      margin-left: -1.5rem;\n      margin-right: -1.5rem;\n      padding-top: 1rem;\n      padding-bottom: 0rem;\n      padding-left: 1.5rem;\n      padding-right: 1.5rem;\n      border-top: 1px solid #e9ecef; }\n      .navbar-vertical.navbar-expand-xs .navbar-user .dropup .dropdown-menu {\n        left: 50%;\n        -webkit-transform: translateX(-50%);\n                transform: translateX(-50%); }\n  @media (min-width: 576px) {\n    .navbar-vertical.navbar-expand-sm {\n      display: block;\n      position: fixed;\n      top: 0;\n      bottom: 0;\n      width: 100%;\n      max-width: 250px;\n      padding-left: 1.5rem;\n      padding-right: 1.5rem;\n      overflow-y: auto; }\n      .navbar-vertical.navbar-expand-sm > [class*=\"container\"] {\n        -webkit-box-orient: vertical;\n        -webkit-box-direction: normal;\n                flex-direction: column;\n        -webkit-box-align: stretch;\n                align-items: stretch;\n        min-height: 100%;\n        padding-left: 0;\n        padding-right: 0; } }\n    @media all and (min-width: 576px) and (-ms-high-contrast: none), (min-width: 576px) and (-ms-high-contrast: active) {\n      .navbar-vertical.navbar-expand-sm > [class*=\"container\"] {\n        min-height: none;\n        height: 100%; } }\n  @media (min-width: 576px) {\n      .navbar-vertical.navbar-expand-sm.fixed-left {\n        left: 0;\n        border-width: 0 1px 0 0; }\n      .navbar-vertical.navbar-expand-sm.fixed-right {\n        right: 0;\n        border-width: 0 0 0 1px; }\n      .navbar-vertical.navbar-expand-sm .navbar-collapse {\n        -webkit-box-flex: 1;\n                flex: 1;\n        display: -webkit-box;\n        display: flex;\n        -webkit-box-orient: vertical;\n        -webkit-box-direction: normal;\n                flex-direction: column;\n        -webkit-box-align: stretch;\n                align-items: stretch;\n        margin-left: -1.5rem;\n        margin-right: -1.5rem;\n        padding-left: 1.5rem;\n        padding-right: 1.5rem; }\n        .navbar-vertical.navbar-expand-sm .navbar-collapse > * {\n          min-width: 100%; }\n      .navbar-vertical.navbar-expand-sm .navbar-nav {\n        -webkit-box-orient: vertical;\n        -webkit-box-direction: normal;\n                flex-direction: column;\n        margin-left: -1.5rem;\n        margin-right: -1.5rem; }\n      .navbar-vertical.navbar-expand-sm .navbar-nav .nav-link {\n        padding: 0.65rem 1.5rem; }\n        .navbar-vertical.navbar-expand-sm .navbar-nav .nav-link.active:before {\n          top: 0.25rem;\n          bottom: 0.25rem;\n          left: 0;\n          right: auto;\n          border-left: 2px solid #5e72e4;\n          border-bottom: 0; }\n      .navbar-vertical.navbar-expand-sm .navbar-nav .nav .nav-link {\n        padding-left: 3.75rem; }\n      .navbar-vertical.navbar-expand-sm .navbar-nav .nav .nav .nav-link {\n        padding-left: 4.5rem; }\n      .navbar-vertical.navbar-expand-sm .navbar-brand {\n        display: block;\n        text-align: center;\n        padding-top: 1rem;\n        padding-bottom: 1rem; }\n      .navbar-vertical.navbar-expand-sm .navbar-brand-img {\n        max-height: 2.5rem; }\n      .navbar-vertical.navbar-expand-sm .navbar-user {\n        margin-left: -1.5rem;\n        margin-right: -1.5rem;\n        padding-top: 1rem;\n        padding-bottom: 0rem;\n        padding-left: 1.5rem;\n        padding-right: 1.5rem;\n        border-top: 1px solid #e9ecef; }\n        .navbar-vertical.navbar-expand-sm .navbar-user .dropup .dropdown-menu {\n          left: 50%;\n          -webkit-transform: translateX(-50%);\n                  transform: translateX(-50%); } }\n  @media (min-width: 768px) {\n    .navbar-vertical.navbar-expand-md {\n      display: block;\n      position: fixed;\n      top: 0;\n      bottom: 0;\n      width: 100%;\n      max-width: 250px;\n      padding-left: 1.5rem;\n      padding-right: 1.5rem;\n      overflow-y: auto; }\n      .navbar-vertical.navbar-expand-md > [class*=\"container\"] {\n        -webkit-box-orient: vertical;\n        -webkit-box-direction: normal;\n                flex-direction: column;\n        -webkit-box-align: stretch;\n                align-items: stretch;\n        min-height: 100%;\n        padding-left: 0;\n        padding-right: 0; } }\n    @media all and (min-width: 768px) and (-ms-high-contrast: none), (min-width: 768px) and (-ms-high-contrast: active) {\n      .navbar-vertical.navbar-expand-md > [class*=\"container\"] {\n        min-height: none;\n        height: 100%; } }\n  @media (min-width: 768px) {\n      .navbar-vertical.navbar-expand-md.fixed-left {\n        left: 0;\n        border-width: 0 1px 0 0; }\n      .navbar-vertical.navbar-expand-md.fixed-right {\n        right: 0;\n        border-width: 0 0 0 1px; }\n      .navbar-vertical.navbar-expand-md .navbar-collapse {\n        -webkit-box-flex: 1;\n                flex: 1;\n        display: -webkit-box;\n        display: flex;\n        -webkit-box-orient: vertical;\n        -webkit-box-direction: normal;\n                flex-direction: column;\n        -webkit-box-align: stretch;\n                align-items: stretch;\n        margin-left: -1.5rem;\n        margin-right: -1.5rem;\n        padding-left: 1.5rem;\n        padding-right: 1.5rem; }\n        .navbar-vertical.navbar-expand-md .navbar-collapse > * {\n          min-width: 100%; }\n      .navbar-vertical.navbar-expand-md .navbar-nav {\n        -webkit-box-orient: vertical;\n        -webkit-box-direction: normal;\n                flex-direction: column;\n        margin-left: -1.5rem;\n        margin-right: -1.5rem; }\n      .navbar-vertical.navbar-expand-md .navbar-nav .nav-link {\n        padding: 0.65rem 1.5rem; }\n        .navbar-vertical.navbar-expand-md .navbar-nav .nav-link.active:before {\n          top: 0.25rem;\n          bottom: 0.25rem;\n          left: 0;\n          right: auto;\n          border-left: 2px solid #5e72e4;\n          border-bottom: 0; }\n      .navbar-vertical.navbar-expand-md .navbar-nav .nav .nav-link {\n        padding-left: 3.75rem; }\n      .navbar-vertical.navbar-expand-md .navbar-nav .nav .nav .nav-link {\n        padding-left: 4.5rem; }\n      .navbar-vertical.navbar-expand-md .navbar-brand {\n        display: block;\n        text-align: center;\n        padding-top: 1rem;\n        padding-bottom: 1rem; }\n      .navbar-vertical.navbar-expand-md .navbar-brand-img {\n        max-height: 2.5rem; }\n      .navbar-vertical.navbar-expand-md .navbar-user {\n        margin-left: -1.5rem;\n        margin-right: -1.5rem;\n        padding-top: 1rem;\n        padding-bottom: 0rem;\n        padding-left: 1.5rem;\n        padding-right: 1.5rem;\n        border-top: 1px solid #e9ecef; }\n        .navbar-vertical.navbar-expand-md .navbar-user .dropup .dropdown-menu {\n          left: 50%;\n          -webkit-transform: translateX(-50%);\n                  transform: translateX(-50%); } }\n  @media (min-width: 992px) {\n    .navbar-vertical.navbar-expand-lg {\n      display: block;\n      position: fixed;\n      top: 0;\n      bottom: 0;\n      width: 100%;\n      max-width: 250px;\n      padding-left: 1.5rem;\n      padding-right: 1.5rem;\n      overflow-y: auto; }\n      .navbar-vertical.navbar-expand-lg > [class*=\"container\"] {\n        -webkit-box-orient: vertical;\n        -webkit-box-direction: normal;\n                flex-direction: column;\n        -webkit-box-align: stretch;\n                align-items: stretch;\n        min-height: 100%;\n        padding-left: 0;\n        padding-right: 0; } }\n    @media all and (min-width: 992px) and (-ms-high-contrast: none), (min-width: 992px) and (-ms-high-contrast: active) {\n      .navbar-vertical.navbar-expand-lg > [class*=\"container\"] {\n        min-height: none;\n        height: 100%; } }\n  @media (min-width: 992px) {\n      .navbar-vertical.navbar-expand-lg.fixed-left {\n        left: 0;\n        border-width: 0 1px 0 0; }\n      .navbar-vertical.navbar-expand-lg.fixed-right {\n        right: 0;\n        border-width: 0 0 0 1px; }\n      .navbar-vertical.navbar-expand-lg .navbar-collapse {\n        -webkit-box-flex: 1;\n                flex: 1;\n        display: -webkit-box;\n        display: flex;\n        -webkit-box-orient: vertical;\n        -webkit-box-direction: normal;\n                flex-direction: column;\n        -webkit-box-align: stretch;\n                align-items: stretch;\n        margin-left: -1.5rem;\n        margin-right: -1.5rem;\n        padding-left: 1.5rem;\n        padding-right: 1.5rem; }\n        .navbar-vertical.navbar-expand-lg .navbar-collapse > * {\n          min-width: 100%; }\n      .navbar-vertical.navbar-expand-lg .navbar-nav {\n        -webkit-box-orient: vertical;\n        -webkit-box-direction: normal;\n                flex-direction: column;\n        margin-left: -1.5rem;\n        margin-right: -1.5rem; }\n      .navbar-vertical.navbar-expand-lg .navbar-nav .nav-link {\n        padding: 0.65rem 1.5rem; }\n        .navbar-vertical.navbar-expand-lg .navbar-nav .nav-link.active:before {\n          top: 0.25rem;\n          bottom: 0.25rem;\n          left: 0;\n          right: auto;\n          border-left: 2px solid #5e72e4;\n          border-bottom: 0; }\n      .navbar-vertical.navbar-expand-lg .navbar-nav .nav .nav-link {\n        padding-left: 3.75rem; }\n      .navbar-vertical.navbar-expand-lg .navbar-nav .nav .nav .nav-link {\n        padding-left: 4.5rem; }\n      .navbar-vertical.navbar-expand-lg .navbar-brand {\n        display: block;\n        text-align: center;\n        padding-top: 1rem;\n        padding-bottom: 1rem; }\n      .navbar-vertical.navbar-expand-lg .navbar-brand-img {\n        max-height: 2.5rem; }\n      .navbar-vertical.navbar-expand-lg .navbar-user {\n        margin-left: -1.5rem;\n        margin-right: -1.5rem;\n        padding-top: 1rem;\n        padding-bottom: 0rem;\n        padding-left: 1.5rem;\n        padding-right: 1.5rem;\n        border-top: 1px solid #e9ecef; }\n        .navbar-vertical.navbar-expand-lg .navbar-user .dropup .dropdown-menu {\n          left: 50%;\n          -webkit-transform: translateX(-50%);\n                  transform: translateX(-50%); } }\n  @media (min-width: 1200px) {\n    .navbar-vertical.navbar-expand-xl {\n      display: block;\n      position: fixed;\n      top: 0;\n      bottom: 0;\n      width: 100%;\n      max-width: 250px;\n      padding-left: 1.5rem;\n      padding-right: 1.5rem;\n      overflow-y: auto; }\n      .navbar-vertical.navbar-expand-xl > [class*=\"container\"] {\n        -webkit-box-orient: vertical;\n        -webkit-box-direction: normal;\n                flex-direction: column;\n        -webkit-box-align: stretch;\n                align-items: stretch;\n        min-height: 100%;\n        padding-left: 0;\n        padding-right: 0; } }\n    @media all and (min-width: 1200px) and (-ms-high-contrast: none), (min-width: 1200px) and (-ms-high-contrast: active) {\n      .navbar-vertical.navbar-expand-xl > [class*=\"container\"] {\n        min-height: none;\n        height: 100%; } }\n  @media (min-width: 1200px) {\n      .navbar-vertical.navbar-expand-xl.fixed-left {\n        left: 0;\n        border-width: 0 1px 0 0; }\n      .navbar-vertical.navbar-expand-xl.fixed-right {\n        right: 0;\n        border-width: 0 0 0 1px; }\n      .navbar-vertical.navbar-expand-xl .navbar-collapse {\n        -webkit-box-flex: 1;\n                flex: 1;\n        display: -webkit-box;\n        display: flex;\n        -webkit-box-orient: vertical;\n        -webkit-box-direction: normal;\n                flex-direction: column;\n        -webkit-box-align: stretch;\n                align-items: stretch;\n        margin-left: -1.5rem;\n        margin-right: -1.5rem;\n        padding-left: 1.5rem;\n        padding-right: 1.5rem; }\n        .navbar-vertical.navbar-expand-xl .navbar-collapse > * {\n          min-width: 100%; }\n      .navbar-vertical.navbar-expand-xl .navbar-nav {\n        -webkit-box-orient: vertical;\n        -webkit-box-direction: normal;\n                flex-direction: column;\n        margin-left: -1.5rem;\n        margin-right: -1.5rem; }\n      .navbar-vertical.navbar-expand-xl .navbar-nav .nav-link {\n        padding: 0.65rem 1.5rem; }\n        .navbar-vertical.navbar-expand-xl .navbar-nav .nav-link.active:before {\n          top: 0.25rem;\n          bottom: 0.25rem;\n          left: 0;\n          right: auto;\n          border-left: 2px solid #5e72e4;\n          border-bottom: 0; }\n      .navbar-vertical.navbar-expand-xl .navbar-nav .nav .nav-link {\n        padding-left: 3.75rem; }\n      .navbar-vertical.navbar-expand-xl .navbar-nav .nav .nav .nav-link {\n        padding-left: 4.5rem; }\n      .navbar-vertical.navbar-expand-xl .navbar-brand {\n        display: block;\n        text-align: center;\n        padding-top: 1rem;\n        padding-bottom: 1rem; }\n      .navbar-vertical.navbar-expand-xl .navbar-brand-img {\n        max-height: 2.5rem; }\n      .navbar-vertical.navbar-expand-xl .navbar-user {\n        margin-left: -1.5rem;\n        margin-right: -1.5rem;\n        padding-top: 1rem;\n        padding-bottom: 0rem;\n        padding-left: 1.5rem;\n        padding-right: 1.5rem;\n        border-top: 1px solid #e9ecef; }\n        .navbar-vertical.navbar-expand-xl .navbar-user .dropup .dropdown-menu {\n          left: 50%;\n          -webkit-transform: translateX(-50%);\n                  transform: translateX(-50%); } }\n\n.navbar-search .input-group {\n  border-radius: 2rem;\n  border: 2px solid;\n  background-color: transparent; }\n  .navbar-search .input-group .input-group-text {\n    background-color: transparent;\n    padding-left: 1rem; }\n\n.navbar-search .form-control {\n  width: 270px;\n  background-color: transparent; }\n\n.navbar-search-dark .input-group {\n  border-color: rgba(255, 255, 255, 0.6); }\n\n.navbar-search-dark .input-group-text {\n  color: rgba(255, 255, 255, 0.6); }\n\n.navbar-search-dark .form-control {\n  color: rgba(255, 255, 255, 0.9); }\n  .navbar-search-dark .form-control::-webkit-input-placeholder {\n    color: rgba(255, 255, 255, 0.6); }\n  .navbar-search-dark .form-control::-moz-placeholder {\n    color: rgba(255, 255, 255, 0.6); }\n  .navbar-search-dark .form-control::-ms-input-placeholder {\n    color: rgba(255, 255, 255, 0.6); }\n  .navbar-search-dark .form-control::placeholder {\n    color: rgba(255, 255, 255, 0.6); }\n\n.navbar-search-dark .focused .input-group {\n  border-color: rgba(255, 255, 255, 0.9); }\n\n.navbar-search-light .input-group {\n  border-color: rgba(0, 0, 0, 0.6); }\n\n.navbar-search-light .input-group-text {\n  color: rgba(0, 0, 0, 0.6); }\n\n.navbar-search-light .form-control {\n  color: rgba(0, 0, 0, 0.9); }\n  .navbar-search-light .form-control::-webkit-input-placeholder {\n    color: rgba(0, 0, 0, 0.6); }\n  .navbar-search-light .form-control::-moz-placeholder {\n    color: rgba(0, 0, 0, 0.6); }\n  .navbar-search-light .form-control::-ms-input-placeholder {\n    color: rgba(0, 0, 0, 0.6); }\n  .navbar-search-light .form-control::placeholder {\n    color: rgba(0, 0, 0, 0.6); }\n\n.navbar-search-light .focused .input-group {\n  border-color: rgba(0, 0, 0, 0.9); }\n\n@media (min-width: 768px) {\n  .navbar .dropdown-menu {\n    opacity: 0;\n    pointer-events: none;\n    margin: 0; }\n  .navbar .dropdown-menu-arrow:before {\n    background: #fff;\n    box-shadow: none;\n    content: '';\n    display: block;\n    height: 12px;\n    width: 12px;\n    left: 20px;\n    position: absolute;\n    bottom: 100%;\n    -webkit-transform: rotate(-45deg) translateY(12px);\n            transform: rotate(-45deg) translateY(12px);\n    z-index: -5;\n    border-radius: 2px; }\n  .navbar .dropdown-menu-right:before {\n    right: 20px;\n    left: auto; }\n  .navbar:not(.navbar-nav-hover) .dropdown-menu.show {\n    opacity: 1;\n    pointer-events: auto;\n    -webkit-animation: show-navbar-dropdown .25s ease forwards;\n            animation: show-navbar-dropdown .25s ease forwards; }\n  .navbar:not(.navbar-nav-hover) .dropdown-menu.close {\n    display: block;\n    -webkit-animation: hide-navbar-dropdown .15s ease backwards;\n            animation: hide-navbar-dropdown .15s ease backwards; }\n  .navbar.navbar-nav-hover .dropdown-menu {\n    opacity: 0;\n    display: block;\n    pointer-events: none;\n    -webkit-transform: translate(0, 10px) perspective(200px) rotateX(-2deg);\n            transform: translate(0, 10px) perspective(200px) rotateX(-2deg);\n    -webkit-transition: visibility 0.25s, opacity 0.25s, -webkit-transform 0.25s;\n    transition: visibility 0.25s, opacity 0.25s, -webkit-transform 0.25s;\n    transition: visibility 0.25s, opacity 0.25s, transform 0.25s;\n    transition: visibility 0.25s, opacity 0.25s, transform 0.25s, -webkit-transform 0.25s; }\n  .navbar.navbar-nav-hover .nav-item.dropdown:hover > .dropdown-menu {\n    display: block;\n    opacity: 1;\n    pointer-events: auto;\n    visibility: visible;\n    -webkit-transform: translate(0, 0);\n            transform: translate(0, 0);\n    -webkit-animation: none;\n            animation: none; }\n  .navbar .dropdown-menu-inner {\n    position: relative;\n    padding: 1rem; }\n  @-webkit-keyframes show-navbar-dropdown {\n    0% {\n      opacity: 0;\n      -webkit-transform: translate(0, 10px) perspective(200px) rotateX(-2deg);\n              transform: translate(0, 10px) perspective(200px) rotateX(-2deg);\n      -webkit-transition: visibility 0.25s, opacity 0.25s, -webkit-transform 0.25s;\n      transition: visibility 0.25s, opacity 0.25s, -webkit-transform 0.25s;\n      transition: visibility 0.25s, opacity 0.25s, transform 0.25s;\n      transition: visibility 0.25s, opacity 0.25s, transform 0.25s, -webkit-transform 0.25s; }\n    100% {\n      -webkit-transform: translate(0, 0);\n              transform: translate(0, 0);\n      opacity: 1; } }\n  @keyframes show-navbar-dropdown {\n    0% {\n      opacity: 0;\n      -webkit-transform: translate(0, 10px) perspective(200px) rotateX(-2deg);\n              transform: translate(0, 10px) perspective(200px) rotateX(-2deg);\n      -webkit-transition: visibility 0.25s, opacity 0.25s, -webkit-transform 0.25s;\n      transition: visibility 0.25s, opacity 0.25s, -webkit-transform 0.25s;\n      transition: visibility 0.25s, opacity 0.25s, transform 0.25s;\n      transition: visibility 0.25s, opacity 0.25s, transform 0.25s, -webkit-transform 0.25s; }\n    100% {\n      -webkit-transform: translate(0, 0);\n              transform: translate(0, 0);\n      opacity: 1; } }\n  @-webkit-keyframes hide-navbar-dropdown {\n    from {\n      opacity: 1; }\n    to {\n      opacity: 0;\n      -webkit-transform: translate(0, 10px);\n              transform: translate(0, 10px); } }\n  @keyframes hide-navbar-dropdown {\n    from {\n      opacity: 1; }\n    to {\n      opacity: 0;\n      -webkit-transform: translate(0, 10px);\n              transform: translate(0, 10px); } } }\n\n.navbar-collapse-header {\n  display: none; }\n\n@media (max-width: 767.98px) {\n  .navbar-nav .nav-link {\n    padding: .625rem 0;\n    color: #172b4d !important; }\n  .navbar-nav .dropdown-menu {\n    box-shadow: none;\n    min-width: auto; }\n    .navbar-nav .dropdown-menu .media svg {\n      width: 30px; }\n  .navbar-collapse {\n    width: calc(100% - 1.4rem);\n    position: absolute;\n    top: 0;\n    left: 0;\n    right: 0;\n    z-index: 1050;\n    margin: .7rem;\n    overflow-y: auto;\n    height: auto !important;\n    opacity: 0; }\n    .navbar-collapse .navbar-toggler {\n      width: 20px;\n      height: 20px;\n      position: relative;\n      cursor: pointer;\n      display: inline-block;\n      padding: 0; }\n      .navbar-collapse .navbar-toggler span {\n        display: block;\n        position: absolute;\n        width: 100%;\n        height: 2px;\n        border-radius: 2px;\n        opacity: 1;\n        background: #283448; }\n      .navbar-collapse .navbar-toggler :nth-child(1) {\n        -webkit-transform: rotate(135deg);\n                transform: rotate(135deg); }\n      .navbar-collapse .navbar-toggler :nth-child(2) {\n        -webkit-transform: rotate(-135deg);\n                transform: rotate(-135deg); }\n    .navbar-collapse .navbar-collapse-header {\n      display: block;\n      padding-bottom: 1rem;\n      margin-bottom: 1rem;\n      border-bottom: 1px solid rgba(0, 0, 0, 0.1); }\n    .navbar-collapse .collapse-brand img {\n      height: 36px; }\n    .navbar-collapse .collapse-close {\n      text-align: right; }\n  .navbar-collapse.collapsing,\n  .navbar-collapse.show {\n    padding: 1.5rem;\n    border-radius: 0.375rem;\n    background: #FFF;\n    box-shadow: 0 50px 100px rgba(50, 50, 93, 0.1), 0 15px 35px rgba(50, 50, 93, 0.15), 0 5px 15px rgba(0, 0, 0, 0.1);\n    -webkit-animation: show-navbar-collapse .2s ease forwards;\n            animation: show-navbar-collapse .2s ease forwards; }\n  .navbar-collapse.collapsing-out {\n    -webkit-animation: hide-navbar-collapse .2s ease forwards;\n            animation: hide-navbar-collapse .2s ease forwards; } }\n\n@-webkit-keyframes show-navbar-collapse {\n  0% {\n    opacity: 0;\n    -webkit-transform: scale(0.95);\n            transform: scale(0.95);\n    -webkit-transform-origin: 100% 0;\n            transform-origin: 100% 0; }\n  100% {\n    opacity: 1;\n    -webkit-transform: scale(1);\n            transform: scale(1); } }\n\n@keyframes show-navbar-collapse {\n  0% {\n    opacity: 0;\n    -webkit-transform: scale(0.95);\n            transform: scale(0.95);\n    -webkit-transform-origin: 100% 0;\n            transform-origin: 100% 0; }\n  100% {\n    opacity: 1;\n    -webkit-transform: scale(1);\n            transform: scale(1); } }\n\n@-webkit-keyframes hide-navbar-collapse {\n  from {\n    opacity: 1;\n    -webkit-transform: scale(1);\n            transform: scale(1);\n    -webkit-transform-origin: 100% 0;\n            transform-origin: 100% 0; }\n  to {\n    opacity: 0;\n    -webkit-transform: scale(0.95);\n            transform: scale(0.95); } }\n\n@keyframes hide-navbar-collapse {\n  from {\n    opacity: 1;\n    -webkit-transform: scale(1);\n            transform: scale(1);\n    -webkit-transform-origin: 100% 0;\n            transform-origin: 100% 0; }\n  to {\n    opacity: 0;\n    -webkit-transform: scale(0.95);\n            transform: scale(0.95); } }\n\n.page-item.active .page-link {\n  box-shadow: 0 7px 14px rgba(50, 50, 93, 0.1), 0 3px 6px rgba(0, 0, 0, 0.08); }\n\n.page-item .page-link,\n.page-item span {\n  display: -webkit-box;\n  display: flex;\n  -webkit-box-align: center;\n          align-items: center;\n  -webkit-box-pack: center;\n          justify-content: center;\n  padding: 0;\n  margin: 0 3px;\n  border-radius: 50% !important;\n  width: 36px;\n  height: 36px;\n  font-size: 0.875rem; }\n\n.pagination-lg .page-item .page-link,\n.pagination-lg .page-item span {\n  width: 46px;\n  height: 46px;\n  line-height: 46px; }\n\n.pagination-sm .page-item .page-link,\n.pagination-sm .page-item span {\n  width: 30px;\n  height: 30px;\n  line-height: 30px; }\n\n.popover {\n  border: 0; }\n\n.popover-header {\n  font-weight: 600; }\n\n.popover-primary {\n  background-color: #5e72e4; }\n  .popover-primary .popover-header {\n    background-color: #5e72e4;\n    color: #fff; }\n  .popover-primary .popover-body {\n    color: #fff; }\n  .popover-primary .popover-header {\n    border-color: rgba(255, 255, 255, 0.2); }\n  .popover-primary.bs-popover-top .arrow::after, .popover-primary.bs-popover-auto[x-placement^=\"top\"] .arrow::after {\n    border-top-color: #5e72e4; }\n  .popover-primary.bs-popover-right .arrow::after, .popover-primary.bs-popover-auto[x-placement^=\"right\"] .arrow::after {\n    border-right-color: #5e72e4; }\n  .popover-primary.bs-popover-bottom .arrow::after, .popover-primary.bs-popover-auto[x-placement^=\"bottom\"] .arrow::after {\n    border-bottom-color: #5e72e4; }\n  .popover-primary.bs-popover-left .arrow::after, .popover-primary.bs-popover-auto[x-placement^=\"left\"] .arrow::after {\n    border-left-color: #5e72e4; }\n\n.popover-secondary {\n  background-color: #f7fafc; }\n  .popover-secondary .popover-header {\n    background-color: #f7fafc;\n    color: #212529; }\n  .popover-secondary .popover-body {\n    color: #212529; }\n  .popover-secondary .popover-header {\n    border-color: rgba(33, 37, 41, 0.2); }\n  .popover-secondary.bs-popover-top .arrow::after, .popover-secondary.bs-popover-auto[x-placement^=\"top\"] .arrow::after {\n    border-top-color: #f7fafc; }\n  .popover-secondary.bs-popover-right .arrow::after, .popover-secondary.bs-popover-auto[x-placement^=\"right\"] .arrow::after {\n    border-right-color: #f7fafc; }\n  .popover-secondary.bs-popover-bottom .arrow::after, .popover-secondary.bs-popover-auto[x-placement^=\"bottom\"] .arrow::after {\n    border-bottom-color: #f7fafc; }\n  .popover-secondary.bs-popover-left .arrow::after, .popover-secondary.bs-popover-auto[x-placement^=\"left\"] .arrow::after {\n    border-left-color: #f7fafc; }\n\n.popover-success {\n  background-color: #2dce89; }\n  .popover-success .popover-header {\n    background-color: #2dce89;\n    color: #fff; }\n  .popover-success .popover-body {\n    color: #fff; }\n  .popover-success .popover-header {\n    border-color: rgba(255, 255, 255, 0.2); }\n  .popover-success.bs-popover-top .arrow::after, .popover-success.bs-popover-auto[x-placement^=\"top\"] .arrow::after {\n    border-top-color: #2dce89; }\n  .popover-success.bs-popover-right .arrow::after, .popover-success.bs-popover-auto[x-placement^=\"right\"] .arrow::after {\n    border-right-color: #2dce89; }\n  .popover-success.bs-popover-bottom .arrow::after, .popover-success.bs-popover-auto[x-placement^=\"bottom\"] .arrow::after {\n    border-bottom-color: #2dce89; }\n  .popover-success.bs-popover-left .arrow::after, .popover-success.bs-popover-auto[x-placement^=\"left\"] .arrow::after {\n    border-left-color: #2dce89; }\n\n.popover-info {\n  background-color: #11cdef; }\n  .popover-info .popover-header {\n    background-color: #11cdef;\n    color: #fff; }\n  .popover-info .popover-body {\n    color: #fff; }\n  .popover-info .popover-header {\n    border-color: rgba(255, 255, 255, 0.2); }\n  .popover-info.bs-popover-top .arrow::after, .popover-info.bs-popover-auto[x-placement^=\"top\"] .arrow::after {\n    border-top-color: #11cdef; }\n  .popover-info.bs-popover-right .arrow::after, .popover-info.bs-popover-auto[x-placement^=\"right\"] .arrow::after {\n    border-right-color: #11cdef; }\n  .popover-info.bs-popover-bottom .arrow::after, .popover-info.bs-popover-auto[x-placement^=\"bottom\"] .arrow::after {\n    border-bottom-color: #11cdef; }\n  .popover-info.bs-popover-left .arrow::after, .popover-info.bs-popover-auto[x-placement^=\"left\"] .arrow::after {\n    border-left-color: #11cdef; }\n\n.popover-warning {\n  background-color: #fb6340; }\n  .popover-warning .popover-header {\n    background-color: #fb6340;\n    color: #fff; }\n  .popover-warning .popover-body {\n    color: #fff; }\n  .popover-warning .popover-header {\n    border-color: rgba(255, 255, 255, 0.2); }\n  .popover-warning.bs-popover-top .arrow::after, .popover-warning.bs-popover-auto[x-placement^=\"top\"] .arrow::after {\n    border-top-color: #fb6340; }\n  .popover-warning.bs-popover-right .arrow::after, .popover-warning.bs-popover-auto[x-placement^=\"right\"] .arrow::after {\n    border-right-color: #fb6340; }\n  .popover-warning.bs-popover-bottom .arrow::after, .popover-warning.bs-popover-auto[x-placement^=\"bottom\"] .arrow::after {\n    border-bottom-color: #fb6340; }\n  .popover-warning.bs-popover-left .arrow::after, .popover-warning.bs-popover-auto[x-placement^=\"left\"] .arrow::after {\n    border-left-color: #fb6340; }\n\n.popover-danger {\n  background-color: #f5365c; }\n  .popover-danger .popover-header {\n    background-color: #f5365c;\n    color: #fff; }\n  .popover-danger .popover-body {\n    color: #fff; }\n  .popover-danger .popover-header {\n    border-color: rgba(255, 255, 255, 0.2); }\n  .popover-danger.bs-popover-top .arrow::after, .popover-danger.bs-popover-auto[x-placement^=\"top\"] .arrow::after {\n    border-top-color: #f5365c; }\n  .popover-danger.bs-popover-right .arrow::after, .popover-danger.bs-popover-auto[x-placement^=\"right\"] .arrow::after {\n    border-right-color: #f5365c; }\n  .popover-danger.bs-popover-bottom .arrow::after, .popover-danger.bs-popover-auto[x-placement^=\"bottom\"] .arrow::after {\n    border-bottom-color: #f5365c; }\n  .popover-danger.bs-popover-left .arrow::after, .popover-danger.bs-popover-auto[x-placement^=\"left\"] .arrow::after {\n    border-left-color: #f5365c; }\n\n.popover-light {\n  background-color: #adb5bd; }\n  .popover-light .popover-header {\n    background-color: #adb5bd;\n    color: #fff; }\n  .popover-light .popover-body {\n    color: #fff; }\n  .popover-light .popover-header {\n    border-color: rgba(255, 255, 255, 0.2); }\n  .popover-light.bs-popover-top .arrow::after, .popover-light.bs-popover-auto[x-placement^=\"top\"] .arrow::after {\n    border-top-color: #adb5bd; }\n  .popover-light.bs-popover-right .arrow::after, .popover-light.bs-popover-auto[x-placement^=\"right\"] .arrow::after {\n    border-right-color: #adb5bd; }\n  .popover-light.bs-popover-bottom .arrow::after, .popover-light.bs-popover-auto[x-placement^=\"bottom\"] .arrow::after {\n    border-bottom-color: #adb5bd; }\n  .popover-light.bs-popover-left .arrow::after, .popover-light.bs-popover-auto[x-placement^=\"left\"] .arrow::after {\n    border-left-color: #adb5bd; }\n\n.popover-dark {\n  background-color: #212529; }\n  .popover-dark .popover-header {\n    background-color: #212529;\n    color: #fff; }\n  .popover-dark .popover-body {\n    color: #fff; }\n  .popover-dark .popover-header {\n    border-color: rgba(255, 255, 255, 0.2); }\n  .popover-dark.bs-popover-top .arrow::after, .popover-dark.bs-popover-auto[x-placement^=\"top\"] .arrow::after {\n    border-top-color: #212529; }\n  .popover-dark.bs-popover-right .arrow::after, .popover-dark.bs-popover-auto[x-placement^=\"right\"] .arrow::after {\n    border-right-color: #212529; }\n  .popover-dark.bs-popover-bottom .arrow::after, .popover-dark.bs-popover-auto[x-placement^=\"bottom\"] .arrow::after {\n    border-bottom-color: #212529; }\n  .popover-dark.bs-popover-left .arrow::after, .popover-dark.bs-popover-auto[x-placement^=\"left\"] .arrow::after {\n    border-left-color: #212529; }\n\n.popover-default {\n  background-color: #172b4d; }\n  .popover-default .popover-header {\n    background-color: #172b4d;\n    color: #fff; }\n  .popover-default .popover-body {\n    color: #fff; }\n  .popover-default .popover-header {\n    border-color: rgba(255, 255, 255, 0.2); }\n  .popover-default.bs-popover-top .arrow::after, .popover-default.bs-popover-auto[x-placement^=\"top\"] .arrow::after {\n    border-top-color: #172b4d; }\n  .popover-default.bs-popover-right .arrow::after, .popover-default.bs-popover-auto[x-placement^=\"right\"] .arrow::after {\n    border-right-color: #172b4d; }\n  .popover-default.bs-popover-bottom .arrow::after, .popover-default.bs-popover-auto[x-placement^=\"bottom\"] .arrow::after {\n    border-bottom-color: #172b4d; }\n  .popover-default.bs-popover-left .arrow::after, .popover-default.bs-popover-auto[x-placement^=\"left\"] .arrow::after {\n    border-left-color: #172b4d; }\n\n.popover-white {\n  background-color: #fff; }\n  .popover-white .popover-header {\n    background-color: #fff;\n    color: #212529; }\n  .popover-white .popover-body {\n    color: #212529; }\n  .popover-white .popover-header {\n    border-color: rgba(33, 37, 41, 0.2); }\n  .popover-white.bs-popover-top .arrow::after, .popover-white.bs-popover-auto[x-placement^=\"top\"] .arrow::after {\n    border-top-color: #fff; }\n  .popover-white.bs-popover-right .arrow::after, .popover-white.bs-popover-auto[x-placement^=\"right\"] .arrow::after {\n    border-right-color: #fff; }\n  .popover-white.bs-popover-bottom .arrow::after, .popover-white.bs-popover-auto[x-placement^=\"bottom\"] .arrow::after {\n    border-bottom-color: #fff; }\n  .popover-white.bs-popover-left .arrow::after, .popover-white.bs-popover-auto[x-placement^=\"left\"] .arrow::after {\n    border-left-color: #fff; }\n\n.popover-neutral {\n  background-color: #fff; }\n  .popover-neutral .popover-header {\n    background-color: #fff;\n    color: #212529; }\n  .popover-neutral .popover-body {\n    color: #212529; }\n  .popover-neutral .popover-header {\n    border-color: rgba(33, 37, 41, 0.2); }\n  .popover-neutral.bs-popover-top .arrow::after, .popover-neutral.bs-popover-auto[x-placement^=\"top\"] .arrow::after {\n    border-top-color: #fff; }\n  .popover-neutral.bs-popover-right .arrow::after, .popover-neutral.bs-popover-auto[x-placement^=\"right\"] .arrow::after {\n    border-right-color: #fff; }\n  .popover-neutral.bs-popover-bottom .arrow::after, .popover-neutral.bs-popover-auto[x-placement^=\"bottom\"] .arrow::after {\n    border-bottom-color: #fff; }\n  .popover-neutral.bs-popover-left .arrow::after, .popover-neutral.bs-popover-auto[x-placement^=\"left\"] .arrow::after {\n    border-left-color: #fff; }\n\n.popover-darker {\n  background-color: black; }\n  .popover-darker .popover-header {\n    background-color: black;\n    color: #fff; }\n  .popover-darker .popover-body {\n    color: #fff; }\n  .popover-darker .popover-header {\n    border-color: rgba(255, 255, 255, 0.2); }\n  .popover-darker.bs-popover-top .arrow::after, .popover-darker.bs-popover-auto[x-placement^=\"top\"] .arrow::after {\n    border-top-color: black; }\n  .popover-darker.bs-popover-right .arrow::after, .popover-darker.bs-popover-auto[x-placement^=\"right\"] .arrow::after {\n    border-right-color: black; }\n  .popover-darker.bs-popover-bottom .arrow::after, .popover-darker.bs-popover-auto[x-placement^=\"bottom\"] .arrow::after {\n    border-bottom-color: black; }\n  .popover-darker.bs-popover-left .arrow::after, .popover-darker.bs-popover-auto[x-placement^=\"left\"] .arrow::after {\n    border-left-color: black; }\n\n.progress-wrapper {\n  position: relative;\n  padding-top: 1.5rem; }\n\n.progress {\n  height: 8px;\n  margin-bottom: 1rem;\n  overflow: hidden;\n  border-radius: 0.25rem;\n  background-color: #e9ecef;\n  box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.1); }\n  .progress .sr-only {\n    width: auto;\n    height: 20px;\n    margin: 0 0 0 30px;\n    left: 0;\n    clip: auto;\n    line-height: 20px;\n    font-size: 13px; }\n\n.progress-heading {\n  font-size: 14px;\n  font-weight: 500;\n  margin: 0 0 2px;\n  padding: 0; }\n\n.progress-bar {\n  box-shadow: none;\n  border-radius: 0;\n  height: auto; }\n\n.progress-info {\n  margin-bottom: .5rem;\n  display: -webkit-box;\n  display: flex;\n  -webkit-box-align: center;\n          align-items: center;\n  -webkit-box-pack: justify;\n          justify-content: space-between; }\n\n.progress-label span {\n  display: inline-block;\n  color: #5e72e4;\n  font-size: .625rem;\n  font-weight: 600;\n  text-transform: uppercase;\n  background: rgba(94, 114, 228, 0.1);\n  padding: .25rem 1rem;\n  border-radius: 30px; }\n\n.progress-percentage {\n  text-align: right; }\n  .progress-percentage span {\n    display: inline-block;\n    color: #8898aa;\n    font-size: .875rem;\n    font-weight: 600; }\n\n.separator {\n  position: absolute;\n  top: auto;\n  left: 0;\n  right: 0;\n  width: 100%;\n  height: 150px;\n  -webkit-transform: translateZ(0);\n          transform: translateZ(0);\n  overflow: hidden;\n  pointer-events: none; }\n  .separator svg {\n    position: absolute;\n    pointer-events: none; }\n\n.separator-top {\n  top: 0;\n  bottom: auto; }\n  .separator-top svg {\n    top: 0; }\n\n.separator-bottom {\n  top: auto;\n  bottom: 0; }\n  .separator-bottom svg {\n    bottom: 0; }\n\n.separator-inverse {\n  -webkit-transform: rotate(180deg);\n          transform: rotate(180deg); }\n\n.separator-skew {\n  height: 60px; }\n  @media (min-width: 1200px) {\n    .separator-skew {\n      height: 70px; } }\n\n.table thead th {\n  padding-top: 0.75rem;\n  padding-bottom: 0.75rem;\n  font-size: 0.65rem;\n  text-transform: uppercase;\n  letter-spacing: 1px;\n  border-bottom: 1px solid #e9ecef; }\n\n.table th {\n  font-weight: 600; }\n\n.table td .progress {\n  height: 3px;\n  width: 120px;\n  margin: 0; }\n\n.table td,\n.table th {\n  font-size: 0.8125rem;\n  white-space: nowrap; }\n\n.table.align-items-center td,\n.table.align-items-center th {\n  vertical-align: middle; }\n\n.table .thead-dark th {\n  background-color: #1c345d;\n  color: #4d7bca; }\n\n.table .thead-light th {\n  background-color: #f6f9fc;\n  color: #8898aa; }\n\n.table-hover tr {\n  -webkit-transition: all 0.15s ease;\n  transition: all 0.15s ease; }\n  @media screen and (prefers-reduced-motion: reduce) {\n    .table-hover tr {\n      -webkit-transition: none;\n      transition: none; } }\n\n.table-flush td,\n.table-flush th {\n  border-left: 0;\n  border-right: 0; }\n\n.table-flush tbody tr:first-child td,\n.table-flush tbody tr:first-child th {\n  border-top: 0; }\n\n.table-flush tbody tr:last-child td,\n.table-flush tbody tr:last-child th {\n  border-bottom: 0; }\n\n.card .table {\n  margin-bottom: 0; }\n  .card .table td,\n  .card .table th {\n    padding-left: 1.5rem;\n    padding-right: 1.5rem; }\n\np {\n  font-size: 1rem;\n  font-weight: 300;\n  line-height: 1.7; }\n\n.lead {\n  font-size: 1.25rem;\n  font-weight: 300;\n  line-height: 1.7;\n  margin-top: 1.5rem; }\n  .lead + .btn-wrapper {\n    margin-top: 3rem; }\n\n.description {\n  font-size: 0.875rem; }\n\n.heading {\n  letter-spacing: 0.025em;\n  font-size: 0.95rem;\n  text-transform: uppercase;\n  font-weight: 600; }\n\n.heading-small {\n  padding-top: .25rem;\n  padding-bottom: .25rem;\n  font-size: .75rem;\n  text-transform: uppercase;\n  letter-spacing: .04em; }\n\n.heading-title {\n  letter-spacing: 0.025em;\n  font-size: 1.375rem;\n  font-weight: 600;\n  text-transform: uppercase; }\n\n.heading-section {\n  letter-spacing: 0.025em;\n  font-size: 1.375rem;\n  font-weight: 600;\n  text-transform: uppercase; }\n  .heading-section img {\n    display: block;\n    width: 72px;\n    height: 72px;\n    margin-bottom: 1.5rem; }\n  .heading-section.text-center img {\n    margin-left: auto;\n    margin-right: auto; }\n\n.display-1 span,\n.display-2 span,\n.display-3 span,\n.display-4 span {\n  display: block;\n  font-weight: 300; }\n\narticle h4:not(:first-child),\narticle h5:not(:first-child) {\n  margin-top: 3rem; }\n\narticle h4, article h5 {\n  margin-bottom: 1.5rem; }\n\narticle figure {\n  margin: 3rem 0; }\n\narticle h5 + figure {\n  margin-top: 0; }\n\n.datepicker {\n  border-radius: 0.375rem;\n  direction: ltr; }\n  .datepicker-inline {\n    width: 220px; }\n  .datepicker-rtl {\n    direction: rtl; }\n    .datepicker-rtl.dropdown-menu {\n      left: auto; }\n    .datepicker-rtl table tr td span {\n      float: right; }\n  .datepicker-dropdown {\n    top: 0;\n    left: 0;\n    padding: 20px 22px;\n    box-shadow: 0 50px 100px rgba(50, 50, 93, 0.1), 0 15px 35px rgba(50, 50, 93, 0.15), 0 5px 15px rgba(0, 0, 0, 0.1); }\n    .datepicker-dropdown.datepicker-orient-left:before {\n      left: 6px; }\n    .datepicker-dropdown.datepicker-orient-left:after {\n      left: 7px; }\n    .datepicker-dropdown.datepicker-orient-right:before {\n      right: 6px; }\n    .datepicker-dropdown.datepicker-orient-right:after {\n      right: 7px; }\n    .datepicker-dropdown.datepicker-orient-bottom:before {\n      top: -7px; }\n    .datepicker-dropdown.datepicker-orient-bottom:after {\n      top: -6px; }\n    .datepicker-dropdown.datepicker-orient-top:before {\n      bottom: -7px;\n      border-bottom: 0;\n      border-top: 7px solid white; }\n    .datepicker-dropdown.datepicker-orient-top:after {\n      bottom: -6px;\n      border-bottom: 0;\n      border-top: 6px solid #fff; }\n  .datepicker table {\n    margin: 0;\n    -webkit-touch-callout: none;\n    -webkit-user-select: none;\n       -moz-user-select: none;\n        -ms-user-select: none;\n            user-select: none; }\n    .datepicker table tr td {\n      border-radius: 50%; }\n    .datepicker table tr th {\n      border-radius: 0.375rem;\n      font-weight: 500; }\n    .datepicker table tr td,\n    .datepicker table tr th {\n      -webkit-transition: all 0.15s ease;\n      transition: all 0.15s ease;\n      width: 36px;\n      height: 36px;\n      border: none;\n      text-align: center;\n      font-size: 0.875rem; }\n  .table-striped .datepicker table tr td,\n  .table-striped .datepicker table tr th {\n    background-color: transparent; }\n  .datepicker table tr td.old, .datepicker table tr td.new {\n    color: #adb5bd; }\n  .datepicker table tr td.day:hover, .datepicker table tr td.focused {\n    background: white;\n    cursor: pointer; }\n  .datepicker table tr td.disabled, .datepicker table tr td.disabled:hover {\n    background: none;\n    color: #dee2e6;\n    cursor: default; }\n  .datepicker table tr td.highlighted {\n    border-radius: 0; }\n    .datepicker table tr td.highlighted.focused {\n      background: #5e72e4; }\n    .datepicker table tr td.highlighted.disabled, .datepicker table tr td.highlighted.disabled:active {\n      background: #5e72e4;\n      color: #ced4da; }\n  .datepicker table tr td.today {\n    background: white; }\n    .datepicker table tr td.today.focused {\n      background: white; }\n    .datepicker table tr td.today.disabled, .datepicker table tr td.today.disabled:active {\n      background: white;\n      color: #8898aa; }\n  .datepicker table tr td.range {\n    background: #5e72e4;\n    color: #fff;\n    border-radius: 0; }\n    .datepicker table tr td.range.focused {\n      background: #3b53de; }\n    .datepicker table tr td.range.disabled, .datepicker table tr td.range.disabled:active, .datepicker table tr td.range.day.disabled:hover {\n      background: #324cdd;\n      color: #8a98eb; }\n  .datepicker table tr td.range.highlighted.focused {\n    background: #cbd3da; }\n  .datepicker table tr td.range.highlighted.disabled, .datepicker table tr td.range.highlighted.disabled:active {\n    background: #e9ecef;\n    color: #dee2e6; }\n  .datepicker table tr td.range.today.disabled, .datepicker table tr td.range.today.disabled:active {\n    background: #5e72e4;\n    color: #fff; }\n  .datepicker table tr td.day.range-start {\n    border-top-right-radius: 0;\n    border-bottom-right-radius: 0; }\n  .datepicker table tr td.day.range-end {\n    border-top-left-radius: 0;\n    border-bottom-left-radius: 0; }\n  .datepicker table tr td.day.range-start.range-end {\n    border-radius: 50%; }\n  .datepicker table tr td.selected, .datepicker table tr td.selected.highlighted, .datepicker table tr td.selected:hover, .datepicker table tr td.selected.highlighted:hover, .datepicker table tr td.day.range:hover {\n    background: #5e72e4;\n    color: #fff; }\n  .datepicker table tr td.active, .datepicker table tr td.active.highlighted, .datepicker table tr td.active:hover, .datepicker table tr td.active.highlighted:hover {\n    background: #5e72e4;\n    color: #fff;\n    box-shadow: none; }\n  .datepicker table tr td span {\n    display: block;\n    width: 23%;\n    height: 54px;\n    line-height: 54px;\n    float: left;\n    margin: 1%;\n    cursor: pointer;\n    border-radius: 4px; }\n    .datepicker table tr td span:hover, .datepicker table tr td span.focused {\n      background: #e9ecef; }\n    .datepicker table tr td span.disabled, .datepicker table tr td span.disabled:hover {\n      background: none;\n      color: #dee2e6;\n      cursor: default; }\n    .datepicker table tr td span.active, .datepicker table tr td span.active:hover, .datepicker table tr td span.active.disabled, .datepicker table tr td span.active.disabled:hover {\n      text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.25); }\n    .datepicker table tr td span.old, .datepicker table tr td span.new {\n      color: #8898aa; }\n  .datepicker .datepicker-switch {\n    width: 145px; }\n  .datepicker .datepicker-switch,\n  .datepicker .prev,\n  .datepicker .next,\n  .datepicker tfoot tr th {\n    cursor: pointer; }\n    .datepicker .datepicker-switch:hover,\n    .datepicker .prev:hover,\n    .datepicker .next:hover,\n    .datepicker tfoot tr th:hover {\n      background: #e9ecef; }\n  .datepicker .prev.disabled,\n  .datepicker .next.disabled {\n    visibility: hidden; }\n  .datepicker .cw {\n    font-size: 10px;\n    width: 12px;\n    padding: 0 2px 0 5px;\n    vertical-align: middle; }\n\n.noUi-target,\n.noUi-target * {\n  -webkit-touch-callout: none;\n  -webkit-tap-highlight-color: rgba(0, 0, 0, 0);\n  -webkit-user-select: none;\n  touch-action: none;\n  -moz-user-select: none;\n   -ms-user-select: none;\n       user-select: none;\n  box-sizing: border-box; }\n\n.noUi-target {\n  position: relative;\n  direction: ltr; }\n\n.noUi-base,\n.noUi-connects {\n  width: 100%;\n  height: 100%;\n  position: relative;\n  z-index: 1; }\n\n.noUi-connects {\n  overflow: hidden;\n  z-index: 0; }\n\n.noUi-connect,\n.noUi-origin {\n  will-change: transform;\n  position: absolute;\n  z-index: 1;\n  top: 0;\n  left: 0;\n  height: 100%;\n  width: 100%;\n  -webkit-transform-origin: 0 0;\n          transform-origin: 0 0; }\n\nhtml:not([dir=\"rtl\"]) .noUi-horizontal .noUi-origin {\n  left: auto;\n  right: 0; }\n\n.noUi-vertical .noUi-origin {\n  width: 0; }\n\n.noUi-horizontal .noUi-origin {\n  height: 0; }\n\n.noUi-handle {\n  position: absolute; }\n\n.noUi-state-tap .noUi-connect,\n.noUi-state-tap .noUi-origin {\n  -webkit-transition: -webkit-transform .3s;\n  transition: -webkit-transform .3s;\n  transition: transform .3s;\n  transition: transform .3s, -webkit-transform .3s; }\n\n.noUi-state-drag * {\n  cursor: inherit !important; }\n\n.noUi-horizontal {\n  height: 5px; }\n\n.noUi-horizontal .noUi-handle {\n  width: 34px;\n  height: 28px;\n  left: -17px;\n  top: -6px; }\n\n.noUi-vertical {\n  width: 5px; }\n\n.noUi-vertical .noUi-handle {\n  width: 28px;\n  height: 34px;\n  left: -6px;\n  top: -17px; }\n\nhtml:not([dir=\"rtl\"]) .noUi-horizontal .noUi-handle {\n  right: -17px;\n  left: auto; }\n\n.noUi-connects {\n  border-radius: 3px; }\n\n.noUi-connect {\n  background: #5e72e4; }\n\n.noUi-draggable {\n  cursor: ew-resize; }\n\n.noUi-vertical .noUi-draggable {\n  cursor: ns-resize; }\n\n.noUi-handle {\n  border: 1px solid #D9D9D9;\n  border-radius: 3px;\n  background: #FFF;\n  cursor: default;\n  box-shadow: inset 0 0 1px #FFF, inset 0 1px 7px #EBEBEB, 0 3px 6px -3px #BBB;\n  outline: none; }\n\n.noUi-active {\n  outline: none; }\n\n/* Disabled state;\n */\n[disabled] .noUi-connect {\n  background: #B8B8B8; }\n\n[disabled].noUi-target,\n[disabled].noUi-handle,\n[disabled] .noUi-handle {\n  cursor: not-allowed; }\n\n/* Base;\n *\n */\n.noUi-pips,\n.noUi-pips * {\n  box-sizing: border-box; }\n\n.noUi-pips {\n  position: absolute;\n  color: #999; }\n\n/* Values;\n *\n */\n.noUi-value {\n  position: absolute;\n  white-space: nowrap;\n  text-align: center; }\n\n.noUi-value-sub {\n  color: #ccc;\n  font-size: 10px; }\n\n/* Markings;\n *\n */\n.noUi-marker {\n  position: absolute;\n  background: #CCC; }\n\n.noUi-marker-sub {\n  background: #AAA; }\n\n.noUi-marker-large {\n  background: #AAA; }\n\n/* Horizontal layout;\n *\n */\n.noUi-pips-horizontal {\n  padding: 10px 0;\n  height: 80px;\n  top: 100%;\n  left: 0;\n  width: 100%; }\n\n.noUi-value-horizontal {\n  -webkit-transform: translate(-50%, 50%);\n          transform: translate(-50%, 50%); }\n\n.noUi-rtl .noUi-value-horizontal {\n  -webkit-transform: translate(50%, 50%);\n          transform: translate(50%, 50%); }\n\n.noUi-marker-horizontal.noUi-marker {\n  margin-left: -1px;\n  width: 2px;\n  height: 5px; }\n\n.noUi-marker-horizontal.noUi-marker-sub {\n  height: 10px; }\n\n.noUi-marker-horizontal.noUi-marker-large {\n  height: 15px; }\n\n/* Vertical layout;\n *\n */\n.noUi-pips-vertical {\n  padding: 0 10px;\n  height: 100%;\n  top: 0;\n  left: 100%; }\n\n.noUi-value-vertical {\n  -webkit-transform: translate(0, -50%);\n  transform: translate(0, -50%, 0);\n  padding-left: 25px; }\n\n.noUi-rtl .noUi-value-vertical {\n  -webkit-transform: translate(0, 50%);\n  transform: translate(0, 50%); }\n\n.noUi-marker-vertical.noUi-marker {\n  width: 5px;\n  height: 2px;\n  margin-top: -1px; }\n\n.noUi-marker-vertical.noUi-marker-sub {\n  width: 10px; }\n\n.noUi-marker-vertical.noUi-marker-large {\n  width: 15px; }\n\n.noUi-tooltip {\n  display: block;\n  position: absolute;\n  border: 1px solid #D9D9D9;\n  border-radius: 3px;\n  background: #fff;\n  color: #000;\n  padding: 5px;\n  text-align: center;\n  white-space: nowrap; }\n\n.noUi-horizontal .noUi-tooltip {\n  -webkit-transform: translate(-50%, 0);\n  transform: translate(-50%, 0);\n  left: 50%;\n  bottom: 120%; }\n\n.noUi-vertical .noUi-tooltip {\n  -webkit-transform: translate(0, -50%);\n  transform: translate(0, -50%);\n  top: 50%;\n  right: 120%; }\n\n.noUi-target {\n  background: #eceeef;\n  border-radius: 5px;\n  border: 0;\n  box-shadow: inset 0 1px 2px rgba(90, 97, 105, 0.1);\n  margin: 15px 0;\n  cursor: pointer; }\n\n.noUi-horizontal {\n  height: 5px; }\n\nhtml:not([dir=\"rtl\"]) .noUi-horizontal .noUi-handle {\n  right: -10px; }\n\n.noUi-vertical {\n  width: 5px; }\n\n.noUi-connect {\n  background: #5e72e4;\n  box-shadow: none; }\n\n.noUi-horizontal .noUi-handle,\n.noUi-vertical .noUi-handle {\n  top: -5px;\n  width: 15px;\n  height: 15px;\n  border-radius: 100%;\n  box-shadow: none;\n  cursor: pointer;\n  background-color: #5e72e4;\n  border: 0;\n  -webkit-transition: box-shadow .15s, -webkit-transform .15s;\n  transition: box-shadow .15s, -webkit-transform .15s;\n  transition: box-shadow .15s, transform .15s;\n  transition: box-shadow .15s, transform .15s, -webkit-transform .15s; }\n\n.noUi-horizontal .noUi-handle.noUi-active,\n.noUi-vertical .noUi-handle.noUi-active {\n  box-shadow: 0px 0px 0px 2px #5e72e4; }\n\n.input-slider--cyan .noUi-connect {\n  background: #2bffc6; }\n\n/* Disabled state */\n[disabled] .noUi-connect,\n[disabled].noUi-connect {\n  background: #b2b2b2; }\n\n[disabled] .noUi-handle,\n[disabled].noUi-origin {\n  cursor: not-allowed; }\n\n/* Range slider value labels */\n.range-slider-value {\n  font-size: 0.75rem;\n  font-weight: 500;\n  background-color: rgba(33, 37, 41, 0.7);\n  color: #fff;\n  border-radius: 10px;\n  padding: .4em .8em .3em .85em; }\n\n.range-slider-wrapper .upper-info {\n  font-weight: 400;\n  margin-bottom: 5px; }\n\n.input-slider-value-output {\n  background: #333;\n  color: #fff;\n  padding: 4px 8px;\n  position: relative;\n  top: 12px;\n  font-size: 11px;\n  border-radius: 2px; }\n\n.input-slider-value-output:after {\n  bottom: 100%;\n  left: 10px;\n  border: solid transparent;\n  content: \" \";\n  height: 0;\n  width: 0;\n  position: absolute;\n  pointer-events: none;\n  border-color: rgba(136, 183, 213, 0);\n  border-bottom-color: #333;\n  border-width: 4px;\n  margin-left: -4px; }\n\n.input-slider-value-output.left:after {\n  left: 10px;\n  right: auto; }\n\n.input-slider-value-output.right:after {\n  right: 10px;\n  left: auto; }\n\n.scrollbar-inner {\n  height: 100%; }\n  .scrollbar-inner:not(:hover) .scroll-element {\n    opacity: 0; }\n  .scrollbar-inner .scroll-element {\n    -webkit-transition: opacity 300ms;\n    transition: opacity 300ms;\n    margin-right: 2px; }\n    .scrollbar-inner .scroll-element .scroll-bar,\n    .scrollbar-inner .scroll-element .scroll-element_track {\n      -webkit-transition: background-color 300ms;\n      transition: background-color 300ms; }\n    .scrollbar-inner .scroll-element .scroll-element_track {\n      background-color: transparent; }\n  .scrollbar-inner .scroll-element.scroll-y {\n    width: 3px;\n    right: 0; }\n  .scrollbar-inner .scroll-element.scroll-x {\n    height: 3px;\n    bottom: 0; }\n\n/*!\n* https://github.com/YouCanBookMe/react-datetime\n*/\n.rdt {\n  position: relative; }\n  .rdt .rdtPicker {\n    -webkit-transition: all 150ms linear;\n    transition: all 150ms linear;\n    margin-top: -20px;\n    visibility: hidden;\n    display: block;\n    opacity: 0; }\n  .rdt.rdtOpen .rdtPicker {\n    opacity: 1;\n    visibility: visible;\n    margin-top: 0; }\n\n.rdtPicker {\n  display: none;\n  position: absolute;\n  padding: 20px;\n  margin-top: 1px;\n  z-index: 99999 !important;\n  background: #fff;\n  border-radius: .375rem;\n  box-shadow: 0px 10px 50px 0px rgba(0, 0, 0, 0.2);\n  -webkit-background-clip: padding-box;\n  background-clip: padding-box;\n  min-width: 160px; }\n  .rdtPicker:before {\n    display: inline-block;\n    position: absolute;\n    width: 0;\n    height: 0;\n    vertical-align: middle;\n    content: \"\";\n    top: -5px;\n    left: 10px;\n    right: auto;\n    color: #ffffff;\n    border-bottom: 0.4em solid;\n    border-right: 0.4em solid transparent;\n    border-left: 0.4em solid transparent; }\n  .rdtPicker:after {\n    border-bottom: 0.4em solid #ffffff;\n    border-right: 0.4em solid transparent;\n    border-left: 0.4em solid transparent;\n    content: \"\";\n    display: inline-block;\n    position: absolute;\n    top: -5px;\n    left: 10px; }\n\n.rdtPicker {\n  display: block;\n  top: 40px; }\n\n.rdtStatic .rdtPicker {\n  box-shadow: none;\n  position: static; }\n\n.rdtPicker .rdtTimeToggle {\n  text-align: center;\n  padding: 10px;\n  border-radius: 4px;\n  visibility: hidden;\n  position: relative; }\n  .rdtPicker .rdtTimeToggle:before {\n    visibility: visible;\n    width: 100%;\n    height: 100%;\n    border-radius: 3px;\n    position: absolute;\n    top: 0;\n    left: 0;\n    display: -webkit-box;\n    display: flex;\n    -webkit-box-pack: center;\n            justify-content: center;\n    -webkit-box-align: center;\n            align-items: center;\n    font: normal normal normal 1em/1 \"Nucleo\";\n    font-size: 18px;\n    content: \"\\EA5E\"; }\n\n.rdtPicker table {\n  width: 100%;\n  margin: 0;\n  border-color: #fff !important; }\n\n.rdtPicker td,\n.rdtPicker th {\n  text-align: center;\n  padding: 1px; }\n\n.rdtPicker td {\n  cursor: pointer; }\n\n.rdtDay {\n  font-size: .875rem;\n  width: 36px;\n  height: 36px;\n  -webkit-transition: all .15s ease;\n  transition: all .15s ease;\n  text-align: center;\n  border: none;\n  border-radius: 50%; }\n  .rdtDay.rdtToday.rdtActive, .rdtDay.rdtActive, .rdtDay.rdtActive:hover, .rdtDay.start-date, .rdtDay.end-date, .rdtDay.middle-date, .rdtDay.start-date:hover, .rdtDay.end-date:hover, .rdtDay.middle-date:hover {\n    background-color: #11cdef !important;\n    color: #fff !important; }\n  .rdtDay.start-date {\n    border-top-right-radius: 0;\n    border-bottom-right-radius: 0; }\n  .rdtDay.middle-date {\n    border-radius: 0; }\n  .rdtDay.end-date {\n    border-top-left-radius: 0;\n    border-bottom-left-radius: 0; }\n\n.rdtDays tr .dow {\n  text-align: center;\n  font-size: 12px;\n  font-weight: inherit;\n  padding-bottom: 5px;\n  padding-top: 10px;\n  font-weight: 300;\n  font-size: .875rem;\n  width: 20px;\n  height: 20px; }\n\n.rdtDays tr .rdtDay {\n  color: #525f7f;\n  font-size: .875rem; }\n  .rdtDays tr .rdtDay.rdtOld, .rdtDays tr .rdtDay.rdtNew {\n    color: #adb5bd;\n    font-weight: 300; }\n\n.rdtPicker td.rdtDay:hover,\n.rdtPicker td.rdtHour:hover,\n.rdtPicker td.rdtMinute:hover,\n.rdtPicker td.rdtSecond:hover,\n.rdtPicker .rdtTimeToggle:hover,\n.rdtPicker .rdtTimeToggle:hover:before {\n  background: #eeeeee;\n  cursor: pointer; }\n\n.rdtPicker td.rdtToday {\n  position: relative; }\n\n.rdtPicker td.rdtActive.rdtToday:before {\n  border-bottom-color: #fff; }\n\n.rdtPicker td.rdtDisabled,\n.rdtPicker td.rdtDisabled:hover {\n  background: none;\n  color: #999999;\n  cursor: not-allowed; }\n\n.rdtPicker td span.rdtOld {\n  color: #999999; }\n\n.rdtPicker td span.rdtDisabled,\n.rdtPicker td span.rdtDisabled:hover {\n  background: none;\n  color: #999999;\n  cursor: not-allowed; }\n\n.rdtPicker tr .dow {\n  width: 14.2857%;\n  border-bottom: none;\n  font-size: .875rem;\n  width: 36px;\n  height: 36px;\n  -webkit-transition: all .15s ease;\n  transition: all .15s ease;\n  text-align: center;\n  border: none;\n  font-weight: 500;\n  border-radius: .375rem; }\n\n.rdtPicker th.rdtSwitch {\n  font-weight: 500;\n  border-radius: .375rem;\n  font-size: .875rem;\n  width: 145px;\n  height: 36px;\n  -webkit-transition: all .15s ease;\n  transition: all .15s ease;\n  text-align: center;\n  border: none; }\n\n.rdtPicker th.rdtNext,\n.rdtPicker th.rdtPrev {\n  font-size: .875rem;\n  width: 36px;\n  height: 36px;\n  -webkit-transition: all .15s ease;\n  transition: all .15s ease;\n  text-align: center;\n  border: none;\n  border-radius: .375rem;\n  cursor: pointer; }\n\n.rdtPicker .dow,\n.rdtPicker th.rdtSwitch,\n.rdtPicker th.rdtNext,\n.rdtPicker th.rdtPrev,\n.rdtPicker .rdtTimeToggle {\n  color: #525f7f; }\n\n.rdtPrev span,\n.rdtNext span {\n  display: block;\n  -webkit-touch-callout: none;\n  /* iOS Safari */\n  -webkit-user-select: none;\n  /* Chrome/Safari/Opera */\n  /* Konqueror */\n  -moz-user-select: none;\n  /* Firefox */\n  -ms-user-select: none;\n  /* Internet Explorer/Edge */\n  user-select: none; }\n\n.rdtPicker th.rdtDisabled,\n.rdtPicker th.rdtDisabled:hover {\n  background: none;\n  color: #999999;\n  cursor: not-allowed; }\n\n.rdtPicker thead tr:first-child th {\n  cursor: pointer; }\n\n.rdtPicker thead tr:first-child th:hover {\n  background: #eeeeee; }\n\n.rdtPicker button {\n  border: none;\n  background: none;\n  cursor: pointer; }\n\n.rdtPicker button:hover {\n  background-color: #eee; }\n\n.rdtPicker thead button {\n  width: 100%;\n  height: 100%; }\n\ntd.rdtMonth,\ntd.rdtYear {\n  height: 50px;\n  width: 25%;\n  cursor: pointer; }\n\ntd.rdtMonth:hover,\ntd.rdtYear:hover {\n  background: #eee; }\n\n.rdtCounters {\n  display: inline-block; }\n\n.rdtCounters > div {\n  float: left;\n  width: 40px;\n  font-weight: inherit;\n  margin: 3px;\n  border-radius: 50%; }\n\n.rdtCounters .rdtCounterSeparator {\n  width: 0;\n  border: 1px solid transparent; }\n\n.rdtCounter {\n  height: 100px; }\n\n.rdtCounter {\n  width: 40px; }\n  .rdtCounter .rdtCount {\n    padding: 7px;\n    height: 40px;\n    border: 1px solid transparent; }\n\n.rdtCounters .rdtCounter:last-child .rdtCount {\n  color: #11cdef;\n  border-radius: 50%;\n  border: 1px solid #11cdef; }\n\n.rdtCounterSeparator {\n  padding: 7px;\n  line-height: 100px; }\n\n.rdtCounter .rdtBtn {\n  line-height: 40px;\n  cursor: pointer;\n  display: block;\n  border-radius: 50%;\n  color: #adb5bd;\n  -webkit-transition: all 60ms ease-in;\n  transition: all 60ms ease-in;\n  -webkit-touch-callout: none;\n  /* iOS Safari */\n  -webkit-user-select: none;\n  /* Chrome/Safari/Opera */\n  /* Konqueror */\n  -moz-user-select: none;\n  /* Firefox */\n  -ms-user-select: none;\n  /* Internet Explorer/Edge */\n  user-select: none; }\n\n.rdtCounter .rdtBtn:hover {\n  background: #eee;\n  color: #797979; }\n\n.rdtCounter .rdtCount {\n  font-size: inherit;\n  line-height: 25px; }\n\n.rdtMilli {\n  vertical-align: middle;\n  padding-left: 8px;\n  width: 48px; }\n\n.rdtMilli input {\n  width: 100%;\n  font-size: inherit;\n  margin-top: 37px; }\n\n.rdtMonths,\n.rdtYears {\n  padding-bottom: 10px; }\n  .rdtMonths .rdtMonth,\n  .rdtMonths .rdtYear,\n  .rdtYears .rdtMonth,\n  .rdtYears .rdtYear {\n    display: inline-block;\n    width: 56px;\n    height: 56px;\n    line-height: 56px;\n    margin: 3px 3px;\n    cursor: pointer;\n    border-radius: 50%;\n    text-align: center; }\n    .rdtMonths .rdtMonth.rdtActive, .rdtMonths .rdtMonth.start-date, .rdtMonths .rdtMonth.end-date, .rdtMonths .rdtMonth.middle-date,\n    .rdtMonths .rdtYear.rdtActive,\n    .rdtMonths .rdtYear.start-date,\n    .rdtMonths .rdtYear.end-date,\n    .rdtMonths .rdtYear.middle-date,\n    .rdtYears .rdtMonth.rdtActive,\n    .rdtYears .rdtMonth.start-date,\n    .rdtYears .rdtMonth.end-date,\n    .rdtYears .rdtMonth.middle-date,\n    .rdtYears .rdtYear.rdtActive,\n    .rdtYears .rdtYear.start-date,\n    .rdtYears .rdtYear.end-date,\n    .rdtYears .rdtYear.middle-date {\n      background-color: #11cdef !important;\n      color: #fff; }\n\n.input-group .input-group-prepend + .rdt .form-control {\n  border-top-left-radius: 0;\n  border-bottom-left-radius: 0; }\n\n.input-group .input-group-prepend + .rdt .form-control {\n  border-top-left-radius: 0;\n  border-bottom-left-radius: 0; }\n\n.input-group > .rdt:not(:last-child) .form-control {\n  border-top-right-radius: 0;\n  border-bottom-right-radius: 0; }\n\n.form-group .rdt {\n  width: 1%;\n  margin-bottom: 0;\n  -webkit-box-flex: 1;\n          flex: 1 1 auto; }\n\n.btn .btn-inner--icon {\n  margin-right: 4px; }\n\n.btn + .btn {\n  margin-left: 4px; }\n\nbutton:focus, :focus {\n  outline: none; }\n\n@-webkit-keyframes show-navbar-dropdown {\n  0% {\n    opacity: 0;\n    -webkit-transition: visibility 0.25s, opacity 0.25s;\n    transition: visibility 0.25s, opacity 0.25s; }\n  100% {\n    opacity: 1; } }\n\n@keyframes show-navbar-dropdown {\n  0% {\n    opacity: 0;\n    -webkit-transition: visibility 0.25s, opacity 0.25s;\n    transition: visibility 0.25s, opacity 0.25s; }\n  100% {\n    opacity: 1; } }\n\n.navbar .collapsing .navbar-toggler {\n  pointer-events: none; }\n\n.navbar .nav-item .nav-link-icon.nav-link i {\n  margin-right: 4px; }\n\n.table .avatar-group .avatar {\n  margin-right: 4px; }\n\n.table .badge i {\n  margin-right: 10px; }\n", ""]);
-
-// exports
-
-
-/***/ }),
-
-/***/ "./node_modules/css-loader/index.js?!./node_modules/postcss-loader/src/index.js?!./node_modules/argon-dashboard-react/src/assets/vendor/@fortawesome/fontawesome-free/css/all.min.css":
-/*!********************************************************************************************************************************************************************************************!*\
-  !*** ./node_modules/css-loader??ref--6-1!./node_modules/postcss-loader/src??ref--6-2!./node_modules/argon-dashboard-react/src/assets/vendor/@fortawesome/fontawesome-free/css/all.min.css ***!
-  \********************************************************************************************************************************************************************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-var escape = __webpack_require__(/*! ../../../../../../../css-loader/lib/url/escape.js */ "./node_modules/css-loader/lib/url/escape.js");
-exports = module.exports = __webpack_require__(/*! ../../../../../../../css-loader/lib/css-base.js */ "./node_modules/css-loader/lib/css-base.js")(false);
-// imports
-
-
-// module
-exports.push([module.i, "/*!\n * Font Awesome Free 5.3.1 by @fontawesome - https://fontawesome.com\n * License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License)\n */\n.fa,.fab,.fal,.far,.fas{-moz-osx-font-smoothing:grayscale;-webkit-font-smoothing:antialiased;display:inline-block;font-style:normal;font-variant:normal;text-rendering:auto;line-height:1}.fa-lg{font-size:1.33333em;line-height:.75em;vertical-align:-.0667em}.fa-xs{font-size:.75em}.fa-sm{font-size:.875em}.fa-1x{font-size:1em}.fa-2x{font-size:2em}.fa-3x{font-size:3em}.fa-4x{font-size:4em}.fa-5x{font-size:5em}.fa-6x{font-size:6em}.fa-7x{font-size:7em}.fa-8x{font-size:8em}.fa-9x{font-size:9em}.fa-10x{font-size:10em}.fa-fw{text-align:center;width:1.25em}.fa-ul{list-style-type:none;margin-left:2.5em;padding-left:0}.fa-ul>li{position:relative}.fa-li{left:-2em;position:absolute;text-align:center;width:2em;line-height:inherit}.fa-border{border:.08em solid #eee;border-radius:.1em;padding:.2em .25em .15em}.fa-pull-left{float:left}.fa-pull-right{float:right}.fa.fa-pull-left,.fab.fa-pull-left,.fal.fa-pull-left,.far.fa-pull-left,.fas.fa-pull-left{margin-right:.3em}.fa.fa-pull-right,.fab.fa-pull-right,.fal.fa-pull-right,.far.fa-pull-right,.fas.fa-pull-right{margin-left:.3em}.fa-spin{-webkit-animation:fa-spin 2s infinite linear;animation:fa-spin 2s infinite linear}.fa-pulse{-webkit-animation:fa-spin 1s infinite steps(8);animation:fa-spin 1s infinite steps(8)}@-webkit-keyframes fa-spin{0%{-webkit-transform:rotate(0deg);transform:rotate(0deg)}to{-webkit-transform:rotate(1turn);transform:rotate(1turn)}}@keyframes fa-spin{0%{-webkit-transform:rotate(0deg);transform:rotate(0deg)}to{-webkit-transform:rotate(1turn);transform:rotate(1turn)}}.fa-rotate-90{-ms-filter:\"progid:DXImageTransform.Microsoft.BasicImage(rotation=1)\";-webkit-transform:rotate(90deg);transform:rotate(90deg)}.fa-rotate-180{-ms-filter:\"progid:DXImageTransform.Microsoft.BasicImage(rotation=2)\";-webkit-transform:rotate(180deg);transform:rotate(180deg)}.fa-rotate-270{-ms-filter:\"progid:DXImageTransform.Microsoft.BasicImage(rotation=3)\";-webkit-transform:rotate(270deg);transform:rotate(270deg)}.fa-flip-horizontal{-ms-filter:\"progid:DXImageTransform.Microsoft.BasicImage(rotation=0, mirror=1)\";-webkit-transform:scaleX(-1);transform:scaleX(-1)}.fa-flip-vertical{-webkit-transform:scaleY(-1);transform:scaleY(-1)}.fa-flip-horizontal.fa-flip-vertical,.fa-flip-vertical{-ms-filter:\"progid:DXImageTransform.Microsoft.BasicImage(rotation=2, mirror=1)\"}.fa-flip-horizontal.fa-flip-vertical{-webkit-transform:scale(-1);transform:scale(-1)}:root .fa-flip-horizontal,:root .fa-flip-vertical,:root .fa-rotate-90,:root .fa-rotate-180,:root .fa-rotate-270{-webkit-filter:none;filter:none}.fa-stack{display:inline-block;height:2em;line-height:2em;position:relative;vertical-align:middle;width:2em}.fa-stack-1x,.fa-stack-2x{left:0;position:absolute;text-align:center;width:100%}.fa-stack-1x{line-height:inherit}.fa-stack-2x{font-size:2em}.fa-inverse{color:#fff}.fa-500px:before{content:\"\\F26E\"}.fa-accessible-icon:before{content:\"\\F368\"}.fa-accusoft:before{content:\"\\F369\"}.fa-ad:before{content:\"\\F641\"}.fa-address-book:before{content:\"\\F2B9\"}.fa-address-card:before{content:\"\\F2BB\"}.fa-adjust:before{content:\"\\F042\"}.fa-adn:before{content:\"\\F170\"}.fa-adversal:before{content:\"\\F36A\"}.fa-affiliatetheme:before{content:\"\\F36B\"}.fa-air-freshener:before{content:\"\\F5D0\"}.fa-algolia:before{content:\"\\F36C\"}.fa-align-center:before{content:\"\\F037\"}.fa-align-justify:before{content:\"\\F039\"}.fa-align-left:before{content:\"\\F036\"}.fa-align-right:before{content:\"\\F038\"}.fa-alipay:before{content:\"\\F642\"}.fa-allergies:before{content:\"\\F461\"}.fa-amazon:before{content:\"\\F270\"}.fa-amazon-pay:before{content:\"\\F42C\"}.fa-ambulance:before{content:\"\\F0F9\"}.fa-american-sign-language-interpreting:before{content:\"\\F2A3\"}.fa-amilia:before{content:\"\\F36D\"}.fa-anchor:before{content:\"\\F13D\"}.fa-android:before{content:\"\\F17B\"}.fa-angellist:before{content:\"\\F209\"}.fa-angle-double-down:before{content:\"\\F103\"}.fa-angle-double-left:before{content:\"\\F100\"}.fa-angle-double-right:before{content:\"\\F101\"}.fa-angle-double-up:before{content:\"\\F102\"}.fa-angle-down:before{content:\"\\F107\"}.fa-angle-left:before{content:\"\\F104\"}.fa-angle-right:before{content:\"\\F105\"}.fa-angle-up:before{content:\"\\F106\"}.fa-angry:before{content:\"\\F556\"}.fa-angrycreative:before{content:\"\\F36E\"}.fa-angular:before{content:\"\\F420\"}.fa-ankh:before{content:\"\\F644\"}.fa-app-store:before{content:\"\\F36F\"}.fa-app-store-ios:before{content:\"\\F370\"}.fa-apper:before{content:\"\\F371\"}.fa-apple:before{content:\"\\F179\"}.fa-apple-alt:before{content:\"\\F5D1\"}.fa-apple-pay:before{content:\"\\F415\"}.fa-archive:before{content:\"\\F187\"}.fa-archway:before{content:\"\\F557\"}.fa-arrow-alt-circle-down:before{content:\"\\F358\"}.fa-arrow-alt-circle-left:before{content:\"\\F359\"}.fa-arrow-alt-circle-right:before{content:\"\\F35A\"}.fa-arrow-alt-circle-up:before{content:\"\\F35B\"}.fa-arrow-circle-down:before{content:\"\\F0AB\"}.fa-arrow-circle-left:before{content:\"\\F0A8\"}.fa-arrow-circle-right:before{content:\"\\F0A9\"}.fa-arrow-circle-up:before{content:\"\\F0AA\"}.fa-arrow-down:before{content:\"\\F063\"}.fa-arrow-left:before{content:\"\\F060\"}.fa-arrow-right:before{content:\"\\F061\"}.fa-arrow-up:before{content:\"\\F062\"}.fa-arrows-alt:before{content:\"\\F0B2\"}.fa-arrows-alt-h:before{content:\"\\F337\"}.fa-arrows-alt-v:before{content:\"\\F338\"}.fa-assistive-listening-systems:before{content:\"\\F2A2\"}.fa-asterisk:before{content:\"\\F069\"}.fa-asymmetrik:before{content:\"\\F372\"}.fa-at:before{content:\"\\F1FA\"}.fa-atlas:before{content:\"\\F558\"}.fa-atom:before{content:\"\\F5D2\"}.fa-audible:before{content:\"\\F373\"}.fa-audio-description:before{content:\"\\F29E\"}.fa-autoprefixer:before{content:\"\\F41C\"}.fa-avianex:before{content:\"\\F374\"}.fa-aviato:before{content:\"\\F421\"}.fa-award:before{content:\"\\F559\"}.fa-aws:before{content:\"\\F375\"}.fa-backspace:before{content:\"\\F55A\"}.fa-backward:before{content:\"\\F04A\"}.fa-balance-scale:before{content:\"\\F24E\"}.fa-ban:before{content:\"\\F05E\"}.fa-band-aid:before{content:\"\\F462\"}.fa-bandcamp:before{content:\"\\F2D5\"}.fa-barcode:before{content:\"\\F02A\"}.fa-bars:before{content:\"\\F0C9\"}.fa-baseball-ball:before{content:\"\\F433\"}.fa-basketball-ball:before{content:\"\\F434\"}.fa-bath:before{content:\"\\F2CD\"}.fa-battery-empty:before{content:\"\\F244\"}.fa-battery-full:before{content:\"\\F240\"}.fa-battery-half:before{content:\"\\F242\"}.fa-battery-quarter:before{content:\"\\F243\"}.fa-battery-three-quarters:before{content:\"\\F241\"}.fa-bed:before{content:\"\\F236\"}.fa-beer:before{content:\"\\F0FC\"}.fa-behance:before{content:\"\\F1B4\"}.fa-behance-square:before{content:\"\\F1B5\"}.fa-bell:before{content:\"\\F0F3\"}.fa-bell-slash:before{content:\"\\F1F6\"}.fa-bezier-curve:before{content:\"\\F55B\"}.fa-bible:before{content:\"\\F647\"}.fa-bicycle:before{content:\"\\F206\"}.fa-bimobject:before{content:\"\\F378\"}.fa-binoculars:before{content:\"\\F1E5\"}.fa-birthday-cake:before{content:\"\\F1FD\"}.fa-bitbucket:before{content:\"\\F171\"}.fa-bitcoin:before{content:\"\\F379\"}.fa-bity:before{content:\"\\F37A\"}.fa-black-tie:before{content:\"\\F27E\"}.fa-blackberry:before{content:\"\\F37B\"}.fa-blender:before{content:\"\\F517\"}.fa-blind:before{content:\"\\F29D\"}.fa-blogger:before{content:\"\\F37C\"}.fa-blogger-b:before{content:\"\\F37D\"}.fa-bluetooth:before{content:\"\\F293\"}.fa-bluetooth-b:before{content:\"\\F294\"}.fa-bold:before{content:\"\\F032\"}.fa-bolt:before{content:\"\\F0E7\"}.fa-bomb:before{content:\"\\F1E2\"}.fa-bone:before{content:\"\\F5D7\"}.fa-bong:before{content:\"\\F55C\"}.fa-book:before{content:\"\\F02D\"}.fa-book-open:before{content:\"\\F518\"}.fa-book-reader:before{content:\"\\F5DA\"}.fa-bookmark:before{content:\"\\F02E\"}.fa-bowling-ball:before{content:\"\\F436\"}.fa-box:before{content:\"\\F466\"}.fa-box-open:before{content:\"\\F49E\"}.fa-boxes:before{content:\"\\F468\"}.fa-braille:before{content:\"\\F2A1\"}.fa-brain:before{content:\"\\F5DC\"}.fa-briefcase:before{content:\"\\F0B1\"}.fa-briefcase-medical:before{content:\"\\F469\"}.fa-broadcast-tower:before{content:\"\\F519\"}.fa-broom:before{content:\"\\F51A\"}.fa-brush:before{content:\"\\F55D\"}.fa-btc:before{content:\"\\F15A\"}.fa-bug:before{content:\"\\F188\"}.fa-building:before{content:\"\\F1AD\"}.fa-bullhorn:before{content:\"\\F0A1\"}.fa-bullseye:before{content:\"\\F140\"}.fa-burn:before{content:\"\\F46A\"}.fa-buromobelexperte:before{content:\"\\F37F\"}.fa-bus:before{content:\"\\F207\"}.fa-bus-alt:before{content:\"\\F55E\"}.fa-business-time:before{content:\"\\F64A\"}.fa-buysellads:before{content:\"\\F20D\"}.fa-calculator:before{content:\"\\F1EC\"}.fa-calendar:before{content:\"\\F133\"}.fa-calendar-alt:before{content:\"\\F073\"}.fa-calendar-check:before{content:\"\\F274\"}.fa-calendar-minus:before{content:\"\\F272\"}.fa-calendar-plus:before{content:\"\\F271\"}.fa-calendar-times:before{content:\"\\F273\"}.fa-camera:before{content:\"\\F030\"}.fa-camera-retro:before{content:\"\\F083\"}.fa-cannabis:before{content:\"\\F55F\"}.fa-capsules:before{content:\"\\F46B\"}.fa-car:before{content:\"\\F1B9\"}.fa-car-alt:before{content:\"\\F5DE\"}.fa-car-battery:before{content:\"\\F5DF\"}.fa-car-crash:before{content:\"\\F5E1\"}.fa-car-side:before{content:\"\\F5E4\"}.fa-caret-down:before{content:\"\\F0D7\"}.fa-caret-left:before{content:\"\\F0D9\"}.fa-caret-right:before{content:\"\\F0DA\"}.fa-caret-square-down:before{content:\"\\F150\"}.fa-caret-square-left:before{content:\"\\F191\"}.fa-caret-square-right:before{content:\"\\F152\"}.fa-caret-square-up:before{content:\"\\F151\"}.fa-caret-up:before{content:\"\\F0D8\"}.fa-cart-arrow-down:before{content:\"\\F218\"}.fa-cart-plus:before{content:\"\\F217\"}.fa-cc-amazon-pay:before{content:\"\\F42D\"}.fa-cc-amex:before{content:\"\\F1F3\"}.fa-cc-apple-pay:before{content:\"\\F416\"}.fa-cc-diners-club:before{content:\"\\F24C\"}.fa-cc-discover:before{content:\"\\F1F2\"}.fa-cc-jcb:before{content:\"\\F24B\"}.fa-cc-mastercard:before{content:\"\\F1F1\"}.fa-cc-paypal:before{content:\"\\F1F4\"}.fa-cc-stripe:before{content:\"\\F1F5\"}.fa-cc-visa:before{content:\"\\F1F0\"}.fa-centercode:before{content:\"\\F380\"}.fa-certificate:before{content:\"\\F0A3\"}.fa-chalkboard:before{content:\"\\F51B\"}.fa-chalkboard-teacher:before{content:\"\\F51C\"}.fa-charging-station:before{content:\"\\F5E7\"}.fa-chart-area:before{content:\"\\F1FE\"}.fa-chart-bar:before{content:\"\\F080\"}.fa-chart-line:before{content:\"\\F201\"}.fa-chart-pie:before{content:\"\\F200\"}.fa-check:before{content:\"\\F00C\"}.fa-check-circle:before{content:\"\\F058\"}.fa-check-double:before{content:\"\\F560\"}.fa-check-square:before{content:\"\\F14A\"}.fa-chess:before{content:\"\\F439\"}.fa-chess-bishop:before{content:\"\\F43A\"}.fa-chess-board:before{content:\"\\F43C\"}.fa-chess-king:before{content:\"\\F43F\"}.fa-chess-knight:before{content:\"\\F441\"}.fa-chess-pawn:before{content:\"\\F443\"}.fa-chess-queen:before{content:\"\\F445\"}.fa-chess-rook:before{content:\"\\F447\"}.fa-chevron-circle-down:before{content:\"\\F13A\"}.fa-chevron-circle-left:before{content:\"\\F137\"}.fa-chevron-circle-right:before{content:\"\\F138\"}.fa-chevron-circle-up:before{content:\"\\F139\"}.fa-chevron-down:before{content:\"\\F078\"}.fa-chevron-left:before{content:\"\\F053\"}.fa-chevron-right:before{content:\"\\F054\"}.fa-chevron-up:before{content:\"\\F077\"}.fa-child:before{content:\"\\F1AE\"}.fa-chrome:before{content:\"\\F268\"}.fa-church:before{content:\"\\F51D\"}.fa-circle:before{content:\"\\F111\"}.fa-circle-notch:before{content:\"\\F1CE\"}.fa-city:before{content:\"\\F64F\"}.fa-clipboard:before{content:\"\\F328\"}.fa-clipboard-check:before{content:\"\\F46C\"}.fa-clipboard-list:before{content:\"\\F46D\"}.fa-clock:before{content:\"\\F017\"}.fa-clone:before{content:\"\\F24D\"}.fa-closed-captioning:before{content:\"\\F20A\"}.fa-cloud:before{content:\"\\F0C2\"}.fa-cloud-download-alt:before{content:\"\\F381\"}.fa-cloud-upload-alt:before{content:\"\\F382\"}.fa-cloudscale:before{content:\"\\F383\"}.fa-cloudsmith:before{content:\"\\F384\"}.fa-cloudversify:before{content:\"\\F385\"}.fa-cocktail:before{content:\"\\F561\"}.fa-code:before{content:\"\\F121\"}.fa-code-branch:before{content:\"\\F126\"}.fa-codepen:before{content:\"\\F1CB\"}.fa-codiepie:before{content:\"\\F284\"}.fa-coffee:before{content:\"\\F0F4\"}.fa-cog:before{content:\"\\F013\"}.fa-cogs:before{content:\"\\F085\"}.fa-coins:before{content:\"\\F51E\"}.fa-columns:before{content:\"\\F0DB\"}.fa-comment:before{content:\"\\F075\"}.fa-comment-alt:before{content:\"\\F27A\"}.fa-comment-dollar:before{content:\"\\F651\"}.fa-comment-dots:before{content:\"\\F4AD\"}.fa-comment-slash:before{content:\"\\F4B3\"}.fa-comments:before{content:\"\\F086\"}.fa-comments-dollar:before{content:\"\\F653\"}.fa-compact-disc:before{content:\"\\F51F\"}.fa-compass:before{content:\"\\F14E\"}.fa-compress:before{content:\"\\F066\"}.fa-concierge-bell:before{content:\"\\F562\"}.fa-connectdevelop:before{content:\"\\F20E\"}.fa-contao:before{content:\"\\F26D\"}.fa-cookie:before{content:\"\\F563\"}.fa-cookie-bite:before{content:\"\\F564\"}.fa-copy:before{content:\"\\F0C5\"}.fa-copyright:before{content:\"\\F1F9\"}.fa-couch:before{content:\"\\F4B8\"}.fa-cpanel:before{content:\"\\F388\"}.fa-creative-commons:before{content:\"\\F25E\"}.fa-creative-commons-by:before{content:\"\\F4E7\"}.fa-creative-commons-nc:before{content:\"\\F4E8\"}.fa-creative-commons-nc-eu:before{content:\"\\F4E9\"}.fa-creative-commons-nc-jp:before{content:\"\\F4EA\"}.fa-creative-commons-nd:before{content:\"\\F4EB\"}.fa-creative-commons-pd:before{content:\"\\F4EC\"}.fa-creative-commons-pd-alt:before{content:\"\\F4ED\"}.fa-creative-commons-remix:before{content:\"\\F4EE\"}.fa-creative-commons-sa:before{content:\"\\F4EF\"}.fa-creative-commons-sampling:before{content:\"\\F4F0\"}.fa-creative-commons-sampling-plus:before{content:\"\\F4F1\"}.fa-creative-commons-share:before{content:\"\\F4F2\"}.fa-credit-card:before{content:\"\\F09D\"}.fa-crop:before{content:\"\\F125\"}.fa-crop-alt:before{content:\"\\F565\"}.fa-cross:before{content:\"\\F654\"}.fa-crosshairs:before{content:\"\\F05B\"}.fa-crow:before{content:\"\\F520\"}.fa-crown:before{content:\"\\F521\"}.fa-css3:before{content:\"\\F13C\"}.fa-css3-alt:before{content:\"\\F38B\"}.fa-cube:before{content:\"\\F1B2\"}.fa-cubes:before{content:\"\\F1B3\"}.fa-cut:before{content:\"\\F0C4\"}.fa-cuttlefish:before{content:\"\\F38C\"}.fa-d-and-d:before{content:\"\\F38D\"}.fa-dashcube:before{content:\"\\F210\"}.fa-database:before{content:\"\\F1C0\"}.fa-deaf:before{content:\"\\F2A4\"}.fa-delicious:before{content:\"\\F1A5\"}.fa-deploydog:before{content:\"\\F38E\"}.fa-deskpro:before{content:\"\\F38F\"}.fa-desktop:before{content:\"\\F108\"}.fa-deviantart:before{content:\"\\F1BD\"}.fa-dharmachakra:before{content:\"\\F655\"}.fa-diagnoses:before{content:\"\\F470\"}.fa-dice:before{content:\"\\F522\"}.fa-dice-five:before{content:\"\\F523\"}.fa-dice-four:before{content:\"\\F524\"}.fa-dice-one:before{content:\"\\F525\"}.fa-dice-six:before{content:\"\\F526\"}.fa-dice-three:before{content:\"\\F527\"}.fa-dice-two:before{content:\"\\F528\"}.fa-digg:before{content:\"\\F1A6\"}.fa-digital-ocean:before{content:\"\\F391\"}.fa-digital-tachograph:before{content:\"\\F566\"}.fa-directions:before{content:\"\\F5EB\"}.fa-discord:before{content:\"\\F392\"}.fa-discourse:before{content:\"\\F393\"}.fa-divide:before{content:\"\\F529\"}.fa-dizzy:before{content:\"\\F567\"}.fa-dna:before{content:\"\\F471\"}.fa-dochub:before{content:\"\\F394\"}.fa-docker:before{content:\"\\F395\"}.fa-dollar-sign:before{content:\"\\F155\"}.fa-dolly:before{content:\"\\F472\"}.fa-dolly-flatbed:before{content:\"\\F474\"}.fa-donate:before{content:\"\\F4B9\"}.fa-door-closed:before{content:\"\\F52A\"}.fa-door-open:before{content:\"\\F52B\"}.fa-dot-circle:before{content:\"\\F192\"}.fa-dove:before{content:\"\\F4BA\"}.fa-download:before{content:\"\\F019\"}.fa-draft2digital:before{content:\"\\F396\"}.fa-drafting-compass:before{content:\"\\F568\"}.fa-draw-polygon:before{content:\"\\F5EE\"}.fa-dribbble:before{content:\"\\F17D\"}.fa-dribbble-square:before{content:\"\\F397\"}.fa-dropbox:before{content:\"\\F16B\"}.fa-drum:before{content:\"\\F569\"}.fa-drum-steelpan:before{content:\"\\F56A\"}.fa-drupal:before{content:\"\\F1A9\"}.fa-dumbbell:before{content:\"\\F44B\"}.fa-dyalog:before{content:\"\\F399\"}.fa-earlybirds:before{content:\"\\F39A\"}.fa-ebay:before{content:\"\\F4F4\"}.fa-edge:before{content:\"\\F282\"}.fa-edit:before{content:\"\\F044\"}.fa-eject:before{content:\"\\F052\"}.fa-elementor:before{content:\"\\F430\"}.fa-ellipsis-h:before{content:\"\\F141\"}.fa-ellipsis-v:before{content:\"\\F142\"}.fa-ello:before{content:\"\\F5F1\"}.fa-ember:before{content:\"\\F423\"}.fa-empire:before{content:\"\\F1D1\"}.fa-envelope:before{content:\"\\F0E0\"}.fa-envelope-open:before{content:\"\\F2B6\"}.fa-envelope-open-text:before{content:\"\\F658\"}.fa-envelope-square:before{content:\"\\F199\"}.fa-envira:before{content:\"\\F299\"}.fa-equals:before{content:\"\\F52C\"}.fa-eraser:before{content:\"\\F12D\"}.fa-erlang:before{content:\"\\F39D\"}.fa-ethereum:before{content:\"\\F42E\"}.fa-etsy:before{content:\"\\F2D7\"}.fa-euro-sign:before{content:\"\\F153\"}.fa-exchange-alt:before{content:\"\\F362\"}.fa-exclamation:before{content:\"\\F12A\"}.fa-exclamation-circle:before{content:\"\\F06A\"}.fa-exclamation-triangle:before{content:\"\\F071\"}.fa-expand:before{content:\"\\F065\"}.fa-expand-arrows-alt:before{content:\"\\F31E\"}.fa-expeditedssl:before{content:\"\\F23E\"}.fa-external-link-alt:before{content:\"\\F35D\"}.fa-external-link-square-alt:before{content:\"\\F360\"}.fa-eye:before{content:\"\\F06E\"}.fa-eye-dropper:before{content:\"\\F1FB\"}.fa-eye-slash:before{content:\"\\F070\"}.fa-facebook:before{content:\"\\F09A\"}.fa-facebook-f:before{content:\"\\F39E\"}.fa-facebook-messenger:before{content:\"\\F39F\"}.fa-facebook-square:before{content:\"\\F082\"}.fa-fast-backward:before{content:\"\\F049\"}.fa-fast-forward:before{content:\"\\F050\"}.fa-fax:before{content:\"\\F1AC\"}.fa-feather:before{content:\"\\F52D\"}.fa-feather-alt:before{content:\"\\F56B\"}.fa-female:before{content:\"\\F182\"}.fa-fighter-jet:before{content:\"\\F0FB\"}.fa-file:before{content:\"\\F15B\"}.fa-file-alt:before{content:\"\\F15C\"}.fa-file-archive:before{content:\"\\F1C6\"}.fa-file-audio:before{content:\"\\F1C7\"}.fa-file-code:before{content:\"\\F1C9\"}.fa-file-contract:before{content:\"\\F56C\"}.fa-file-download:before{content:\"\\F56D\"}.fa-file-excel:before{content:\"\\F1C3\"}.fa-file-export:before{content:\"\\F56E\"}.fa-file-image:before{content:\"\\F1C5\"}.fa-file-import:before{content:\"\\F56F\"}.fa-file-invoice:before{content:\"\\F570\"}.fa-file-invoice-dollar:before{content:\"\\F571\"}.fa-file-medical:before{content:\"\\F477\"}.fa-file-medical-alt:before{content:\"\\F478\"}.fa-file-pdf:before{content:\"\\F1C1\"}.fa-file-powerpoint:before{content:\"\\F1C4\"}.fa-file-prescription:before{content:\"\\F572\"}.fa-file-signature:before{content:\"\\F573\"}.fa-file-upload:before{content:\"\\F574\"}.fa-file-video:before{content:\"\\F1C8\"}.fa-file-word:before{content:\"\\F1C2\"}.fa-fill:before{content:\"\\F575\"}.fa-fill-drip:before{content:\"\\F576\"}.fa-film:before{content:\"\\F008\"}.fa-filter:before{content:\"\\F0B0\"}.fa-fingerprint:before{content:\"\\F577\"}.fa-fire:before{content:\"\\F06D\"}.fa-fire-extinguisher:before{content:\"\\F134\"}.fa-firefox:before{content:\"\\F269\"}.fa-first-aid:before{content:\"\\F479\"}.fa-first-order:before{content:\"\\F2B0\"}.fa-first-order-alt:before{content:\"\\F50A\"}.fa-firstdraft:before{content:\"\\F3A1\"}.fa-fish:before{content:\"\\F578\"}.fa-flag:before{content:\"\\F024\"}.fa-flag-checkered:before{content:\"\\F11E\"}.fa-flask:before{content:\"\\F0C3\"}.fa-flickr:before{content:\"\\F16E\"}.fa-flipboard:before{content:\"\\F44D\"}.fa-flushed:before{content:\"\\F579\"}.fa-fly:before{content:\"\\F417\"}.fa-folder:before{content:\"\\F07B\"}.fa-folder-minus:before{content:\"\\F65D\"}.fa-folder-open:before{content:\"\\F07C\"}.fa-folder-plus:before{content:\"\\F65E\"}.fa-font:before{content:\"\\F031\"}.fa-font-awesome:before{content:\"\\F2B4\"}.fa-font-awesome-alt:before{content:\"\\F35C\"}.fa-font-awesome-flag:before{content:\"\\F425\"}.fa-font-awesome-logo-full:before{content:\"\\F4E6\"}.fa-fonticons:before{content:\"\\F280\"}.fa-fonticons-fi:before{content:\"\\F3A2\"}.fa-football-ball:before{content:\"\\F44E\"}.fa-fort-awesome:before{content:\"\\F286\"}.fa-fort-awesome-alt:before{content:\"\\F3A3\"}.fa-forumbee:before{content:\"\\F211\"}.fa-forward:before{content:\"\\F04E\"}.fa-foursquare:before{content:\"\\F180\"}.fa-free-code-camp:before{content:\"\\F2C5\"}.fa-freebsd:before{content:\"\\F3A4\"}.fa-frog:before{content:\"\\F52E\"}.fa-frown:before{content:\"\\F119\"}.fa-frown-open:before{content:\"\\F57A\"}.fa-fulcrum:before{content:\"\\F50B\"}.fa-funnel-dollar:before{content:\"\\F662\"}.fa-futbol:before{content:\"\\F1E3\"}.fa-galactic-republic:before{content:\"\\F50C\"}.fa-galactic-senate:before{content:\"\\F50D\"}.fa-gamepad:before{content:\"\\F11B\"}.fa-gas-pump:before{content:\"\\F52F\"}.fa-gavel:before{content:\"\\F0E3\"}.fa-gem:before{content:\"\\F3A5\"}.fa-genderless:before{content:\"\\F22D\"}.fa-get-pocket:before{content:\"\\F265\"}.fa-gg:before{content:\"\\F260\"}.fa-gg-circle:before{content:\"\\F261\"}.fa-gift:before{content:\"\\F06B\"}.fa-git:before{content:\"\\F1D3\"}.fa-git-square:before{content:\"\\F1D2\"}.fa-github:before{content:\"\\F09B\"}.fa-github-alt:before{content:\"\\F113\"}.fa-github-square:before{content:\"\\F092\"}.fa-gitkraken:before{content:\"\\F3A6\"}.fa-gitlab:before{content:\"\\F296\"}.fa-gitter:before{content:\"\\F426\"}.fa-glass-martini:before{content:\"\\F000\"}.fa-glass-martini-alt:before{content:\"\\F57B\"}.fa-glasses:before{content:\"\\F530\"}.fa-glide:before{content:\"\\F2A5\"}.fa-glide-g:before{content:\"\\F2A6\"}.fa-globe:before{content:\"\\F0AC\"}.fa-globe-africa:before{content:\"\\F57C\"}.fa-globe-americas:before{content:\"\\F57D\"}.fa-globe-asia:before{content:\"\\F57E\"}.fa-gofore:before{content:\"\\F3A7\"}.fa-golf-ball:before{content:\"\\F450\"}.fa-goodreads:before{content:\"\\F3A8\"}.fa-goodreads-g:before{content:\"\\F3A9\"}.fa-google:before{content:\"\\F1A0\"}.fa-google-drive:before{content:\"\\F3AA\"}.fa-google-play:before{content:\"\\F3AB\"}.fa-google-plus:before{content:\"\\F2B3\"}.fa-google-plus-g:before{content:\"\\F0D5\"}.fa-google-plus-square:before{content:\"\\F0D4\"}.fa-google-wallet:before{content:\"\\F1EE\"}.fa-gopuram:before{content:\"\\F664\"}.fa-graduation-cap:before{content:\"\\F19D\"}.fa-gratipay:before{content:\"\\F184\"}.fa-grav:before{content:\"\\F2D6\"}.fa-greater-than:before{content:\"\\F531\"}.fa-greater-than-equal:before{content:\"\\F532\"}.fa-grimace:before{content:\"\\F57F\"}.fa-grin:before{content:\"\\F580\"}.fa-grin-alt:before{content:\"\\F581\"}.fa-grin-beam:before{content:\"\\F582\"}.fa-grin-beam-sweat:before{content:\"\\F583\"}.fa-grin-hearts:before{content:\"\\F584\"}.fa-grin-squint:before{content:\"\\F585\"}.fa-grin-squint-tears:before{content:\"\\F586\"}.fa-grin-stars:before{content:\"\\F587\"}.fa-grin-tears:before{content:\"\\F588\"}.fa-grin-tongue:before{content:\"\\F589\"}.fa-grin-tongue-squint:before{content:\"\\F58A\"}.fa-grin-tongue-wink:before{content:\"\\F58B\"}.fa-grin-wink:before{content:\"\\F58C\"}.fa-grip-horizontal:before{content:\"\\F58D\"}.fa-grip-vertical:before{content:\"\\F58E\"}.fa-gripfire:before{content:\"\\F3AC\"}.fa-grunt:before{content:\"\\F3AD\"}.fa-gulp:before{content:\"\\F3AE\"}.fa-h-square:before{content:\"\\F0FD\"}.fa-hacker-news:before{content:\"\\F1D4\"}.fa-hacker-news-square:before{content:\"\\F3AF\"}.fa-hackerrank:before{content:\"\\F5F7\"}.fa-hamsa:before{content:\"\\F665\"}.fa-hand-holding:before{content:\"\\F4BD\"}.fa-hand-holding-heart:before{content:\"\\F4BE\"}.fa-hand-holding-usd:before{content:\"\\F4C0\"}.fa-hand-lizard:before{content:\"\\F258\"}.fa-hand-paper:before{content:\"\\F256\"}.fa-hand-peace:before{content:\"\\F25B\"}.fa-hand-point-down:before{content:\"\\F0A7\"}.fa-hand-point-left:before{content:\"\\F0A5\"}.fa-hand-point-right:before{content:\"\\F0A4\"}.fa-hand-point-up:before{content:\"\\F0A6\"}.fa-hand-pointer:before{content:\"\\F25A\"}.fa-hand-rock:before{content:\"\\F255\"}.fa-hand-scissors:before{content:\"\\F257\"}.fa-hand-spock:before{content:\"\\F259\"}.fa-hands:before{content:\"\\F4C2\"}.fa-hands-helping:before{content:\"\\F4C4\"}.fa-handshake:before{content:\"\\F2B5\"}.fa-hashtag:before{content:\"\\F292\"}.fa-haykal:before{content:\"\\F666\"}.fa-hdd:before{content:\"\\F0A0\"}.fa-heading:before{content:\"\\F1DC\"}.fa-headphones:before{content:\"\\F025\"}.fa-headphones-alt:before{content:\"\\F58F\"}.fa-headset:before{content:\"\\F590\"}.fa-heart:before{content:\"\\F004\"}.fa-heartbeat:before{content:\"\\F21E\"}.fa-helicopter:before{content:\"\\F533\"}.fa-highlighter:before{content:\"\\F591\"}.fa-hips:before{content:\"\\F452\"}.fa-hire-a-helper:before{content:\"\\F3B0\"}.fa-history:before{content:\"\\F1DA\"}.fa-hockey-puck:before{content:\"\\F453\"}.fa-home:before{content:\"\\F015\"}.fa-hooli:before{content:\"\\F427\"}.fa-hornbill:before{content:\"\\F592\"}.fa-hospital:before{content:\"\\F0F8\"}.fa-hospital-alt:before{content:\"\\F47D\"}.fa-hospital-symbol:before{content:\"\\F47E\"}.fa-hot-tub:before{content:\"\\F593\"}.fa-hotel:before{content:\"\\F594\"}.fa-hotjar:before{content:\"\\F3B1\"}.fa-hourglass:before{content:\"\\F254\"}.fa-hourglass-end:before{content:\"\\F253\"}.fa-hourglass-half:before{content:\"\\F252\"}.fa-hourglass-start:before{content:\"\\F251\"}.fa-houzz:before{content:\"\\F27C\"}.fa-html5:before{content:\"\\F13B\"}.fa-hubspot:before{content:\"\\F3B2\"}.fa-i-cursor:before{content:\"\\F246\"}.fa-id-badge:before{content:\"\\F2C1\"}.fa-id-card:before{content:\"\\F2C2\"}.fa-id-card-alt:before{content:\"\\F47F\"}.fa-image:before{content:\"\\F03E\"}.fa-images:before{content:\"\\F302\"}.fa-imdb:before{content:\"\\F2D8\"}.fa-inbox:before{content:\"\\F01C\"}.fa-indent:before{content:\"\\F03C\"}.fa-industry:before{content:\"\\F275\"}.fa-infinity:before{content:\"\\F534\"}.fa-info:before{content:\"\\F129\"}.fa-info-circle:before{content:\"\\F05A\"}.fa-instagram:before{content:\"\\F16D\"}.fa-internet-explorer:before{content:\"\\F26B\"}.fa-ioxhost:before{content:\"\\F208\"}.fa-italic:before{content:\"\\F033\"}.fa-itunes:before{content:\"\\F3B4\"}.fa-itunes-note:before{content:\"\\F3B5\"}.fa-java:before{content:\"\\F4E4\"}.fa-jedi:before{content:\"\\F669\"}.fa-jedi-order:before{content:\"\\F50E\"}.fa-jenkins:before{content:\"\\F3B6\"}.fa-joget:before{content:\"\\F3B7\"}.fa-joint:before{content:\"\\F595\"}.fa-joomla:before{content:\"\\F1AA\"}.fa-journal-whills:before{content:\"\\F66A\"}.fa-js:before{content:\"\\F3B8\"}.fa-js-square:before{content:\"\\F3B9\"}.fa-jsfiddle:before{content:\"\\F1CC\"}.fa-kaaba:before{content:\"\\F66B\"}.fa-kaggle:before{content:\"\\F5FA\"}.fa-key:before{content:\"\\F084\"}.fa-keybase:before{content:\"\\F4F5\"}.fa-keyboard:before{content:\"\\F11C\"}.fa-keycdn:before{content:\"\\F3BA\"}.fa-khanda:before{content:\"\\F66D\"}.fa-kickstarter:before{content:\"\\F3BB\"}.fa-kickstarter-k:before{content:\"\\F3BC\"}.fa-kiss:before{content:\"\\F596\"}.fa-kiss-beam:before{content:\"\\F597\"}.fa-kiss-wink-heart:before{content:\"\\F598\"}.fa-kiwi-bird:before{content:\"\\F535\"}.fa-korvue:before{content:\"\\F42F\"}.fa-landmark:before{content:\"\\F66F\"}.fa-language:before{content:\"\\F1AB\"}.fa-laptop:before{content:\"\\F109\"}.fa-laptop-code:before{content:\"\\F5FC\"}.fa-laravel:before{content:\"\\F3BD\"}.fa-lastfm:before{content:\"\\F202\"}.fa-lastfm-square:before{content:\"\\F203\"}.fa-laugh:before{content:\"\\F599\"}.fa-laugh-beam:before{content:\"\\F59A\"}.fa-laugh-squint:before{content:\"\\F59B\"}.fa-laugh-wink:before{content:\"\\F59C\"}.fa-layer-group:before{content:\"\\F5FD\"}.fa-leaf:before{content:\"\\F06C\"}.fa-leanpub:before{content:\"\\F212\"}.fa-lemon:before{content:\"\\F094\"}.fa-less:before{content:\"\\F41D\"}.fa-less-than:before{content:\"\\F536\"}.fa-less-than-equal:before{content:\"\\F537\"}.fa-level-down-alt:before{content:\"\\F3BE\"}.fa-level-up-alt:before{content:\"\\F3BF\"}.fa-life-ring:before{content:\"\\F1CD\"}.fa-lightbulb:before{content:\"\\F0EB\"}.fa-line:before{content:\"\\F3C0\"}.fa-link:before{content:\"\\F0C1\"}.fa-linkedin:before{content:\"\\F08C\"}.fa-linkedin-in:before{content:\"\\F0E1\"}.fa-linode:before{content:\"\\F2B8\"}.fa-linux:before{content:\"\\F17C\"}.fa-lira-sign:before{content:\"\\F195\"}.fa-list:before{content:\"\\F03A\"}.fa-list-alt:before{content:\"\\F022\"}.fa-list-ol:before{content:\"\\F0CB\"}.fa-list-ul:before{content:\"\\F0CA\"}.fa-location-arrow:before{content:\"\\F124\"}.fa-lock:before{content:\"\\F023\"}.fa-lock-open:before{content:\"\\F3C1\"}.fa-long-arrow-alt-down:before{content:\"\\F309\"}.fa-long-arrow-alt-left:before{content:\"\\F30A\"}.fa-long-arrow-alt-right:before{content:\"\\F30B\"}.fa-long-arrow-alt-up:before{content:\"\\F30C\"}.fa-low-vision:before{content:\"\\F2A8\"}.fa-luggage-cart:before{content:\"\\F59D\"}.fa-lyft:before{content:\"\\F3C3\"}.fa-magento:before{content:\"\\F3C4\"}.fa-magic:before{content:\"\\F0D0\"}.fa-magnet:before{content:\"\\F076\"}.fa-mail-bulk:before{content:\"\\F674\"}.fa-mailchimp:before{content:\"\\F59E\"}.fa-male:before{content:\"\\F183\"}.fa-mandalorian:before{content:\"\\F50F\"}.fa-map:before{content:\"\\F279\"}.fa-map-marked:before{content:\"\\F59F\"}.fa-map-marked-alt:before{content:\"\\F5A0\"}.fa-map-marker:before{content:\"\\F041\"}.fa-map-marker-alt:before{content:\"\\F3C5\"}.fa-map-pin:before{content:\"\\F276\"}.fa-map-signs:before{content:\"\\F277\"}.fa-markdown:before{content:\"\\F60F\"}.fa-marker:before{content:\"\\F5A1\"}.fa-mars:before{content:\"\\F222\"}.fa-mars-double:before{content:\"\\F227\"}.fa-mars-stroke:before{content:\"\\F229\"}.fa-mars-stroke-h:before{content:\"\\F22B\"}.fa-mars-stroke-v:before{content:\"\\F22A\"}.fa-mastodon:before{content:\"\\F4F6\"}.fa-maxcdn:before{content:\"\\F136\"}.fa-medal:before{content:\"\\F5A2\"}.fa-medapps:before{content:\"\\F3C6\"}.fa-medium:before{content:\"\\F23A\"}.fa-medium-m:before{content:\"\\F3C7\"}.fa-medkit:before{content:\"\\F0FA\"}.fa-medrt:before{content:\"\\F3C8\"}.fa-meetup:before{content:\"\\F2E0\"}.fa-megaport:before{content:\"\\F5A3\"}.fa-meh:before{content:\"\\F11A\"}.fa-meh-blank:before{content:\"\\F5A4\"}.fa-meh-rolling-eyes:before{content:\"\\F5A5\"}.fa-memory:before{content:\"\\F538\"}.fa-menorah:before{content:\"\\F676\"}.fa-mercury:before{content:\"\\F223\"}.fa-microchip:before{content:\"\\F2DB\"}.fa-microphone:before{content:\"\\F130\"}.fa-microphone-alt:before{content:\"\\F3C9\"}.fa-microphone-alt-slash:before{content:\"\\F539\"}.fa-microphone-slash:before{content:\"\\F131\"}.fa-microscope:before{content:\"\\F610\"}.fa-microsoft:before{content:\"\\F3CA\"}.fa-minus:before{content:\"\\F068\"}.fa-minus-circle:before{content:\"\\F056\"}.fa-minus-square:before{content:\"\\F146\"}.fa-mix:before{content:\"\\F3CB\"}.fa-mixcloud:before{content:\"\\F289\"}.fa-mizuni:before{content:\"\\F3CC\"}.fa-mobile:before{content:\"\\F10B\"}.fa-mobile-alt:before{content:\"\\F3CD\"}.fa-modx:before{content:\"\\F285\"}.fa-monero:before{content:\"\\F3D0\"}.fa-money-bill:before{content:\"\\F0D6\"}.fa-money-bill-alt:before{content:\"\\F3D1\"}.fa-money-bill-wave:before{content:\"\\F53A\"}.fa-money-bill-wave-alt:before{content:\"\\F53B\"}.fa-money-check:before{content:\"\\F53C\"}.fa-money-check-alt:before{content:\"\\F53D\"}.fa-monument:before{content:\"\\F5A6\"}.fa-moon:before{content:\"\\F186\"}.fa-mortar-pestle:before{content:\"\\F5A7\"}.fa-mosque:before{content:\"\\F678\"}.fa-motorcycle:before{content:\"\\F21C\"}.fa-mouse-pointer:before{content:\"\\F245\"}.fa-music:before{content:\"\\F001\"}.fa-napster:before{content:\"\\F3D2\"}.fa-neos:before{content:\"\\F612\"}.fa-neuter:before{content:\"\\F22C\"}.fa-newspaper:before{content:\"\\F1EA\"}.fa-nimblr:before{content:\"\\F5A8\"}.fa-nintendo-switch:before{content:\"\\F418\"}.fa-node:before{content:\"\\F419\"}.fa-node-js:before{content:\"\\F3D3\"}.fa-not-equal:before{content:\"\\F53E\"}.fa-notes-medical:before{content:\"\\F481\"}.fa-npm:before{content:\"\\F3D4\"}.fa-ns8:before{content:\"\\F3D5\"}.fa-nutritionix:before{content:\"\\F3D6\"}.fa-object-group:before{content:\"\\F247\"}.fa-object-ungroup:before{content:\"\\F248\"}.fa-odnoklassniki:before{content:\"\\F263\"}.fa-odnoklassniki-square:before{content:\"\\F264\"}.fa-oil-can:before{content:\"\\F613\"}.fa-old-republic:before{content:\"\\F510\"}.fa-om:before{content:\"\\F679\"}.fa-opencart:before{content:\"\\F23D\"}.fa-openid:before{content:\"\\F19B\"}.fa-opera:before{content:\"\\F26A\"}.fa-optin-monster:before{content:\"\\F23C\"}.fa-osi:before{content:\"\\F41A\"}.fa-outdent:before{content:\"\\F03B\"}.fa-page4:before{content:\"\\F3D7\"}.fa-pagelines:before{content:\"\\F18C\"}.fa-paint-brush:before{content:\"\\F1FC\"}.fa-paint-roller:before{content:\"\\F5AA\"}.fa-palette:before{content:\"\\F53F\"}.fa-palfed:before{content:\"\\F3D8\"}.fa-pallet:before{content:\"\\F482\"}.fa-paper-plane:before{content:\"\\F1D8\"}.fa-paperclip:before{content:\"\\F0C6\"}.fa-parachute-box:before{content:\"\\F4CD\"}.fa-paragraph:before{content:\"\\F1DD\"}.fa-parking:before{content:\"\\F540\"}.fa-passport:before{content:\"\\F5AB\"}.fa-pastafarianism:before{content:\"\\F67B\"}.fa-paste:before{content:\"\\F0EA\"}.fa-patreon:before{content:\"\\F3D9\"}.fa-pause:before{content:\"\\F04C\"}.fa-pause-circle:before{content:\"\\F28B\"}.fa-paw:before{content:\"\\F1B0\"}.fa-paypal:before{content:\"\\F1ED\"}.fa-peace:before{content:\"\\F67C\"}.fa-pen:before{content:\"\\F304\"}.fa-pen-alt:before{content:\"\\F305\"}.fa-pen-fancy:before{content:\"\\F5AC\"}.fa-pen-nib:before{content:\"\\F5AD\"}.fa-pen-square:before{content:\"\\F14B\"}.fa-pencil-alt:before{content:\"\\F303\"}.fa-pencil-ruler:before{content:\"\\F5AE\"}.fa-people-carry:before{content:\"\\F4CE\"}.fa-percent:before{content:\"\\F295\"}.fa-percentage:before{content:\"\\F541\"}.fa-periscope:before{content:\"\\F3DA\"}.fa-phabricator:before{content:\"\\F3DB\"}.fa-phoenix-framework:before{content:\"\\F3DC\"}.fa-phoenix-squadron:before{content:\"\\F511\"}.fa-phone:before{content:\"\\F095\"}.fa-phone-slash:before{content:\"\\F3DD\"}.fa-phone-square:before{content:\"\\F098\"}.fa-phone-volume:before{content:\"\\F2A0\"}.fa-php:before{content:\"\\F457\"}.fa-pied-piper:before{content:\"\\F2AE\"}.fa-pied-piper-alt:before{content:\"\\F1A8\"}.fa-pied-piper-hat:before{content:\"\\F4E5\"}.fa-pied-piper-pp:before{content:\"\\F1A7\"}.fa-piggy-bank:before{content:\"\\F4D3\"}.fa-pills:before{content:\"\\F484\"}.fa-pinterest:before{content:\"\\F0D2\"}.fa-pinterest-p:before{content:\"\\F231\"}.fa-pinterest-square:before{content:\"\\F0D3\"}.fa-place-of-worship:before{content:\"\\F67F\"}.fa-plane:before{content:\"\\F072\"}.fa-plane-arrival:before{content:\"\\F5AF\"}.fa-plane-departure:before{content:\"\\F5B0\"}.fa-play:before{content:\"\\F04B\"}.fa-play-circle:before{content:\"\\F144\"}.fa-playstation:before{content:\"\\F3DF\"}.fa-plug:before{content:\"\\F1E6\"}.fa-plus:before{content:\"\\F067\"}.fa-plus-circle:before{content:\"\\F055\"}.fa-plus-square:before{content:\"\\F0FE\"}.fa-podcast:before{content:\"\\F2CE\"}.fa-poll:before{content:\"\\F681\"}.fa-poll-h:before{content:\"\\F682\"}.fa-poo:before{content:\"\\F2FE\"}.fa-poop:before{content:\"\\F619\"}.fa-portrait:before{content:\"\\F3E0\"}.fa-pound-sign:before{content:\"\\F154\"}.fa-power-off:before{content:\"\\F011\"}.fa-pray:before{content:\"\\F683\"}.fa-praying-hands:before{content:\"\\F684\"}.fa-prescription:before{content:\"\\F5B1\"}.fa-prescription-bottle:before{content:\"\\F485\"}.fa-prescription-bottle-alt:before{content:\"\\F486\"}.fa-print:before{content:\"\\F02F\"}.fa-procedures:before{content:\"\\F487\"}.fa-product-hunt:before{content:\"\\F288\"}.fa-project-diagram:before{content:\"\\F542\"}.fa-pushed:before{content:\"\\F3E1\"}.fa-puzzle-piece:before{content:\"\\F12E\"}.fa-python:before{content:\"\\F3E2\"}.fa-qq:before{content:\"\\F1D6\"}.fa-qrcode:before{content:\"\\F029\"}.fa-question:before{content:\"\\F128\"}.fa-question-circle:before{content:\"\\F059\"}.fa-quidditch:before{content:\"\\F458\"}.fa-quinscape:before{content:\"\\F459\"}.fa-quora:before{content:\"\\F2C4\"}.fa-quote-left:before{content:\"\\F10D\"}.fa-quote-right:before{content:\"\\F10E\"}.fa-quran:before{content:\"\\F687\"}.fa-r-project:before{content:\"\\F4F7\"}.fa-random:before{content:\"\\F074\"}.fa-ravelry:before{content:\"\\F2D9\"}.fa-react:before{content:\"\\F41B\"}.fa-readme:before{content:\"\\F4D5\"}.fa-rebel:before{content:\"\\F1D0\"}.fa-receipt:before{content:\"\\F543\"}.fa-recycle:before{content:\"\\F1B8\"}.fa-red-river:before{content:\"\\F3E3\"}.fa-reddit:before{content:\"\\F1A1\"}.fa-reddit-alien:before{content:\"\\F281\"}.fa-reddit-square:before{content:\"\\F1A2\"}.fa-redo:before{content:\"\\F01E\"}.fa-redo-alt:before{content:\"\\F2F9\"}.fa-registered:before{content:\"\\F25D\"}.fa-rendact:before{content:\"\\F3E4\"}.fa-renren:before{content:\"\\F18B\"}.fa-reply:before{content:\"\\F3E5\"}.fa-reply-all:before{content:\"\\F122\"}.fa-replyd:before{content:\"\\F3E6\"}.fa-researchgate:before{content:\"\\F4F8\"}.fa-resolving:before{content:\"\\F3E7\"}.fa-retweet:before{content:\"\\F079\"}.fa-rev:before{content:\"\\F5B2\"}.fa-ribbon:before{content:\"\\F4D6\"}.fa-road:before{content:\"\\F018\"}.fa-robot:before{content:\"\\F544\"}.fa-rocket:before{content:\"\\F135\"}.fa-rocketchat:before{content:\"\\F3E8\"}.fa-rockrms:before{content:\"\\F3E9\"}.fa-route:before{content:\"\\F4D7\"}.fa-rss:before{content:\"\\F09E\"}.fa-rss-square:before{content:\"\\F143\"}.fa-ruble-sign:before{content:\"\\F158\"}.fa-ruler:before{content:\"\\F545\"}.fa-ruler-combined:before{content:\"\\F546\"}.fa-ruler-horizontal:before{content:\"\\F547\"}.fa-ruler-vertical:before{content:\"\\F548\"}.fa-rupee-sign:before{content:\"\\F156\"}.fa-sad-cry:before{content:\"\\F5B3\"}.fa-sad-tear:before{content:\"\\F5B4\"}.fa-safari:before{content:\"\\F267\"}.fa-sass:before{content:\"\\F41E\"}.fa-save:before{content:\"\\F0C7\"}.fa-schlix:before{content:\"\\F3EA\"}.fa-school:before{content:\"\\F549\"}.fa-screwdriver:before{content:\"\\F54A\"}.fa-scribd:before{content:\"\\F28A\"}.fa-search:before{content:\"\\F002\"}.fa-search-dollar:before{content:\"\\F688\"}.fa-search-location:before{content:\"\\F689\"}.fa-search-minus:before{content:\"\\F010\"}.fa-search-plus:before{content:\"\\F00E\"}.fa-searchengin:before{content:\"\\F3EB\"}.fa-seedling:before{content:\"\\F4D8\"}.fa-sellcast:before{content:\"\\F2DA\"}.fa-sellsy:before{content:\"\\F213\"}.fa-server:before{content:\"\\F233\"}.fa-servicestack:before{content:\"\\F3EC\"}.fa-shapes:before{content:\"\\F61F\"}.fa-share:before{content:\"\\F064\"}.fa-share-alt:before{content:\"\\F1E0\"}.fa-share-alt-square:before{content:\"\\F1E1\"}.fa-share-square:before{content:\"\\F14D\"}.fa-shekel-sign:before{content:\"\\F20B\"}.fa-shield-alt:before{content:\"\\F3ED\"}.fa-ship:before{content:\"\\F21A\"}.fa-shipping-fast:before{content:\"\\F48B\"}.fa-shirtsinbulk:before{content:\"\\F214\"}.fa-shoe-prints:before{content:\"\\F54B\"}.fa-shopping-bag:before{content:\"\\F290\"}.fa-shopping-basket:before{content:\"\\F291\"}.fa-shopping-cart:before{content:\"\\F07A\"}.fa-shopware:before{content:\"\\F5B5\"}.fa-shower:before{content:\"\\F2CC\"}.fa-shuttle-van:before{content:\"\\F5B6\"}.fa-sign:before{content:\"\\F4D9\"}.fa-sign-in-alt:before{content:\"\\F2F6\"}.fa-sign-language:before{content:\"\\F2A7\"}.fa-sign-out-alt:before{content:\"\\F2F5\"}.fa-signal:before{content:\"\\F012\"}.fa-signature:before{content:\"\\F5B7\"}.fa-simplybuilt:before{content:\"\\F215\"}.fa-sistrix:before{content:\"\\F3EE\"}.fa-sitemap:before{content:\"\\F0E8\"}.fa-sith:before{content:\"\\F512\"}.fa-skull:before{content:\"\\F54C\"}.fa-skyatlas:before{content:\"\\F216\"}.fa-skype:before{content:\"\\F17E\"}.fa-slack:before{content:\"\\F198\"}.fa-slack-hash:before{content:\"\\F3EF\"}.fa-sliders-h:before{content:\"\\F1DE\"}.fa-slideshare:before{content:\"\\F1E7\"}.fa-smile:before{content:\"\\F118\"}.fa-smile-beam:before{content:\"\\F5B8\"}.fa-smile-wink:before{content:\"\\F4DA\"}.fa-smoking:before{content:\"\\F48D\"}.fa-smoking-ban:before{content:\"\\F54D\"}.fa-snapchat:before{content:\"\\F2AB\"}.fa-snapchat-ghost:before{content:\"\\F2AC\"}.fa-snapchat-square:before{content:\"\\F2AD\"}.fa-snowflake:before{content:\"\\F2DC\"}.fa-socks:before{content:\"\\F696\"}.fa-solar-panel:before{content:\"\\F5BA\"}.fa-sort:before{content:\"\\F0DC\"}.fa-sort-alpha-down:before{content:\"\\F15D\"}.fa-sort-alpha-up:before{content:\"\\F15E\"}.fa-sort-amount-down:before{content:\"\\F160\"}.fa-sort-amount-up:before{content:\"\\F161\"}.fa-sort-down:before{content:\"\\F0DD\"}.fa-sort-numeric-down:before{content:\"\\F162\"}.fa-sort-numeric-up:before{content:\"\\F163\"}.fa-sort-up:before{content:\"\\F0DE\"}.fa-soundcloud:before{content:\"\\F1BE\"}.fa-spa:before{content:\"\\F5BB\"}.fa-space-shuttle:before{content:\"\\F197\"}.fa-speakap:before{content:\"\\F3F3\"}.fa-spinner:before{content:\"\\F110\"}.fa-splotch:before{content:\"\\F5BC\"}.fa-spotify:before{content:\"\\F1BC\"}.fa-spray-can:before{content:\"\\F5BD\"}.fa-square:before{content:\"\\F0C8\"}.fa-square-full:before{content:\"\\F45C\"}.fa-square-root-alt:before{content:\"\\F698\"}.fa-squarespace:before{content:\"\\F5BE\"}.fa-stack-exchange:before{content:\"\\F18D\"}.fa-stack-overflow:before{content:\"\\F16C\"}.fa-stamp:before{content:\"\\F5BF\"}.fa-star:before{content:\"\\F005\"}.fa-star-and-crescent:before{content:\"\\F699\"}.fa-star-half:before{content:\"\\F089\"}.fa-star-half-alt:before{content:\"\\F5C0\"}.fa-star-of-david:before{content:\"\\F69A\"}.fa-star-of-life:before{content:\"\\F621\"}.fa-staylinked:before{content:\"\\F3F5\"}.fa-steam:before{content:\"\\F1B6\"}.fa-steam-square:before{content:\"\\F1B7\"}.fa-steam-symbol:before{content:\"\\F3F6\"}.fa-step-backward:before{content:\"\\F048\"}.fa-step-forward:before{content:\"\\F051\"}.fa-stethoscope:before{content:\"\\F0F1\"}.fa-sticker-mule:before{content:\"\\F3F7\"}.fa-sticky-note:before{content:\"\\F249\"}.fa-stop:before{content:\"\\F04D\"}.fa-stop-circle:before{content:\"\\F28D\"}.fa-stopwatch:before{content:\"\\F2F2\"}.fa-store:before{content:\"\\F54E\"}.fa-store-alt:before{content:\"\\F54F\"}.fa-strava:before{content:\"\\F428\"}.fa-stream:before{content:\"\\F550\"}.fa-street-view:before{content:\"\\F21D\"}.fa-strikethrough:before{content:\"\\F0CC\"}.fa-stripe:before{content:\"\\F429\"}.fa-stripe-s:before{content:\"\\F42A\"}.fa-stroopwafel:before{content:\"\\F551\"}.fa-studiovinari:before{content:\"\\F3F8\"}.fa-stumbleupon:before{content:\"\\F1A4\"}.fa-stumbleupon-circle:before{content:\"\\F1A3\"}.fa-subscript:before{content:\"\\F12C\"}.fa-subway:before{content:\"\\F239\"}.fa-suitcase:before{content:\"\\F0F2\"}.fa-suitcase-rolling:before{content:\"\\F5C1\"}.fa-sun:before{content:\"\\F185\"}.fa-superpowers:before{content:\"\\F2DD\"}.fa-superscript:before{content:\"\\F12B\"}.fa-supple:before{content:\"\\F3F9\"}.fa-surprise:before{content:\"\\F5C2\"}.fa-swatchbook:before{content:\"\\F5C3\"}.fa-swimmer:before{content:\"\\F5C4\"}.fa-swimming-pool:before{content:\"\\F5C5\"}.fa-synagogue:before{content:\"\\F69B\"}.fa-sync:before{content:\"\\F021\"}.fa-sync-alt:before{content:\"\\F2F1\"}.fa-syringe:before{content:\"\\F48E\"}.fa-table:before{content:\"\\F0CE\"}.fa-table-tennis:before{content:\"\\F45D\"}.fa-tablet:before{content:\"\\F10A\"}.fa-tablet-alt:before{content:\"\\F3FA\"}.fa-tablets:before{content:\"\\F490\"}.fa-tachometer-alt:before{content:\"\\F3FD\"}.fa-tag:before{content:\"\\F02B\"}.fa-tags:before{content:\"\\F02C\"}.fa-tape:before{content:\"\\F4DB\"}.fa-tasks:before{content:\"\\F0AE\"}.fa-taxi:before{content:\"\\F1BA\"}.fa-teamspeak:before{content:\"\\F4F9\"}.fa-teeth:before{content:\"\\F62E\"}.fa-teeth-open:before{content:\"\\F62F\"}.fa-telegram:before{content:\"\\F2C6\"}.fa-telegram-plane:before{content:\"\\F3FE\"}.fa-tencent-weibo:before{content:\"\\F1D5\"}.fa-terminal:before{content:\"\\F120\"}.fa-text-height:before{content:\"\\F034\"}.fa-text-width:before{content:\"\\F035\"}.fa-th:before{content:\"\\F00A\"}.fa-th-large:before{content:\"\\F009\"}.fa-th-list:before{content:\"\\F00B\"}.fa-the-red-yeti:before{content:\"\\F69D\"}.fa-theater-masks:before{content:\"\\F630\"}.fa-themeco:before{content:\"\\F5C6\"}.fa-themeisle:before{content:\"\\F2B2\"}.fa-thermometer:before{content:\"\\F491\"}.fa-thermometer-empty:before{content:\"\\F2CB\"}.fa-thermometer-full:before{content:\"\\F2C7\"}.fa-thermometer-half:before{content:\"\\F2C9\"}.fa-thermometer-quarter:before{content:\"\\F2CA\"}.fa-thermometer-three-quarters:before{content:\"\\F2C8\"}.fa-thumbs-down:before{content:\"\\F165\"}.fa-thumbs-up:before{content:\"\\F164\"}.fa-thumbtack:before{content:\"\\F08D\"}.fa-ticket-alt:before{content:\"\\F3FF\"}.fa-times:before{content:\"\\F00D\"}.fa-times-circle:before{content:\"\\F057\"}.fa-tint:before{content:\"\\F043\"}.fa-tint-slash:before{content:\"\\F5C7\"}.fa-tired:before{content:\"\\F5C8\"}.fa-toggle-off:before{content:\"\\F204\"}.fa-toggle-on:before{content:\"\\F205\"}.fa-toolbox:before{content:\"\\F552\"}.fa-tooth:before{content:\"\\F5C9\"}.fa-torah:before{content:\"\\F6A0\"}.fa-torii-gate:before{content:\"\\F6A1\"}.fa-trade-federation:before{content:\"\\F513\"}.fa-trademark:before{content:\"\\F25C\"}.fa-traffic-light:before{content:\"\\F637\"}.fa-train:before{content:\"\\F238\"}.fa-transgender:before{content:\"\\F224\"}.fa-transgender-alt:before{content:\"\\F225\"}.fa-trash:before{content:\"\\F1F8\"}.fa-trash-alt:before{content:\"\\F2ED\"}.fa-tree:before{content:\"\\F1BB\"}.fa-trello:before{content:\"\\F181\"}.fa-tripadvisor:before{content:\"\\F262\"}.fa-trophy:before{content:\"\\F091\"}.fa-truck:before{content:\"\\F0D1\"}.fa-truck-loading:before{content:\"\\F4DE\"}.fa-truck-monster:before{content:\"\\F63B\"}.fa-truck-moving:before{content:\"\\F4DF\"}.fa-truck-pickup:before{content:\"\\F63C\"}.fa-tshirt:before{content:\"\\F553\"}.fa-tty:before{content:\"\\F1E4\"}.fa-tumblr:before{content:\"\\F173\"}.fa-tumblr-square:before{content:\"\\F174\"}.fa-tv:before{content:\"\\F26C\"}.fa-twitch:before{content:\"\\F1E8\"}.fa-twitter:before{content:\"\\F099\"}.fa-twitter-square:before{content:\"\\F081\"}.fa-typo3:before{content:\"\\F42B\"}.fa-uber:before{content:\"\\F402\"}.fa-uikit:before{content:\"\\F403\"}.fa-umbrella:before{content:\"\\F0E9\"}.fa-umbrella-beach:before{content:\"\\F5CA\"}.fa-underline:before{content:\"\\F0CD\"}.fa-undo:before{content:\"\\F0E2\"}.fa-undo-alt:before{content:\"\\F2EA\"}.fa-uniregistry:before{content:\"\\F404\"}.fa-universal-access:before{content:\"\\F29A\"}.fa-university:before{content:\"\\F19C\"}.fa-unlink:before{content:\"\\F127\"}.fa-unlock:before{content:\"\\F09C\"}.fa-unlock-alt:before{content:\"\\F13E\"}.fa-untappd:before{content:\"\\F405\"}.fa-upload:before{content:\"\\F093\"}.fa-usb:before{content:\"\\F287\"}.fa-user:before{content:\"\\F007\"}.fa-user-alt:before{content:\"\\F406\"}.fa-user-alt-slash:before{content:\"\\F4FA\"}.fa-user-astronaut:before{content:\"\\F4FB\"}.fa-user-check:before{content:\"\\F4FC\"}.fa-user-circle:before{content:\"\\F2BD\"}.fa-user-clock:before{content:\"\\F4FD\"}.fa-user-cog:before{content:\"\\F4FE\"}.fa-user-edit:before{content:\"\\F4FF\"}.fa-user-friends:before{content:\"\\F500\"}.fa-user-graduate:before{content:\"\\F501\"}.fa-user-lock:before{content:\"\\F502\"}.fa-user-md:before{content:\"\\F0F0\"}.fa-user-minus:before{content:\"\\F503\"}.fa-user-ninja:before{content:\"\\F504\"}.fa-user-plus:before{content:\"\\F234\"}.fa-user-secret:before{content:\"\\F21B\"}.fa-user-shield:before{content:\"\\F505\"}.fa-user-slash:before{content:\"\\F506\"}.fa-user-tag:before{content:\"\\F507\"}.fa-user-tie:before{content:\"\\F508\"}.fa-user-times:before{content:\"\\F235\"}.fa-users:before{content:\"\\F0C0\"}.fa-users-cog:before{content:\"\\F509\"}.fa-ussunnah:before{content:\"\\F407\"}.fa-utensil-spoon:before{content:\"\\F2E5\"}.fa-utensils:before{content:\"\\F2E7\"}.fa-vaadin:before{content:\"\\F408\"}.fa-vector-square:before{content:\"\\F5CB\"}.fa-venus:before{content:\"\\F221\"}.fa-venus-double:before{content:\"\\F226\"}.fa-venus-mars:before{content:\"\\F228\"}.fa-viacoin:before{content:\"\\F237\"}.fa-viadeo:before{content:\"\\F2A9\"}.fa-viadeo-square:before{content:\"\\F2AA\"}.fa-vial:before{content:\"\\F492\"}.fa-vials:before{content:\"\\F493\"}.fa-viber:before{content:\"\\F409\"}.fa-video:before{content:\"\\F03D\"}.fa-video-slash:before{content:\"\\F4E2\"}.fa-vihara:before{content:\"\\F6A7\"}.fa-vimeo:before{content:\"\\F40A\"}.fa-vimeo-square:before{content:\"\\F194\"}.fa-vimeo-v:before{content:\"\\F27D\"}.fa-vine:before{content:\"\\F1CA\"}.fa-vk:before{content:\"\\F189\"}.fa-vnv:before{content:\"\\F40B\"}.fa-volleyball-ball:before{content:\"\\F45F\"}.fa-volume-down:before{content:\"\\F027\"}.fa-volume-off:before{content:\"\\F026\"}.fa-volume-up:before{content:\"\\F028\"}.fa-vuejs:before{content:\"\\F41F\"}.fa-walking:before{content:\"\\F554\"}.fa-wallet:before{content:\"\\F555\"}.fa-warehouse:before{content:\"\\F494\"}.fa-weebly:before{content:\"\\F5CC\"}.fa-weibo:before{content:\"\\F18A\"}.fa-weight:before{content:\"\\F496\"}.fa-weight-hanging:before{content:\"\\F5CD\"}.fa-weixin:before{content:\"\\F1D7\"}.fa-whatsapp:before{content:\"\\F232\"}.fa-whatsapp-square:before{content:\"\\F40C\"}.fa-wheelchair:before{content:\"\\F193\"}.fa-whmcs:before{content:\"\\F40D\"}.fa-wifi:before{content:\"\\F1EB\"}.fa-wikipedia-w:before{content:\"\\F266\"}.fa-window-close:before{content:\"\\F410\"}.fa-window-maximize:before{content:\"\\F2D0\"}.fa-window-minimize:before{content:\"\\F2D1\"}.fa-window-restore:before{content:\"\\F2D2\"}.fa-windows:before{content:\"\\F17A\"}.fa-wine-glass:before{content:\"\\F4E3\"}.fa-wine-glass-alt:before{content:\"\\F5CE\"}.fa-wix:before{content:\"\\F5CF\"}.fa-wolf-pack-battalion:before{content:\"\\F514\"}.fa-won-sign:before{content:\"\\F159\"}.fa-wordpress:before{content:\"\\F19A\"}.fa-wordpress-simple:before{content:\"\\F411\"}.fa-wpbeginner:before{content:\"\\F297\"}.fa-wpexplorer:before{content:\"\\F2DE\"}.fa-wpforms:before{content:\"\\F298\"}.fa-wrench:before{content:\"\\F0AD\"}.fa-x-ray:before{content:\"\\F497\"}.fa-xbox:before{content:\"\\F412\"}.fa-xing:before{content:\"\\F168\"}.fa-xing-square:before{content:\"\\F169\"}.fa-y-combinator:before{content:\"\\F23B\"}.fa-yahoo:before{content:\"\\F19E\"}.fa-yandex:before{content:\"\\F413\"}.fa-yandex-international:before{content:\"\\F414\"}.fa-yelp:before{content:\"\\F1E9\"}.fa-yen-sign:before{content:\"\\F157\"}.fa-yin-yang:before{content:\"\\F6AD\"}.fa-yoast:before{content:\"\\F2B1\"}.fa-youtube:before{content:\"\\F167\"}.fa-youtube-square:before{content:\"\\F431\"}.fa-zhihu:before{content:\"\\F63F\"}.sr-only{border:0;clip:rect(0,0,0,0);height:1px;margin:-1px;overflow:hidden;padding:0;position:absolute;width:1px}.sr-only-focusable:active,.sr-only-focusable:focus{clip:auto;height:auto;margin:0;overflow:visible;position:static;width:auto}@font-face{font-family:\"Font Awesome 5 Brands\";font-style:normal;font-weight:normal;src:url(" + escape(__webpack_require__(/*! ../webfonts/fa-brands-400.eot */ "./node_modules/argon-dashboard-react/src/assets/vendor/@fortawesome/fontawesome-free/webfonts/fa-brands-400.eot")) + ");src:url(" + escape(__webpack_require__(/*! ../webfonts/fa-brands-400.eot */ "./node_modules/argon-dashboard-react/src/assets/vendor/@fortawesome/fontawesome-free/webfonts/fa-brands-400.eot")) + "?#iefix) format(\"embedded-opentype\"),url(" + escape(__webpack_require__(/*! ../webfonts/fa-brands-400.woff2 */ "./node_modules/argon-dashboard-react/src/assets/vendor/@fortawesome/fontawesome-free/webfonts/fa-brands-400.woff2")) + ") format(\"woff2\"),url(" + escape(__webpack_require__(/*! ../webfonts/fa-brands-400.woff */ "./node_modules/argon-dashboard-react/src/assets/vendor/@fortawesome/fontawesome-free/webfonts/fa-brands-400.woff")) + ") format(\"woff\"),url(" + escape(__webpack_require__(/*! ../webfonts/fa-brands-400.ttf */ "./node_modules/argon-dashboard-react/src/assets/vendor/@fortawesome/fontawesome-free/webfonts/fa-brands-400.ttf")) + ") format(\"truetype\"),url(" + escape(__webpack_require__(/*! ../webfonts/fa-brands-400.svg */ "./node_modules/argon-dashboard-react/src/assets/vendor/@fortawesome/fontawesome-free/webfonts/fa-brands-400.svg")) + "#fontawesome) format(\"svg\")}.fab{font-family:\"Font Awesome 5 Brands\"}@font-face{font-family:\"Font Awesome 5 Free\";font-style:normal;font-weight:400;src:url(" + escape(__webpack_require__(/*! ../webfonts/fa-regular-400.eot */ "./node_modules/argon-dashboard-react/src/assets/vendor/@fortawesome/fontawesome-free/webfonts/fa-regular-400.eot")) + ");src:url(" + escape(__webpack_require__(/*! ../webfonts/fa-regular-400.eot */ "./node_modules/argon-dashboard-react/src/assets/vendor/@fortawesome/fontawesome-free/webfonts/fa-regular-400.eot")) + "?#iefix) format(\"embedded-opentype\"),url(" + escape(__webpack_require__(/*! ../webfonts/fa-regular-400.woff2 */ "./node_modules/argon-dashboard-react/src/assets/vendor/@fortawesome/fontawesome-free/webfonts/fa-regular-400.woff2")) + ") format(\"woff2\"),url(" + escape(__webpack_require__(/*! ../webfonts/fa-regular-400.woff */ "./node_modules/argon-dashboard-react/src/assets/vendor/@fortawesome/fontawesome-free/webfonts/fa-regular-400.woff")) + ") format(\"woff\"),url(" + escape(__webpack_require__(/*! ../webfonts/fa-regular-400.ttf */ "./node_modules/argon-dashboard-react/src/assets/vendor/@fortawesome/fontawesome-free/webfonts/fa-regular-400.ttf")) + ") format(\"truetype\"),url(" + escape(__webpack_require__(/*! ../webfonts/fa-regular-400.svg */ "./node_modules/argon-dashboard-react/src/assets/vendor/@fortawesome/fontawesome-free/webfonts/fa-regular-400.svg")) + "#fontawesome) format(\"svg\")}.far{font-weight:400}@font-face{font-family:\"Font Awesome 5 Free\";font-style:normal;font-weight:900;src:url(" + escape(__webpack_require__(/*! ../webfonts/fa-solid-900.eot */ "./node_modules/argon-dashboard-react/src/assets/vendor/@fortawesome/fontawesome-free/webfonts/fa-solid-900.eot")) + ");src:url(" + escape(__webpack_require__(/*! ../webfonts/fa-solid-900.eot */ "./node_modules/argon-dashboard-react/src/assets/vendor/@fortawesome/fontawesome-free/webfonts/fa-solid-900.eot")) + "?#iefix) format(\"embedded-opentype\"),url(" + escape(__webpack_require__(/*! ../webfonts/fa-solid-900.woff2 */ "./node_modules/argon-dashboard-react/src/assets/vendor/@fortawesome/fontawesome-free/webfonts/fa-solid-900.woff2")) + ") format(\"woff2\"),url(" + escape(__webpack_require__(/*! ../webfonts/fa-solid-900.woff */ "./node_modules/argon-dashboard-react/src/assets/vendor/@fortawesome/fontawesome-free/webfonts/fa-solid-900.woff")) + ") format(\"woff\"),url(" + escape(__webpack_require__(/*! ../webfonts/fa-solid-900.ttf */ "./node_modules/argon-dashboard-react/src/assets/vendor/@fortawesome/fontawesome-free/webfonts/fa-solid-900.ttf")) + ") format(\"truetype\"),url(" + escape(__webpack_require__(/*! ../webfonts/fa-solid-900.svg */ "./node_modules/argon-dashboard-react/src/assets/vendor/@fortawesome/fontawesome-free/webfonts/fa-solid-900.svg")) + "#fontawesome) format(\"svg\")}.fa,.far,.fas{font-family:\"Font Awesome 5 Free\"}.fa,.fas{font-weight:900}", ""]);
-
-// exports
-
-
-/***/ }),
-
-/***/ "./node_modules/css-loader/index.js?!./node_modules/postcss-loader/src/index.js?!./node_modules/argon-dashboard-react/src/assets/vendor/nucleo/css/nucleo.css":
-/*!********************************************************************************************************************************************************************!*\
-  !*** ./node_modules/css-loader??ref--6-1!./node_modules/postcss-loader/src??ref--6-2!./node_modules/argon-dashboard-react/src/assets/vendor/nucleo/css/nucleo.css ***!
-  \********************************************************************************************************************************************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-var escape = __webpack_require__(/*! ../../../../../../css-loader/lib/url/escape.js */ "./node_modules/css-loader/lib/url/escape.js");
-exports = module.exports = __webpack_require__(/*! ../../../../../../css-loader/lib/css-base.js */ "./node_modules/css-loader/lib/css-base.js")(false);
-// imports
-
-
-// module
-exports.push([module.i, "/*--------------------------------\n\nhermes-dashboard-icons Web Font - built using nucleoapp.com\nLicense - nucleoapp.com/license/\n\n-------------------------------- */\n@font-face {\n  font-family: 'NucleoIcons';\n  src: url(" + escape(__webpack_require__(/*! ../fonts/nucleo-icons.eot */ "./node_modules/argon-dashboard-react/src/assets/vendor/nucleo/fonts/nucleo-icons.eot")) + ");\n  src: url(" + escape(__webpack_require__(/*! ../fonts/nucleo-icons.eot */ "./node_modules/argon-dashboard-react/src/assets/vendor/nucleo/fonts/nucleo-icons.eot")) + ") format('embedded-opentype'), url(" + escape(__webpack_require__(/*! ../fonts/nucleo-icons.woff2 */ "./node_modules/argon-dashboard-react/src/assets/vendor/nucleo/fonts/nucleo-icons.woff2")) + ") format('woff2'), url(" + escape(__webpack_require__(/*! ../fonts/nucleo-icons.woff */ "./node_modules/argon-dashboard-react/src/assets/vendor/nucleo/fonts/nucleo-icons.woff")) + ") format('woff'), url(" + escape(__webpack_require__(/*! ../fonts/nucleo-icons.ttf */ "./node_modules/argon-dashboard-react/src/assets/vendor/nucleo/fonts/nucleo-icons.ttf")) + ") format('truetype'), url(" + escape(__webpack_require__(/*! ../fonts/nucleo-icons.svg */ "./node_modules/argon-dashboard-react/src/assets/vendor/nucleo/fonts/nucleo-icons.svg")) + ") format('svg');\n  font-weight: normal;\n  font-style: normal;\n}\n/*------------------------\n    base class definition\n-------------------------*/\n.ni {\n  display: inline-block;\n  font: normal normal normal 14px/1 NucleoIcons;\n  font-size: inherit;\n  text-rendering: auto;\n  -webkit-font-smoothing: antialiased;\n  -moz-osx-font-smoothing: grayscale;\n}\n/*------------------------\n  change icon size\n-------------------------*/\n.ni-lg {\n  font-size: 1.33333333em;\n  line-height: 0.75em;\n  vertical-align: -15%;\n}\n.ni-2x {\n  font-size: 2em;\n}\n.ni-3x {\n  font-size: 3em;\n}\n.ni-4x {\n  font-size: 4em;\n}\n.ni-5x {\n  font-size: 5em;\n}\n\n/*----------------------------------\n  add a square/circle background\n-----------------------------------*/\n.ni.square,\n.ni.circle {\n  padding: 0.33333333em;\n  vertical-align: -16%;\n  background-color: #eee;\n}\n.ni.circle {\n  border-radius: 50%;\n}\n/*------------------------\n  list icons\n-------------------------*/\n.ni-ul {\n  padding-left: 0;\n  margin-left: 2.14285714em;\n  list-style-type: none;\n}\n.ni-ul > li {\n  position: relative;\n}\n.ni-ul > li > .ni {\n  position: absolute;\n  left: -1.57142857em;\n  top: 0.14285714em;\n  text-align: center;\n}\n.ni-ul > li > .ni.lg {\n  top: 0;\n  left: -1.35714286em;\n}\n.ni-ul > li > .ni.circle,\n.ni-ul > li > .ni.square {\n  top: -0.19047619em;\n  left: -1.9047619em;\n}\n/*------------------------\n  spinning icons\n-------------------------*/\n.ni.spin {\n  -webkit-animation: nc-spin 2s infinite linear;\n  animation: nc-spin 2s infinite linear;\n}\n@-webkit-keyframes nc-spin {\n  0% {\n    -webkit-transform: rotate(0deg);\n  }\n  100% {\n    -webkit-transform: rotate(360deg);\n  }\n}\n@keyframes nc-spin {\n  0% {\n    -webkit-transform: rotate(0deg);\n    transform: rotate(0deg);\n  }\n  100% {\n    -webkit-transform: rotate(360deg);\n    transform: rotate(360deg);\n  }\n}\n/*------------------------\n  rotated/flipped icons\n-------------------------*/\n.ni.rotate-90 {\n  filter: progid:DXImageTransform.Microsoft.BasicImage(rotation=1);\n  -webkit-transform: rotate(90deg);\n  transform: rotate(90deg);\n}\n.ni.rotate-180 {\n  filter: progid:DXImageTransform.Microsoft.BasicImage(rotation=2);\n  -webkit-transform: rotate(180deg);\n  transform: rotate(180deg);\n}\n.ni.rotate-270 {\n  filter: progid:DXImageTransform.Microsoft.BasicImage(rotation=3);\n  -webkit-transform: rotate(270deg);\n  transform: rotate(270deg);\n}\n.ni.flip-y {\n  filter: progid:DXImageTransform.Microsoft.BasicImage(rotation=0);\n  -webkit-transform: scale(-1, 1);\n  transform: scale(-1, 1);\n}\n.ni.flip-x {\n  filter: progid:DXImageTransform.Microsoft.BasicImage(rotation=2);\n  -webkit-transform: scale(1, -1);\n  transform: scale(1, -1);\n}\n/*------------------------\n    font icons\n-------------------------*/\n\n.ni-active-40::before {\n    content: \"\\EA02\";\n}\n\n.ni-air-baloon::before {\n    content: \"\\EA03\";\n}\n\n.ni-album-2::before {\n    content: \"\\EA04\";\n}\n\n.ni-align-center::before {\n    content: \"\\EA05\";\n}\n\n.ni-align-left-2::before {\n    content: \"\\EA06\";\n}\n\n.ni-ambulance::before {\n    content: \"\\EA07\";\n}\n\n.ni-app::before {\n    content: \"\\EA08\";\n}\n\n.ni-archive-2::before {\n    content: \"\\EA09\";\n}\n\n.ni-atom::before {\n    content: \"\\EA0A\";\n}\n\n.ni-badge::before {\n    content: \"\\EA0B\";\n}\n\n.ni-bag-17::before {\n    content: \"\\EA0C\";\n}\n\n.ni-basket::before {\n    content: \"\\EA0D\";\n}\n\n.ni-bell-55::before {\n    content: \"\\EA0E\";\n}\n\n.ni-bold-down::before {\n    content: \"\\EA0F\";\n}\n\n.ni-bold-left::before {\n    content: \"\\EA10\";\n}\n\n.ni-bold-right::before {\n    content: \"\\EA11\";\n}\n\n.ni-bold-up::before {\n    content: \"\\EA12\";\n}\n\n.ni-bold::before {\n    content: \"\\EA13\";\n}\n\n.ni-book-bookmark::before {\n    content: \"\\EA14\";\n}\n\n.ni-books::before {\n    content: \"\\EA15\";\n}\n\n.ni-box-2::before {\n    content: \"\\EA16\";\n}\n\n.ni-briefcase-24::before {\n    content: \"\\EA17\";\n}\n\n.ni-building::before {\n    content: \"\\EA18\";\n}\n\n.ni-bulb-61::before {\n    content: \"\\EA19\";\n}\n\n.ni-bullet-list-67::before {\n    content: \"\\EA1A\";\n}\n\n.ni-bus-front-12::before {\n    content: \"\\EA1B\";\n}\n\n.ni-button-pause::before {\n    content: \"\\EA1C\";\n}\n\n.ni-button-play::before {\n    content: \"\\EA1D\";\n}\n\n.ni-button-power::before {\n    content: \"\\EA1E\";\n}\n\n.ni-calendar-grid-58::before {\n    content: \"\\EA1F\";\n}\n\n.ni-camera-compact::before {\n    content: \"\\EA20\";\n}\n\n.ni-caps-small::before {\n    content: \"\\EA21\";\n}\n\n.ni-cart::before {\n    content: \"\\EA22\";\n}\n\n.ni-chart-bar-32::before {\n    content: \"\\EA23\";\n}\n\n.ni-chart-pie-35::before {\n    content: \"\\EA24\";\n}\n\n.ni-chat-round::before {\n    content: \"\\EA25\";\n}\n\n.ni-check-bold::before {\n    content: \"\\EA26\";\n}\n\n.ni-circle-08::before {\n    content: \"\\EA27\";\n}\n\n.ni-cloud-download-95::before {\n    content: \"\\EA28\";\n}\n\n.ni-cloud-upload-96::before {\n    content: \"\\EA29\";\n}\n\n.ni-compass-04::before {\n    content: \"\\EA2A\";\n}\n\n.ni-controller::before {\n    content: \"\\EA2B\";\n}\n\n.ni-credit-card::before {\n    content: \"\\EA2C\";\n}\n\n.ni-curved-next::before {\n    content: \"\\EA2D\";\n}\n\n.ni-delivery-fast::before {\n    content: \"\\EA2E\";\n}\n\n.ni-diamond::before {\n    content: \"\\EA2F\";\n}\n\n.ni-email-83::before {\n    content: \"\\EA30\";\n}\n\n.ni-fat-add::before {\n    content: \"\\EA31\";\n}\n\n.ni-fat-delete::before {\n    content: \"\\EA32\";\n}\n\n.ni-fat-remove::before {\n    content: \"\\EA33\";\n}\n\n.ni-favourite-28::before {\n    content: \"\\EA34\";\n}\n\n.ni-folder-17::before {\n    content: \"\\EA35\";\n}\n\n.ni-glasses-2::before {\n    content: \"\\EA36\";\n}\n\n.ni-hat-3::before {\n    content: \"\\EA37\";\n}\n\n.ni-headphones::before {\n    content: \"\\EA38\";\n}\n\n.ni-html5::before {\n    content: \"\\EA39\";\n}\n\n.ni-istanbul::before {\n    content: \"\\EA3A\";\n}\n\n.ni-key-25::before {\n    content: \"\\EA3B\";\n}\n\n.ni-laptop::before {\n    content: \"\\EA3C\";\n}\n\n.ni-like-2::before {\n    content: \"\\EA3D\";\n}\n\n.ni-lock-circle-open::before {\n    content: \"\\EA3E\";\n}\n\n.ni-map-big::before {\n    content: \"\\EA3F\";\n}\n\n.ni-mobile-button::before {\n    content: \"\\EA40\";\n}\n\n.ni-money-coins::before {\n    content: \"\\EA41\";\n}\n\n.ni-note-03::before {\n    content: \"\\EA42\";\n}\n\n.ni-notification-70::before {\n    content: \"\\EA43\";\n}\n\n.ni-palette::before {\n    content: \"\\EA44\";\n}\n\n.ni-paper-diploma::before {\n    content: \"\\EA45\";\n}\n\n.ni-pin-3::before {\n    content: \"\\EA46\";\n}\n\n.ni-planet::before {\n    content: \"\\EA47\";\n}\n\n.ni-ruler-pencil::before {\n    content: \"\\EA48\";\n}\n\n.ni-satisfied::before {\n    content: \"\\EA49\";\n}\n\n.ni-scissors::before {\n    content: \"\\EA4A\";\n}\n\n.ni-send::before {\n    content: \"\\EA4B\";\n}\n\n.ni-settings-gear-65::before {\n    content: \"\\EA4C\";\n}\n\n.ni-settings::before {\n    content: \"\\EA4D\";\n}\n\n.ni-single-02::before {\n    content: \"\\EA4E\";\n}\n\n.ni-single-copy-04::before {\n    content: \"\\EA4F\";\n}\n\n.ni-sound-wave::before {\n    content: \"\\EA50\";\n}\n\n.ni-spaceship::before {\n    content: \"\\EA51\";\n}\n\n.ni-square-pin::before {\n    content: \"\\EA52\";\n}\n\n.ni-support-16::before {\n    content: \"\\EA53\";\n}\n\n.ni-tablet-button::before {\n    content: \"\\EA54\";\n}\n\n.ni-tag::before {\n    content: \"\\EA55\";\n}\n\n.ni-tie-bow::before {\n    content: \"\\EA56\";\n}\n\n.ni-time-alarm::before {\n    content: \"\\EA57\";\n}\n\n.ni-trophy::before {\n    content: \"\\EA58\";\n}\n\n.ni-tv-2::before {\n    content: \"\\EA59\";\n}\n\n.ni-umbrella-13::before {\n    content: \"\\EA5A\";\n}\n\n.ni-user-run::before {\n    content: \"\\EA5B\";\n}\n\n.ni-vector::before {\n    content: \"\\EA5C\";\n}\n\n.ni-watch-time::before {\n    content: \"\\EA5D\";\n}\n\n.ni-world::before {\n    content: \"\\EA5E\";\n}\n\n.ni-zoom-split-in::before {\n    content: \"\\EA5F\";\n}\n\n.ni-collection::before {\n    content: \"\\EA60\";\n}\n\n.ni-image::before {\n    content: \"\\EA61\";\n}\n\n.ni-shop::before {\n    content: \"\\EA62\";\n}\n\n.ni-ungroup::before {\n    content: \"\\EA63\";\n}\n\n.ni-world-2::before {\n    content: \"\\EA64\";\n}\n\n.ni-ui-04::before {\n    content: \"\\EA65\";\n}\n\n\n/* all icon font classes list here */\n", ""]);
-
-// exports
-
-
-/***/ }),
-
-/***/ "./node_modules/css-loader/lib/css-base.js":
-/*!*************************************************!*\
-  !*** ./node_modules/css-loader/lib/css-base.js ***!
-  \*************************************************/
-/*! no static exports found */
-/***/ (function(module, exports) {
-
-/*
-	MIT License http://www.opensource.org/licenses/mit-license.php
-	Author Tobias Koppers @sokra
-*/
-// css base code, injected by the css-loader
-module.exports = function(useSourceMap) {
-	var list = [];
-
-	// return the list of modules as css string
-	list.toString = function toString() {
-		return this.map(function (item) {
-			var content = cssWithMappingToString(item, useSourceMap);
-			if(item[2]) {
-				return "@media " + item[2] + "{" + content + "}";
-			} else {
-				return content;
-			}
-		}).join("");
-	};
-
-	// import a list of modules into the list
-	list.i = function(modules, mediaQuery) {
-		if(typeof modules === "string")
-			modules = [[null, modules, ""]];
-		var alreadyImportedModules = {};
-		for(var i = 0; i < this.length; i++) {
-			var id = this[i][0];
-			if(typeof id === "number")
-				alreadyImportedModules[id] = true;
-		}
-		for(i = 0; i < modules.length; i++) {
-			var item = modules[i];
-			// skip already imported module
-			// this implementation is not 100% perfect for weird media query combinations
-			//  when a module is imported multiple times with different media queries.
-			//  I hope this will never occur (Hey this way we have smaller bundles)
-			if(typeof item[0] !== "number" || !alreadyImportedModules[item[0]]) {
-				if(mediaQuery && !item[2]) {
-					item[2] = mediaQuery;
-				} else if(mediaQuery) {
-					item[2] = "(" + item[2] + ") and (" + mediaQuery + ")";
-				}
-				list.push(item);
-			}
-		}
-	};
-	return list;
-};
-
-function cssWithMappingToString(item, useSourceMap) {
-	var content = item[1] || '';
-	var cssMapping = item[3];
-	if (!cssMapping) {
-		return content;
-	}
-
-	if (useSourceMap && typeof btoa === 'function') {
-		var sourceMapping = toComment(cssMapping);
-		var sourceURLs = cssMapping.sources.map(function (source) {
-			return '/*# sourceURL=' + cssMapping.sourceRoot + source + ' */'
-		});
-
-		return [content].concat(sourceURLs).concat([sourceMapping]).join('\n');
-	}
-
-	return [content].join('\n');
-}
-
-// Adapted from convert-source-map (MIT)
-function toComment(sourceMap) {
-	// eslint-disable-next-line no-undef
-	var base64 = btoa(unescape(encodeURIComponent(JSON.stringify(sourceMap))));
-	var data = 'sourceMappingURL=data:application/json;charset=utf-8;base64,' + base64;
-
-	return '/*# ' + data + ' */';
-}
-
-
-/***/ }),
-
-/***/ "./node_modules/css-loader/lib/url/escape.js":
-/*!***************************************************!*\
-  !*** ./node_modules/css-loader/lib/url/escape.js ***!
-  \***************************************************/
-/*! no static exports found */
-/***/ (function(module, exports) {
-
-module.exports = function escape(url) {
-    if (typeof url !== 'string') {
-        return url
-    }
-    // If url is already wrapped in quotes, remove them
-    if (/^['"].*['"]$/.test(url)) {
-        url = url.slice(1, -1);
-    }
-    // Should url be wrapped?
-    // See https://drafts.csswg.org/css-values-3/#urls
-    if (/["'() \t\n]/.test(url)) {
-        return '"' + url.replace(/"/g, '\\"').replace(/\n/g, '\\n') + '"'
-    }
-
-    return url
-}
-
-
-/***/ }),
-
 /***/ "./node_modules/dom-helpers/class/addClass.js":
 /*!****************************************************!*\
   !*** ./node_modules/dom-helpers/class/addClass.js ***!
@@ -8399,6 +9846,121 @@ function createMemoryHistory(props) {
 }
 
 
+
+
+/***/ }),
+
+/***/ "./node_modules/hoist-non-react-statics/dist/hoist-non-react-statics.cjs.js":
+/*!**********************************************************************************!*\
+  !*** ./node_modules/hoist-non-react-statics/dist/hoist-non-react-statics.cjs.js ***!
+  \**********************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+/**
+ * Copyright 2015, Yahoo! Inc.
+ * Copyrights licensed under the New BSD License. See the accompanying LICENSE file for terms.
+ */
+var ReactIs = __webpack_require__(/*! react-is */ "./node_modules/react-is/index.js");
+var REACT_STATICS = {
+    childContextTypes: true,
+    contextType: true,
+    contextTypes: true,
+    defaultProps: true,
+    displayName: true,
+    getDefaultProps: true,
+    getDerivedStateFromError: true,
+    getDerivedStateFromProps: true,
+    mixins: true,
+    propTypes: true,
+    type: true
+};
+
+var KNOWN_STATICS = {
+    name: true,
+    length: true,
+    prototype: true,
+    caller: true,
+    callee: true,
+    arguments: true,
+    arity: true
+};
+
+var FORWARD_REF_STATICS = {
+    '$$typeof': true,
+    render: true,
+    defaultProps: true,
+    displayName: true,
+    propTypes: true
+};
+
+var MEMO_STATICS = {
+    '$$typeof': true,
+    compare: true,
+    defaultProps: true,
+    displayName: true,
+    propTypes: true,
+    type: true
+};
+
+var TYPE_STATICS = {};
+TYPE_STATICS[ReactIs.ForwardRef] = FORWARD_REF_STATICS;
+
+function getStatics(component) {
+    if (ReactIs.isMemo(component)) {
+        return MEMO_STATICS;
+    }
+    return TYPE_STATICS[component['$$typeof']] || REACT_STATICS;
+}
+
+var defineProperty = Object.defineProperty;
+var getOwnPropertyNames = Object.getOwnPropertyNames;
+var getOwnPropertySymbols = Object.getOwnPropertySymbols;
+var getOwnPropertyDescriptor = Object.getOwnPropertyDescriptor;
+var getPrototypeOf = Object.getPrototypeOf;
+var objectPrototype = Object.prototype;
+
+function hoistNonReactStatics(targetComponent, sourceComponent, blacklist) {
+    if (typeof sourceComponent !== 'string') {
+        // don't hoist over string (html) components
+
+        if (objectPrototype) {
+            var inheritedComponent = getPrototypeOf(sourceComponent);
+            if (inheritedComponent && inheritedComponent !== objectPrototype) {
+                hoistNonReactStatics(targetComponent, inheritedComponent, blacklist);
+            }
+        }
+
+        var keys = getOwnPropertyNames(sourceComponent);
+
+        if (getOwnPropertySymbols) {
+            keys = keys.concat(getOwnPropertySymbols(sourceComponent));
+        }
+
+        var targetStatics = getStatics(targetComponent);
+        var sourceStatics = getStatics(sourceComponent);
+
+        for (var i = 0; i < keys.length; ++i) {
+            var key = keys[i];
+            if (!KNOWN_STATICS[key] && !(blacklist && blacklist[key]) && !(sourceStatics && sourceStatics[key]) && !(targetStatics && targetStatics[key])) {
+                var descriptor = getOwnPropertyDescriptor(sourceComponent, key);
+                try {
+                    // Avoid failures from read-only properties
+                    defineProperty(targetComponent, key, descriptor);
+                } catch (e) {}
+            }
+        }
+
+        return targetComponent;
+    }
+
+    return targetComponent;
+}
+
+module.exports = hoistNonReactStatics;
 
 
 /***/ }),
@@ -63224,7 +64786,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react_is__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! react-is */ "./node_modules/react-is/index.js");
 /* harmony import */ var react_is__WEBPACK_IMPORTED_MODULE_9___default = /*#__PURE__*/__webpack_require__.n(react_is__WEBPACK_IMPORTED_MODULE_9__);
 /* harmony import */ var _babel_runtime_helpers_esm_objectWithoutPropertiesLoose__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! @babel/runtime/helpers/esm/objectWithoutPropertiesLoose */ "./node_modules/@babel/runtime/helpers/esm/objectWithoutPropertiesLoose.js");
-/* harmony import */ var hoist_non_react_statics__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! hoist-non-react-statics */ "./node_modules/react-router/node_modules/hoist-non-react-statics/dist/hoist-non-react-statics.cjs.js");
+/* harmony import */ var hoist_non_react_statics__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! hoist-non-react-statics */ "./node_modules/hoist-non-react-statics/dist/hoist-non-react-statics.cjs.js");
 /* harmony import */ var hoist_non_react_statics__WEBPACK_IMPORTED_MODULE_11___default = /*#__PURE__*/__webpack_require__.n(hoist_non_react_statics__WEBPACK_IMPORTED_MODULE_11__);
 
 
@@ -64181,121 +65743,6 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 
 exports.default = _react2.default.createContext || _implementation2.default;
 module.exports = exports['default'];
-
-/***/ }),
-
-/***/ "./node_modules/react-router/node_modules/hoist-non-react-statics/dist/hoist-non-react-statics.cjs.js":
-/*!************************************************************************************************************!*\
-  !*** ./node_modules/react-router/node_modules/hoist-non-react-statics/dist/hoist-non-react-statics.cjs.js ***!
-  \************************************************************************************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-/**
- * Copyright 2015, Yahoo! Inc.
- * Copyrights licensed under the New BSD License. See the accompanying LICENSE file for terms.
- */
-var ReactIs = __webpack_require__(/*! react-is */ "./node_modules/react-is/index.js");
-var REACT_STATICS = {
-    childContextTypes: true,
-    contextType: true,
-    contextTypes: true,
-    defaultProps: true,
-    displayName: true,
-    getDefaultProps: true,
-    getDerivedStateFromError: true,
-    getDerivedStateFromProps: true,
-    mixins: true,
-    propTypes: true,
-    type: true
-};
-
-var KNOWN_STATICS = {
-    name: true,
-    length: true,
-    prototype: true,
-    caller: true,
-    callee: true,
-    arguments: true,
-    arity: true
-};
-
-var FORWARD_REF_STATICS = {
-    '$$typeof': true,
-    render: true,
-    defaultProps: true,
-    displayName: true,
-    propTypes: true
-};
-
-var MEMO_STATICS = {
-    '$$typeof': true,
-    compare: true,
-    defaultProps: true,
-    displayName: true,
-    propTypes: true,
-    type: true
-};
-
-var TYPE_STATICS = {};
-TYPE_STATICS[ReactIs.ForwardRef] = FORWARD_REF_STATICS;
-
-function getStatics(component) {
-    if (ReactIs.isMemo(component)) {
-        return MEMO_STATICS;
-    }
-    return TYPE_STATICS[component['$$typeof']] || REACT_STATICS;
-}
-
-var defineProperty = Object.defineProperty;
-var getOwnPropertyNames = Object.getOwnPropertyNames;
-var getOwnPropertySymbols = Object.getOwnPropertySymbols;
-var getOwnPropertyDescriptor = Object.getOwnPropertyDescriptor;
-var getPrototypeOf = Object.getPrototypeOf;
-var objectPrototype = Object.prototype;
-
-function hoistNonReactStatics(targetComponent, sourceComponent, blacklist) {
-    if (typeof sourceComponent !== 'string') {
-        // don't hoist over string (html) components
-
-        if (objectPrototype) {
-            var inheritedComponent = getPrototypeOf(sourceComponent);
-            if (inheritedComponent && inheritedComponent !== objectPrototype) {
-                hoistNonReactStatics(targetComponent, inheritedComponent, blacklist);
-            }
-        }
-
-        var keys = getOwnPropertyNames(sourceComponent);
-
-        if (getOwnPropertySymbols) {
-            keys = keys.concat(getOwnPropertySymbols(sourceComponent));
-        }
-
-        var targetStatics = getStatics(targetComponent);
-        var sourceStatics = getStatics(sourceComponent);
-
-        for (var i = 0; i < keys.length; ++i) {
-            var key = keys[i];
-            if (!KNOWN_STATICS[key] && !(blacklist && blacklist[key]) && !(sourceStatics && sourceStatics[key]) && !(targetStatics && targetStatics[key])) {
-                var descriptor = getOwnPropertyDescriptor(sourceComponent, key);
-                try {
-                    // Avoid failures from read-only properties
-                    defineProperty(targetComponent, key, descriptor);
-                } catch (e) {}
-            }
-        }
-
-        return targetComponent;
-    }
-
-    return targetComponent;
-}
-
-module.exports = hoistNonReactStatics;
-
 
 /***/ }),
 
@@ -77471,515 +78918,6 @@ if (false) {} else {
 
 /***/ }),
 
-/***/ "./node_modules/style-loader/lib/addStyles.js":
-/*!****************************************************!*\
-  !*** ./node_modules/style-loader/lib/addStyles.js ***!
-  \****************************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-/*
-	MIT License http://www.opensource.org/licenses/mit-license.php
-	Author Tobias Koppers @sokra
-*/
-
-var stylesInDom = {};
-
-var	memoize = function (fn) {
-	var memo;
-
-	return function () {
-		if (typeof memo === "undefined") memo = fn.apply(this, arguments);
-		return memo;
-	};
-};
-
-var isOldIE = memoize(function () {
-	// Test for IE <= 9 as proposed by Browserhacks
-	// @see http://browserhacks.com/#hack-e71d8692f65334173fee715c222cb805
-	// Tests for existence of standard globals is to allow style-loader
-	// to operate correctly into non-standard environments
-	// @see https://github.com/webpack-contrib/style-loader/issues/177
-	return window && document && document.all && !window.atob;
-});
-
-var getTarget = function (target, parent) {
-  if (parent){
-    return parent.querySelector(target);
-  }
-  return document.querySelector(target);
-};
-
-var getElement = (function (fn) {
-	var memo = {};
-
-	return function(target, parent) {
-                // If passing function in options, then use it for resolve "head" element.
-                // Useful for Shadow Root style i.e
-                // {
-                //   insertInto: function () { return document.querySelector("#foo").shadowRoot }
-                // }
-                if (typeof target === 'function') {
-                        return target();
-                }
-                if (typeof memo[target] === "undefined") {
-			var styleTarget = getTarget.call(this, target, parent);
-			// Special case to return head of iframe instead of iframe itself
-			if (window.HTMLIFrameElement && styleTarget instanceof window.HTMLIFrameElement) {
-				try {
-					// This will throw an exception if access to iframe is blocked
-					// due to cross-origin restrictions
-					styleTarget = styleTarget.contentDocument.head;
-				} catch(e) {
-					styleTarget = null;
-				}
-			}
-			memo[target] = styleTarget;
-		}
-		return memo[target]
-	};
-})();
-
-var singleton = null;
-var	singletonCounter = 0;
-var	stylesInsertedAtTop = [];
-
-var	fixUrls = __webpack_require__(/*! ./urls */ "./node_modules/style-loader/lib/urls.js");
-
-module.exports = function(list, options) {
-	if (typeof DEBUG !== "undefined" && DEBUG) {
-		if (typeof document !== "object") throw new Error("The style-loader cannot be used in a non-browser environment");
-	}
-
-	options = options || {};
-
-	options.attrs = typeof options.attrs === "object" ? options.attrs : {};
-
-	// Force single-tag solution on IE6-9, which has a hard limit on the # of <style>
-	// tags it will allow on a page
-	if (!options.singleton && typeof options.singleton !== "boolean") options.singleton = isOldIE();
-
-	// By default, add <style> tags to the <head> element
-        if (!options.insertInto) options.insertInto = "head";
-
-	// By default, add <style> tags to the bottom of the target
-	if (!options.insertAt) options.insertAt = "bottom";
-
-	var styles = listToStyles(list, options);
-
-	addStylesToDom(styles, options);
-
-	return function update (newList) {
-		var mayRemove = [];
-
-		for (var i = 0; i < styles.length; i++) {
-			var item = styles[i];
-			var domStyle = stylesInDom[item.id];
-
-			domStyle.refs--;
-			mayRemove.push(domStyle);
-		}
-
-		if(newList) {
-			var newStyles = listToStyles(newList, options);
-			addStylesToDom(newStyles, options);
-		}
-
-		for (var i = 0; i < mayRemove.length; i++) {
-			var domStyle = mayRemove[i];
-
-			if(domStyle.refs === 0) {
-				for (var j = 0; j < domStyle.parts.length; j++) domStyle.parts[j]();
-
-				delete stylesInDom[domStyle.id];
-			}
-		}
-	};
-};
-
-function addStylesToDom (styles, options) {
-	for (var i = 0; i < styles.length; i++) {
-		var item = styles[i];
-		var domStyle = stylesInDom[item.id];
-
-		if(domStyle) {
-			domStyle.refs++;
-
-			for(var j = 0; j < domStyle.parts.length; j++) {
-				domStyle.parts[j](item.parts[j]);
-			}
-
-			for(; j < item.parts.length; j++) {
-				domStyle.parts.push(addStyle(item.parts[j], options));
-			}
-		} else {
-			var parts = [];
-
-			for(var j = 0; j < item.parts.length; j++) {
-				parts.push(addStyle(item.parts[j], options));
-			}
-
-			stylesInDom[item.id] = {id: item.id, refs: 1, parts: parts};
-		}
-	}
-}
-
-function listToStyles (list, options) {
-	var styles = [];
-	var newStyles = {};
-
-	for (var i = 0; i < list.length; i++) {
-		var item = list[i];
-		var id = options.base ? item[0] + options.base : item[0];
-		var css = item[1];
-		var media = item[2];
-		var sourceMap = item[3];
-		var part = {css: css, media: media, sourceMap: sourceMap};
-
-		if(!newStyles[id]) styles.push(newStyles[id] = {id: id, parts: [part]});
-		else newStyles[id].parts.push(part);
-	}
-
-	return styles;
-}
-
-function insertStyleElement (options, style) {
-	var target = getElement(options.insertInto)
-
-	if (!target) {
-		throw new Error("Couldn't find a style target. This probably means that the value for the 'insertInto' parameter is invalid.");
-	}
-
-	var lastStyleElementInsertedAtTop = stylesInsertedAtTop[stylesInsertedAtTop.length - 1];
-
-	if (options.insertAt === "top") {
-		if (!lastStyleElementInsertedAtTop) {
-			target.insertBefore(style, target.firstChild);
-		} else if (lastStyleElementInsertedAtTop.nextSibling) {
-			target.insertBefore(style, lastStyleElementInsertedAtTop.nextSibling);
-		} else {
-			target.appendChild(style);
-		}
-		stylesInsertedAtTop.push(style);
-	} else if (options.insertAt === "bottom") {
-		target.appendChild(style);
-	} else if (typeof options.insertAt === "object" && options.insertAt.before) {
-		var nextSibling = getElement(options.insertAt.before, target);
-		target.insertBefore(style, nextSibling);
-	} else {
-		throw new Error("[Style Loader]\n\n Invalid value for parameter 'insertAt' ('options.insertAt') found.\n Must be 'top', 'bottom', or Object.\n (https://github.com/webpack-contrib/style-loader#insertat)\n");
-	}
-}
-
-function removeStyleElement (style) {
-	if (style.parentNode === null) return false;
-	style.parentNode.removeChild(style);
-
-	var idx = stylesInsertedAtTop.indexOf(style);
-	if(idx >= 0) {
-		stylesInsertedAtTop.splice(idx, 1);
-	}
-}
-
-function createStyleElement (options) {
-	var style = document.createElement("style");
-
-	if(options.attrs.type === undefined) {
-		options.attrs.type = "text/css";
-	}
-
-	if(options.attrs.nonce === undefined) {
-		var nonce = getNonce();
-		if (nonce) {
-			options.attrs.nonce = nonce;
-		}
-	}
-
-	addAttrs(style, options.attrs);
-	insertStyleElement(options, style);
-
-	return style;
-}
-
-function createLinkElement (options) {
-	var link = document.createElement("link");
-
-	if(options.attrs.type === undefined) {
-		options.attrs.type = "text/css";
-	}
-	options.attrs.rel = "stylesheet";
-
-	addAttrs(link, options.attrs);
-	insertStyleElement(options, link);
-
-	return link;
-}
-
-function addAttrs (el, attrs) {
-	Object.keys(attrs).forEach(function (key) {
-		el.setAttribute(key, attrs[key]);
-	});
-}
-
-function getNonce() {
-	if (false) {}
-
-	return __webpack_require__.nc;
-}
-
-function addStyle (obj, options) {
-	var style, update, remove, result;
-
-	// If a transform function was defined, run it on the css
-	if (options.transform && obj.css) {
-	    result = typeof options.transform === 'function'
-		 ? options.transform(obj.css) 
-		 : options.transform.default(obj.css);
-
-	    if (result) {
-	    	// If transform returns a value, use that instead of the original css.
-	    	// This allows running runtime transformations on the css.
-	    	obj.css = result;
-	    } else {
-	    	// If the transform function returns a falsy value, don't add this css.
-	    	// This allows conditional loading of css
-	    	return function() {
-	    		// noop
-	    	};
-	    }
-	}
-
-	if (options.singleton) {
-		var styleIndex = singletonCounter++;
-
-		style = singleton || (singleton = createStyleElement(options));
-
-		update = applyToSingletonTag.bind(null, style, styleIndex, false);
-		remove = applyToSingletonTag.bind(null, style, styleIndex, true);
-
-	} else if (
-		obj.sourceMap &&
-		typeof URL === "function" &&
-		typeof URL.createObjectURL === "function" &&
-		typeof URL.revokeObjectURL === "function" &&
-		typeof Blob === "function" &&
-		typeof btoa === "function"
-	) {
-		style = createLinkElement(options);
-		update = updateLink.bind(null, style, options);
-		remove = function () {
-			removeStyleElement(style);
-
-			if(style.href) URL.revokeObjectURL(style.href);
-		};
-	} else {
-		style = createStyleElement(options);
-		update = applyToTag.bind(null, style);
-		remove = function () {
-			removeStyleElement(style);
-		};
-	}
-
-	update(obj);
-
-	return function updateStyle (newObj) {
-		if (newObj) {
-			if (
-				newObj.css === obj.css &&
-				newObj.media === obj.media &&
-				newObj.sourceMap === obj.sourceMap
-			) {
-				return;
-			}
-
-			update(obj = newObj);
-		} else {
-			remove();
-		}
-	};
-}
-
-var replaceText = (function () {
-	var textStore = [];
-
-	return function (index, replacement) {
-		textStore[index] = replacement;
-
-		return textStore.filter(Boolean).join('\n');
-	};
-})();
-
-function applyToSingletonTag (style, index, remove, obj) {
-	var css = remove ? "" : obj.css;
-
-	if (style.styleSheet) {
-		style.styleSheet.cssText = replaceText(index, css);
-	} else {
-		var cssNode = document.createTextNode(css);
-		var childNodes = style.childNodes;
-
-		if (childNodes[index]) style.removeChild(childNodes[index]);
-
-		if (childNodes.length) {
-			style.insertBefore(cssNode, childNodes[index]);
-		} else {
-			style.appendChild(cssNode);
-		}
-	}
-}
-
-function applyToTag (style, obj) {
-	var css = obj.css;
-	var media = obj.media;
-
-	if(media) {
-		style.setAttribute("media", media)
-	}
-
-	if(style.styleSheet) {
-		style.styleSheet.cssText = css;
-	} else {
-		while(style.firstChild) {
-			style.removeChild(style.firstChild);
-		}
-
-		style.appendChild(document.createTextNode(css));
-	}
-}
-
-function updateLink (link, options, obj) {
-	var css = obj.css;
-	var sourceMap = obj.sourceMap;
-
-	/*
-		If convertToAbsoluteUrls isn't defined, but sourcemaps are enabled
-		and there is no publicPath defined then lets turn convertToAbsoluteUrls
-		on by default.  Otherwise default to the convertToAbsoluteUrls option
-		directly
-	*/
-	var autoFixUrls = options.convertToAbsoluteUrls === undefined && sourceMap;
-
-	if (options.convertToAbsoluteUrls || autoFixUrls) {
-		css = fixUrls(css);
-	}
-
-	if (sourceMap) {
-		// http://stackoverflow.com/a/26603875
-		css += "\n/*# sourceMappingURL=data:application/json;base64," + btoa(unescape(encodeURIComponent(JSON.stringify(sourceMap)))) + " */";
-	}
-
-	var blob = new Blob([css], { type: "text/css" });
-
-	var oldSrc = link.href;
-
-	link.href = URL.createObjectURL(blob);
-
-	if(oldSrc) URL.revokeObjectURL(oldSrc);
-}
-
-
-/***/ }),
-
-/***/ "./node_modules/style-loader/lib/urls.js":
-/*!***********************************************!*\
-  !*** ./node_modules/style-loader/lib/urls.js ***!
-  \***********************************************/
-/*! no static exports found */
-/***/ (function(module, exports) {
-
-
-/**
- * When source maps are enabled, `style-loader` uses a link element with a data-uri to
- * embed the css on the page. This breaks all relative urls because now they are relative to a
- * bundle instead of the current page.
- *
- * One solution is to only use full urls, but that may be impossible.
- *
- * Instead, this function "fixes" the relative urls to be absolute according to the current page location.
- *
- * A rudimentary test suite is located at `test/fixUrls.js` and can be run via the `npm test` command.
- *
- */
-
-module.exports = function (css) {
-  // get current location
-  var location = typeof window !== "undefined" && window.location;
-
-  if (!location) {
-    throw new Error("fixUrls requires window.location");
-  }
-
-	// blank or null?
-	if (!css || typeof css !== "string") {
-	  return css;
-  }
-
-  var baseUrl = location.protocol + "//" + location.host;
-  var currentDir = baseUrl + location.pathname.replace(/\/[^\/]*$/, "/");
-
-	// convert each url(...)
-	/*
-	This regular expression is just a way to recursively match brackets within
-	a string.
-
-	 /url\s*\(  = Match on the word "url" with any whitespace after it and then a parens
-	   (  = Start a capturing group
-	     (?:  = Start a non-capturing group
-	         [^)(]  = Match anything that isn't a parentheses
-	         |  = OR
-	         \(  = Match a start parentheses
-	             (?:  = Start another non-capturing groups
-	                 [^)(]+  = Match anything that isn't a parentheses
-	                 |  = OR
-	                 \(  = Match a start parentheses
-	                     [^)(]*  = Match anything that isn't a parentheses
-	                 \)  = Match a end parentheses
-	             )  = End Group
-              *\) = Match anything and then a close parens
-          )  = Close non-capturing group
-          *  = Match anything
-       )  = Close capturing group
-	 \)  = Match a close parens
-
-	 /gi  = Get all matches, not the first.  Be case insensitive.
-	 */
-	var fixedCss = css.replace(/url\s*\(((?:[^)(]|\((?:[^)(]+|\([^)(]*\))*\))*)\)/gi, function(fullMatch, origUrl) {
-		// strip quotes (if they exist)
-		var unquotedOrigUrl = origUrl
-			.trim()
-			.replace(/^"(.*)"$/, function(o, $1){ return $1; })
-			.replace(/^'(.*)'$/, function(o, $1){ return $1; });
-
-		// already a full url? no change
-		if (/^(#|data:|http:\/\/|https:\/\/|file:\/\/\/|\s*$)/i.test(unquotedOrigUrl)) {
-		  return fullMatch;
-		}
-
-		// convert the url to a full url
-		var newUrl;
-
-		if (unquotedOrigUrl.indexOf("//") === 0) {
-		  	//TODO: should we add protocol?
-			newUrl = unquotedOrigUrl;
-		} else if (unquotedOrigUrl.indexOf("/") === 0) {
-			// path should be relative to the base url
-			newUrl = baseUrl + unquotedOrigUrl; // already starts with '/'
-		} else {
-			// path should be relative to current directory
-			newUrl = currentDir + unquotedOrigUrl.replace(/^\.\//, ""); // Strip leading './'
-		}
-
-		// send back the fixed url(...)
-		return "url(" + JSON.stringify(newUrl) + ")";
-	});
-
-	// send back the fixed css
-	return fixedCss;
-};
-
-
-/***/ }),
-
 /***/ "./node_modules/tiny-invariant/dist/tiny-invariant.esm.js":
 /*!****************************************************************!*\
   !*** ./node_modules/tiny-invariant/dist/tiny-invariant.esm.js ***!
@@ -78242,14 +79180,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router-dom/esm/react-router-dom.js");
 /* harmony import */ var _pages_dashboard_dashboard__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./pages/dashboard/dashboard */ "./resources/js/pages/dashboard/dashboard.js");
-/* harmony import */ var _pages_dashboard_dashboard__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_pages_dashboard_dashboard__WEBPACK_IMPORTED_MODULE_2__);
-/* harmony import */ var _node_modules_argon_dashboard_react_src_assets_vendor_nucleo_css_nucleo_css__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../node_modules/argon-dashboard-react/src/assets/vendor/nucleo/css/nucleo.css */ "./node_modules/argon-dashboard-react/src/assets/vendor/nucleo/css/nucleo.css");
-/* harmony import */ var _node_modules_argon_dashboard_react_src_assets_vendor_nucleo_css_nucleo_css__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(_node_modules_argon_dashboard_react_src_assets_vendor_nucleo_css_nucleo_css__WEBPACK_IMPORTED_MODULE_3__);
-/* harmony import */ var _node_modules_argon_dashboard_react_src_assets_vendor_fortawesome_fontawesome_free_css_all_min_css__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../../node_modules/argon-dashboard-react/src/assets/vendor/@fortawesome/fontawesome-free/css/all.min.css */ "./node_modules/argon-dashboard-react/src/assets/vendor/@fortawesome/fontawesome-free/css/all.min.css");
-/* harmony import */ var _node_modules_argon_dashboard_react_src_assets_vendor_fortawesome_fontawesome_free_css_all_min_css__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(_node_modules_argon_dashboard_react_src_assets_vendor_fortawesome_fontawesome_free_css_all_min_css__WEBPACK_IMPORTED_MODULE_4__);
-/* harmony import */ var _node_modules_argon_dashboard_react_src_assets_css_argon_dashboard_react_css__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../../node_modules/argon-dashboard-react/src/assets/css/argon-dashboard-react.css */ "./node_modules/argon-dashboard-react/src/assets/css/argon-dashboard-react.css");
-/* harmony import */ var _node_modules_argon_dashboard_react_src_assets_css_argon_dashboard_react_css__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/__webpack_require__.n(_node_modules_argon_dashboard_react_src_assets_css_argon_dashboard_react_css__WEBPACK_IMPORTED_MODULE_5__);
-/* harmony import */ var _layouts_AdminLayout__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./layouts/AdminLayout */ "./resources/js/layouts/AdminLayout.js");
+/* harmony import */ var _layouts_AdminLayout__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./layouts/AdminLayout */ "./resources/js/layouts/AdminLayout.js");
+/* harmony import */ var reactstrap__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! reactstrap */ "./node_modules/reactstrap/es/index.js");
 function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -78274,8 +79206,6 @@ function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || func
 
 
 
-
-
 var App =
 /*#__PURE__*/
 function (_React$Component) {
@@ -78290,9 +79220,9 @@ function (_React$Component) {
   _createClass(App, [{
     key: "render",
     value: function render() {
-      return react__WEBPACK_IMPORTED_MODULE_0__["createElement"](_layouts_AdminLayout__WEBPACK_IMPORTED_MODULE_6__["default"], null, react__WEBPACK_IMPORTED_MODULE_0__["createElement"](react_router_dom__WEBPACK_IMPORTED_MODULE_1__["Switch"], null, react__WEBPACK_IMPORTED_MODULE_0__["createElement"](react_router_dom__WEBPACK_IMPORTED_MODULE_1__["Route"], {
+      return react__WEBPACK_IMPORTED_MODULE_0__["createElement"](_layouts_AdminLayout__WEBPACK_IMPORTED_MODULE_3__["default"], null, react__WEBPACK_IMPORTED_MODULE_0__["createElement"](react_router_dom__WEBPACK_IMPORTED_MODULE_1__["Switch"], null, react__WEBPACK_IMPORTED_MODULE_0__["createElement"](react_router_dom__WEBPACK_IMPORTED_MODULE_1__["Route"], {
         path: "/dashboard",
-        component: _pages_dashboard_dashboard__WEBPACK_IMPORTED_MODULE_2___default.a
+        component: _pages_dashboard_dashboard__WEBPACK_IMPORTED_MODULE_2__["default"]
       })));
     }
   }]);
@@ -78359,6 +79289,74 @@ if (token) {
 //     cluster: process.env.MIX_PUSHER_APP_CLUSTER,
 //     encrypted: true
 // });
+
+/***/ }),
+
+/***/ "./resources/js/components/Toast.js":
+/*!******************************************!*\
+  !*** ./resources/js/components/Toast.js ***!
+  \******************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return GenericToast; });
+/* harmony import */ var reactstrap__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! reactstrap */ "./node_modules/reactstrap/es/index.js");
+/* harmony import */ var React__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! React */ "./node_modules/React/index.js");
+/* harmony import */ var React__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(React__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_2__);
+function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
+
+function _possibleConstructorReturn(self, call) { if (call && (_typeof(call) === "object" || typeof call === "function")) { return call; } return _assertThisInitialized(self); }
+
+function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
+
+function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
+
+function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
+
+
+
+
+
+var GenericToast =
+/*#__PURE__*/
+function (_Component) {
+  _inherits(GenericToast, _Component);
+
+  function GenericToast() {
+    _classCallCheck(this, GenericToast);
+
+    return _possibleConstructorReturn(this, _getPrototypeOf(GenericToast).call(this));
+  }
+
+  _createClass(GenericToast, [{
+    key: "render",
+    value: function render() {
+      return react__WEBPACK_IMPORTED_MODULE_2___default.a.createElement(reactstrap__WEBPACK_IMPORTED_MODULE_0__["Toast"], null, react__WEBPACK_IMPORTED_MODULE_2___default.a.createElement(reactstrap__WEBPACK_IMPORTED_MODULE_0__["ToastHeader"], {
+        icon: react__WEBPACK_IMPORTED_MODULE_2___default.a.createElement(reactstrap__WEBPACK_IMPORTED_MODULE_0__["Spinner"], {
+          size: "sm",
+          type: "grow",
+          color: "danger"
+        })
+      }, "Info"), react__WEBPACK_IMPORTED_MODULE_2___default.a.createElement(reactstrap__WEBPACK_IMPORTED_MODULE_0__["ToastBody"], null, "Info Here!"));
+    }
+  }]);
+
+  return GenericToast;
+}(React__WEBPACK_IMPORTED_MODULE_1__["Component"]);
+
+
 
 /***/ }),
 
@@ -78458,8 +79456,6 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var reactstrap__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! reactstrap */ "./node_modules/reactstrap/es/index.js");
 function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
-function _extends() { _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; }; return _extends.apply(this, arguments); }
-
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
@@ -78497,18 +79493,7 @@ function (_Component) {
   _createClass(AdminLayout, [{
     key: "render",
     value: function render() {
-      return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_components_admin_Sidebar__WEBPACK_IMPORTED_MODULE_2___default.a, _extends({}, this.props, {
-        logo: {
-          innerLink: "/dashboard",
-          imgSrc: "https://demos.creative-tim.com/argon-dashboard-react/static/media/argon-react.f38ddea9.png",
-          imgAlt: "Yeet"
-        }
-      })), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-        className: "main-content",
-        ref: "mainContent"
-      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_components_admin_NavBar__WEBPACK_IMPORTED_MODULE_3___default.a, null), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_components_admin_Header__WEBPACK_IMPORTED_MODULE_4___default.a, null), this.props.children, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(reactstrap__WEBPACK_IMPORTED_MODULE_5__["Container"], {
-        fluid: true
-      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_components_admin_Footer__WEBPACK_IMPORTED_MODULE_1___default.a, null))));
+      return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, this.props.children);
     }
   }]);
 
@@ -78523,8 +79508,82 @@ function (_Component) {
 /*!***************************************************!*\
   !*** ./resources/js/pages/dashboard/dashboard.js ***!
   \***************************************************/
-/*! no static exports found */
-/***/ (function(module, exports) {
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return Example; });
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var reactstrap__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! reactstrap */ "./node_modules/reactstrap/es/index.js");
+/* harmony import */ var _components_Toast__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../components/Toast */ "./resources/js/components/Toast.js");
+function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
+
+function _possibleConstructorReturn(self, call) { if (call && (_typeof(call) === "object" || typeof call === "function")) { return call; } return _assertThisInitialized(self); }
+
+function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
+
+function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
+
+function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
+
+
+
+
+
+var Example =
+/*#__PURE__*/
+function (_Component) {
+  _inherits(Example, _Component);
+
+  function Example() {
+    _classCallCheck(this, Example);
+
+    return _possibleConstructorReturn(this, _getPrototypeOf(Example).apply(this, arguments));
+  }
+
+  _createClass(Example, [{
+    key: "render",
+    value: function render() {
+      return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "container"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "row justify-content-center"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "col-md-8"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "card"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "card-header"
+      }, "Example Component"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "card-body"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(reactstrap__WEBPACK_IMPORTED_MODULE_1__["Spinner"], {
+        size: "sm",
+        color: "success",
+        type: "grow"
+      }), "Server Online!", react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(reactstrap__WEBPACK_IMPORTED_MODULE_1__["Spinner"], {
+        size: "sm",
+        color: "danger",
+        type: "grow"
+      }), "Server Offline!", react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(reactstrap__WEBPACK_IMPORTED_MODULE_1__["Spinner"], {
+        size: "sm",
+        color: "warning",
+        type: "grow"
+      }), "Server Pinging!"))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_components_Toast__WEBPACK_IMPORTED_MODULE_2__["default"], null)));
+    }
+  }]);
+
+  return Example;
+}(react__WEBPACK_IMPORTED_MODULE_0__["Component"]);
 
 
 

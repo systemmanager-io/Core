@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import {Spinner} from "reactstrap";
 
 export default class Example extends Component {
     render() {
@@ -10,7 +11,7 @@ export default class Example extends Component {
                             <div className="card-header">Example Component</div>
 
                             <div className="card-body">
-                                I'm an example component!
+                                 I'm an example component!
                             </div>
                         </div>
                     </div>
