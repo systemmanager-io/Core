@@ -6,14 +6,18 @@ import "../../node_modules/argon-dashboard-react/src/assets/vendor/nucleo/css/nu
 import "../../node_modules/argon-dashboard-react/src/assets/vendor/@fortawesome/fontawesome-free/css/all.min.css";
 import "../../node_modules/argon-dashboard-react/src/assets/css/argon-dashboard-react.css";
 
-import Header from "./components/Header";
+import AdminLayout from "./layouts/AdminLayout";
 
 class App extends React.Component {
     render() {
         return (
-            <Switch>
-                <Route path="/dashboard" component={Dashboard}/>
-            </Switch>
+            <AdminLayout>
+                <Switch>
+                    <Route path="/dashboard" component={Dashboard}/>
+                    {/*<Route path="/status" component={Status}/>*/}
+                    {/*<Route path="/management" component={Management}/>*/}
+                </Switch>
+            </AdminLayout>
         );
     }
 }
