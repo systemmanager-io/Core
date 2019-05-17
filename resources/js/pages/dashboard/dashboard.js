@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import {Spinner, Row} from "reactstrap";
 import Toast from "../../components/Toast";
 
-export default class Example extends Component {
+export default class Dashboard extends Component {
     render() {
         return (
             <div className="container">
