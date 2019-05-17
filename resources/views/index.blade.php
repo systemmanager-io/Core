@@ -6,7 +6,7 @@
         <meta name="csrf-token">
         <link rel="stylesheet" href="{{ asset('css/app.css') }}">
 
-        <title>Laravel</title>
+        <title>SystemManager</title>
 
         <!-- Fonts -->
     </head>

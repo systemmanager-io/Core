@@ -1,6 +1,5 @@
 import {Toast, ToastHeader, ToastBody, Spinner} from 'reactstrap';
-import {Component} from 'React'
-import React from "react";
+import {Component} from 'react'
 
 export default class GenericToast extends Component {
 
