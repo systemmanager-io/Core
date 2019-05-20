@@ -2,13 +2,17 @@ import * as React from 'react';
 import {Route, Switch} from "react-router-dom";
 import Dashboard from "./pages/dashboard/dashboard";
 
-
 import AdminLayout from "./layouts/AdminLayout";
-import {Spinner} from "reactstrap";
 import Login from "./pages/login/login";
 import LoginLayout from "./layouts/LoginLayout";
 
 class App extends React.Component {
+
+    state = {
+        isLoggedIn: false,
+        user: {}
+    };
+
     render() {
         return (
             <Switch>
@@ -16,9 +20,9 @@ class App extends React.Component {
                     <Route path="/login" exact component={Login}/>
                 </LoginLayout>
                 <AdminLayout>
-                    <Route path="/dashboard" component={Dashboard}/>
-                    {/*<Route path="/status" component={Status}/>*/}
-                    {/*<Route path="/management" component={Management}/>*/}
+                    <Route path="/dashboard" exact component={Dashboard}/>
+                    {/*<Route path="/status" exact component={Status}/>*/}
+                    {/*<Route path="/management" exact component={Management}/>*/}
                 </AdminLayout>
             </Switch>
         );

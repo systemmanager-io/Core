@@ -32,4 +32,3 @@ Route::group(['middleware' => 'api.headers'], function () {
     Route::post('auth/register', 'UserController@register');
 });
 Route::get('open', 'DataController@open');
-

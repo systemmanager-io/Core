@@ -11,4 +11,4 @@
 |
 */
 
-Route::view('/{path?}', 'index');
+Route::view('{path?}', 'index');

@@ -30,7 +30,7 @@ class Kernel extends HttpKernel
      */
     protected $routeMiddleware = [
         'jwt.verify' => \App\Http\Middleware\jwtMiddleware::class,
-        'api-header' => \App\Http\Middleware\API::class,
+        'api.headers' => \App\Http\Middleware\API::class,
 //        'auth' => \App\Http\Middleware\Authenticate::class,
 //        'auth.basic' => \Illuminate\Auth\Middleware\AuthenticateWithBasicAuth::class,
         'bindings' => \Illuminate\Routing\Middleware\SubstituteBindings::class,
