@@ -43604,47 +43604,31 @@ function (_Component) {
         }
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(reactstrap__WEBPACK_IMPORTED_MODULE_1__["Card"], null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(reactstrap__WEBPACK_IMPORTED_MODULE_1__["CardBody"], null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h2", {
         className: ""
-      }, "SystemManager"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-        hidden: this.state.waitingForToken
-      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(reactstrap__WEBPACK_IMPORTED_MODULE_1__["InputGroup"], {
+      }, "SystemManager"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("br", null), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(reactstrap__WEBPACK_IMPORTED_MODULE_1__["InputGroup"], {
         id: "usernameInput"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(reactstrap__WEBPACK_IMPORTED_MODULE_1__["Input"], {
         onChange: this.setFormState,
         name: "username",
-        hidden: this.state.passwordForm,
         placeholder: "Username"
-      })), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(reactstrap__WEBPACK_IMPORTED_MODULE_1__["InputGroup"], {
-        id: "passwordInput",
-        hidden: !this.state.passwordForm
+      })), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("br", null), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(reactstrap__WEBPACK_IMPORTED_MODULE_1__["InputGroup"], {
+        id: "passwordInput"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(reactstrap__WEBPACK_IMPORTED_MODULE_1__["Input"], {
         type: "password",
         onChange: this.setFormState,
         name: "password",
         placeholder: "Password"
-      })), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(reactstrap__WEBPACK_IMPORTED_MODULE_1__["Button"], {
-        onClick: this.passwordForm.bind(this),
-        hidden: this.state.passwordForm,
-        style: {
-          width: "100%"
-        },
-        color: "primary"
-      }, "Next"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(reactstrap__WEBPACK_IMPORTED_MODULE_1__["Button"], {
+      })), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("br", null), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(reactstrap__WEBPACK_IMPORTED_MODULE_1__["Button"], {
         onClick: this.submitLogin.bind(this),
         color: "primary",
-        hidden: !this.state.passwordForm,
         style: {
           width: "100%"
         }
-      }, "Login")), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-        hidden: !this.state.waitingForToken
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(reactstrap__WEBPACK_IMPORTED_MODULE_1__["Spinner"], {
-        color: this.state.statusForToken ? this.state.statusForToken : "dark",
-        type: "grow",
-        style: {
-          width: "5rem",
-          height: "5rem"
-        }
-      }))))))));
+        hidden: !this.state.waitingForToken,
+        size: "sm"
+      }), " ", react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("a", {
+        hidden: this.state.waitingForToken
+      }, "Login")))))))));
     }
   }, {
     key: "passwordForm",
@@ -43664,7 +43648,7 @@ function (_Component) {
       var bodyData = [];
       bodyData['email'] = this.state.username;
       bodyData['password'] = this.state.password;
-      fetch("http://localhost" + "/api/auth/login", {
+      fetch("http://localhost:8000" + "/api/auth/login", {
         mode: "cors",
         method: 'post',
         headers: {
@@ -43724,8 +43708,8 @@ function (_Component) {
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! C:\Users\tigog\PhpstormProjects\SystemManager-WebPanel\resources\js\index.js */"./resources/js/index.js");
-module.exports = __webpack_require__(/*! C:\Users\tigog\PhpstormProjects\SystemManager-WebPanel\resources\sass\app.scss */"./resources/sass/app.scss");
+__webpack_require__(/*! /home/tigo/Projects/SystemManager/SystemManager-WebPanel/resources/js/index.js */"./resources/js/index.js");
+module.exports = __webpack_require__(/*! /home/tigo/Projects/SystemManager/SystemManager-WebPanel/resources/sass/app.scss */"./resources/sass/app.scss");
 
 
 /***/ })

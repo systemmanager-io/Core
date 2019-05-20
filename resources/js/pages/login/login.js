@@ -25,28 +25,22 @@ export default class Login extends Component {
                             <Card>
                                 <CardBody>
                                     <h2 className="">SystemManager</h2>
-                                    <div hidden={this.state.waitingForToken}>
-
+                                    <div>
+                                        <br/>
                                         <InputGroup id="usernameInput">
                                             <Input onChange={this.setFormState} name="username"
-                                                   hidden={this.state.passwordForm} placeholder="Username"/>
+                                                   placeholder="Username"/>
                                         </InputGroup>
-
-                                        <InputGroup id="passwordInput" hidden={!this.state.passwordForm}>
+                                        <br/>
+                                        <InputGroup id="passwordInput">
                                             <Input type='password' onChange={this.setFormState} name="password"
                                                    placeholder="Password"/>
                                         </InputGroup>
-
-                                        <Button onClick={this.passwordForm.bind(this)}
-                                                hidden={this.state.passwordForm}
-                                                style={{width: "100%"}} color="primary">Next</Button>
-
+                                        <br/>
                                         <Button onClick={this.submitLogin.bind(this)} color="primary"
-                                                hidden={!this.state.passwordForm} style={{width: "100%"}}>Login</Button>
-                                    </div>
-                                    <div hidden={!this.state.waitingForToken}>
-                                        <Spinner color={this.state.statusForToken ? this.state.statusForToken : "dark"}
-                                                 type="grow" style={{width: "5rem", height: "5rem"}}/>
+                                                style={{width: "100%"}}><Spinner hidden={!this.state.waitingForToken}
+                                                                                 size="sm"/> <a
+                                            hidden={this.state.waitingForToken}>Login</a></Button>
                                     </div>
                                 </CardBody>
                             </Card>

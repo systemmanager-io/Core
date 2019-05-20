@@ -24,7 +24,7 @@ class UserController extends Controller
             return response()->json(['error' => 'could_not_create_token'], 500);
         }
 
-        setcookie("token")
+        setcookie("token", $token);
         return response()->json(compact('token'));
     }
 
