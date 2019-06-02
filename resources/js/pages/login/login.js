@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
 import {Spinner, Row, Card, CardBody, Input, InputGroupAddon, InputGroup, Button} from "reactstrap";
+import LoginLayout from "../../layouts/LoginLayout";
 
 export default class Login extends Component {
 
@@ -18,36 +19,39 @@ export default class Login extends Component {
 
     render() {
         return (
-            <div>
-                <div className="container">
-                    <div className="row justify-content-center">
-                        <div className="" style={{width: "400px", top: "50%"}}>
-                            <Card>
-                                <CardBody>
-                                    <h2 className="">SystemManager</h2>
-                                    <div>
-                                        <br/>
-                                        <InputGroup id="usernameInput">
-                                            <Input onChange={this.setFormState} name="username"
-                                                   placeholder="Username"/>
-                                        </InputGroup>
-                                        <br/>
-                                        <InputGroup id="passwordInput">
-                                            <Input type='password' onChange={this.setFormState} name="password"
-                                                   placeholder="Password"/>
-                                        </InputGroup>
-                                        <br/>
-                                        <Button onClick={this.submitLogin.bind(this)} color="primary"
-                                                style={{width: "100%"}}><Spinner hidden={!this.state.waitingForToken}
-                                                                                 size="sm"/> <a
-                                            hidden={this.state.waitingForToken}>Login</a></Button>
-                                    </div>
-                                </CardBody>
-                            </Card>
+            <LoginLayout>
+                <div>
+                    <div className="container">
+                        <div className="row justify-content-center">
+                            <div className="" style={{width: "400px", top: "50%"}}>
+                                <Card>
+                                    <CardBody>
+                                        <h2 className="">SystemManager</h2>
+                                        <div>
+                                            <br/>
+                                            <InputGroup id="usernameInput">
+                                                <Input onChange={this.setFormState} name="username"
+                                                       placeholder="Username"/>
+                                            </InputGroup>
+                                            <br/>
+                                            <InputGroup id="passwordInput">
+                                                <Input type='password' onChange={this.setFormState} name="password"
+                                                       placeholder="Password"/>
+                                            </InputGroup>
+                                            <br/>
+                                            <Button onClick={this.submitLogin.bind(this)} color="primary"
+                                                    style={{width: "100%"}}><Spinner
+                                                hidden={!this.state.waitingForToken}
+                                                size="sm"/> <a
+                                                hidden={this.state.waitingForToken}>Login</a></Button>
+                                        </div>
+                                    </CardBody>
+                                </Card>
+                            </div>
                         </div>
                     </div>
                 </div>
-            </div>
+            </LoginLayout>
         );
     }
 

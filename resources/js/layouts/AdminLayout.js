@@ -1,15 +1,24 @@
-import React, {Component} from 'react';
+import * as React from 'react';
+import Sidebar from "../components/admin/Sidebar";
+import NavBar from "../components/admin/NavBar";
 
-export default class AdminLayout extends Component {
+export default class AdminLayout extends React.Component {
     render() {
         return (
             <div>
-                <a>aaa</a>
                 {/*<Header />*/}
-                {/*<NavBar/>*/}
-                {/*<Sidebar/>*/}
-                {this.props.children}
-                {/*<Footer/>*/}
+
+                <div className="d-flex" id="wrapper">
+                    <Sidebar/>
+                    <div id="page-content-wrapper">
+                        <NavBar/>
+                        <div className="container-fluid">
+                            {this.props.children}
+                        </div>
+                        {/*<Footer/>*/}
+                    </div>
+                </div>
+
             </div>
         );
     }

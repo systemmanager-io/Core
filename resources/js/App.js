@@ -16,9 +16,7 @@ class App extends React.Component {
     render() {
         return (
             <Switch>
-                <LoginLayout>
-                    <Route path="/login" exact component={Login}/>
-                </LoginLayout>
+                <Route path="/login" exact component={Login}/>
                 <AdminLayout>
                     <Route path="/dashboard" exact component={Dashboard}/>
                     {/*<Route path="/status" exact component={Status}/>*/}
