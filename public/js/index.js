@@ -2752,6 +2752,46 @@ var autoReplace = function autoReplace() {
 
 /***/ }),
 
+/***/ "./node_modules/@fortawesome/free-solid-svg-icons/faBars.js":
+/*!******************************************************************!*\
+  !*** ./node_modules/@fortawesome/free-solid-svg-icons/faBars.js ***!
+  \******************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+Object.defineProperty(exports, '__esModule', { value: true });
+var prefix = 'fas';
+var iconName = 'bars';
+var width = 448;
+var height = 512;
+var ligatures = [];
+var unicode = 'f0c9';
+var svgPathData = 'M16 132h416c8.837 0 16-7.163 16-16V76c0-8.837-7.163-16-16-16H16C7.163 60 0 67.163 0 76v40c0 8.837 7.163 16 16 16zm0 160h416c8.837 0 16-7.163 16-16v-40c0-8.837-7.163-16-16-16H16c-8.837 0-16 7.163-16 16v40c0 8.837 7.163 16 16 16zm0 160h416c8.837 0 16-7.163 16-16v-40c0-8.837-7.163-16-16-16H16c-8.837 0-16 7.163-16 16v40c0 8.837 7.163 16 16 16z';
+
+exports.definition = {
+  prefix: prefix,
+  iconName: iconName,
+  icon: [
+    width,
+    height,
+    ligatures,
+    unicode,
+    svgPathData
+  ]};
+
+exports.faBars = exports.definition;
+exports.prefix = prefix;
+exports.iconName = iconName;
+exports.width = width;
+exports.height = height;
+exports.ligatures = ligatures;
+exports.unicode = unicode;
+exports.svgPathData = svgPathData;
+
+/***/ }),
+
 /***/ "./node_modules/@fortawesome/free-solid-svg-icons/index.es.js":
 /*!********************************************************************!*\
   !*** ./node_modules/@fortawesome/free-solid-svg-icons/index.es.js ***!
@@ -53043,6 +53083,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _layouts_AdminLayout__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./layouts/AdminLayout */ "./resources/js/layouts/AdminLayout.js");
 /* harmony import */ var _pages_login_login__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./pages/login/login */ "./resources/js/pages/login/login.js");
 /* harmony import */ var _layouts_LoginLayout__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./layouts/LoginLayout */ "./resources/js/layouts/LoginLayout.js");
+/* harmony import */ var _pages_servers__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./pages/servers */ "./resources/js/pages/servers.js");
 function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -53062,6 +53103,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
 
 function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
 
 
 
@@ -53107,6 +53149,10 @@ function (_React$Component) {
         path: "/dashboard",
         exact: true,
         component: _pages_dashboard_dashboard__WEBPACK_IMPORTED_MODULE_2__["default"]
+      }), react__WEBPACK_IMPORTED_MODULE_0__["createElement"](react_router_dom__WEBPACK_IMPORTED_MODULE_1__["Route"], {
+        path: "/servers",
+        exact: true,
+        component: _pages_servers__WEBPACK_IMPORTED_MODULE_6__["default"]
       })));
     }
   }]);
@@ -53188,9 +53234,13 @@ function (_React$Component) {
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var _fortawesome_react_fontawesome__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @fortawesome/react-fontawesome */ "./node_modules/@fortawesome/react-fontawesome/index.es.js");
-/* harmony import */ var _fortawesome_free_solid_svg_icons__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @fortawesome/free-solid-svg-icons */ "./node_modules/@fortawesome/free-solid-svg-icons/index.es.js");
-/* harmony import */ var reactstrap__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! reactstrap */ "./node_modules/reactstrap/es/index.js");
+/* harmony import */ var reactstrap__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! reactstrap */ "./node_modules/reactstrap/es/index.js");
+/* harmony import */ var reactstrap_es_DropdownToggle__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! reactstrap/es/DropdownToggle */ "./node_modules/reactstrap/es/DropdownToggle.js");
+/* harmony import */ var _fortawesome_react_fontawesome__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @fortawesome/react-fontawesome */ "./node_modules/@fortawesome/react-fontawesome/index.es.js");
+/* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router-dom/esm/react-router-dom.js");
+/* harmony import */ var _fortawesome_free_solid_svg_icons_faBars__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! @fortawesome/free-solid-svg-icons/faBars */ "./node_modules/@fortawesome/free-solid-svg-icons/faBars.js");
+/* harmony import */ var _fortawesome_free_solid_svg_icons_faBars__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/__webpack_require__.n(_fortawesome_free_solid_svg_icons_faBars__WEBPACK_IMPORTED_MODULE_5__);
+/* harmony import */ var _fortawesome_free_solid_svg_icons__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! @fortawesome/free-solid-svg-icons */ "./node_modules/@fortawesome/free-solid-svg-icons/index.es.js");
 function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -53214,6 +53264,9 @@ function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || func
 
 
 
+
+
+
 var NavBar =
 /*#__PURE__*/
 function (_React$Component) {
@@ -53227,7 +53280,7 @@ function (_React$Component) {
     _this = _possibleConstructorReturn(this, _getPrototypeOf(NavBar).call(this, props));
     _this.toggle = _this.toggle.bind(_assertThisInitialized(_this));
     _this.state = {
-      isOpen: false
+      accountIsOpen: false
     };
     return _this;
   }
@@ -53236,7 +53289,7 @@ function (_React$Component) {
     key: "toggle",
     value: function toggle() {
       this.setState({
-        isOpen: !this.state.isOpen // navbar collapse
+        accountIsOpen: !this.state.accountIsOpen // navbar collapse
 
       });
     }
@@ -53245,61 +53298,31 @@ function (_React$Component) {
     value: function render() {
       return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("nav", {
         className: "navbar navbar-expand-lg navbar-light bg-light border-bottom"
-      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
-        className: "btn btn-primary",
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(reactstrap__WEBPACK_IMPORTED_MODULE_1__["Button"], {
+        outline: true,
+        color: "primary",
         id: "menu-toggle"
-      }, "Toggle Menu"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
-        className: "navbar-toggler",
-        type: "button",
-        "data-toggle": "collapse",
-        "data-target": "#navbarSupportedContent",
-        "aria-controls": "navbarSupportedContent",
-        "aria-expanded": "false",
-        "aria-label": "Toggle navigation"
-      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
-        className: "navbar-toggler-icon"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_fortawesome_react_fontawesome__WEBPACK_IMPORTED_MODULE_3__["FontAwesomeIcon"], {
+        icon: _fortawesome_free_solid_svg_icons_faBars__WEBPACK_IMPORTED_MODULE_5__["faBars"]
       })), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "collapse navbar-collapse",
         id: "navbarSupportedContent"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("ul", {
         className: "navbar-nav ml-auto mt-2 mt-lg-0"
-      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", {
-        className: "nav-item active"
-      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("a", {
-        className: "nav-link",
-        href: "#"
-      }, "Home ", react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
-        className: "sr-only"
-      }, "(current)"))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", {
-        className: "nav-item"
-      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("a", {
-        className: "nav-link",
-        href: "#"
-      }, "Link")), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", {
-        className: "nav-item dropdown"
-      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("a", {
-        className: "nav-link dropdown-toggle",
-        href: "#",
-        id: "navbarDropdown",
-        role: "button",
-        "data-toggle": "dropdown",
-        "aria-haspopup": "true",
-        "aria-expanded": "false"
-      }, "Dropdown"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-        className: "dropdown-menu dropdown-menu-right",
-        "aria-labelledby": "navbarDropdown"
-      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("a", {
-        className: "dropdown-item",
-        href: "#"
-      }, "Action"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("a", {
-        className: "dropdown-item",
-        href: "#"
-      }, "Another action"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-        className: "dropdown-divider"
-      }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("a", {
-        className: "dropdown-item",
-        href: "#"
-      }, "Something else here"))))));
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(reactstrap__WEBPACK_IMPORTED_MODULE_1__["Dropdown"], {
+        isOpen: this.state.accountIsOpen,
+        toggle: this.toggle
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(reactstrap_es_DropdownToggle__WEBPACK_IMPORTED_MODULE_2__["default"], null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_fortawesome_react_fontawesome__WEBPACK_IMPORTED_MODULE_3__["FontAwesomeIcon"], {
+        icon: _fortawesome_free_solid_svg_icons__WEBPACK_IMPORTED_MODULE_6__["faUser"]
+      })), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(reactstrap__WEBPACK_IMPORTED_MODULE_1__["DropdownMenu"], {
+        right: true
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(reactstrap__WEBPACK_IMPORTED_MODULE_1__["DropdownItem"], {
+        header: true
+      }, "Header"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(reactstrap__WEBPACK_IMPORTED_MODULE_1__["DropdownItem"], null, "Some Action"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(reactstrap__WEBPACK_IMPORTED_MODULE_1__["DropdownItem"], {
+        disabled: true
+      }, "Action (disabled)"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(reactstrap__WEBPACK_IMPORTED_MODULE_1__["DropdownItem"], {
+        divider: true
+      }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(reactstrap__WEBPACK_IMPORTED_MODULE_1__["DropdownItem"], null, "Foo Action"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(reactstrap__WEBPACK_IMPORTED_MODULE_1__["DropdownItem"], null, "Bar Action"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(reactstrap__WEBPACK_IMPORTED_MODULE_1__["DropdownItem"], null, "Quo Action"))))));
     }
   }]);
 
@@ -53321,6 +53344,10 @@ function (_React$Component) {
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _fortawesome_react_fontawesome__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @fortawesome/react-fontawesome */ "./node_modules/@fortawesome/react-fontawesome/index.es.js");
+/* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router-dom/esm/react-router-dom.js");
+/* harmony import */ var _fortawesome_free_solid_svg_icons__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @fortawesome/free-solid-svg-icons */ "./node_modules/@fortawesome/free-solid-svg-icons/index.es.js");
+/* harmony import */ var reactstrap__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! reactstrap */ "./node_modules/reactstrap/es/index.js");
 function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -53331,13 +53358,19 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
 
 function _possibleConstructorReturn(self, call) { if (call && (_typeof(call) === "object" || typeof call === "function")) { return call; } return _assertThisInitialized(self); }
 
-function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
-
 function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
+
+function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
 
 function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
+
+
+
 
 
 
@@ -53346,13 +53379,29 @@ var Sidebar =
 function (_React$Component) {
   _inherits(Sidebar, _React$Component);
 
-  function Sidebar() {
+  function Sidebar(props) {
+    var _this;
+
     _classCallCheck(this, Sidebar);
 
-    return _possibleConstructorReturn(this, _getPrototypeOf(Sidebar).apply(this, arguments));
+    _this = _possibleConstructorReturn(this, _getPrototypeOf(Sidebar).call(this, props));
+
+    _defineProperty(_assertThisInitialized(_this), "state", {
+      tooltipOpen: false
+    });
+
+    _this.toggle = _this.toggle.bind(_assertThisInitialized(_this));
+    return _this;
   }
 
   _createClass(Sidebar, [{
+    key: "toggle",
+    value: function toggle() {
+      this.setState({
+        tooltipOpen: !this.state.tooltipOpen
+      });
+    }
+  }, {
     key: "render",
     value: function render() {
       return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
@@ -53360,27 +53409,36 @@ function (_React$Component) {
         id: "sidebar-wrapper"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "sidebar-heading"
-      }, "SystemManager"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-        className: "list-group list-group-flush"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("a", {
-        href: "#",
+        id: "systemmanagerVersionHover"
+      }, "SystemManager")), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(reactstrap__WEBPACK_IMPORTED_MODULE_4__["Tooltip"], {
+        placement: "right",
+        isOpen: this.state.tooltipOpen,
+        target: "systemmanagerVersionHover",
+        toggle: this.toggle
+      }, "v0.1"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "list-group list-group-flush"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_2__["Link"], {
+        to: "dashboard",
         className: "list-group-item list-group-item-action bg-light"
-      }, "Dashboard"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("a", {
-        href: "#",
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_fortawesome_react_fontawesome__WEBPACK_IMPORTED_MODULE_1__["FontAwesomeIcon"], {
+        icon: _fortawesome_free_solid_svg_icons__WEBPACK_IMPORTED_MODULE_3__["faDesktop"]
+      }), " Dashboard"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_2__["Link"], {
+        to: "servers",
         className: "list-group-item list-group-item-action bg-light"
-      }, "Shortcuts"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("a", {
-        href: "#",
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_fortawesome_react_fontawesome__WEBPACK_IMPORTED_MODULE_1__["FontAwesomeIcon"], {
+        icon: _fortawesome_free_solid_svg_icons__WEBPACK_IMPORTED_MODULE_3__["faServer"]
+      }), " Servers"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_2__["Link"], {
+        to: "log",
         className: "list-group-item list-group-item-action bg-light"
-      }, "Overview"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("a", {
-        href: "#",
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_fortawesome_react_fontawesome__WEBPACK_IMPORTED_MODULE_1__["FontAwesomeIcon"], {
+        icon: _fortawesome_free_solid_svg_icons__WEBPACK_IMPORTED_MODULE_3__["faList"]
+      }), " Log"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_2__["Link"], {
+        to: "settings",
         className: "list-group-item list-group-item-action bg-light"
-      }, "Events"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("a", {
-        href: "#",
-        className: "list-group-item list-group-item-action bg-light"
-      }, "Profile"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("a", {
-        href: "#",
-        className: "list-group-item list-group-item-action bg-light"
-      }, "Status")));
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_fortawesome_react_fontawesome__WEBPACK_IMPORTED_MODULE_1__["FontAwesomeIcon"], {
+        icon: _fortawesome_free_solid_svg_icons__WEBPACK_IMPORTED_MODULE_3__["faCogs"]
+      }), " Settings")));
     }
   }]);
 
@@ -53475,7 +53533,7 @@ function (_React$Component) {
         id: "page-content-wrapper"
       }, react__WEBPACK_IMPORTED_MODULE_0__["createElement"](_components_admin_NavBar__WEBPACK_IMPORTED_MODULE_2__["default"], null), react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("div", {
         className: "container-fluid"
-      }, this.props.children))));
+      }, react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("br", null), this.props.children))));
     }
   }]);
 
@@ -53557,6 +53615,9 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var reactstrap__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! reactstrap */ "./node_modules/reactstrap/es/index.js");
 /* harmony import */ var _components_InfoBox__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../components/InfoBox */ "./resources/js/components/InfoBox.js");
+/* harmony import */ var reactstrap_es_CardDeck__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! reactstrap/es/CardDeck */ "./node_modules/reactstrap/es/CardDeck.js");
+/* harmony import */ var _fortawesome_react_fontawesome__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @fortawesome/react-fontawesome */ "./node_modules/@fortawesome/react-fontawesome/index.es.js");
+/* harmony import */ var _fortawesome_free_solid_svg_icons__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! @fortawesome/free-solid-svg-icons */ "./node_modules/@fortawesome/free-solid-svg-icons/index.es.js");
 function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -53577,6 +53638,9 @@ function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || func
 
 
 
+
+
+
  // import Toast from "../../components/Toast";
 
 var Dashboard =
@@ -53593,89 +53657,62 @@ function (_React$Component) {
   _createClass(Dashboard, [{
     key: "render",
     value: function render() {
-      return react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("div", {
-        className: "container"
-      }, react__WEBPACK_IMPORTED_MODULE_0__["createElement"](_components_InfoBox__WEBPACK_IMPORTED_MODULE_2__["default"], null), react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("div", {
-        "class": "row"
+      return react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("div", null, react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("h2", null, "Dashboard"), react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("hr", null), react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("div", {
+        className: "row"
       }, react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("div", {
-        className: "col-md-4"
+        className: "col-md-3"
+      }, react__WEBPACK_IMPORTED_MODULE_0__["createElement"](reactstrap__WEBPACK_IMPORTED_MODULE_1__["Card"], {
+        inverse: true,
+        color: "success"
       }, react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("div", {
-        className: "card"
+        className: "row no-gutters"
       }, react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("div", {
-        className: "card-body"
-      }, react__WEBPACK_IMPORTED_MODULE_0__["createElement"](reactstrap__WEBPACK_IMPORTED_MODULE_1__["Spinner"], {
-        size: "sm",
-        color: "success",
-        type: "grow"
-      }), "Server Online!", react__WEBPACK_IMPORTED_MODULE_0__["createElement"](reactstrap__WEBPACK_IMPORTED_MODULE_1__["Spinner"], {
-        size: "sm",
-        color: "danger",
-        type: "grow"
-      }), "Server Offline!", react__WEBPACK_IMPORTED_MODULE_0__["createElement"](reactstrap__WEBPACK_IMPORTED_MODULE_1__["Spinner"], {
-        size: "sm",
-        color: "warning",
-        type: "grow"
-      }), "Server Pinging!"))), react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("div", {
-        className: "col-md-4"
+        className: "col-md-3 col-lg-3 col-sm-3 col-3"
+      }, react__WEBPACK_IMPORTED_MODULE_0__["createElement"](reactstrap__WEBPACK_IMPORTED_MODULE_1__["CardBody"], null, react__WEBPACK_IMPORTED_MODULE_0__["createElement"](_fortawesome_react_fontawesome__WEBPACK_IMPORTED_MODULE_4__["FontAwesomeIcon"], {
+        className: "infobox-icon",
+        icon: _fortawesome_free_solid_svg_icons__WEBPACK_IMPORTED_MODULE_5__["faServer"]
+      }))), react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("div", {
+        className: "col-md-9 col-lg-9 col-sm-9 col-9"
+      }, react__WEBPACK_IMPORTED_MODULE_0__["createElement"](reactstrap__WEBPACK_IMPORTED_MODULE_1__["CardBody"], null, react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("h4", null, "Server status"), react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("h5", null, "1 Online | 1 Offline"))))), react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("br", null)), react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("div", {
+        className: "col-md-3"
+      }, react__WEBPACK_IMPORTED_MODULE_0__["createElement"](reactstrap__WEBPACK_IMPORTED_MODULE_1__["Card"], {
+        inverse: true,
+        color: "success"
       }, react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("div", {
-        className: "card"
+        className: "row no-gutters"
       }, react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("div", {
-        className: "card-header"
-      }, "Example Component"), react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("div", {
-        className: "card-body"
-      }, react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("a", null, react__WEBPACK_IMPORTED_MODULE_0__["createElement"](reactstrap__WEBPACK_IMPORTED_MODULE_1__["Spinner"], {
-        size: "sm",
-        color: "success",
-        type: "grow"
-      }), "Server Online!"), react__WEBPACK_IMPORTED_MODULE_0__["createElement"](reactstrap__WEBPACK_IMPORTED_MODULE_1__["Spinner"], {
-        size: "sm",
-        color: "danger",
-        type: "grow"
-      }), "Server Offline!", react__WEBPACK_IMPORTED_MODULE_0__["createElement"](reactstrap__WEBPACK_IMPORTED_MODULE_1__["Spinner"], {
-        size: "sm",
-        color: "warning",
-        type: "grow"
-      }), "Server Pinging!"))), react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("div", {
-        className: "col-md-4"
+        className: "col-md-3"
+      }, react__WEBPACK_IMPORTED_MODULE_0__["createElement"](reactstrap__WEBPACK_IMPORTED_MODULE_1__["CardBody"], null, react__WEBPACK_IMPORTED_MODULE_0__["createElement"](_fortawesome_react_fontawesome__WEBPACK_IMPORTED_MODULE_4__["FontAwesomeIcon"], {
+        icon: "desktop"
+      }))), react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("div", {
+        className: "col-md-9"
+      }, react__WEBPACK_IMPORTED_MODULE_0__["createElement"](reactstrap__WEBPACK_IMPORTED_MODULE_1__["CardBody"], null, react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("h4", null, "Server status"), react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("h5", null, "1 Online | 1 Offline"))))), react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("br", null)), react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("div", {
+        className: "col-md-3"
+      }, react__WEBPACK_IMPORTED_MODULE_0__["createElement"](reactstrap__WEBPACK_IMPORTED_MODULE_1__["Card"], {
+        inverse: true,
+        color: "success"
       }, react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("div", {
-        className: "card"
+        className: "row no-gutters"
       }, react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("div", {
-        className: "card-header"
-      }, "Example Component"), react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("div", {
-        className: "card-body"
-      }, react__WEBPACK_IMPORTED_MODULE_0__["createElement"](reactstrap__WEBPACK_IMPORTED_MODULE_1__["Spinner"], {
-        size: "sm",
-        color: "success",
-        type: "grow"
-      }), "Server Online!", react__WEBPACK_IMPORTED_MODULE_0__["createElement"](reactstrap__WEBPACK_IMPORTED_MODULE_1__["Spinner"], {
-        size: "sm",
-        color: "danger",
-        type: "grow"
-      }), "Server Offline!", react__WEBPACK_IMPORTED_MODULE_0__["createElement"](reactstrap__WEBPACK_IMPORTED_MODULE_1__["Spinner"], {
-        size: "sm",
-        color: "warning",
-        type: "grow"
-      }), "Server Pinging!"))), react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("div", {
-        className: "col-md-4"
+        className: "col-md-3"
+      }, react__WEBPACK_IMPORTED_MODULE_0__["createElement"](reactstrap__WEBPACK_IMPORTED_MODULE_1__["CardBody"], null, react__WEBPACK_IMPORTED_MODULE_0__["createElement"](_fortawesome_react_fontawesome__WEBPACK_IMPORTED_MODULE_4__["FontAwesomeIcon"], {
+        icon: _fortawesome_free_solid_svg_icons__WEBPACK_IMPORTED_MODULE_5__["faDesktop"]
+      }))), react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("div", {
+        className: "col-md-9"
+      }, react__WEBPACK_IMPORTED_MODULE_0__["createElement"](reactstrap__WEBPACK_IMPORTED_MODULE_1__["CardBody"], null, react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("h4", null, "Server status"), react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("h5", null, "1 Online | 1 Offline"))))), react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("br", null)), react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("div", {
+        className: "col-md-3"
+      }, react__WEBPACK_IMPORTED_MODULE_0__["createElement"](reactstrap__WEBPACK_IMPORTED_MODULE_1__["Card"], {
+        inverse: true,
+        color: "success"
       }, react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("div", {
-        className: "card"
+        className: "row no-gutters"
       }, react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("div", {
-        className: "card-header"
-      }, "Example Component"), react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("div", {
-        className: "card-body"
-      }, react__WEBPACK_IMPORTED_MODULE_0__["createElement"](reactstrap__WEBPACK_IMPORTED_MODULE_1__["Spinner"], {
-        size: "sm",
-        color: "success",
-        type: "grow"
-      }), "Server Online!", react__WEBPACK_IMPORTED_MODULE_0__["createElement"](reactstrap__WEBPACK_IMPORTED_MODULE_1__["Spinner"], {
-        size: "sm",
-        color: "danger",
-        type: "grow"
-      }), "Server Offline!", react__WEBPACK_IMPORTED_MODULE_0__["createElement"](reactstrap__WEBPACK_IMPORTED_MODULE_1__["Spinner"], {
-        size: "sm",
-        color: "warning",
-        type: "grow"
-      }), "Server Pinging!"))), react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("div", {
+        className: "col-md-3"
+      }, react__WEBPACK_IMPORTED_MODULE_0__["createElement"](reactstrap__WEBPACK_IMPORTED_MODULE_1__["CardBody"], null, react__WEBPACK_IMPORTED_MODULE_0__["createElement"](_fortawesome_react_fontawesome__WEBPACK_IMPORTED_MODULE_4__["FontAwesomeIcon"], {
+        icon: "desktop"
+      }))), react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("div", {
+        className: "col-md-9"
+      }, react__WEBPACK_IMPORTED_MODULE_0__["createElement"](reactstrap__WEBPACK_IMPORTED_MODULE_1__["CardBody"], null, react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("h4", null, "Server status"), react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("h5", null, "1 Online | 1 Offline"))))), react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("br", null)), react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("div", {
         className: "col-md-8"
       }, react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("div", {
         className: "card"
@@ -53871,6 +53908,124 @@ function (_Component) {
 
 
 /* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./../../../../node_modules/process/browser.js */ "./node_modules/process/browser.js")))
+
+/***/ }),
+
+/***/ "./resources/js/pages/servers.js":
+/*!***************************************!*\
+  !*** ./resources/js/pages/servers.js ***!
+  \***************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return Servers; });
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var reactstrap__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! reactstrap */ "./node_modules/reactstrap/es/index.js");
+/* harmony import */ var reactstrap_es_CardDeck__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! reactstrap/es/CardDeck */ "./node_modules/reactstrap/es/CardDeck.js");
+/* harmony import */ var _fortawesome_react_fontawesome__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @fortawesome/react-fontawesome */ "./node_modules/@fortawesome/react-fontawesome/index.es.js");
+/* harmony import */ var _fortawesome_free_solid_svg_icons__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @fortawesome/free-solid-svg-icons */ "./node_modules/@fortawesome/free-solid-svg-icons/index.es.js");
+function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
+
+function _possibleConstructorReturn(self, call) { if (call && (_typeof(call) === "object" || typeof call === "function")) { return call; } return _assertThisInitialized(self); }
+
+function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
+
+function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
+
+function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
+
+
+
+
+
+ // import Toast from "../../components/Toast";
+
+/*
+
+@TODO REMOVE SPINNER THINGIES MAKE IT STATIC. KEEP SPINNERS FOR LOADING
+
+ */
+
+var Servers =
+/*#__PURE__*/
+function (_React$Component) {
+  _inherits(Servers, _React$Component);
+
+  function Servers() {
+    _classCallCheck(this, Servers);
+
+    return _possibleConstructorReturn(this, _getPrototypeOf(Servers).apply(this, arguments));
+  }
+
+  _createClass(Servers, [{
+    key: "render",
+    value: function render() {
+      return react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("div", null, react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("h2", null, "Servers"), react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("hr", null), react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("div", {
+        className: "row"
+      }, react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("div", {
+        className: "col-md-12"
+      }, react__WEBPACK_IMPORTED_MODULE_0__["createElement"](reactstrap__WEBPACK_IMPORTED_MODULE_1__["Card"], null, react__WEBPACK_IMPORTED_MODULE_0__["createElement"](reactstrap__WEBPACK_IMPORTED_MODULE_1__["Table"], {
+        responsive: true,
+        hover: true
+      }, react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("thead", null, react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("tr", null, react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("th", {
+        style: {
+          width: "25px"
+        }
+      }, "#"), react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("th", {
+        style: {
+          width: "50px"
+        }
+      }, "Status"), react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("th", {
+        style: {
+          width: "200px"
+        }
+      }, "Name"), react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("th", {
+        style: {
+          width: "100px"
+        }
+      }, "IP"), react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("th", null, "Description"))), react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("tbody", null, react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("tr", null, react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("th", {
+        scope: "row"
+      }, "1"), react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("th", {
+        scope: "row"
+      }, react__WEBPACK_IMPORTED_MODULE_0__["createElement"](reactstrap__WEBPACK_IMPORTED_MODULE_1__["Spinner"], {
+        color: "success",
+        type: "grow",
+        size: "sm"
+      })), react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("td", null, "NL-AMS1-01"), react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("td", null, "xxx.xxx.xxx.xxx"), react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("td", null, "Web server")), react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("tr", null, react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("th", {
+        scope: "row"
+      }, "1"), react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("th", {
+        scope: "row"
+      }, react__WEBPACK_IMPORTED_MODULE_0__["createElement"](reactstrap__WEBPACK_IMPORTED_MODULE_1__["Spinner"], {
+        color: "warning",
+        type: "grow",
+        size: "sm"
+      })), react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("td", null, "NL-AMS1-02"), react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("td", null, "xxx.xxx.xxx.xxx"), react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("td", null, "Git server")), react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("tr", null, react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("th", {
+        scope: "row"
+      }, "1"), react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("th", {
+        scope: "row"
+      }, react__WEBPACK_IMPORTED_MODULE_0__["createElement"](reactstrap__WEBPACK_IMPORTED_MODULE_1__["Spinner"], {
+        color: "danger",
+        type: "grow",
+        size: "sm"
+      })), react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("td", null, "NL-AMS1-03"), react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("td", null, "xxx.xxx.xxx.xxx"), react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("td", null, "SystemManager Instance"))))))));
+    }
+  }]);
+
+  return Servers;
+}(react__WEBPACK_IMPORTED_MODULE_0__["Component"]);
+
+
 
 /***/ }),
 

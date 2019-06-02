@@ -13,6 +13,7 @@ export default class AdminLayout extends React.Component {
                     <div id="page-content-wrapper">
                         <NavBar/>
                         <div className="container-fluid">
+                            <br />
                             {this.props.children}
                         </div>
                         {/*<Footer/>*/}
