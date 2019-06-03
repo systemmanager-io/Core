@@ -23,3 +23,17 @@
     //line-height: 90px;
     //background: rgba(0, 0, 0, 0.2);
 }
+
+.serverstatus {
+    font-size: 16px;
+}
+
+.serverstatus.online {
+    color: green;
+}
+.serverstatus.info {
+    color: blue;
+}
+.serverstatus.offline {
+    color: red;
+}

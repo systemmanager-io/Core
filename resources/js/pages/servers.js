@@ -2,7 +2,7 @@ import * as React from 'react';
 import {Spinner, Toast, Row, ToastHeader, ToastBody, Card, CardBody, Table} from "reactstrap";
 import CardDeck from "reactstrap/es/CardDeck";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
-import {faDesktop, faServer} from "@fortawesome/free-solid-svg-icons";
+import {faCircle, faDesktop, faServer} from "@fortawesome/free-solid-svg-icons";
 // import Toast from "../../components/Toast";
 
 /*
@@ -28,6 +28,7 @@ export default class Servers extends React.Component {
                                     <th style={{width: "200px"}}>Name</th>
                                     <th style={{width: "100px"}}>IP</th>
                                     <th>Description</th>
+                                    <th>System Message</th>
                                     {/*<th>Cluster</th>*/}
 
                                 </tr>
@@ -35,24 +36,43 @@ export default class Servers extends React.Component {
                                 <tbody>
                                 <tr>
                                     <th scope="row">1</th>
-                                    <th scope="row"><Spinner color="success" type="grow" size="sm"></Spinner></th>
+                                    <th><FontAwesomeIcon style={{color: "red"}} icon={faCircle}/></th>
                                     <td>NL-AMS1-01</td>
                                     <td>xxx.xxx.xxx.xxx</td>
                                     <td>Web server</td>
+                                    <td></td>
                                 </tr>
                                 <tr>
                                     <th scope="row">1</th>
-                                    <th scope="row"><Spinner color="warning" type="grow" size="sm"></Spinner></th>
+                                    <th><Spinner type="grow" size="sm" color="dark"/></th>
                                     <td>NL-AMS1-02</td>
                                     <td>xxx.xxx.xxx.xxx</td>
                                     <td>Git server</td>
+                                    <td></td>
                                 </tr>
                                 <tr>
                                     <th scope="row">1</th>
-                                    <th scope="row"><Spinner color="danger" type="grow" size="sm"></Spinner></th>
+                                    <th><FontAwesomeIcon className="serverstatus info" icon={faCircle}/></th>
                                     <td>NL-AMS1-03</td>
                                     <td>xxx.xxx.xxx.xxx</td>
                                     <td>SystemManager Instance</td>
+                                    <td>SMART Error</td>
+                                </tr>
+                                <tr>
+                                    <th scope="row">12</th>
+                                    <th><FontAwesomeIcon className="serverstatus online" icon={faCircle}/></th>
+                                    <td>NL-AMS1-03</td>
+                                    <td>xxx.xxx.xxx.xxx</td>
+                                    <td>SystemManager Instance</td>
+                                    <td></td>
+                                </tr>
+                                <tr>
+                                    <th scope="row">1</th>
+                                    <th><FontAwesomeIcon className="serverstatus offline" icon={faCircle}/></th>
+                                    <td>NL-AMS1-03</td>
+                                    <td>xxx.xxx.xxx.xxx</td>
+                                    <td>SystemManager Instance</td>
+                                    <td>Server did not respond: HTTP Error 400</td>
                                 </tr>
                                 </tbody>
                             </Table>
