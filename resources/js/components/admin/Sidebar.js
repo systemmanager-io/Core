@@ -30,14 +30,18 @@ class Sidebar extends React.Component {
                     v0.1
                 </Tooltip>
                 <div className="list-group list-group-flush">
-                    <Link to="dashboard" className="list-group-item list-group-item-action bg-light"><FontAwesomeIcon
+                    <Link to="/dashboard" className="list-group-item list-group-item-action bg-light"><FontAwesomeIcon
                         icon={faDesktop}/> Dashboard</Link>
-                    <Link to="servers" className="list-group-item list-group-item-action bg-light"><FontAwesomeIcon
+                    <Link to="/servers" className="list-group-item list-group-item-action bg-light"><FontAwesomeIcon
                         icon={faServer}/> Servers</Link>
-                    <Link to="log" className="list-group-item list-group-item-action bg-light"><FontAwesomeIcon
+                    <Link to="/log" className="list-group-item list-group-item-action bg-light"><FontAwesomeIcon
                         icon={faList}/> Log</Link>
-                    <Link to="settings" className="list-group-item list-group-item-action bg-light"><FontAwesomeIcon
-                        icon={faCogs}/> Settings</Link>
+                    <Link to="/settings"
+                          className="list-group list-group-item list-group-item-action bg-light"><FontAwesomeIcon
+                        icon={faCogs}/> Settings
+                        <Link to="/settings/servers"
+                              className="list-group-item list-group-item-action bg-light">Test</Link>
+                    </Link>
 
                 </div>
             </div>

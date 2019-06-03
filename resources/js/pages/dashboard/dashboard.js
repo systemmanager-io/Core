@@ -14,6 +14,14 @@ export default class Dashboard extends React.Component {
                 <hr />
                 <div className="row">
                     <div className="col-md-3">
+                        {/*
+
+
+
+                        On successful the card will turn green and display a cool message
+                        On error the card will turn red and report te server that has errored
+
+                        */}
                         <Card inverse color="success">
                             <div className="row no-gutters">
                                 <div className="col-md-3 col-lg-3 col-sm-3 col-3">
@@ -24,7 +32,7 @@ export default class Dashboard extends React.Component {
                                 <div className="col-md-9 col-lg-9 col-sm-9 col-9">
                                     <CardBody>
                                         <h4>Server status</h4>
-                                        <h5>1 Online | 1 Offline</h5>
+                                        <h5>All Systems Operational</h5>
                                     </CardBody>
                                 </div>
                             </div>

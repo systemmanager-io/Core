@@ -3,13 +3,6 @@ import {Spinner, Toast, Row, ToastHeader, ToastBody, Card, CardBody, Table} from
 import CardDeck from "reactstrap/es/CardDeck";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faCircle, faDesktop, faServer} from "@fortawesome/free-solid-svg-icons";
-// import Toast from "../../components/Toast";
-
-/*
-
-@TODO REMOVE SPINNER THINGIES MAKE IT STATIC. KEEP SPINNERS FOR LOADING
-
- */
 
 export default class Servers extends React.Component {
     render() {
@@ -24,24 +17,16 @@ export default class Servers extends React.Component {
                                 <thead>
                                 <tr>
                                     <th style={{width: "25px"}}>#</th>
-                                    <th style={{width: "50px"}}>Status</th>
-                                    <th style={{width: "200px"}}>Name</th>
-                                    <th style={{width: "100px"}}>IP</th>
-                                    <th>Description</th>
-                                    <th>System Message</th>
+                                    <th style={{width: "25px"}}></th>
+                                    <th style={{minWidth: "200px"}}>Name</th>
+                                    <th style={{minWidth: "100px"}}>IP</th>
+                                    <th style={{minWidth: "100px"}} >Description</th>
+                                    <th style={{minWidth: "100px"}}>System Message</th>
                                     {/*<th>Cluster</th>*/}
 
                                 </tr>
                                 </thead>
                                 <tbody>
-                                <tr>
-                                    <th scope="row">1</th>
-                                    <th><FontAwesomeIcon style={{color: "red"}} icon={faCircle}/></th>
-                                    <td>NL-AMS1-01</td>
-                                    <td>xxx.xxx.xxx.xxx</td>
-                                    <td>Web server</td>
-                                    <td></td>
-                                </tr>
                                 <tr>
                                     <th scope="row">1</th>
                                     <th><Spinner type="grow" size="sm" color="dark"/></th>
