@@ -2,7 +2,15 @@ import * as React from 'react';
 import {Spinner, Toast, Row, ToastHeader, ToastBody, Card, CardBody, Table} from "reactstrap";
 import CardDeck from "reactstrap/es/CardDeck";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
-import {faCircle, faDesktop, faServer} from "@fortawesome/free-solid-svg-icons";
+import {
+    faCheckCircle,
+    faCircle, faClock,
+    faDesktop,
+    faExclamationCircle,
+    faExclamationTriangle,
+    faServer
+} from "@fortawesome/free-solid-svg-icons";
+import {faTimesCircle} from "@fortawesome/free-solid-svg-icons/faTimesCircle";
 
 export default class Servers extends React.Component {
     render() {
@@ -29,35 +37,43 @@ export default class Servers extends React.Component {
                                 <tbody>
                                 <tr>
                                     <th scope="row">1</th>
-                                    <th><Spinner type="grow" size="sm" color="dark"/></th>
-                                    <td>NL-AMS1-02</td>
+                                    <th><FontAwesomeIcon className="serverstatus warning" icon={faExclamationTriangle}/></th>
+                                    <td>NL-AMS1-01</td>
                                     <td>xxx.xxx.xxx.xxx</td>
-                                    <td>Git server</td>
+                                    <td>Instance with Warning</td>
                                     <td></td>
                                 </tr>
                                 <tr>
                                     <th scope="row">1</th>
-                                    <th><FontAwesomeIcon className="serverstatus info" icon={faCircle}/></th>
-                                    <td>NL-AMS1-03</td>
+                                    <th><FontAwesomeIcon className="serverstatus danger" icon={faExclamationTriangle}/></th>
+                                    <td>NL-AMS1-02</td>
                                     <td>xxx.xxx.xxx.xxx</td>
-                                    <td>SystemManager Instance</td>
+                                    <td>Instance with Critical error</td>
                                     <td>SMART Error</td>
                                 </tr>
                                 <tr>
                                     <th scope="row">12</th>
-                                    <th><FontAwesomeIcon className="serverstatus online" icon={faCircle}/></th>
+                                    <th><FontAwesomeIcon className="serverstatus online" icon={faCheckCircle}/></th>
                                     <td>NL-AMS1-03</td>
                                     <td>xxx.xxx.xxx.xxx</td>
-                                    <td>SystemManager Instance</td>
+                                    <td>Online Instance</td>
+                                    <td></td>
+                                </tr>
+                                <tr>
+                                    <th scope="row">12</th>
+                                    <th><FontAwesomeIcon className="serverstatus info" icon={faClock}/></th>
+                                    <td>NL-AMS1-04</td>
+                                    <td>xxx.xxx.xxx.xxx</td>
+                                    <td>Pinging Instance</td>
                                     <td></td>
                                 </tr>
                                 <tr>
                                     <th scope="row">1</th>
-                                    <th><FontAwesomeIcon className="serverstatus offline" icon={faCircle}/></th>
-                                    <td>NL-AMS1-03</td>
+                                    <th><FontAwesomeIcon className="serverstatus offline" icon={faTimesCircle}/></th>
+                                    <td>NL-AMS1-05</td>
                                     <td>xxx.xxx.xxx.xxx</td>
-                                    <td>SystemManager Instance</td>
-                                    <td>Server did not respond: HTTP Error 400</td>
+                                    <td>Offline Instance</td>
+                                    <td></td>
                                 </tr>
                                 </tbody>
                             </Table>

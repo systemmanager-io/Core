@@ -31,9 +31,20 @@
 .serverstatus.online {
     color: green;
 }
+.serverstatus.warning {
+    color: orange;
+}
+.serverstatus.danger {
+    color: red;
+}
 .serverstatus.info {
     color: blue;
 }
 .serverstatus.offline {
     color: red;
+}
+.profilecard {
+
+    width: 500px;
+
 }

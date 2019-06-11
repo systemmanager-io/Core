@@ -1,10 +1,11 @@
 import React from 'react';
-import {Button, Dropdown, DropdownItem, DropdownMenu} from "reactstrap";
+import {Button, Card, CardFooter, Dropdown, DropdownItem, DropdownMenu} from "reactstrap";
 import DropdownToggle from "reactstrap/es/DropdownToggle";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {Link} from "react-router-dom";
 import {faBars} from "@fortawesome/free-solid-svg-icons/faBars";
-import {faUser} from "@fortawesome/free-solid-svg-icons";
+import {faLock, faSignOutAlt, faUser} from "@fortawesome/free-solid-svg-icons";
+import CardBody from "reactstrap/es/CardBody";
 
 
 class NavBar extends React.Component {
@@ -41,13 +42,15 @@ class NavBar extends React.Component {
                         <Dropdown isOpen={this.state.accountIsOpen} toggle={this.toggle}>
                             <DropdownToggle><FontAwesomeIcon icon={faUser}/></DropdownToggle>
                             <DropdownMenu right>
-                                <DropdownItem header>Header</DropdownItem>
-                                <DropdownItem>Some Action</DropdownItem>
-                                <DropdownItem disabled>Action (disabled)</DropdownItem>
-                                <DropdownItem divider />
-                                <DropdownItem>Foo Action</DropdownItem>
-                                <DropdownItem>Bar Action</DropdownItem>
-                                <DropdownItem>Quo Action</DropdownItem>
+                                <div className="profilecard">
+                                    <CardBody>
+                                        <Button><FontAwesomeIcon icon={faUser}/> Profile</Button>
+                                    </CardBody>
+                                    <CardFooter>
+                                    <Button><FontAwesomeIcon icon={faLock}/> Lock</Button>
+                                    <Button style={{textAlign: "right"}}><FontAwesomeIcon icon={faSignOutAlt}/> Sign Out</Button>
+                                    </CardFooter>
+                                </div>
                             </DropdownMenu>
                         </Dropdown>
                         {/*<li className="nav-item active">*/}
