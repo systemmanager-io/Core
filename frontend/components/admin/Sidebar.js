@@ -23,7 +23,7 @@ class Sidebar extends React.Component {
 
     render() {
         return (
-            <div className="bg-light border-right open" id="sidebar-wrapper">
+            <div className="bg-light border-right">
                 <div className="sidebar-heading"><a id="systemmanagerVersionHover">SystemManager</a></div>
                 <Tooltip placement="right" isOpen={this.state.tooltipOpen} target="systemmanagerVersionHover"
                          toggle={this.toggle}>
