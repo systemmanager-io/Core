@@ -6,6 +6,7 @@ import AdminLayout from "./layouts/AdminLayout";
 import Login from "./pages/login/login";
 import LoginLayout from "./layouts/LoginLayout";
 import Servers from "./pages/servers";
+import './css/app.scss';
 
 class App extends React.Component {
 
@@ -21,6 +22,7 @@ class App extends React.Component {
                 <AdminLayout>
                     <Route path="/dashboard" exact component={Dashboard}/>
                     <Route path="/servers" exact component={Servers}/>
+                    <Route path="/settings/servers" exact component={Servers}/>
                     {/*<Route path="/management" exact component={Management}/>*/}
                 </AdminLayout>
             </Switch>

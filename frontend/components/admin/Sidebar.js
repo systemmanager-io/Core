@@ -23,7 +23,7 @@ class Sidebar extends React.Component {
 
     render() {
         return (
-            <div className="bg-light border-right" id="sidebar-wrapper">
+            <div className="bg-light border-right open" id="sidebar-wrapper">
                 <div className="sidebar-heading"><a id="systemmanagerVersionHover">SystemManager</a></div>
                 <Tooltip placement="right" isOpen={this.state.tooltipOpen} target="systemmanagerVersionHover"
                          toggle={this.toggle}>
@@ -39,10 +39,9 @@ class Sidebar extends React.Component {
                     <Link to="/settings"
                           className="list-group list-group-item list-group-item-action bg-light"><FontAwesomeIcon
                         icon={faCogs}/> Settings
-                        <Link to="/settings/servers"
-                              className="list-group-item list-group-item-action bg-light">Test</Link>
                     </Link>
-
+                    <Link to="/settings/servers"
+                          className="list-group-item list-group-item-action bg-light">Servfers</Link>
                 </div>
             </div>
         );

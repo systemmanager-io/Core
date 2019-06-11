@@ -5,7 +5,10 @@
 @import 'variables';
 
 // Bootstrap
-@import '~bootstrap/scss/bootstrap';
+@import '../../node_modules/bootstrap/scss/bootstrap';
+
+// Sidebar
+@import './sidebar';
 
 .navbar-laravel {
     background-color: #fff;
@@ -41,10 +44,8 @@
     color: blue;
 }
 .serverstatus.offline {
-    color: red;
+    color: red
 }
 .profilecard {
-
-    width: 500px;
-
+    width: 250px;
 }

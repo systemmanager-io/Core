@@ -1,3 +1,5 @@
+@import './_variables.scss';
+
 body {
     //overflow-x: hidden;
 }
@@ -12,8 +14,15 @@ body {
 }
 
 #sidebar-wrapper .sidebar-heading {
-    padding: 0.875rem 1.25rem;
+    display: flex;
+    height: 53px;
+    text-align: center;
+    align-items: center;
     font-size: 1.2rem;
+
+}
+div.sidebar-heading > a {
+    display: inline-block
 }
 
 #sidebar-wrapper .list-group {
