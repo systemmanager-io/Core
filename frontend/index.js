@@ -1,5 +1,4 @@
 // import './bootstrap';
-import "react-hot-loader";
 import * as React from 'react';
 import * as ReactDOM from 'react-dom';
 import App from './App';
@@ -9,9 +8,8 @@ ReactDOM.render(
     <BrowserRouter>
         <App/>
     </BrowserRouter>,
-document.getElementById("systemmanagerapp"),
-)
-;
+    document.getElementById("systemmanagerapp"),
+);
 
 // If you want your app to work offline and load faster, you can change
 // unregister() to register() below. Note this comes with some pitfalls.

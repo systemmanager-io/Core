@@ -7,7 +7,7 @@ import {
     faCircle, faClock,
     faDesktop,
     faExclamationCircle,
-    faExclamationTriangle,
+    faExclamationTriangle, faInfoCircle,
     faServer
 } from "@fortawesome/free-solid-svg-icons";
 import {faTimesCircle} from "@fortawesome/free-solid-svg-icons/faTimesCircle";
@@ -27,7 +27,7 @@ export default class Servers extends React.Component {
                                     <th style={{width: "25px"}}>#</th>
                                     <th style={{width: "25px"}}></th>
                                     <th style={{minWidth: "200px"}}>Name</th>
-                                    <th style={{minWidth: "100px"}}>IP</th>
+                                    <th style={{minWidth: "100px"}}>IP/FQDN</th>
                                     <th style={{minWidth: "100px"}} >Description</th>
                                     <th style={{minWidth: "100px"}}>System Message</th>
                                     {/*<th>Cluster</th>*/}
@@ -35,6 +35,14 @@ export default class Servers extends React.Component {
                                 </tr>
                                 </thead>
                                 <tbody>
+                                <tr>
+                                    <th scope="row">1</th>
+                                    <th><FontAwesomeIcon className="serverstatus info" icon={faInfoCircle}/></th>
+                                    <td>NL-ALM1-01</td>
+                                    <td>xxx.xxx.xxx.xxx</td>
+                                    <td>Instance with Info</td>
+                                    <td></td>
+                                </tr>
                                 <tr>
                                     <th scope="row">1</th>
                                     <th><FontAwesomeIcon className="serverstatus warning" icon={faExclamationTriangle}/></th>
@@ -61,7 +69,7 @@ export default class Servers extends React.Component {
                                 </tr>
                                 <tr>
                                     <th scope="row">12</th>
-                                    <th><FontAwesomeIcon className="serverstatus info" icon={faClock}/></th>
+                                    <th><FontAwesomeIcon className="serverstatus warning" icon={faClock}/></th>
                                     <td>NL-AMS1-04</td>
                                     <td>xxx.xxx.xxx.xxx</td>
                                     <td>Pinging Instance</td>
