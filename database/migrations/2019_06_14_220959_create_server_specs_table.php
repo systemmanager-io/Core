@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateServersTable extends Migration
+class CreateServerSpecsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,14 +13,13 @@ class CreateServersTable extends Migration
      */
     public function up()
     {
-        Schema::create('servers', function (Blueprint $table) {
+        Schema::create('server_specs', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->string('name');
-            $table->ipAddress('ipAddress');
-            $table->longText('description')->nullable();
-            $table->boolean("portableMode")->default(false);
-            $table->boolean("online");
-            $table->text("systemMessage");
+            $table->bigInteger('serverId');
+            $table->string("cpuManufacture");
+            $table->string("cpuModel");
+            $table->string("cpuType");
+            $table->string("cpuCores");
             $table->timestamps();
         });
     }
@@ -32,6 +31,6 @@ class CreateServersTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('servers');
+        Schema::dropIfExists('server_specs');
     }
 }

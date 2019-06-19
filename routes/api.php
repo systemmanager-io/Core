@@ -17,7 +17,10 @@ Route::group(['middleware' => ['api.headers', 'jwt.verify']], function () {
 
     Route::prefix('server')->group(function () {
 
-        Route::post('create', 'ServerController@create');
+        Route::get('list', 'ServerController@index');
+        Route::get('get', 'ServerController@show');
+        Route::post('create', 'ServerController@store');
+        Route::post('edit', 'ServerController@update');
 
     });
 
@@ -28,10 +31,9 @@ Route::group(['middleware' => 'api.headers'], function () {
     // The registration and login requests doesn't come with tokens
     // as users at that point have not been authenticated yet
     // Therefore the jwtMiddleware will be exclusive of them
-    Route::post('auth/login', 'UserController@authenticate');
-    Route::post('auth/register', 'UserController@register');
+    Route::post('auth/login', 'Auth\AuthenticatorController');
+    Route::post('auth/register', 'Auth\RegisterController');
 
 
 });
-Route::get('open', 'DataController@open');
 
