@@ -25,7 +25,7 @@ module.exports = {
     resolve: { extensions: ["*", ".js", ".jsx"] },
     output: {
         path: path.resolve(__dirname, "public/js"),
-        publicPath: "http://192.168.178.60:3000/js/",
+        publicPath: "http://192.168.178.60  :3000/js/",
         filename: "index.js"
     },
     devServer: {

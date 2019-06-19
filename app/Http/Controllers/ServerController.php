@@ -21,9 +21,10 @@ class ServerController extends Controller
     /**
      * Show the form for creating a new resource.
      *
-     * @return \Illuminate\Http\Response
+     * @param Request $request
+     * @return void
      */
-    public function create($request)
+    public function create(Request $request)
     {
         $validated = Validator::make($request->all(), [
             'name' => 'required|string|max:255',
@@ -31,6 +32,7 @@ class ServerController extends Controller
             'description' => 'required|string|max:255',
             'portableMode' => 'required|boolean',
         ]);
+
 
         RetrieveServerStatus::dispatch()->onQueue('serverstatus');
     }

@@ -14,13 +14,13 @@ use Illuminate\Http\Request;
 */
 Route::group(['middleware' => ['api.headers', 'jwt.verify']], function () {
 
-    // all routes to protected resources are registered here
-    Route::get('users/list', function () {
-        $users = App\User::all();
 
-        $response = ['success' => true, 'data' => $users];
-        return response()->json($response, 201);
+    Route::prefix('server')->group(function () {
+
+        Route::post('create', 'ServerController@create');
+
     });
+
 });
 
 Route::group(['middleware' => 'api.headers'], function () {
@@ -30,6 +30,8 @@ Route::group(['middleware' => 'api.headers'], function () {
     // Therefore the jwtMiddleware will be exclusive of them
     Route::post('auth/login', 'UserController@authenticate');
     Route::post('auth/register', 'UserController@register');
+
+
 });
 Route::get('open', 'DataController@open');
 

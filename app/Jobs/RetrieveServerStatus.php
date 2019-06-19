@@ -29,6 +29,6 @@ class RetrieveServerStatus implements ShouldQueue
      */
     public function handle()
     {
-        print_r("test");
+        print_r("Yeet");
     }
 }

@@ -9,4 +9,6 @@ class Server extends Model
     /**
      * Get the server statusses
      */
+
+
 }
