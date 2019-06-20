@@ -21,6 +21,7 @@ Route::group(['middleware' => ['api.headers', 'jwt.verify']], function () {
         Route::get('get', 'ServerController@show');
         Route::post('create', 'ServerController@store');
         Route::post('edit', 'ServerController@update');
+        Route::get('queue', 'ServerController@queue');
 
     });
 

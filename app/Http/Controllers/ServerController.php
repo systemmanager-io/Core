@@ -32,6 +32,7 @@ class ServerController extends Controller
         $validated = $request->validate([
             'name' => 'required|string|max:255',
             'ipAddress' => 'required|string|max:255',
+            'port' => 'required|int',
             'description' => 'string|max:255',
             'portableMode' => 'required|boolean',
         ]);
@@ -39,6 +40,7 @@ class ServerController extends Controller
         $server = new Server();
         $server->name = $validated['name'];
         $server->ipAddress = $validated['ipAddress'];
+        $server->port = $validated['port'];
         if (isset($validated->description)) {
             $server->description = $validated['description'];
         }
@@ -82,5 +84,10 @@ class ServerController extends Controller
     public function destroy($id)
     {
         //
+    }
+
+    public function queue()
+    {
+        QueueAllServers::dispatch()->onQueue('serverstatus');
     }
 }

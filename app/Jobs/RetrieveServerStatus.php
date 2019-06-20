@@ -2,6 +2,8 @@
 
 namespace App\Jobs;
 
+use App\Server;
+use App\ServerStatus;
 use Illuminate\Bus\Queueable;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Queue\InteractsWithQueue;
@@ -9,6 +11,8 @@ use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
 use GuzzleHttp\Exception\GuzzleException;
 use GuzzleHttp\Client;
+use Illuminate\Support\Facades\Log;
+use PhpParser\JsonDecoder;
 
 class RetrieveServerStatus implements ShouldQueue
 {
@@ -33,10 +37,25 @@ class RetrieveServerStatus implements ShouldQueue
      */
     public function handle()
     {
+        $server = Server::find($this->serverId);
+        $serverStatus = $server->statuses->last();
+        $decodedStatus = json_decode($serverStatus);
 
-        $ch = curl_init("http://127.0.0.1:3000/status");
-        curl_setopt($ch, CURLOPT_RETURNTRANSFER , 0);
-        $result = curl_exec($ch);
-        curl_close($ch);
+
+        Log::info($serverStatus);
+        if (!$server->portableMode == 1) {
+            $ch = curl_init($server->ipAddress . ":" . $server->port . "/status");
+
+            curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+//            $result = curl_exec($ch);
+            if (!curl_exec($ch) === false) {
+                die($decodedStatus['status']);
+            } else {
+                echo "Offline";
+            }
+            echo("\n");
+            curl_close($ch);
+
+        }
     }
 }
