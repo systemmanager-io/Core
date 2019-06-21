@@ -14,6 +14,5 @@ class Server extends Model
     {
         return $this->hasMany(ServerStatus::class, "serverId");
     }
-
 }
 

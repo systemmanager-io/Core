@@ -7,17 +7,37 @@ use App\Jobs\RetrieveServerStatus;
 use App\Server;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
+use PhpParser\Node\Expr\Array_;
 
 class ServerController extends Controller
 {
     /**
      * Display a listing of the resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return array
      */
     public function index()
     {
+        $serverList = Array();
 
+        $servers = Server::all();
+        foreach ($servers as $server) {
+            $serverStatus = $server->statuses->last();
+            $serverItem = Array();
+            $serverItem['id'] = $server->id;
+            $serverItem['name'] = $server->name;
+            $serverItem['ipAddress'] = $server->ipAddress;
+            $serverItem['port'] = $server->port;
+            $serverItem['description'] = $server->description;
+            $serverItem['portableMode'] = $server->portableMode;
+            $serverItem['status'] = $serverStatus['status'];
+            $serverItem['messageType'] = $serverStatus['messageType'];
+            $serverItem['message'] = $serverStatus['message'];
+
+            array_push($serverList, $serverItem);
+        }
+
+        return $serverList;
     }
 
     /**
@@ -29,19 +49,27 @@ class ServerController extends Controller
      */
     public function store(Request $request)
     {
-        $validated = $request->validate([
+        $validator = Validator::make($request->all(), [
             'name' => 'required|string|max:255',
             'ipAddress' => 'required|string|max:255',
-            'port' => 'required|int',
+            'port' => 'int',
             'description' => 'string|max:255',
             'portableMode' => 'required|boolean',
         ]);
 
+        if ($validator->fails()) {
+            return response()->json(['errors' => $validator->errors()]);
+        }
+
+        $validated = $validator->validated();
+
         $server = new Server();
         $server->name = $validated['name'];
         $server->ipAddress = $validated['ipAddress'];
-        $server->port = $validated['port'];
-        if (isset($validated->description)) {
+        if (isset($validated['port'])) {
+            $server->port = $validated['port'];
+        }
+        if (isset($validated['description'])) {
             $server->description = $validated['description'];
         }
         $server->portableMode = $validated['portableMode'];
