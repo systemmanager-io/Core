@@ -91,7 +91,7 @@ class RetrieveServerStatus implements ShouldQueue
                     $newServerStatus->save();
                 }
             }
-            echo("\n");
+            print_r($ch);
             curl_close($ch);
 
         } else {

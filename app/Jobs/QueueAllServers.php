@@ -3,6 +3,7 @@
 namespace App\Jobs;
 
 use App\Server;
+use App\Setting;
 use Illuminate\Bus\Queueable;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Queue\InteractsWithQueue;
@@ -33,8 +34,15 @@ class QueueAllServers implements ShouldQueue
 
         $servers = Server::all();
 
-        foreach ($servers as $server) {
-            RetrieveServerStatus::dispatch($server->id)->onQueue('serverstatus');
+        $automaticPinger = Setting::where('key', '=', 'automaticPinger')->get();
+
+
+        if ($automaticPinger) {
+            foreach ($servers as $server) {
+                RetrieveServerStatus::dispatch($server->id)->onQueue('serverstatus');
+            }
+        } else {
+            print_r("Automatic pinger turned off");
         }
     }
 }

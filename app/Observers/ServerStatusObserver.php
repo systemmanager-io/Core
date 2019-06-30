@@ -14,7 +14,7 @@ class ServerStatusObserver
      */
     public function created(ServerStatus $serverStatus)
     {
-        //
+        print_f($serverStatus);
     }
 
     /**

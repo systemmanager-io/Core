@@ -117,5 +117,7 @@ class ServerController extends Controller
     public function queue()
     {
         QueueAllServers::dispatch()->onQueue('serverstatus');
+
+        return response()->json(["status" => "server reping queued", "code" => 200], 200);
     }
 }
