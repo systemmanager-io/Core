@@ -43,17 +43,15 @@ class RetrieveServerStatus implements ShouldQueue
 
 
         Log::info($serverStatus);
-//        echo($server);
-//        echo($serverStatus);
         if (!$server->portableMode == 1) {
             $ch = curl_init($server->ipAddress . ":" . $server->port . "/status");
 
             curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
-//            $result = curl_exec($ch);
             if (!curl_exec($ch) === false) {
+                print_r("Online");
                 if ($serverStatus['status'] === "ONLINE") {
-//                    echo($serverStatus);
                     echo("ONLINE WITH RECORD");
+                    echo("\n");
                 } elseif ($serverStatus['status'] === "OFFLINE") {
                     $newServerStatus = new ServerStatus;
                     $newServerStatus->serverId = $server->id;
@@ -62,7 +60,6 @@ class RetrieveServerStatus implements ShouldQueue
                     $newServerStatus->message = "Server marked as Online";
                     $newServerStatus->save();
                 } else {
-                    echo($serverStatus);
                     $newServerStatus = new ServerStatus;
                     $newServerStatus->serverId = $server->id;
                     $newServerStatus->status = "ONLINE";
@@ -71,27 +68,26 @@ class RetrieveServerStatus implements ShouldQueue
                     $newServerStatus->save();
                 }
             } else {
+                print_r("Offline");
                 if ($serverStatus['status'] === "OFFLINE") {
-//                    echo($serverStatus);
                     echo("OFFLINE WITH RECORD");
+                    echo("\n");
                 } elseif ($serverStatus['status'] === "ONLINE") {
                     $newServerStatus = new ServerStatus;
                     $newServerStatus->serverId = $server->id;
                     $newServerStatus->status = "OFFLINE";
                     $newServerStatus->messageType = "FATAL";
-                    $newServerStatus->message = "Server marked as Offline";
+                    $newServerStatus->message = "SERVER IS OFFLINE";
                     $newServerStatus->save();
                 } else {
-                    echo($serverStatus);
                     $newServerStatus = new ServerStatus;
                     $newServerStatus->serverId = $server->id;
-                    $newServerStatus->status = "ONLINE";
+                    $newServerStatus->status = "OFFLINE";
                     $newServerStatus->messageType = "FATAL";
-                    $newServerStatus->message = "Server marked as Offline";
+                    $newServerStatus->message = "SERVER IS OFFLINE";
                     $newServerStatus->save();
                 }
             }
-            print_r($ch);
             curl_close($ch);
 
         } else {
