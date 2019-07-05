@@ -4,8 +4,10 @@ namespace App\Http\Controllers;
 
 use App\Jobs\QueueAllServers;
 use App\Jobs\RetrieveServerStatus;
+use App\Mail\ServerOnline;
 use App\Server;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Validator;
 use PhpParser\Node\Expr\Array_;
 
@@ -73,7 +75,7 @@ class ServerController extends Controller
             $server->description = $validated['description'];
         }
         $server->portableMode = $validated['portableMode'];
-        $server->authKey = bin2hex(random_bytes(256));
+        $server->authKey = bin2hex(random_bytes(64));
 
         $server->save();
 

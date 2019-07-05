@@ -2,6 +2,8 @@
 
 namespace App\Jobs;
 
+use App\Mail\ServerOffline;
+use App\Mail\ServerOnline;
 use App\Server;
 use App\ServerStatus;
 use Illuminate\Bus\Queueable;
@@ -12,6 +14,7 @@ use Illuminate\Foundation\Bus\Dispatchable;
 use GuzzleHttp\Exception\GuzzleException;
 use GuzzleHttp\Client;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Mail;
 use PhpParser\JsonDecoder;
 
 class RetrieveServerStatus implements ShouldQueue
@@ -41,17 +44,13 @@ class RetrieveServerStatus implements ShouldQueue
         $serverStatus = $server->statuses->last();
         $decodedStatus = json_decode($serverStatus);
 
-
         Log::info($serverStatus);
         if (!$server->portableMode == 1) {
             $ch = curl_init($server->ipAddress . ":" . $server->port . "/status");
 
             curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
             if (!curl_exec($ch) === false) {
-                print_r("Online");
                 if ($serverStatus['status'] === "ONLINE") {
-                    echo("ONLINE WITH RECORD");
-                    echo("\n");
                 } elseif ($serverStatus['status'] === "OFFLINE") {
                     $newServerStatus = new ServerStatus;
                     $newServerStatus->serverId = $server->id;
@@ -59,6 +58,15 @@ class RetrieveServerStatus implements ShouldQueue
                     $newServerStatus->messageType = "INFO";
                     $newServerStatus->message = "Server marked as Online";
                     $newServerStatus->save();
+
+                    $email = [
+                        "serverName" => $server->name,
+                        "status" => "ONLINE",
+                        "message" => "NOT PROGRAMMED IN JUST YET"
+                    ];
+
+                    Mail::to("tigo.middelkoop@gmail.com")->queue(new ServerOnline($email));
+
                 } else {
                     $newServerStatus = new ServerStatus;
                     $newServerStatus->serverId = $server->id;
@@ -68,10 +76,7 @@ class RetrieveServerStatus implements ShouldQueue
                     $newServerStatus->save();
                 }
             } else {
-                print_r("Offline");
                 if ($serverStatus['status'] === "OFFLINE") {
-                    echo("OFFLINE WITH RECORD");
-                    echo("\n");
                 } elseif ($serverStatus['status'] === "ONLINE") {
                     $newServerStatus = new ServerStatus;
                     $newServerStatus->serverId = $server->id;
@@ -79,6 +84,15 @@ class RetrieveServerStatus implements ShouldQueue
                     $newServerStatus->messageType = "FATAL";
                     $newServerStatus->message = "SERVER IS OFFLINE";
                     $newServerStatus->save();
+
+                    $email = [
+                        "serverName" => $server->name,
+                        "status" => "OFFLINE",
+                        "message" => "NOT PROGRAMMED IN JUST YET"
+                    ];
+
+                    Mail::to("tigo.middelkoop@gmail.com")->queue(new ServerOffline($email));
+
                 } else {
                     $newServerStatus = new ServerStatus;
                     $newServerStatus->serverId = $server->id;

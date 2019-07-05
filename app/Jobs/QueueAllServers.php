@@ -37,7 +37,7 @@ class QueueAllServers implements ShouldQueue
         $automaticPinger = Setting::where('key', '=', 'automaticPinger')->get();
 
 
-        if ($automaticPinger) {
+        if ($automaticPinger || $manual) {
             foreach ($servers as $server) {
                 RetrieveServerStatus::dispatch($server->id)->onQueue('serverstatus');
             }

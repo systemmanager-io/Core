@@ -2,6 +2,7 @@
 
 namespace App\Http;
 
+use App\Http\Middleware\JsonMiddleware;
 use Illuminate\Foundation\Http\Kernel as HttpKernel;
 
 class Kernel extends HttpKernel
@@ -29,6 +30,7 @@ class Kernel extends HttpKernel
      * @var array
      */
     protected $routeMiddleware = [
+        'return-json' => JsonMiddleware::class,
         'api.headers' => \App\Http\Middleware\API::class,
 //        'auth' => \App\Http\Middleware\Authenticate::class,
 //        'auth.basic' => \Illuminate\Auth\Middleware\AuthenticateWithBasicAuth::class,

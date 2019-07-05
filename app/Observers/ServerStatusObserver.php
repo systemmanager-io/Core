@@ -2,7 +2,10 @@
 
 namespace App\Observers;
 
+use App\Mail\ServerOnline;
 use App\ServerStatus;
+use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Mail;
 
 class ServerStatusObserver
 {
@@ -14,7 +17,9 @@ class ServerStatusObserver
      */
     public function created(ServerStatus $serverStatus)
     {
-        print_f($serverStatus);
+//        Log::info("Sending Mail");
+//        Mail::to("tigo.middelkoop@gmail.com")->queue(new ServerStatusChanged());
+//        Log::info("Mail Send");
     }
 
     /**
