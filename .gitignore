@@ -1,14 +1,3 @@
-/node_modules
-/public/hot
-/public/storage
-/storage/*.key
-/vendor
-.env
-.phpunit.result.cache
-Homestead.json
-Homestead.yaml
-npm-debug.log
-yarn-error.log
-yarn.lock
-composer.lock
-/.idea/
+ubuntu-cosmic-18.10-cloudimg-console.log
+.idea/
+.vagrant/
