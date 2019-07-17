@@ -1,0 +1,27 @@
+{
+  "name": "systemmanager-core",
+  "version": "1.0.0",
+  "description": "The core for SystemManager",
+  "main": "index.js",
+  "author": "GenericDevelopment (Tigo Middelkoop)",
+  "license": "MIT",
+  "private": false,
+  "scripts": {
+    "build": "tsc",
+    "start": "ts-node src/"
+  },
+  "dependencies": {
+    "bull": "^3.10.0",
+    "cors": "^2.8.5",
+    "dotenv": "^8.0.0",
+    "express": "^4.17.1",
+    "ioredis": "^4.11.2",
+    "jsonwebtoken": "^8.5.1",
+    "lodash": "^4.17.14",
+    "sequelize": "^5.10.1",
+    "yaml": "^1.6.0"
+  },
+  "devDependencies": {
+    "ts-node": "^8.3.0"
+  }
+}
