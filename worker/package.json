@@ -1,0 +1,21 @@
+{
+  "name": "systemmanager-worker",
+  "version": "1.0.0",
+  "description": "The job worker for SystemManager",
+  "main": "worker.js",
+  "author": "GenericDevelopment (Tigo Middelkoop)",
+  "license": "MIT",
+  "private": false,
+  "dependencies": {
+    "bull": "^3.10.0",
+    "debug": "^4.1.1",
+    "node-fetch": "^2.6.0"
+  },
+  "devDependencies": {
+    "@types/bull": "^3.10.0",
+    "@types/debug": "^4.1.4",
+    "@types/node-fetch": "^2.3.7",
+    "ts-node": "^8.3.0",
+    "typescript": "^3.5.3"
+  }
+}
