@@ -6,6 +6,9 @@
   "author": "GenericDevelopment (Tigo Middelkoop)",
   "license": "MIT",
   "private": false,
+  "scripts": {
+    "start": "ts-node src/worker.ts"
+  },
   "dependencies": {
     "bull": "^3.10.0",
     "debug": "^4.1.1",

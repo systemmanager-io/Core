@@ -8,25 +8,28 @@
   "private": false,
   "scripts": {
     "build": "tsc",
-    "start": "ts-node src/server.ts",
-    "sequelize-skeleton": "npx sequelize init:models; npx sequelize init:config"
+    "start": "ts-node src/server.ts"
   },
   "dependencies": {
     "@types/debug": "^4.1.4",
     "@types/joi": "^14.3.3",
+    "apollo-server-core": "^2.7.0",
+    "apollo-server-express": "^2.7.0",
+    "arangojs": "^6.10.0",
     "bull": "^3.10.0",
     "cors": "^2.8.5",
     "debug": "^4.1.1",
     "dotenv": "^8.0.0",
     "express": "^4.17.1",
+    "express-graphql": "^0.9.0",
+    "graphql": "^14.4.2",
+    "graphql-subscriptions": "^1.1.0",
     "ioredis": "^4.11.2",
     "joi": "^14.3.1",
     "jsonwebtoken": "^8.5.1",
     "lodash": "^4.17.14",
     "node-fetch": "^2.6.0",
     "nodemailer": "^6.3.0",
-    "sequelize": "^5.10.1",
-    "sequelize-cli": "^5.5.0",
     "yaml": "^1.6.0"
   },
   "devDependencies": {
@@ -34,11 +37,11 @@
     "@types/cors": "^2.8.5",
     "@types/dotenv": "^6.1.1",
     "@types/express": "^4.17.0",
+    "@types/graphql": "^14.2.3",
     "@types/ioredis": "^4.0.13",
     "@types/jsonwebtoken": "^8.3.2",
     "@types/lodash": "^4.14.136",
     "@types/node-fetch": "^2.3.7",
-    "@types/sequelize": "^4.28.3",
     "@types/yaml": "^1.0.2",
     "ts-node": "^8.3.0",
     "typescript": "^3.5.3"

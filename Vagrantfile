@@ -33,11 +33,12 @@ Vagrant.configure("2") do |config|
   config.vm.network "private_network", :ip => '192.168.56.100', :adapter => 2
   config.vm.network "forwarded_port", guest: 8080, host: 8080
   config.vm.network "forwarded_port", guest: 6379, host: 6379
+  config.vm.network "forwarded_port", guest: 8529, host: 8529
 
   config.vm.provision "shell", path: "vagrant/provision/start.sh", privileged: false
   config.vm.provision "shell", path: "vagrant/provision/nodejs.sh", privileged: false
   config.vm.provision "shell", path: "vagrant/provision/redis.sh", privileged: false
-  config.vm.provision "shell", path: "vagrant/provision/mysql.sh", privileged: false
+  config.vm.provision "shell", path: "vagrant/provision/arangodb.sh", privileged: false
   config.vm.provision "shell", path: "vagrant/bootstrap.sh", run: "always"
 
 end
