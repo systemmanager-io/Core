@@ -9,7 +9,7 @@ export const redis = new IORedis(config.redis);
 export const app = express();
 export const router = express.Router();
 
-export const arangodb = new Arango.Database(config.arangodb.url);
+export const arangodb = new Arango.Database(config.arangodb.host);
 arangodb.useBasicAuth(config.arangodb.username, config.arangodb.password);
 arangodb.useDatabase(config.arangodb.database);
 
