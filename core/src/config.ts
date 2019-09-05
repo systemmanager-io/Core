@@ -7,7 +7,7 @@ import {configDebug} from "./Lib/debug";
 configDebug("Loading Config");
 
 export const graphql = {
-    path: "/admin"
+    path: "/"
 };
 
 export const http = {

@@ -1,6 +1,6 @@
 import {GraphQLObjectType, GraphQLBoolean, GraphQLList, GraphQLNonNull, GraphQLID} from 'graphql'
 import {ServerUpdateInput, ServerCreateInput, Server} from './serverSchema'
-// import serverModel from "../../../Models/Documents/serverModel";
+import serverModel from "../../../Arango/Models/serverModel";
 
 export default {
     type: new GraphQLObjectType({
@@ -14,8 +14,7 @@ export default {
                     },
                 },
                 resolve(root, args) {
-                    return args.data;
-                    // return userModel.insert(data);
+                    return serverModel.insert(args.data);
                 },
             },
             update: {
