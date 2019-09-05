@@ -17,15 +17,15 @@ export default abstract class baseModel {
         return result.new;
     }
 
-    update() {
+    public async update() {
 
     }
 
-    find() {
+    public async find() {
 
     }
 
-    list() {
+    public async list() {
 
     }
 
