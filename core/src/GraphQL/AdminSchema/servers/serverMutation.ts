@@ -32,7 +32,7 @@ export default {
                     // return userModel.update(args.selector, args.data);
                 },
             },
-            deleteMulti: {
+            remove: {
                 type: GraphQLBoolean,
                 args: {
                     selectors: {
@@ -45,20 +45,11 @@ export default {
                     },
                 },
                 async resolve(root, args) {
-                    await Promise.all(args.selectors.map(removeServer));
+                    //@TODO MULTIREMOVE!
                     return true
                 }
             },
         }),
     }),
     resolve: () => ({}),
-}
-
-async function removeServer(serverId: string) {
-    // const server = await serverModel.find(serverId);
-    // if (server) {
-    //     const wait = [];
-        // wait.push(serverModel.rem/ove(user._id));
-        // await Promise.all(wait);
-    // }
 }

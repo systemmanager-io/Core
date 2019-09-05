@@ -12,7 +12,9 @@ export default abstract class baseModel {
         console.log(newDocument);
         const result = await this.collection.save(newDocument, {
             returnNew: true
-        })
+        });
+        console.log(result.new);
+        return result.new;
     }
 
     update() {
@@ -24,6 +26,10 @@ export default abstract class baseModel {
     }
 
     list() {
+
+    }
+
+    public async remove() {
 
     }
 
