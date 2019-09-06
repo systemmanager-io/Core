@@ -6,7 +6,7 @@ sudo apt-key add - < Release.key
 sudo rm Release.key
 
 #add arangoDB repo
-echo 'deb https://download.arangodb.com/arangodb34/DEBIAN/ /' | sudo tee /etc/apt/sources.list.d/arangodb.list
+echo 'deb https://download.arangodb.com/arangodb35/DEBIAN/ /' | sudo tee /etc/apt/sources.list.d/arangodb.list
 sudo apt-get update
 
 #prepare arangoDB installation

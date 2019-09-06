@@ -28,7 +28,7 @@ export const Server = new GraphQLObjectType({
             description: "Determines if the panel should ping the server",
         },
         port: {
-            type: new GraphQLNonNull(GraphQLInt),
+            type: GraphQLInt,
             description: "The port of the server."
         }
 
@@ -78,7 +78,7 @@ export const ServerCreateInput = new GraphQLInputObjectType({
             defaultValue: false,
         },
         port: {
-            type: new GraphQLNonNull(GraphQLInt),
+            type: GraphQLInt,
             defaultValue: 8181
         }
 

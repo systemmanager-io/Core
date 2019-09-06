@@ -3,7 +3,7 @@ import {arangodb} from "../../connectors";
 
 class ServerModel extends baseModel {
 
-    collection = arangodb.collection("servers")
+    collection = arangodb.collection("servers");
 
     filterFields = {
         '_id': ['doc._id', '=='],

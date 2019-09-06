@@ -14,7 +14,8 @@ export default {
                     },
                 },
                 resolve(root, args) {
-                    return serverModel.insert(args.data);
+                    const serverInput = args.data;
+                    return serverModel.insert(serverInput);
                 },
             },
             update: {
