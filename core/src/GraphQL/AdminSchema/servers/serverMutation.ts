@@ -11,6 +11,7 @@ export default {
                 args: {
                     data: {
                         type: new GraphQLNonNull(ServerCreateInput),
+                        description: "Create an new Server entry in SystemManager"
                     },
                 },
                 resolve(root, args) {
@@ -23,7 +24,7 @@ export default {
                 args: {
                     selector: {
                         type: new GraphQLNonNull(GraphQLID),
-                        description: "_id or _key of the object",
+                        description: "Update an Server entry in Systemmanager",
                     },
                     data: {
                         type: new GraphQLNonNull(ServerUpdateInput),
@@ -42,14 +43,13 @@ export default {
                                 new GraphQLNonNull(GraphQLID),
                             ),
                         ),
-                        description: "a list of _id or _key of the object",
+                        description: "Delete Server entries in systemmanager.",
                     },
                 },
                 async resolve(root, args) {
                     const selectors = args.selectors;
 
                     selectors.map(async (data:any) => {
-                        console.log(data);
                         await serverModel.remove(data);
                     });
                     return true
