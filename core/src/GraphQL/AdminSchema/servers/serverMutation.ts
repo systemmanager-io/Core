@@ -1,6 +1,6 @@
 import {GraphQLObjectType, GraphQLBoolean, GraphQLList, GraphQLNonNull, GraphQLID} from 'graphql'
 import {ServerUpdateInput, ServerCreateInput, Server} from './serverSchema'
-// import serverModel from "../../../Models/Documents/serverModel";
+import serverModel from "../../../Arango/Models/serverModel";
 
 export default {
     type: new GraphQLObjectType({
@@ -14,8 +14,8 @@ export default {
                     },
                 },
                 resolve(root, args) {
-                    return args.data;
-                    // return userModel.insert(data);
+                    const serverInput = args.data;
+                    return serverModel.insert(serverInput);
                 },
             },
             update: {
@@ -33,7 +33,7 @@ export default {
                     // return userModel.update(args.selector, args.data);
                 },
             },
-            deleteMulti: {
+            remove: {
                 type: GraphQLBoolean,
                 args: {
                     selectors: {
@@ -46,20 +46,11 @@ export default {
                     },
                 },
                 async resolve(root, args) {
-                    await Promise.all(args.selectors.map(removeServer));
+                    //@TODO MULTIREMOVE!
                     return true
                 }
             },
         }),
     }),
     resolve: () => ({}),
-}
-
-async function removeServer(serverId: string) {
-    // const server = await serverModel.find(serverId);
-    // if (server) {
-    //     const wait = [];
-        // wait.push(serverModel.rem/ove(user._id));
-        // await Promise.all(wait);
-    // }
 }

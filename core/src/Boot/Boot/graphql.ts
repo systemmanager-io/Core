@@ -4,7 +4,7 @@ import {ApolloServer} from "apollo-server-express";
 import {execute, subscribe} from "graphql";
 import {defaultPlaygroundOptions} from "apollo-server-core";
 import {graphqlDebug} from "../../Lib/debug";
-import adminSchema from "../../GraphQL/Schemas/adminSchema";
+import adminSchema from "../../GraphQL/AdminSchema/adminSchema";
 
 
 export default async function graphqlServer() {
@@ -19,6 +19,7 @@ export default async function graphqlServer() {
         playground: {
             ...defaultPlaygroundOptions,
             settings: {
+                // "editor.theme": "light"
                 // "request.credentials": 'include',
 
             }

@@ -12,11 +12,11 @@ const mutation = {
 
 export default new GraphQLSchema({
     query: new GraphQLObjectType({
-        name: 'AdminQuery',
+        name: 'AdminQueries',
         fields: query,
     }),
     mutation: new GraphQLObjectType({
-        name: 'AdminMutation',
+        name: 'AdminMutations',
         fields: mutation,
     }),
 });

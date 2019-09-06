@@ -7,19 +7,19 @@ import {configDebug} from "./Lib/debug";
 configDebug("Loading Config");
 
 export const graphql = {
-    path: "/admin"
+    path: "/"
 };
 
 export const http = {
-    host: process.env.HTTP_HOST || '',
+    host:  process.env.HTTP_HOST || '0.0.0.0',
     port: parseInt(process.env.HTTP_PORT || '8080')
 };
 
 export const arangodb = {
-    host: process.env.ARANGODB_HOST || '',
+    host: "tcp://" + process.env.ARANGODB_HOST || '',
     username: process.env.ARANGODB_USERNAME || '',
     password: process.env.ARANGODB_PASSWORD || '',
-    database: process.env.ARANGODB_DATABASE || '',
+    database: process.env.ARANGODB_DATABASE || 'systemmanager',
 };
 
 export const redis = {
