@@ -1,5 +1,6 @@
 import * as graphql from 'graphql'
 import {Server} from './serverSchema'
+import serverModel from '../../../Arango/Models/serverModel';
 
 export default {
     type: new graphql.GraphQLObjectType({
@@ -16,7 +17,7 @@ export default {
                     },
                 },
                 resolve(root, args) {
-                    // return serverModel.find(args.selector);
+                    return serverModel.find(args.selector);
                 },
             },
         }),

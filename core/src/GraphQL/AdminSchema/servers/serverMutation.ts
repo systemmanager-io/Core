@@ -46,7 +46,12 @@ export default {
                     },
                 },
                 async resolve(root, args) {
-                    //@TODO MULTIREMOVE!
+                    const selectors = args.selectors;
+
+                    selectors.map(async (data:any) => {
+                        console.log(data);
+                        await serverModel.remove(data);
+                    });
                     return true
                 }
             },

@@ -1,5 +1,7 @@
 import * as arangojs from "arangojs";
 import {graphqlDebug} from "../../Lib/debug";
+import { DocumentHandle } from "arangojs/lib/cjs/collection";
+import { DocumentData } from "arangojs/lib/cjs/util/types";
 
 export default abstract class baseModel {
 
@@ -9,24 +11,18 @@ export default abstract class baseModel {
         return this.collection.name;
     }
 
-    public async insert(newDocument: any): Promise<any> {
+    public async insert(newDocument: DocumentData<any>): Promise<any> {
 
         if (Array.isArray(newDocument)) {
             newDocument.map(d => this.addDates(d));
         } else {
             this.addDates(newDocument)
         }
-        // console.log(this.collection);
-        graphqlDebug("Inserting", newDocument);
 
-        try {
-            const result = await this.collection.save(newDocument, {
-                returnNew: true
-            });
-            return result.new;
-        } catch (e) {
-            console.log(e)
-        }
+        const result = await this.collection.save(newDocument, {
+            returnNew: true
+        });
+        return result.new;
     }
 
     public async update() {
@@ -46,7 +42,18 @@ export default abstract class baseModel {
 
     }
 
-    public async remove() {
+    public async remove(selector: DocumentHandle): Promise<any | null> {
+
+        if(await this.collection.documentExists(selector)) {
+            try {
+                return await this.collection.remove(selector);
+            } catch (err) {
+                console.log(err);
+                return false;
+            }
+        } else {
+            return false
+        }
 
     }
 

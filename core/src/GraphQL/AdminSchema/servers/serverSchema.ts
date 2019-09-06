@@ -11,6 +11,14 @@ export const Server = new GraphQLObjectType({
     name: 'Server',
     fields: () => ({
 
+        _id: {
+            type: GraphQLString,
+        },
+
+        _key: {
+            type: GraphQLString
+        },
+
         name: {
             type: new GraphQLNonNull(GraphQLString),
             description: "The name of the server.",
