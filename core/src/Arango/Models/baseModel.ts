@@ -39,7 +39,7 @@ export default abstract class baseModel {
     }
 
     public async list() {
-
+        return await this.collection.all();
     }
 
     public async remove(selector: DocumentHandle): Promise<any | null> {

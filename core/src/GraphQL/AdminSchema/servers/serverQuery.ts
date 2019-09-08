@@ -1,19 +1,32 @@
 import * as graphql from 'graphql'
-import {Server} from './serverSchema'
+import {Server, ServerCreateInput, ServerPaginator} from './serverSchema'
 import serverModel from '../../../Arango/Models/serverModel';
+import {GraphQLNonNull} from "graphql";
 
 export default {
     type: new graphql.GraphQLObjectType({
         name: 'ServerQueries',
         fields: () => ({
-            // list: {},
+            list: {
+                type: Server,
+                description: "Get a list of current server entries in SystemManager",
+                args: {
+                    paginator: {
+                        type: new GraphQLNonNull(ServerPaginator),
+                        description: "Create an new Server entry in SystemManager"
+                    },
+                },
+                resolve(root, args) {
+                    return serverModel.list()
+                }
+            },
             get: {
                 type: Server,
                 description: 'Retrieve the server information by its ID or Key',
                 args: {
                     selector: {
                         type: new graphql.GraphQLNonNull(graphql.GraphQLID),
-                        description: 'The ID or the Key of the server',
+                        description: 'Get an Server entry by its _id or _key',
                     },
                 },
                 resolve(root, args) {

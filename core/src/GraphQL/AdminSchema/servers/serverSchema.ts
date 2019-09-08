@@ -11,6 +11,8 @@ export const Server = new GraphQLObjectType({
     name: 'Server',
     fields: () => ({
 
+        //...document
+
         _id: {
             type: GraphQLString,
         },
@@ -43,7 +45,7 @@ export const Server = new GraphQLObjectType({
     }),
 });
 
-// @TODO make paginator
+
 
 export const ServerUpdateInput = new GraphQLInputObjectType({
     name: 'ServerUpdateInput',
@@ -99,3 +101,13 @@ export const ServerFiltersInput = new GraphQLInputObjectType({
         // ...documentFilters,
     }),
 });
+
+// @TODO make paginator
+export const ServerPaginator = new GraphQLInputObjectType({
+    name: 'ServerPaginator',
+    fields: () => ({
+        filter: {
+            type: GraphQLString
+        }
+    })
+})
