@@ -1,5 +1,3 @@
-import {configCheckerDebug} from "../Lib/debug";
-
 export default function setArangoHost(entry: string) {
     /*
         This feels so goddamn wrong!
