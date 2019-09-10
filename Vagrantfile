@@ -17,7 +17,7 @@ module OS
 end
 
 Vagrant.configure("2") do |config|
-  config.vm.box = "ubuntu/cosmic64"
+  config.vm.box = "ubuntu/disco64"
 
   config.vm.provider "virtualbox" do |v|
     v.memory = 2048
@@ -30,7 +30,7 @@ Vagrant.configure("2") do |config|
     config.vm.synced_folder ".", "/var/www/systemmanager", :type => "nfs", :nfs_version => 4
   end
 
-  config.vm.network "private_network", :ip => '192.168.56.100', :adapter => 2
+  config.vm.network "public_network", :ip => '192.168.10.100', :adapter => 2
   config.vm.network "forwarded_port", guest: 8080, host: 8080
   config.vm.network "forwarded_port", guest: 6379, host: 6379
   config.vm.network "forwarded_port", guest: 8529, host: 8529
