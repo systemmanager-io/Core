@@ -12,10 +12,10 @@ if (cluster.isMaster) {
         console.log("Adding worker")
     }
 
-    cluster.on('exit', function (worker, code, signal) {
+    cluster.on('exit', function (worker: any, code: any, signal: any) {
         console.log('worker ' + worker.process.pid + ' died');
     });
 
 } else {
-    pingQueue.process((job, jobDone) => pingServers(job, jobDone));
+    pingQueue.process((job: any, jobDone: any) => pingServers(job, jobDone));
 }
