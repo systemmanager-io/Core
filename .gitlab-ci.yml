@@ -31,7 +31,7 @@ build_worker:
       - './worker/build'
 
 test_core:
-  stage: build_core
+  stage: TestCore
   needs:
     - build_core
   script:
@@ -39,7 +39,7 @@ test_core:
 
 
 test_worker:
-  stage: test_worker
+  stage: TestWorker
   needs:
     - build_worker
   script:
