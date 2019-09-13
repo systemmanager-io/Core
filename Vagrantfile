@@ -30,10 +30,15 @@ Vagrant.configure("2") do |config|
     config.vm.synced_folder ".", "/var/www/systemmanager", :type => "nfs", :nfs_version => 4
   end
 
-  config.vm.network "public_network", :ip => '192.168.10.100', :adapter => 2
+
+
+  config.vm.network "private_network", :ip => '192.168.10.100', :adapter => 2
   config.vm.network "forwarded_port", guest: 8080, host: 8080
   config.vm.network "forwarded_port", guest: 6379, host: 6379
-  config.vm.network "forwarded_port", guest: 8529, host: 8529
+  config.vm.network "forwarded_port", guest: 8529, host: 3000
+
+  #config.vm.provision "file", source: "~/.tmux.conf", destination: "/home/vagrant/.tmux.conf"
+  #config.vm.provision "file", source: "~/.tmux.conf", destination: "/root/.tmux.conf"
 
   config.vm.provision "shell", path: "vagrant/provision/start.sh", privileged: false
   config.vm.provision "shell", path: "vagrant/provision/nodejs.sh", privileged: false
