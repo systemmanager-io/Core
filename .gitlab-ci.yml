@@ -1,0 +1,65 @@
+image: awhalen/docker-php-composer-node
+
+cache:
+  key: "SystemManager-Core"
+  paths:
+    - "node_modules/"
+
+
+stages:
+  - build
+  - test
+#  - staging
+#  - production
+
+build:
+  stage: build
+  script:
+    - yarn
+    - yarn build
+  artifacts:
+    paths:
+      - './build'
+
+test:
+  stage: test
+  script:
+    - echo "No tests are defined yet"
+
+deploy_staging:
+  stage: staging
+  before_script:
+    - mkdir -p ~/.ssh
+    - echo "$SSH_PRIVATE_KEY" | tr -d '\r' > ~/.ssh/id_rsa
+    - chmod 700 ~/.ssh/id_rsa
+    - eval "$(ssh-agent -s)"
+    - ssh-add ~/.ssh/id_rsa
+    - ssh-keyscan -H 'nl-ams1-01.genericdevelopment.nl' >> ~/.ssh/known_hosts
+  script:
+    #    - rsync -airzP "$PWD"/build/*
+    - echo "No Production Has been set up in the .gitlab-ci.yml"
+  environment:
+    name: staging
+    url: https://staging.systemmanager.io
+  only:
+    - master
+
+
+deploy_prod:
+  stage: production
+  before_script:
+    - mkdir -p ~/.ssh
+    - echo "$SSH_PRIVATE_KEY" | tr -d '\r' > ~/.ssh/id_rsa
+    - chmod 700 ~/.ssh/id_rsa
+    - eval "$(ssh-agent -s)"
+    - ssh-add ~/.ssh/id_rsa
+    - ssh-keyscan -H 'nl-ams1-01.genericdevelopment.nl' >> ~/.ssh/known_hosts
+  script:
+    #    - rsync -airzP "$PWD"/build/*
+    - echo "No Production Has been set up in the .gitlab-ci.yml"
+  environment:
+    name: production
+    url: https://systemmanager.io
+  when: manual
+  only:
+    - master
