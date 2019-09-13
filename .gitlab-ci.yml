@@ -18,12 +18,6 @@ build_core:
   artifacts:
     paths:
       - './core/build'
-      - './worker/build'
-
-test_core:
-  stage: test
-  script:
-    - echo "No tests are defined yet"
 
 
 build_worker:
@@ -33,8 +27,13 @@ build_worker:
     - yarn && yarn build
   artifacts:
     paths:
-      - './core/build'
       - './worker/build'
+
+test_core:
+  stage: test
+  script:
+    - echo "No tests are defined yet"
+
 
 test_worker:
   stage: test
