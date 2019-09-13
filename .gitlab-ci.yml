@@ -15,7 +15,7 @@ stages:
 build:
   stage: build
   script:
-    - cd core/ yarn && yarn build
+    - cd core/
     - yarn && yarn build
     - cd ../worker
     - yarn && yarn build
