@@ -7,62 +7,39 @@ cache:
 
 
 stages:
-  - build
-  - test
-#  - staging
-#  - production
+  - build_core
+  - build_worker
+  - test_core
+  - test_worker
 
-build:
-  stage: build
+build_core:
+  stage: build_core
   script:
     - cd core/
-    - yarn && yarn build
-    - cd ../worker
     - yarn && yarn build
   artifacts:
     paths:
       - './core/build'
       - './worker/build'
 
-test:
-  stage: test
+test_core:
+  stage: test_core
   script:
     - echo "No tests are defined yet"
 
-#deploy_staging:
-#  stage: staging
-#  before_script:
-#    - mkdir -p ~/.ssh
-#    - echo "$SSH_PRIVATE_KEY" | tr -d '\r' > ~/.ssh/id_rsa
-#    - chmod 700 ~/.ssh/id_rsa
-#    - eval "$(ssh-agent -s)"
-#    - ssh-add ~/.ssh/id_rsa
-#    - ssh-keyscan -H 'nl-ams1-01.genericdevelopment.nl' >> ~/.ssh/known_hosts
-#  script:
-#    #    - rsync -airzP "$PWD"/build/*
-#    - echo "No Production Has been set up in the .gitlab-ci.yml"
-#  environment:
-#    name: staging
-#    url: https://staging.systemmanager.io
-#  only:
-#    - master
-#
-#
-#deploy_prod:
-#  stage: production
-#  before_script:
-#    - mkdir -p ~/.ssh
-#    - echo "$SSH_PRIVATE_KEY" | tr -d '\r' > ~/.ssh/id_rsa
-#    - chmod 700 ~/.ssh/id_rsa
-#    - eval "$(ssh-agent -s)"
-#    - ssh-add ~/.ssh/id_rsa
-#    - ssh-keyscan -H 'nl-ams1-01.genericdevelopment.nl' >> ~/.ssh/known_hosts
-#  script:
-#    #    - rsync -airzP "$PWD"/build/*
-#    - echo "No Production Has been set up in the .gitlab-ci.yml"
-#  environment:
-#    name: production
-#    url: https://systemmanager.io
-#  when: manual
-#  only:
-#    - master
+
+build_worker:
+  stage: build_worker
+  script:
+    - cd worker/
+    - yarn && yarn build
+  artifacts:
+    paths:
+      - './core/build'
+      - './worker/build'
+
+test_worker:
+  stage: test_worker
+  script:
+    - echo "No tests are defined yet"
+
