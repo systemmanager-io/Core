@@ -15,12 +15,14 @@ stages:
 build:
   stage: build
   script:
-    - cd core
-    - yarn
-    - yarn build
+    - cd core/ yarn && yarn build
+    - yarn && yarn build
+    - cd ../worker
+    - yarn && yarn build
   artifacts:
     paths:
-      - './build'
+      - './core/build'
+      - './worker/build'
 
 test:
   stage: test

@@ -7,7 +7,8 @@
   "license": "MIT",
   "private": false,
   "scripts": {
-    "start": "ts-node src/worker.ts"
+    "start": "ts-node src/worker.ts",
+    "build": "tsc src"
   },
   "dependencies": {
     "bull": "^3.10.0",
