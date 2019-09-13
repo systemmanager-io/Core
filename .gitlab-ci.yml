@@ -31,13 +31,17 @@ build_worker:
       - './worker/build'
 
 test_core:
-  stage: TestCore
+  stage: build_core
+  needs:
+    - build_core
   script:
     - echo "No tests are defined yet"
 
 
 test_worker:
-  stage: TestWorker
+  stage: test_worker
+  needs:
+    - build_worker
   script:
     - echo "No tests are defined yet"
 
