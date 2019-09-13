@@ -1,6 +1,6 @@
 import * as graphql from 'graphql'
 import {Server, ServerCreateInput, ServerPaginator} from './serverSchema'
-import serverModel from '../../../Arango/Models/serverModel';
+import serverModel from '../../../ArangoDB/Models/serverModel';
 import {GraphQLNonNull} from "graphql";
 
 export default {
@@ -12,7 +12,7 @@ export default {
                 description: "Get a list of current server entries in SystemManager",
                 args: {
                     paginator: {
-                        type: new GraphQLNonNull(ServerPaginator),
+                        type: ServerPaginator,
                         description: "Create an new Server entry in SystemManager"
                     },
                 },

@@ -1,4 +1,4 @@
-import baseModel from "./baseModel";
+import baseModel from "../../Lib/Arango/baseModel";
 import {arangodb} from "../../connectors";
 
 class ServerModel extends baseModel {

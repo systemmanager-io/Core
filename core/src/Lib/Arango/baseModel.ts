@@ -1,5 +1,5 @@
 import * as arangojs from "arangojs";
-import {graphqlDebug} from "../../Lib/debug";
+import {graphqlDebug} from "../debug";
 import { DocumentHandle } from "arangojs/lib/cjs/collection";
 import { DocumentData } from "arangojs/lib/cjs/util/types";
 
@@ -39,7 +39,11 @@ export default abstract class baseModel {
     }
 
     public async list() {
-        return await this.collection.all();
+
+        const result = await this.collection.all();
+        console.log(result);
+        console.log(result["_result"]);
+        return result["_result"].json();
     }
 
     public async remove(selector: DocumentHandle): Promise<any | null> {
