@@ -7,13 +7,11 @@ cache:
 
 
 stages:
-  - build_core
-  - build_worker
-  - test_core
-  - test_worker
+  - core
+  - worker
 
 build_core:
-  stage: build_core
+  stage: core
   script:
     - cd core/
     - yarn && yarn build
@@ -23,13 +21,13 @@ build_core:
       - './worker/build'
 
 test_core:
-  stage: test_core
+  stage: core
   script:
     - echo "No tests are defined yet"
 
 
 build_worker:
-  stage: build_worker
+  stage: worker
   script:
     - cd worker/
     - yarn && yarn build
@@ -39,7 +37,7 @@ build_worker:
       - './worker/build'
 
 test_worker:
-  stage: test_worker
+  stage: worker
   script:
     - echo "No tests are defined yet"
 
