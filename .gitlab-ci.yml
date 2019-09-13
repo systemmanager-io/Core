@@ -15,6 +15,7 @@ stages:
 build:
   stage: build
   script:
+    - cd core
     - yarn
     - yarn build
   artifacts:
