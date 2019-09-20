@@ -1,7 +1,9 @@
 import * as arangojs from "arangojs";
-import {graphqlDebug} from "../debug";
+import * as _ from "lodash";
+import { graphqlDebug } from "../debug";
 import { DocumentHandle } from "arangojs/lib/cjs/collection";
 import { DocumentData } from "arangojs/lib/cjs/util/types";
+import { ArrayCursor } from "arangojs/lib/cjs/cursor";
 
 export default abstract class baseModel {
 
@@ -38,12 +40,13 @@ export default abstract class baseModel {
         }
     }
 
+    // List all entries in a collection with (possibly applied filters)
     public async list() {
 
-        const result = await this.collection.all();
-        console.log(result);
-        console.log(result["_result"]);
-        return result["_result"].json();
+        const result: ArrayCursor = await this.collection.all();
+        const allDocuments = _.get(result, "_result");
+        graphqlDebug(allDocuments);
+        return allDocuments;
     }
 
     public async remove(selector: DocumentHandle): Promise<any | null> {

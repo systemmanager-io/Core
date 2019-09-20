@@ -13,7 +13,7 @@ async function bootCore() {
 
 
 bootCore().then(() => {
-    httpDebug(`🚀 Server ready at http://localhost:${config.http.port}`);
-    httpDebug(`🚀 Subscriptions ready at ws://localhost:${config.http.port}`);
+    httpDebug(`🚀 Server ready at http://${config.http.host}:${config.http.port}`);
+    // httpDebug(`🚀 Subscriptions ready at ws://${config.http.host}:${config.http.port}`);
 });
 

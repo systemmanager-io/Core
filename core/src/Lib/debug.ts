@@ -9,11 +9,11 @@ export const httpDebug = coreDebug.extend('http');
 export const queueDebug = coreDebug.extend('queue');
 export const graphqlDebug = coreDebug.extend('graphql');
 
-// This is an nasty hack to get stuff working
-coreDebug.enabled = true;
-dbDebug.enabled = true;
-configDebug.enabled = true;
-pluginDebug.enabled = true;
-httpDebug.enabled = true;
-queueDebug.enabled = true;
-graphqlDebug.enabled = true;
+// // This is an nasty hack to get stuff working
+// coreDebug.enabled = true;
+// dbDebug.enabled = true;
+// configDebug.enabled = true;
+// pluginDebug.enabled = true;
+// httpDebug.enabled = true;
+// queueDebug.enabled = true;
+// graphqlDebug.enabled = true;

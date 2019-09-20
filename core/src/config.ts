@@ -1,12 +1,9 @@
 import * as dotenv from 'dotenv'
-
 const env = dotenv.config();
-
 import {configDebug} from "./Lib/debug";
 import setArangoHost from "./Functions/setArangoHost";
 
 configDebug("Loading Config");
-
 export const graphql = {
     path: "/"
 };

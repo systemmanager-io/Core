@@ -17,7 +17,7 @@ export default {
                     },
                 },
                 resolve(root, args) {
-                    return serverModel.list()
+                    return serverModel.list();
                 }
             },
             get: {
