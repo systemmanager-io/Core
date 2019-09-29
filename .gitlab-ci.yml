@@ -8,8 +8,7 @@ cache:
 
 stages:
   - Build
-  - TestCore
-  - TestWorker
+  - Test
 
 build_core:
   stage: Build
@@ -31,7 +30,7 @@ build_worker:
       - './worker/build'
 
 test_core:
-  stage: TestCore
+  stage: Test
   needs:
     - build_core
   script:
@@ -39,7 +38,7 @@ test_core:
 
 
 test_worker:
-  stage: TestWorker
+  stage: Test
   needs:
     - build_worker
   script:
