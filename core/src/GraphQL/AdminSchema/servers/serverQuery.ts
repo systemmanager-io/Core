@@ -8,7 +8,7 @@ export default {
         name: 'ServerQueries',
         fields: () => ({
             list: {
-                type: Server,
+                type: new graphql.GraphQLList(Server),
                 description: "Get a list of current server entries in SystemManager",
                 args: {
                     paginator: {

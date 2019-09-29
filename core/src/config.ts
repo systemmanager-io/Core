@@ -5,7 +5,8 @@ import setArangoHost from "./Functions/setArangoHost";
 
 configDebug("Loading Config");
 export const graphql = {
-    path: "/"
+    path: process.env.GRAPHQL_PATH || "/",
+    serverPath: process.env.GRAPHQL_SERVERPATH || "/server"
 };
 
 export const http = {

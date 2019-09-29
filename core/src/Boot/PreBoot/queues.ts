@@ -1,6 +1,6 @@
-import {coreDebug} from "../../Lib/debug";
+import {queueDebug} from "../../Lib/debug";
 
 const Bull = require('bull');
 
-coreDebug("Configuring queues and jobs");
+queueDebug("Configuring queues and jobs");
 export const pingQueue = new Bull('pingQueue');

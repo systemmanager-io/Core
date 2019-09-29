@@ -4,10 +4,10 @@ import {ApolloServer} from "apollo-server-express";
 import {defaultPlaygroundOptions} from "apollo-server-core";
 import {graphqlDebug} from "../../Lib/debug";
 import adminSchema from "../../GraphQL/AdminSchema/adminSchema";
-
+import getErrorCode from "../../Lib/Errors/getErrorCode";
 
 export default async function graphqlServer() {
-    graphqlDebug('Booting GraphQL');
+    graphqlDebug('Loading GraphQL');
 
     const schema = adminSchema;
     const graphqlServer = new ApolloServer({
@@ -19,6 +19,11 @@ export default async function graphqlServer() {
 
             }
         },
+        // @ts-ignore
+        formatError: (err => {
+            const error = getErrorCode(err.message);
+            return ({message: error.message, statusCode: error.statusCode});
+        }),
         subscriptions: {},
         uploads: {},
     });
@@ -28,6 +33,6 @@ export default async function graphqlServer() {
         path: config.graphql.path
     })
 
-    graphqlDebug('GraphQL Booted');
+    graphqlDebug('GraphQL Loaded');
 
 }

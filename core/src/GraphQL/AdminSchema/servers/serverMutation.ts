@@ -15,8 +15,7 @@ export default {
                     },
                 },
                 resolve(root, args) {
-                    const serverInput = args.data;
-                    return serverModel.insert(serverInput);
+                    return serverModel.insert(args.data);
                 },
             },
             update: {
@@ -31,7 +30,7 @@ export default {
                     },
                 },
                 resolve(root, args) {
-                    // return userModel.update(args.selector, args.data);
+                    return serverModel.update(args.selector, args.data);
                 },
             },
             remove: {
