@@ -64,7 +64,7 @@ export default abstract class baseModel {
     }
 
     // List all entries in a collection with (possibly applied filters)
-    public async list() {
+    public async list(filters: any) {
         // This is a query and not an all function so I can make an paginator soon. The Models already use an paginator schema.
         // @TODO Make paginator
         const query: AqlQuery = aql`

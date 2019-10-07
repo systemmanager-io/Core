@@ -4,6 +4,7 @@ import {
     GraphQLInputObjectType,
     GraphQLNonNull
 } from 'graphql'
+import serverLogType from "../../../Lib/Types/GraphQL/StatusENUM";
 
 export const ServerLog = new GraphQLObjectType({
     name: 'ServerLog',
@@ -13,13 +14,17 @@ export const ServerLog = new GraphQLObjectType({
             type: new GraphQLNonNull(GraphQLString),
             description: "The serverId of the server.",
         },
+        type: {
+            type: new GraphQLNonNull(serverLogType),
+            description: "Type of the log.",
+        },
         status: {
             type: new GraphQLNonNull(GraphQLString),
             description: "The status of the ServerLog.",
         },
         reason: {
             type: GraphQLString,
-            description: "The reason the server went offline"
+            description: "Reason for the creation of the Log"
         }
 
     }),

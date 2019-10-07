@@ -1,11 +1,14 @@
-import pingServers from "./Jobs/pingServers";
-
+"use strict";
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+const pingServers_1 = __importDefault(require("./Jobs/pingServers"));
 let Queue = require('bull');
 let cluster = require('cluster');
-console.log("Bootin")
-
+console.log("Bootin");
 const numWorkers = 1;
-let pingQueue = new Queue("pingQueue", {redis: {port: 6379, host: '127.0.0.1'}});
+let pingQueue = new Queue("pingQueue", { redis: { port: 6379, host: '127.0.0.1' } });
 // if (cluster.isMaster) {
 //     for (let i = 0; i < numWorkers; i++) {
 //         cluster.fork();
@@ -19,7 +22,7 @@ let pingQueue = new Queue("pingQueue", {redis: {port: 6379, host: '127.0.0.1'}})
 //         console.log(job, result);
 //     });
 // } else {
-pingQueue.process((job: any, jobDone: any) => pingServers(job, jobDone));
-pingQueue.on('completed', function (job: any, result: any) {
+pingQueue.process((job, jobDone) => pingServers_1.default(job, jobDone));
+pingQueue.on('completed', function (job, result) {
     console.log(job, result);
 });

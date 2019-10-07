@@ -4,33 +4,48 @@ import {ApolloServer} from "apollo-server-express";
 import {defaultPlaygroundOptions} from "apollo-server-core";
 import {graphqlDebug} from "../../Lib/debug";
 import adminSchema from "../../GraphQL/AdminSchema/adminSchema";
+import serverSchema from "../../GraphQL/ServerSchema/serverSchema";
 import getErrorCode from "../../Lib/Errors/getErrorCode";
 
 export default async function graphqlServer() {
     graphqlDebug('Loading GraphQL');
 
-    const schema = adminSchema;
-    const graphqlServer = new ApolloServer({
-        schema: schema,
+    const graphqlSettings: any = {
         playground: {
             ...defaultPlaygroundOptions,
             settings: {
                 // "request.credentials": 'include',
-
             }
         },
+        subscriptions: {},
+        uploads: {},
         // @ts-ignore
         formatError: (err => {
             const error = getErrorCode(err.message);
             return ({message: error.message, statusCode: error.statusCode});
         }),
-        subscriptions: {},
-        uploads: {},
+    }
+
+    const adminGraphql = new ApolloServer({
+        schema: adminSchema,
+        ...graphqlSettings,
+
     });
 
-    graphqlServer.applyMiddleware({
+    const serverGraphql = new ApolloServer({
+        schema: serverSchema,
+        ...graphqlSettings,
+    })
+
+
+    adminGraphql.applyMiddleware({
         app: app,
-        path: config.graphql.path
+        path: config.graphql.path + "admin"
+    })
+
+    serverGraphql.applyMiddleware({
+        app: app,
+        path: config.graphql.path + "server"
     })
 
     graphqlDebug('GraphQL Loaded');

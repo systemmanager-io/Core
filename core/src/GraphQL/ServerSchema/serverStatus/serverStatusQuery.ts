@@ -1,18 +1,18 @@
 import * as graphql from 'graphql'
-import {Server, ServerCreateInput, ServerPaginator} from './serverSchema'
+import {ServerStatus, ServerStatusCreateInput, ServerStatusPaginator} from './serverStatusSchema'
 import serverModel from '../../../ArangoDB/Models/serverModel';
 
 export default {
     type: new graphql.GraphQLObjectType({
-        name: 'ServerQueries',
+        name: 'ServerStatusStatusQueries',
         fields: () => ({
             list: {
-                type: new graphql.GraphQLList(Server),
+                type: new graphql.GraphQLList(ServerStatus),
                 description: "Get a list of current server entries in SystemManager",
                 args: {
                     paginator: {
-                        type: ServerPaginator,
-                        description: "Create an new Server entry in SystemManager"
+                        type: ServerStatusPaginator,
+                        description: "Create an new ServerStatus entry in SystemManager"
                     },
                 },
                 resolve(root, args) {
@@ -20,12 +20,12 @@ export default {
                 }
             },
             get: {
-                type: Server,
+                type: ServerStatus,
                 description: 'Retrieve the server information by its ID or Key',
                 args: {
                     selector: {
                         type: new graphql.GraphQLNonNull(graphql.GraphQLID),
-                        description: 'Get an Server entry by its _id or _key',
+                        description: 'Get an ServerStatus entry by its _id or _key',
                     },
                 },
                 resolve(root, args) {
