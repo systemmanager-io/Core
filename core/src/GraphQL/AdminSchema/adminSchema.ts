@@ -1,13 +1,15 @@
 import {GraphQLObjectType, GraphQLSchema} from 'graphql'
 import serverMutation from "./servers/serverMutation";
 import serverQuery from "./servers/serverQuery";
+import serverLogMutation from "./serverLogs/serverLogMutation";
 
 const query = {
-    servers: serverQuery
+    server: serverQuery
 };
 
 const mutation = {
-    servers: serverMutation,
+    server: serverMutation,
+    serverLog: serverLogMutation,
 };
 
 export default new GraphQLSchema({
