@@ -15,7 +15,6 @@ async function migrate() {
     let newMigrations: boolean = false;
 
     await getMigrations().map(migration => {
-        //@TODO Check for migration Collection to pu;t the migration data in. {migration: %migrationname%}
         //@TODO Check only for ts/js files. So no other files will be imported.
 
         migrationCollection.documentExists(migration.file).then((exist: boolean) => {

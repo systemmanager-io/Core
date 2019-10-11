@@ -3,15 +3,19 @@ import serverMutation from "./servers/serverMutation";
 import serverQuery from "./servers/serverQuery";
 import serverLogMutation from "./serverLogs/serverLogMutation";
 import serverLogQuery from "./serverLogs/serverLogQuery";
+import settingQuery from "./settings/settingQuery";
+import settingMutation from "./settings/settingMutation";
 
 const query = {
     server: serverQuery,
-    serverLog: serverLogQuery
+    serverLog: serverLogQuery,
+    setting: settingQuery
 };
 
 const mutation = {
     server: serverMutation,
     serverLog: serverLogMutation,
+    setting: settingMutation
 };
 
 export default new GraphQLSchema({

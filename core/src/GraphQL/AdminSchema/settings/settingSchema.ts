@@ -22,6 +22,14 @@ export const Setting = new GraphQLObjectType({
 });
 
 // @TODO make paginator
+export const SettingPaginator = new GraphQLInputObjectType({
+    name: 'SettingPaginator',
+    fields: () => ({
+        filter: {
+            type: GraphQLString
+        }
+    })
+})
 
 export const SettingUpdateInput = new GraphQLInputObjectType({
     name: 'SettingUpdateInput',
