@@ -31,6 +31,15 @@ export const ServerLog = new GraphQLObjectType({
 });
 
 // @TODO make paginator
+export const ServerLogPaginator = new GraphQLInputObjectType({
+    name: 'ServerLogPaginator',
+    fields: () => ({
+        filter: {
+            type: GraphQLString
+        }
+    })
+})
+
 
 export const ServerLogUpdateInput = new GraphQLInputObjectType({
     name: 'ServerLogUpdateInput',
