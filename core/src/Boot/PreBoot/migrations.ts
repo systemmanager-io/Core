@@ -5,6 +5,8 @@ import * as _ from 'lodash'
 import checkMigrationCollection from "../../ArangoDB/Functions/checkMigrationCollection";
 import {arangodb} from "../../connectors";
 import {exist} from "joi";
+import checkMigrationExtensions from "../../ArangoDB/Functions/checkMigrationExtensions";
+import Migration from "../../Lib/Types/ArangoDB/Migration";
 
 dbDebug("Checking for migrations");
 checkMigrationCollection().then(migrate);
@@ -17,18 +19,22 @@ async function migrate() {
     await getMigrations().map(migration => {
         //@TODO Check only for ts/js files. So no other files will be imported.
 
-        migrationCollection.documentExists(migration.file).then((exist: boolean) => {
-            if (!exist) {
-                const file = require(migration.path);
-                if (typeof file.up === 'function') {
-                    dbDebug("Migrating", migration.file);
-                    file.up();
-                    dbDebug("Migrated", migration.file);
+
+        // I dont know what is better... The check before or after checking about the record.
+        if (checkMigrationExtensions(migration)) {
+            migrationCollection.documentExists(migration.file).then((exist: boolean) => {
+                if (!exist) {
+                    const file = require(migration.path);
+                    if (typeof file.up === 'function') {
+                        dbDebug("Migrating", migration.file);
+                        file.up();
+                        dbDebug("Migrated", migration.file);
+                    }
+                    newMigrations = true;
+                    migrationCollection.save({_key: migration.file});
                 }
-                newMigrations = true;
-                migrationCollection.save({_key: migration.file});
-            }
-        })
+            })
+        }
     })
 }
 
