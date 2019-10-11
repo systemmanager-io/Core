@@ -9,6 +9,14 @@ export const ServerSpecs = new GraphQLObjectType({
     name: 'ServerSpecs',
     fields: () => ({
 
+        _id: {
+            type: GraphQLString,
+        },
+
+        _key: {
+            type: GraphQLString
+        },
+
         // CPU: {
         //     name: 'CPU',
         // },

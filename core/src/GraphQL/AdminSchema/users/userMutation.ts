@@ -1,36 +1,36 @@
 import {GraphQLObjectType, GraphQLBoolean, GraphQLList, GraphQLNonNull, GraphQLID} from 'graphql'
-import {SettingUpdateInput, SettingCreateInput, Setting} from './settingSchema'
-import settingModel from "../../../ArangoDB/Models/settingModel";
+import {UserUpdateInput, UserCreateInput, User, UserInput} from './userSchema'
+import userModel from "../../../ArangoDB/Models/userModel";
 
 export default {
     type: new GraphQLObjectType({
-        name: 'SettingMutations',
+        name: 'UserMutations',
         fields: () => ({
             create: {
-                type: Setting,
+                type: UserInput,
                 args: {
                     data: {
-                        type: new GraphQLNonNull(SettingCreateInput),
-                        description: "Create an new Setting entry in SystemManager"
+                        type: new GraphQLNonNull(UserCreateInput),
+                        description: "Create an new User entry in SystemManager"
                     },
                 },
                 resolve(root, args) {
-                    return settingModel.insert(args.data);
+                    return userModel.insert(args.data);
                 },
             },
             update: {
-                type: Setting,
+                type: UserInput,
                 args: {
                     selector: {
                         type: new GraphQLNonNull(GraphQLID),
-                        description: "Update an Setting entry in Systemmanager",
+                        description: "Update an User entry in Systemmanager",
                     },
                     data: {
-                        type: new GraphQLNonNull(SettingUpdateInput),
+                        type: new GraphQLNonNull(UserUpdateInput),
                     },
                 },
                 resolve(root, args) {
-                    return settingModel.update(args.selector, args.data);
+                    return userModel.update(args.selector, args.data);
                 },
             },
             remove: {
@@ -42,14 +42,14 @@ export default {
                                 new GraphQLNonNull(GraphQLID),
                             ),
                         ),
-                        description: "Delete Setting entries in systemmanager.",
+                        description: "Delete User entries in systemmanager.",
                     },
                 },
                 async resolve(root, args) {
                     const selectors = args.selectors;
 
                     selectors.map(async (data:any) => {
-                        await settingModel.remove(data);
+                        await userModel.remove(data);
                     });
                     return true
                 }

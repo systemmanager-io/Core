@@ -10,6 +10,14 @@ export const ServerLog = new GraphQLObjectType({
     name: 'ServerLog',
     fields: () => ({
 
+        _id: {
+            type: GraphQLString,
+        },
+
+        _key: {
+            type: GraphQLString
+        },
+
         serverId: {
             type: new GraphQLNonNull(GraphQLString),
             description: "The serverId of the server.",

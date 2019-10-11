@@ -9,6 +9,14 @@ export const Setting = new GraphQLObjectType({
     name: 'Setting',
     fields: () => ({
 
+        _id: {
+            type: GraphQLString,
+        },
+
+        _key: {
+            type: GraphQLString
+        },
+
         key: {
             type: new GraphQLNonNull(GraphQLString),
             description: "The key of the setting.",

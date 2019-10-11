@@ -16,5 +16,3 @@ coreDebug("|                     Version 0.0.1                  |");
 coreDebug("|                                                    |");
 coreDebug("+----------------------------------------------------+");
 coreDebug("SystemManager Core Booting up");
-
-// updateDebug("There is an update available!");
