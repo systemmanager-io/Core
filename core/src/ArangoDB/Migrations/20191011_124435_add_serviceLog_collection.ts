@@ -9,5 +9,5 @@ export async function up() {
 }
 
 export async function down() {
-    await serviceLogCollection.dropx();
+    await serviceLogCollection.drop();
 }
