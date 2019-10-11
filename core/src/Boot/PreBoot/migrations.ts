@@ -14,22 +14,23 @@ async function migrate() {
     const migrationCollection = arangodb.collection("migrations");
     let newMigrations: boolean = false;
 
-    await getMigrations().map(async migration => {
+    await getMigrations().map(migration => {
         //@TODO Check for migration Collection to pu;t the migration data in. {migration: %migrationname%}
         //@TODO Check only for ts/js files. So no other files will be imported.
-        const exist = await migrationCollection.documentExists(migration.file);
-        if (!exist) {
-            const file = require(migration.path);
 
-            if (typeof file.up === 'function') {
-                dbDebug("Migrating", migration.file);
-                await file.up();
-                dbDebug("Migrated", migration.file);
+        migrationCollection.documentExists(migration.file).then((exist: boolean) => {
+            if (!exist) {
+                const file = require(migration.path);
+                if (typeof file.up === 'function') {
+                    dbDebug("Migrating", migration.file);
+                    file.up();
+                    dbDebug("Migrated", migration.file);
+                }
+                newMigrations = true;
+                migrationCollection.save({_key: migration.file});
             }
-            newMigrations = true;
-            await migrationCollection.save({_key: migration.file});
-        }
-    });
+        })
+    })
 }
 
 function getMigrations() {
