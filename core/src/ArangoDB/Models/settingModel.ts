@@ -1,9 +1,9 @@
 import baseModel from "../../Lib/Arango/baseModel";
 import {arangodb} from "../../connectors";
 
-class ServerModel extends baseModel {
+class SettingModel extends baseModel {
 
-    collection = arangodb.collection("serverLogs");
+    collection = arangodb.collection("settings");
 
     filterFields = {
         '_id': ['doc._id', '=='],
@@ -12,4 +12,4 @@ class ServerModel extends baseModel {
 
 }
 
-export default new ServerModel();
+export default new SettingModel();
