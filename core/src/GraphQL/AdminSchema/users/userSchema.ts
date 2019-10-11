@@ -51,14 +51,14 @@ export const UserInput = new GraphQLObjectType({
             type: GraphQLString
         },
 
-        email: {
-            type: new GraphQLNonNull(GraphQLString),
-            description: "The email of the user"
-        },
-
         name: {
             type: GraphQLString,
             description: "The name of the user. If not set the username will be shown instead",
+        },
+
+        email: {
+            type: new GraphQLNonNull(GraphQLString),
+            description: "The email of the user"
         },
         username: {
             type: new GraphQLNonNull(GraphQLString),
