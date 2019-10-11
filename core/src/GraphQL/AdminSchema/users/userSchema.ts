@@ -13,7 +13,6 @@ export const User = new GraphQLObjectType({
         _id: {
             type: GraphQLString,
         },
-
         _key: {
             type: GraphQLString
         },
@@ -25,6 +24,11 @@ export const User = new GraphQLObjectType({
         username: {
             type: new GraphQLNonNull(GraphQLString),
             description: "The username of the user",
+        },
+
+        email: {
+            type: new GraphQLNonNull(GraphQLString),
+            description: "The email of the user"
         },
 
         authMethod: {
@@ -47,6 +51,10 @@ export const UserInput = new GraphQLObjectType({
             type: GraphQLString
         },
 
+        email: {
+            type: new GraphQLNonNull(GraphQLString),
+            description: "The email of the user"
+        },
 
         name: {
             type: GraphQLString,
@@ -98,6 +106,11 @@ export const UserUpdateInput = new GraphQLInputObjectType({
             description: "The username of the user",
         },
 
+        email: {
+            type: new GraphQLNonNull(GraphQLString),
+            description: "The email of the user"
+        },
+
         authMethod: {
             type: authMethodType,
             description: "The way a user is being authenticated, defaults to PASSWORD",
@@ -127,6 +140,11 @@ export const UserCreateInput = new GraphQLInputObjectType({
         username: {
             type: new GraphQLNonNull(GraphQLString),
             description: "The username of the user",
+        },
+
+        email: {
+            type: new GraphQLNonNull(GraphQLString),
+            description: "The email of the user"
         },
 
         authMethod: {
