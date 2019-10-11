@@ -4,7 +4,7 @@ import {
     GraphQLInputObjectType,
     GraphQLNonNull
 } from 'graphql'
-import serverLogType from "../../../Lib/Types/GraphQL/StatusENUM";
+import serverLogType from "../../../Lib/Enums/StatusENUM";
 
 export const ServerLog = new GraphQLObjectType({
     name: 'ServerLog',

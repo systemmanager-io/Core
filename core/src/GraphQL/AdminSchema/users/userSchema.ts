@@ -4,7 +4,7 @@ import {
     GraphQLInputObjectType,
     GraphQLNonNull
 } from 'graphql'
-import authMethodType from '../../../Lib/Types/GraphQL/AuthMethodENUM';
+import authMethodType from '../../../Lib/Enums/AuthMethodENUM';
 
 export const User = new GraphQLObjectType({
     name: 'User',

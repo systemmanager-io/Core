@@ -2,6 +2,7 @@ import {GraphQLObjectType, GraphQLBoolean, GraphQLList, GraphQLNonNull, GraphQLI
 import {UserUpdateInput, UserCreateInput, User, UserInput} from './userSchema'
 import userModel from "../../../ArangoDB/Models/userModel";
 import {dbDebug} from "../../../Lib/debug";
+import userType from "../../../Lib/Types/GraphQL/UserType";
 
 export default {
     type: new GraphQLObjectType({
@@ -31,7 +32,7 @@ export default {
 
 
                     if (args.data.password === args.data.password_confirmation) {
-                        dbDebug("Passwords Match!");
+                        dbDebug("Passwords Match!");0
                         user.append({password: args.data.password});
                     }
 
