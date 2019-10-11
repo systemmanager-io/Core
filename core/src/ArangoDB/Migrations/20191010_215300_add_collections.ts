@@ -6,8 +6,8 @@ const serverLogCollection = arangodb.collection("serverLogs");
 
 export async function up() {
 
-await serverCollection.create();
-await serverLogCollection.create();
+// await serverCollection.create();
+// await serverLogCollection.create();
 
 }
 
