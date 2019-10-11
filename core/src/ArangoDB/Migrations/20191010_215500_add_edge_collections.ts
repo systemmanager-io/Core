@@ -13,7 +13,7 @@ export async function up() {
 }
 
 export async function down() {
-    await roleHasPermissionsEdgeCollection.dropx();
+    await roleHasPermissionsEdgeCollection.drop();
     await userHasPermissionsEdgeCollection.drop();
     await userHasRolesEdgeCollection.drop();
 }
