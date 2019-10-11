@@ -1,6 +1,7 @@
 import {GraphQLObjectType, GraphQLBoolean, GraphQLList, GraphQLNonNull, GraphQLID} from 'graphql'
 import {UserUpdateInput, UserCreateInput, User, UserInput} from './userSchema'
 import userModel from "../../../ArangoDB/Models/userModel";
+import {dbDebug} from "../../../Lib/debug";
 
 export default {
     type: new GraphQLObjectType({
@@ -15,7 +16,26 @@ export default {
                     },
                 },
                 resolve(root, args) {
-                    return userModel.insert(args.data);
+
+                    // @TODO make type for this.
+                    let user: any = {
+                        username: args.data.username,
+                        email: args.data.email,
+                    }
+
+                    if (!args.date.name === undefined) {
+                        user.append({name: args.data.name})
+                    } else {
+                        user.append({name: args.data.username})
+                    }
+
+
+                    if (args.data.password === args.data.password_confirmation) {
+                        dbDebug("Passwords Match!");
+                        user.append({password: args.data.password});
+                    }
+
+                    return userModel.insert(user);
                 },
             },
             update: {
