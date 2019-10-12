@@ -2,7 +2,9 @@ import {GraphQLObjectType, GraphQLBoolean, GraphQLList, GraphQLNonNull, GraphQLI
 import {UserUpdateInput, UserCreateInput, User, UserInput} from './userSchema'
 import userModel from "../../../ArangoDB/Models/userModel";
 import {dbDebug} from "../../../Lib/debug";
-import userType from "../../../Lib/Types/GraphQL/UserType";
+import UserType from "../../../Lib/Types/GraphQL/UserType";
+import * as crypto from "crypto";
+import argon from "argon2";
 
 export default {
     type: new GraphQLObjectType({
@@ -16,41 +18,41 @@ export default {
                         description: "Create an new User entry in SystemManager"
                     },
                 },
-                resolve(root, args) {
+                async resolve(root, args) {
 
-                    console.log(args.data);
                     // @TODO make type for this.
-                    let user: any = {
+                    let user: UserType = {
+                        name: undefined,
                         username: args.data.username,
                         email: args.data.email,
+                        authMethod: args.data.authMethod,
+                        password: undefined,
+                        salt: undefined
                     }
 
-                    console.log(1);
-
-                    // if (!args.data.name == null) {
-                    //     console.log('11');
-                    //     user.append({name: args.data.name});
-                    //     console.log('12');
-                    // } else {
-                    //     console.log('13');
-                    //     try {
-                    //         user.append({name: args.data.username});
-                    //     } catch (e) {
-                    //         throw new Error(e);
-                    //     }
-                    //     console.log('14');
-                    // }
-
-                    console.log(2);
-
-                    if (args.data.password === args.data.password_confirmation) {
-                        dbDebug("Passwords Match!");
-                        // user.append({password: args.data.password});
+                    if (args.data.name !== undefined) {
+                        user.name = args.data.name;
+                    } else {
+                        user.name = args.data.username;
                     }
 
-                    console.log(3);
+                    if (args.data.authMethod === "password") {
+                        if (args.data.password === args.data.password_confirmation) {
+                            dbDebug("Passwords Match!");
+                            // @TODO SALTING AND HASHING!
+                            // By the way, as a user you wont be able to get the password nor the hash out of the graphql
 
-                    return userModel.insert(args.data);
+                            const salt = crypto.randomBytes(256);
+                            const password = await argon.hash(args.data.password + salt.toString("hex"));
+                            user.salt = salt.toString('hex');
+                            user.password = password;
+                        }
+
+                    }
+                    return userModel.insert(user).then(user => {
+                        delete user.password;
+                        return user
+                    });
                 },
             },
             update: {
