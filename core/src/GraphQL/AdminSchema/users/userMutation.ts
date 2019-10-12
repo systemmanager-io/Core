@@ -18,25 +18,39 @@ export default {
                 },
                 resolve(root, args) {
 
+                    console.log(args.data);
                     // @TODO make type for this.
                     let user: any = {
                         username: args.data.username,
                         email: args.data.email,
                     }
 
-                    if (!args.date.name === undefined) {
-                        user.append({name: args.data.name})
-                    } else {
-                        user.append({name: args.data.username})
-                    }
+                    console.log(1);
 
+                    // if (!args.data.name == null) {
+                    //     console.log('11');
+                    //     user.append({name: args.data.name});
+                    //     console.log('12');
+                    // } else {
+                    //     console.log('13');
+                    //     try {
+                    //         user.append({name: args.data.username});
+                    //     } catch (e) {
+                    //         throw new Error(e);
+                    //     }
+                    //     console.log('14');
+                    // }
+
+                    console.log(2);
 
                     if (args.data.password === args.data.password_confirmation) {
-                        dbDebug("Passwords Match!");0
-                        user.append({password: args.data.password});
+                        dbDebug("Passwords Match!");
+                        // user.append({password: args.data.password});
                     }
 
-                    return userModel.insert(user);
+                    console.log(3);
+
+                    return userModel.insert(args.data);
                 },
             },
             update: {
@@ -69,7 +83,7 @@ export default {
                 async resolve(root, args) {
                     const selectors = args.selectors;
 
-                    selectors.map(async (data:any) => {
+                    selectors.map(async (data: any) => {
                         await userModel.remove(data);
                     });
                     return true

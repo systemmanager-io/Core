@@ -6,4 +6,4 @@ const Bull = require('bull');
 queueDebug("Configuring queues and jobs");
 export const pingQueue = new Bull('pingQueue', redis);
 
-pingQueue.add("TEST").then(console.log("Job proccessed/run"));
+// pingQueue.add("TEST").then(console.log("Job proccessed/run"));

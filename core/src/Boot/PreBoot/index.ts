@@ -1,5 +1,5 @@
 //Set the debug to our logger. This can be changed later once the config is being loaded.
-process.env.DEBUG = "*";
+process.env.DEBUG = "systemmanager:*";
 
 
 import "./showCoreInfo"
