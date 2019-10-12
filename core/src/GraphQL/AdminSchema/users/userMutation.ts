@@ -54,21 +54,21 @@ export default {
                     });
                 },
             },
-            update: {
-                type: UserInput,
-                args: {
-                    selector: {
-                        type: new GraphQLNonNull(GraphQLID),
-                        description: "Update an User entry in Systemmanager",
-                    },
-                    data: {
-                        type: new GraphQLNonNull(UserUpdateInput),
-                    },
-                },
-                resolve(root, args) {
-                    return userModel.update(args.selector, args.data);
-                },
-            },
+            // update: {
+            //     type: UserInput,
+            //     args: {
+            //         selector: {
+            //             type: new GraphQLNonNull(GraphQLID),
+            //             description: "Update an User entry in Systemmanager",
+            //         },
+            //         data: {
+            //             type: new GraphQLNonNull(UserUpdateInput),
+            //         },
+            //     },
+            //     resolve(root, args) {
+            //         return userModel.update(args.selector, args.data);
+            //     },
+            // },
             remove: {
                 type: GraphQLBoolean,
                 args: {
