@@ -21,9 +21,6 @@ export default {
                 },
                 async resolve(root, args) {
 
-
-
-                    // @TODO make type for this.
                     let user: UserType = {
                         _key: uuid(),
                         name: undefined,
@@ -42,8 +39,8 @@ export default {
 
                     if (args.data.authMethod === "password") {
                         if (args.data.password === args.data.password_confirmation) {
-                            // @TODO SALTING AND HASHING!
                             // By the way, as a user you wont be able to get the password nor the hash out of the graphql
+                            // Wghen you request it at account creation you will get NULL back.
                             const salt = crypto.randomBytes(256);
                             const password = await argon.hash(args.data.password + salt.toString("hex"));
                             user.salt = salt.toString('hex');
