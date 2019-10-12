@@ -1,4 +1,5 @@
 export default interface userType  {
+    _key: string,
     username: string,
     email: string,
     name: string | undefined,

@@ -5,6 +5,7 @@ import {dbDebug} from "../../../Lib/debug";
 import UserType from "../../../Lib/Types/GraphQL/UserType";
 import * as crypto from "crypto";
 import argon from "argon2";
+import uuid from "uuid/v4"
 
 export default {
     type: new GraphQLObjectType({
@@ -20,8 +21,11 @@ export default {
                 },
                 async resolve(root, args) {
 
+
+
                     // @TODO make type for this.
                     let user: UserType = {
+                        _key: uuid(),
                         name: undefined,
                         username: args.data.username,
                         email: args.data.email,
@@ -38,10 +42,8 @@ export default {
 
                     if (args.data.authMethod === "password") {
                         if (args.data.password === args.data.password_confirmation) {
-                            dbDebug("Passwords Match!");
                             // @TODO SALTING AND HASHING!
                             // By the way, as a user you wont be able to get the password nor the hash out of the graphql
-
                             const salt = crypto.randomBytes(256);
                             const password = await argon.hash(args.data.password + salt.toString("hex"));
                             user.salt = salt.toString('hex');
