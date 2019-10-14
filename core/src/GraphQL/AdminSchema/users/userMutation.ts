@@ -28,7 +28,7 @@ export default {
                         _key: uuid(),
                         name: undefined,
                         username: args.data.username,
-                        email: args.data.email,
+                        email: args.data.email.toLowerCase(),
                         authMethod: args.data.authMethod,
                         password: undefined,
                         salt: undefined
