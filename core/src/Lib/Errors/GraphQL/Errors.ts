@@ -1,5 +1,7 @@
 const errorName = {
-    NOTFOUND: "NOTFOUND"
+    NOTFOUND: "NOTFOUND",
+    INTERNALERROR: "INTERNALERROR",
+    NOPASSWORDMATCH: "NOPASSWORDMATCH"
 }
 
 export default errorName

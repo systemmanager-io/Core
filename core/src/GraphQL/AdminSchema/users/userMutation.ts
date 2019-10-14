@@ -6,6 +6,7 @@ import UserType from "../../../Lib/Types/GraphQL/UserType";
 import * as crypto from "crypto";
 import argon from "argon2";
 import uuid from "uuid/v4"
+import errorName from "./../../../Lib/Errors/GraphQL/Errors"
 
 export default {
     type: new GraphQLObjectType({
@@ -45,6 +46,8 @@ export default {
                             const password = await argon.hash(args.data.password + salt.toString("hex"));
                             user.salt = salt.toString('hex');
                             user.password = password;
+                        } else {
+                            throw new Error(errorName.NOPASSWORDMATCH);
                         }
 
                     }
