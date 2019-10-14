@@ -10,7 +10,10 @@ const errorType: any = {
 
 
     NOPASSWORDMATCH: {
-        message: `Passwords no not match`,
+        message: `Passwords do not match`,
+    },
+    USERALREADYEXISTS: {
+        message: `User already exists`
     }
 }
 export default errorType;

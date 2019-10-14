@@ -22,6 +22,8 @@ export default {
                 },
                 async resolve(root, args) {
 
+                    // @TODO CHECK IF USER ALREADY EXISTS
+
                     let user: UserType = {
                         _key: uuid(),
                         name: undefined,
