@@ -3,7 +3,8 @@ image: awhalen/docker-php-composer-node
 cache:
   key: "SystemManager-Core"
   paths:
-    - "node_modules/"
+    - "core/node_modules/"
+    - "worker/node_modules/"
 
 
 stages:
@@ -14,7 +15,7 @@ build_core:
   stage: Build
   script:
     - cd core/
-    - yarn && yarn build
+    - npm install && npm run build
   artifacts:
     paths:
       - './core/build'
@@ -24,7 +25,7 @@ build_worker:
   stage: Build
   script:
     - cd worker/
-    - yarn && yarn build
+    - npm install && npm run build
   artifacts:
     paths:
       - './worker/build'
