@@ -12,7 +12,7 @@ export default {
                 args: {
                     paginator: {
                         type: ServerPaginator,
-                        description: "Create an new Server entry in SystemManager"
+                        description: "Filter your results"
                     },
                 },
                 resolve(root, args) {

@@ -1,6 +1,6 @@
 import * as graphql from 'graphql'
 import {User, UserPaginator} from './userSchema'
-import userModel from '../../../ArangoDB/Models/settingModel';
+import userModel from '../../../ArangoDB/Models/userModel';
 
 export default {
     type: new graphql.GraphQLObjectType({
@@ -12,7 +12,7 @@ export default {
                 args: {
                     paginator: {
                         type: UserPaginator,
-                        description: "Create an new Setting entry in SystemManager"
+                        description: "Filter your results"
                     },
                 },
                 resolve(root, args) {
@@ -29,6 +29,7 @@ export default {
                     },
                 },
                 resolve(root, args) {
+                    console.log(args);
                     return userModel.find(args.selector);
                 },
             },
