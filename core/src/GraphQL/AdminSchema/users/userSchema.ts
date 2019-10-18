@@ -102,12 +102,12 @@ export const UserUpdateInput = new GraphQLInputObjectType({
             description: "The name of the user. If not set the username will be shown instead",
         },
         username: {
-            type: new GraphQLNonNull(GraphQLString),
+            type: GraphQLString,
             description: "The username of the user",
         },
 
         email: {
-            type: new GraphQLNonNull(GraphQLString),
+            type: GraphQLString,
             description: "The email of the user"
         },
 
@@ -118,12 +118,12 @@ export const UserUpdateInput = new GraphQLInputObjectType({
         },
 
         password: {
-            type: new GraphQLNonNull(GraphQLString),
+            type: GraphQLString,
             description: "The password of the user, fill in when authMethod PASSWORD is being selected."
         },
 
         password_confirmation: {
-            type: new GraphQLNonNull(GraphQLString),
+            type: GraphQLString,
             description: "The password of the user, fill in when authMethod PASSWORD is being selected."
         }
     }),
