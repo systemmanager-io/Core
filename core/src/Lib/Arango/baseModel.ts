@@ -59,6 +59,7 @@ export default abstract class baseModel {
             return await this.collection.document(selector);
         } catch (err) {
             console.log(err);
+            // @TODO Throw error?
             return null;
         }
     }
