@@ -1,5 +1,6 @@
-import baseModel from "../../Lib/Arango/baseModel";
-import {arangodb} from "../../connectors";
+import baseModel from "../../../Lib/Arango/baseModel";
+import {arangodb} from "../../../connectors";
+import {string} from "joi";
 
 class ServerModel extends baseModel {
 
@@ -8,6 +9,10 @@ class ServerModel extends baseModel {
     filterFields = {
         '_id': ['doc._id', '=='],
         '_key': ['doc._key', '=='],
+    };
+
+    modelFields = {
+        'permission': string
     };
 
 }

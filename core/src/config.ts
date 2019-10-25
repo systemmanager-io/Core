@@ -28,4 +28,9 @@ export const redis = {
     // password: process.env.REDIS_PASSWORD || null
 };
 
+export const jwt = {
+    key: process.env.JWT_KEY || '',
+    secret: process.env.JWT_SECRET || '',
+};
+
 configDebug("Config Loaded");

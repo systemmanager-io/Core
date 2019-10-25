@@ -14,6 +14,12 @@ export default abstract class baseModel {
 
     protected abstract collection: arangojs.DocumentCollection;
 
+    // protected abstract modelFields: ;
+    //
+    // protected ModelFields(): any {
+    //     return this.modelData
+    // }
+
     protected collectionName(): string {
         return this.collection.name;
     }

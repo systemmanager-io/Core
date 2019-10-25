@@ -1,5 +1,5 @@
-import baseModel from "../../Lib/Arango/baseModel";
-import {arangodb} from "../../connectors";
+import baseModel from "../../../Lib/Arango/baseModel";
+import {arangodb} from "../../../connectors";
 
 class SettingModel extends baseModel {
 
