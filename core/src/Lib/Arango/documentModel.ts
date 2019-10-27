@@ -14,11 +14,13 @@ export default abstract class baseModel {
 
     protected abstract collection: arangojs.DocumentCollection;
 
+    // @TODO build a function/thing that will allow models to give their fields, so you wont put be able to put unknown data in the database
     // protected abstract modelFields: ;
     //
     // protected ModelFields(): any {
     //     return this.modelData
     // }
+
 
     protected collectionName(): string {
         return this.collection.name;
