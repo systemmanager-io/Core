@@ -11,9 +11,9 @@ class ServerModel extends documentModel {
         '_key': ['doc._key', '=='],
     };
 
-    modelFields = {
-        'permission': string
-    };
+    // modelFields = {
+    //     'permission': string
+    // };
 
 }
 
