@@ -1,7 +1,7 @@
-import baseModel from "../../../../Lib/Arango/baseModel";
+import documentModel from "../../../../Lib/Arango/documentModel";
 import {arangodb} from "../../../../connectors";
 
-class ServerLogModel extends baseModel {
+class ServerLogModel extends documentModel {
 
     collection = arangodb.collection("serverLogs");
 

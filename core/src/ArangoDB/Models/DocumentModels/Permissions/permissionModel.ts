@@ -1,7 +1,11 @@
-import baseModel from "../../../../Lib/Arango/baseModel";
+import documentModel from "../../../../Lib/Arango/documentModel";
 import {arangodb} from "../../../../connectors";
 
-class PermissionModel extends baseModel {
+interface databaseFields {
+    permission: string
+}
+
+class PermissionModel extends documentModel {
 
     collection = arangodb.collection("permissions");
 
@@ -10,6 +14,10 @@ class PermissionModel extends baseModel {
         '_key': ['doc._key', '=='],
     };
 
+
 }
+
+
+
 
 export default new PermissionModel();
