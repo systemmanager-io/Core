@@ -1,6 +1,6 @@
 import * as graphql from 'graphql'
 import {Server, ServerCreateInput, ServerPaginator} from './serverSchema'
-import serverModel from '../../../ArangoDB/Models/serverModel';
+import serverModel from '../../../ArangoDB/Models/DocumentModels/serverModel';
 
 export default {
     type: new graphql.GraphQLObjectType({

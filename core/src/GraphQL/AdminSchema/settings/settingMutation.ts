@@ -1,6 +1,6 @@
 import {GraphQLObjectType, GraphQLBoolean, GraphQLList, GraphQLNonNull, GraphQLID} from 'graphql'
 import {SettingUpdateInput, SettingCreateInput, Setting} from './settingSchema'
-import settingModel from "../../../ArangoDB/Models/settingModel";
+import settingModel from "../../../ArangoDB/Models/DocumentModels/settingModel";
 
 export default {
     type: new GraphQLObjectType({

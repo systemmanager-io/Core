@@ -1,6 +1,6 @@
 import {GraphQLObjectType, GraphQLBoolean, GraphQLList, GraphQLNonNull, GraphQLID} from 'graphql'
 import {ServerUpdateInput, ServerCreateInput, Server} from './serverSchema'
-import serverModel from "../../../ArangoDB/Models/serverModel";
+import serverModel from "../../../ArangoDB/Models/DocumentModels/serverModel";
 import uuid from "uuid/v4";
 
 export default {

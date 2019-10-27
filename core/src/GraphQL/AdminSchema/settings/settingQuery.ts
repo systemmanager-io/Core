@@ -1,6 +1,6 @@
 import * as graphql from 'graphql'
 import {Setting, SettingPaginator} from './settingSchema'
-import settingModel from '../../../ArangoDB/Models/settingModel';
+import settingModel from '../../../ArangoDB/Models/DocumentModels/settingModel';
 
 export default {
     type: new graphql.GraphQLObjectType({

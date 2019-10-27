@@ -1,6 +1,6 @@
 import * as graphql from 'graphql'
 import {User, UserPaginator} from './userSchema'
-import userModel from '../../../ArangoDB/Models/userModel';
+import userModel from '../../../ArangoDB/Models/DocumentModels/userModel';
 
 export default {
     type: new graphql.GraphQLObjectType({
@@ -8,7 +8,7 @@ export default {
         fields: () => ({
             list: {
                 type: new graphql.GraphQLList(User),
-                description: "Get a list of current setting entries in SystemManager",
+                description: "Get a list of current user entries in SystemManager",
                 args: {
                     paginator: {
                         type: UserPaginator,
@@ -16,20 +16,21 @@ export default {
                     },
                 },
                 resolve(root, args) {
-                    return userModel.list(args.paginator);
+                    const c = userModel.list(args.paginator);
+                    console.log(c.then((result) => {return result}));
+                    return c;
                 }
             },
             get: {
                 type: User,
-                description: 'Retrieve the setting information by its ID or Key',
+                description: 'Retrieve an users information by its ID or Key',
                 args: {
                     selector: {
                         type: new graphql.GraphQLNonNull(graphql.GraphQLID),
-                        description: 'Get an Setting entry by its _id or _key',
+                        description: 'Get an User entry by its _id or _key',
                     },
                 },
                 resolve(root, args) {
-                    console.log(args);
                     return userModel.find(args.selector);
                 },
             },

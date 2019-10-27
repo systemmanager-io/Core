@@ -1,6 +1,6 @@
 import {GraphQLObjectType, GraphQLBoolean, GraphQLList, GraphQLNonNull, GraphQLID} from 'graphql'
 import {UserUpdateInput, UserCreateInput, User, UserInput} from './userSchema'
-import userModel from "../../../ArangoDB/Models/userModel";
+import userModel from "../../../ArangoDB/Models/DocumentModels/userModel";
 import {dbDebug} from "../../../Lib/debug";
 import {UserCreateType, UserUpdateType} from "../../../Lib/Types/GraphQL/UserType";
 import * as crypto from "crypto";

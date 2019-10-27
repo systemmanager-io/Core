@@ -3,12 +3,12 @@ import {graphqlDebug} from "../debug";
 import {DocumentHandle} from "arangojs/lib/cjs/collection";
 import {DocumentData} from "arangojs/lib/cjs/util/types";
 import {aql} from "arangojs";
-import errorName from "./../../Lib/Errors/GraphQL/Errors";
+import errorName from "../Errors/GraphQL/Errors";
 import {arangodb} from "../../connectors";
 import {ArrayCursor} from "arangojs/lib/async/cursor";
 import {AqlQuery} from "arangojs/lib/async/aql-query";
 
-export default abstract class baseModel {
+export default abstract class documentModel {
 
     timestamps = true;
 

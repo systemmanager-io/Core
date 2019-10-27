@@ -1,6 +1,6 @@
 import * as graphql from 'graphql'
 import {ServerLog, ServerLogPaginator} from './serverLogSchema'
-import serverLogModel from '../../../ArangoDB/Models/serverLogModel';
+import serverLogModel from '../../../ArangoDB/Models/DocumentModels/Logs/serverLogModel';
 
 export default {
     type: new graphql.GraphQLObjectType({

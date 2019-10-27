@@ -1,6 +1,6 @@
 import {GraphQLObjectType, GraphQLBoolean, GraphQLList, GraphQLNonNull, GraphQLID} from 'graphql'
 import {ServerLogUpdateInput, ServerLogCreateInput, ServerLog} from './serverLogSchema'
-import serverLogModel from "../../../ArangoDB/Models/serverLogModel";
+import serverLogModel from "../../../ArangoDB/Models/DocumentModels/Logs/serverLogModel";
 
 export default {
     type: new GraphQLObjectType({
