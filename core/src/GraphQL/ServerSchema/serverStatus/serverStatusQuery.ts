@@ -1,6 +1,6 @@
 import * as graphql from 'graphql'
 import {ServerStatus, ServerStatusCreateInput, ServerStatusPaginator} from './serverStatusSchema'
-import serverModel from '../../../ArangoDB/Models/serverModel';
+import serverModel from '../../../ArangoDB/Models/DocumentModels/serverModel';
 
 export default {
     type: new graphql.GraphQLObjectType({

@@ -4,19 +4,21 @@ import * as config from "./config";
 import IORedis from "ioredis";
 import * as ArangoJS from "arangojs";
 import jwtMiddleware from "./Http/Middlewares/jwtMiddleware";
+import UserLoginController from "./Http/Controllers/UserLoginController";
 
 export const redis = new IORedis(config.redis);
 
 export const app = express();
 export const router = express.Router();
 
+app.post("/admin/login", function (req, res, next) {
+    UserLoginController.login(req, res, next)
+});
 
-// app.use('/', function (req, res, next) {
-//     console.log('Request Type:', req.method)
-//     res.send("Welcome to SystemManager! \n Made with love by/for SystemManagers!");
-//     next()
-// })
-app.use('/admin', function(req, res, next) {jwtMiddleware(req, res, next)});
+app.use("/admin", function (req, res, next) {
+    jwtMiddleware(req, res, next)
+});
+
 
 export const arangodb: any = new ArangoJS.Database(config.arangodb.host);
 arangodb.useBasicAuth(config.arangodb.username, config.arangodb.password);

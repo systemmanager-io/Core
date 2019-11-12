@@ -4,6 +4,13 @@ import {redis} from "../../connectors";
 const Bull = require('bull');
 
 queueDebug("Configuring queues and jobs");
-export const pingQueue = new Bull('pingQueue', redis);
 
-// pingQueue.add("TEST").then(console.log("Job proccessed/run"));
+redis.echo("Test").then(result => console.log);
+export const pingQueue = new Bull('pingQueue');
+
+pingQueue.add("TEST").then((r: any) => console.log("Job Added"));
+
+pingQueue.process(function (job: any, jobDone: any) {
+    console.log("Job Done!", job);
+    jobDone();
+}).then((r: any) => console.log("Job Processed"))

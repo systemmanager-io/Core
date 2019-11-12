@@ -1,6 +1,6 @@
 import * as config from '../../config'
 import {app} from "../../connectors";
-import {ApolloServer} from "apollo-server-express";
+import {ApolloServer, ApolloServerExpressConfig} from "apollo-server-express";
 import {defaultPlaygroundOptions} from "apollo-server-core";
 import {graphqlDebug} from "../../Lib/debug";
 import adminSchema from "../../GraphQL/AdminSchema/adminSchema";
@@ -10,12 +10,14 @@ import getErrorCode from "../../Lib/Errors/getErrorCode";
 export default async function graphqlServer() {
     graphqlDebug('Loading GraphQL');
 
-    const graphqlSettings: any = {
+    const graphqlSettings: ApolloServerExpressConfig = {
         playground: {
             ...defaultPlaygroundOptions,
             settings: {
                 // "request.credentials": 'include',
+
             }
+
         },
         subscriptions: {},
         uploads: {},
@@ -24,10 +26,11 @@ export default async function graphqlServer() {
             const error = getErrorCode(err.message);
             return ({message: error.message, statusCode: error.statusCode});
         }),
-    }
+    };
 
     const adminGraphql = new ApolloServer({
         schema: adminSchema,
+
         ...graphqlSettings,
 
     });
@@ -35,18 +38,18 @@ export default async function graphqlServer() {
     const serverGraphql = new ApolloServer({
         schema: serverSchema,
         ...graphqlSettings,
-    })
+    });
 
 
     adminGraphql.applyMiddleware({
         app: app,
         path: config.graphql.path + "admin"
-    })
+    });
 
     serverGraphql.applyMiddleware({
         app: app,
         path: config.graphql.path + "server"
-    })
+    });
 
     graphqlDebug('GraphQL Loaded');
 

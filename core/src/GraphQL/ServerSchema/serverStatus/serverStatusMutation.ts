@@ -1,6 +1,6 @@
 import {GraphQLObjectType, GraphQLBoolean, GraphQLList, GraphQLNonNull, GraphQLID} from 'graphql'
 import {ServerStatusUpdateInput, ServerStatusCreateInput, ServerStatus} from './serverStatusSchema'
-import serverModel from "../../../ArangoDB/Models/serverModel";
+import serverModel from "../../../ArangoDB/Models/DocumentModels/serverModel";
 
 export default {
     type: new GraphQLObjectType({
