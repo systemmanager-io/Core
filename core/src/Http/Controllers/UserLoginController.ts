@@ -17,6 +17,19 @@ export default class UserLoginController {
 
         httpDebug("User Logging In");
 
+        console.log(req.headers);
+
+        const email: any = req.headers.email;
+        const password: any = req.headers.password;
+
+        if (email == undefined || password == undefined) {
+            res.send({error: "Email/Password not set"});
+            return
+        }
+
+        console.log(email, password)
+
+
         res.send({test: "test"});
 
     }

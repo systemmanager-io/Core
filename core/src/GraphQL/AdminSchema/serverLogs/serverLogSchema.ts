@@ -5,6 +5,8 @@ import {
     GraphQLNonNull
 } from 'graphql'
 import serverLogType from "../../../Lib/Enums/StatusENUM";
+import GraphQLPaginateObject from "../../../Lib/GraphQL/GraphQLPaginateObject";
+import GraphQLFilterObject from "../../../Lib/GraphQL/GraphQLFilterObject";
 
 export const ServerLog = new GraphQLObjectType({
     name: 'ServerLog',
@@ -43,7 +45,10 @@ export const ServerLogPaginator = new GraphQLInputObjectType({
     name: 'ServerLogPaginator',
     fields: () => ({
         filter: {
-            type: GraphQLString
+            type: GraphQLFilterObject
+        },
+        paginate: {
+            type: GraphQLPaginateObject
         }
     })
 })
