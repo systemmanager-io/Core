@@ -7,6 +7,7 @@ import errorName from "../Errors/GraphQL/Errors";
 import {arangodb} from "../../connectors";
 import {ArrayCursor} from "arangojs/lib/async/cursor";
 import {AqlQuery} from "arangojs/lib/async/aql-query";
+import {PaginateType} from "../Types/GraphQL/PaginateType";
 
 export default abstract class documentModel {
 
@@ -81,16 +82,23 @@ export default abstract class documentModel {
     }
 
     // List all entries in a collection with (possibly applied filters)
-    public async list(filters: any) {
+    public async list(paginator: PaginateType) {
+        //@ TODO Make types for these.
         // This is a query and not an all function so I can make an paginator soon. The Models already use an paginator schema.
         // @TODO Make paginator
+        console.log(paginator);
+
         const query: AqlQuery = aql`
             FOR d IN @@collectionName
+            LIMIT @limit
             RETURN d
         `;
 
+
         query.bindVars = {
-            "@collectionName": this.collectionName()
+            "@collectionName": this.collectionName(),
+            "limit": paginator.paginate.limit || 50
+
         };
 
         const result: ArrayCursor = await arangodb.query(query);

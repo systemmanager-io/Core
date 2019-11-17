@@ -21,7 +21,7 @@ Vagrant.configure("2") do |config|
 
   config.vm.provider "virtualbox" do |v|
     v.memory = 2048
-    v.name = "SystemManager-CORE"
+    v.name = "SystemManager"
   end
 
   if OS.mac?
