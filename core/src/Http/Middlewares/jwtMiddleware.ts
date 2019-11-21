@@ -6,11 +6,10 @@ import * as jwt from "jsonwebtoken";
 import * as config from "../../config"
 import {JsonWebTokenError} from "jsonwebtoken";
 
-
 const invalidToken = {
     error: "No JWT",
     message: "Perhaps you forgot to log in?"
-}
+};
 export default function jwtMiddleware(req: Request, res: Response, next: NextFunction) {
 
     httpMiddlewareDebug("JWT Middleware", uuid());
