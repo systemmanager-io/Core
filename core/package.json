@@ -4,6 +4,10 @@
   "description": "The core for SystemManager",
   "main": "index.js",
   "author": "GenericDevelopment (Tigo Middelkoop)",
+  "homepage": "https://systemmanager.io",
+  "repository": {
+    "url": "https://github.com/systemmanager-io/Core"
+  },
   "license": "MIT",
   "private": false,
   "scripts": {
