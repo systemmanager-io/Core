@@ -1,10 +1,11 @@
-import jwt from "jsonwebtoken";
+import * as jsonwebtoken from "jsonwebtoken";
 import {NextFunction, Request, Response} from "express";
 import {httpDebug} from "../../Lib/debug";
 import {ArrayCursor} from "arangojs/lib/async/cursor";
 import {arangodb} from "../../connectors";
 import {aql, AqlQuery} from "arangojs/lib/cjs/aql-query";
 import argon from "argon2";
+import * as config from "../../config"
 
 const incorrectInfo = {status: "Incorrect login information"};
 export default class UserLoginController {
@@ -42,7 +43,17 @@ export default class UserLoginController {
             // The const below this thing feels SO broken.
             const user = userAccount[0];
             if (await argon.verify(user.password, password + user.salt)) {
-                res.send({status: "YEAAAAAAAAAAA WHOOOO PASSWORD CORRECT!"})
+
+                const jwt = jsonwebtoken.sign({
+                    userId: user._id
+                }, "123", {expiresIn: "1h"})
+
+
+                const checker = jsonwebtoken.verify(jwt, config.jwt.secret);
+                console.log(checker);
+
+                res.send({jwt})
+
             } else {
                 res.status(401);
                 res.send(incorrectInfo)
