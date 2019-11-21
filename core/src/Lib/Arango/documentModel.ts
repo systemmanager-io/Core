@@ -7,6 +7,7 @@ import errorName from "../Errors/GraphQL/Errors";
 import {arangodb} from "../../connectors";
 import {ArrayCursor} from "arangojs/lib/async/cursor";
 import {AqlQuery} from "arangojs/lib/async/aql-query";
+import {PaginateType} from "../Types/GraphQL/PaginateType";
 
 export default abstract class documentModel {
 
@@ -15,6 +16,9 @@ export default abstract class documentModel {
     protected abstract collection: arangojs.DocumentCollection;
 
     // @TODO build a function/thing that will allow models to give their fields, so you wont put be able to put unknown data in the database
+    // @TODO This is especially handy if you are going to use certain models for certain stuff in an plugin, idk, have to decide how plugins are going to work.
+
+    // @TODO Also implement something that will ONLY allow the model to insert in their own collection not another collection. Then the purpose of seperate models just goed to shit/
     // protected abstract modelFields: ;
     //
     // protected ModelFields(): any {
@@ -72,17 +76,29 @@ export default abstract class documentModel {
         }
     }
 
+    public async search(searchFilters: any) {
+        // We can use the list for this as well. It I think that is the way to go to be honest. Or we do listing and such jusst in that one.
+        // If the list is doing more than just listing we cu
+    }
+
     // List all entries in a collection with (possibly applied filters)
-    public async list(filters: any) {
+    public async list(paginator: PaginateType) {
+        //@ TODO Make types for these.
         // This is a query and not an all function so I can make an paginator soon. The Models already use an paginator schema.
         // @TODO Make paginator
+        console.log(paginator);
+
         const query: AqlQuery = aql`
             FOR d IN @@collectionName
+            LIMIT @limit
             RETURN d
         `;
 
+
         query.bindVars = {
-            "@collectionName": this.collectionName()
+            "@collectionName": this.collectionName(),
+            "limit": paginator.paginate.limit || 50
+
         };
 
         const result: ArrayCursor = await arangodb.query(query);

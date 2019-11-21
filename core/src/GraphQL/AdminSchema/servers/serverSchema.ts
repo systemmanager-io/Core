@@ -6,6 +6,8 @@ import {
     GraphQLBoolean,
     GraphQLInt
 } from 'graphql'
+import GraphQLFilterObject from "../../../Lib/GraphQL/GraphQLFilterObject";
+import GraphQLPaginateObject from "../../../Lib/GraphQL/GraphQLPaginateObject";
 
 export const Server = new GraphQLObjectType({
     name: 'Server',
@@ -107,7 +109,10 @@ export const ServerPaginator = new GraphQLInputObjectType({
     name: 'ServerPaginator',
     fields: () => ({
         filter: {
-            type: GraphQLString
+            type: GraphQLFilterObject
+        },
+        paginate: {
+            type: GraphQLPaginateObject
         }
     })
 })

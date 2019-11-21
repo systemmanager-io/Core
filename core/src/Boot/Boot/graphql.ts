@@ -21,8 +21,8 @@ export default async function graphqlServer() {
         },
         subscriptions: {},
         uploads: {},
-        // @ts-ignore
         formatError: (err => {
+            console.log(err)
             const error = getErrorCode(err.message);
             return ({message: error.message, statusCode: error.statusCode});
         }),
