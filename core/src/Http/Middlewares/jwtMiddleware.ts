@@ -29,9 +29,14 @@ export default function jwtMiddleware(req: Request, res: Response, next: NextFun
         jwt.verify(jwtToken, config.jwt.secret)
     } catch (e) {
         if (e instanceof JsonWebTokenError) {
-            console.log("JWT", e);
-            res.status(403);
-            res.send(invalidToken);
+            console.log("JWT", e.name);
+            if(e.name == "TokenExpiredError") {
+                res.status(403);
+                res.send({error: "Token Expired"})
+            } else if(e.name == "JsonWebTokenError") {
+                res.status(403);
+                res.send({error: "Token Malformed"});
+            }
             return
         }
     }

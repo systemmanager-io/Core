@@ -46,7 +46,7 @@ export default class UserLoginController {
 
                 const jwt = jsonwebtoken.sign({
                     userId: user._id
-                }, "123", {expiresIn: "1h"})
+                }, config.jwt.secret, {expiresIn: "1h"});
 
 
                 const checker = jsonwebtoken.verify(jwt, config.jwt.secret);
