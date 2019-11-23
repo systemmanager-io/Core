@@ -16,10 +16,8 @@ const invalidToken = {
 };
 export default async function jwtMiddleware(req: Request, res: Response, next: NextFunction) {
 
-    httpMiddlewareDebug("JWT Middleware", uuid());
     const jwtToken: any = req.headers.token;
 
-    // @TODO Make a check to see if someone is blocked before continuing
     // @TODO There must be a safer way to check if someone is real. We also need to keep the possibility of jwt Hijacking in mind
 
     if (jwtToken == undefined) {
@@ -54,11 +52,9 @@ export default async function jwtMiddleware(req: Request, res: Response, next: N
     `;
     query.bindVars = {userId: jwtData.userId};
     const queryResult: ArrayCursor = await arangodb.query(query);
-
-    // This seems little off to do all(). But i have limited the query to show/retrieve the first user only
     const userAccount: any = await queryResult.all();
 
-    //If this is false the user has been blocked by an system operator.
+    //If this is false the user has been blocked by an SysOp
     if (userAccount[0]) {
         res.status(403);
         res.send({error: "You no longer have access to this resource"});
