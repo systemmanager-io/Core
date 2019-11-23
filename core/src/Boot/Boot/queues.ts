@@ -10,10 +10,10 @@ export async function queue() {
 
     redis.echo("Test").then(result => console.log);
 
-    pingQueue.add("TEST").then((r: any) => console.log("Job Added"));
+    pingQueue.add("TEST").then((r: any) => queueDebug("Job Added"));
 
     pingQueue.process(function (job: any, jobDone: any) {
-        console.log("Job Done!", job);
+        queueDebug("Job Done!", job);
         jobDone();
-    }).then((r: any) => console.log("Job Processed"))
+    }).then((r: any) => queueDebug("Job Processed"))
 }

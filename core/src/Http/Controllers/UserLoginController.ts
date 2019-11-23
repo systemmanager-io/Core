@@ -11,17 +11,15 @@ const incorrectInfo = {status: "Incorrect login information"};
 export default class UserLoginController {
 
     public static async login(req: Request, res: Response, next: NextFunction) {
-
-        httpDebug("User Logging In");
-
-        const email: any = req.headers.email;
-        const password: any = req.headers.password;
+        let email: string | string[] | undefined = req.headers.email;
+        const password: string | string[] | undefined = req.headers.password;
 
         if (email == undefined || password == undefined) {
             res.status(401);
             res.send(incorrectInfo);
             return
         }
+        if (typeof email === "string") email = email.toLowerCase();
 
         const query: AqlQuery = aql`
         FOR u in users
