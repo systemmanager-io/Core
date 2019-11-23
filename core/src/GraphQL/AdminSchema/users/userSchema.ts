@@ -185,7 +185,6 @@ export const UserCreateInput = new GraphQLInputObjectType({
         blocked: {
             type: GraphQLBoolean,
             description: "Toggle this if you want to block a user, defaults to FALSE",
-            default: false
         }
 
     }),

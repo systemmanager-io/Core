@@ -7,6 +7,9 @@ import * as crypto from "crypto";
 import argon from "argon2";
 import uuid from "uuid/v4"
 import errorName from "./../../../Lib/Errors/GraphQL/Errors"
+import {aql, AqlQuery} from "arangojs/lib/cjs/aql-query";
+import {ArrayCursor} from "arangojs/lib/async/cursor";
+import {arangodb} from "../../../connectors";
 
 export default {
     type: new GraphQLObjectType({
@@ -32,7 +35,7 @@ export default {
                         authMethod: args.data.authMethod,
                         password: undefined,
                         salt: undefined,
-                        blocked: args.data.blocked
+                        blocked: args.data.blocked || false
                     };
 
                     if (args.data.name !== undefined) {
@@ -40,6 +43,9 @@ export default {
                     } else {
                         user.name = args.data.username;
                     }
+
+                    const userExists: boolean = await checkIfUserExists(user.email)
+                    if (userExists) throw new Error(errorName.USERALREADYEXISTS);
 
                     if (args.data.authMethod === "password") {
                         if (args.data.password === args.data.password_confirmation) {
@@ -81,6 +87,12 @@ export default {
                         salt: undefined,
                         blocked: args.data.blocked || undefined
                     };
+
+                    if (user.email !== undefined) {
+                        const userExists: boolean = await checkIfUserExists(user.email)
+
+                        if (userExists) throw new Error(errorName.USERALREADYEXISTS);
+                    }
 
                     if (args.data.authMethod === "password") {
                         if (args.data.password !== undefined) {
@@ -128,4 +140,23 @@ export default {
         }),
     }),
     resolve: () => ({}),
+}
+
+async function checkIfUserExists(email: string) {
+
+    const query: AqlQuery = aql`
+                        FOR u in users
+                            FILTER u.email == @email
+                            LIMIT 1
+                        RETURN u
+                    `;
+
+    query.bindVars = {
+        email: email
+    };
+
+    const queryResult: ArrayCursor = await arangodb.query(query);
+    const userAccount: any = await queryResult.all();
+    return Array.isArray(userAccount) && userAccount.length != 0;
+
 }
