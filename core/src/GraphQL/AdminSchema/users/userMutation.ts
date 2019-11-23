@@ -31,7 +31,8 @@ export default {
                         email: args.data.email.toLowerCase(),
                         authMethod: args.data.authMethod,
                         password: undefined,
-                        salt: undefined
+                        salt: undefined,
+                        blocked: args.data.blocked
                     };
 
                     if (args.data.name !== undefined) {
@@ -77,7 +78,8 @@ export default {
                         email: args.data.email.toLowerCase() || undefined,
                         authMethod: args.data.authMethod || undefined,
                         password: undefined,
-                        salt: undefined
+                        salt: undefined,
+                        blocked: args.data.blocked || undefined
                     };
 
                     if (args.data.authMethod === "password") {
