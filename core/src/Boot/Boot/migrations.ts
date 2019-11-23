@@ -7,10 +7,8 @@ import {arangodb} from "../../connectors";
 import checkMigrationExtensions from "../../ArangoDB/Functions/checkMigrationExtensions";
 import Migration from "../../Lib/Types/ArangoDB/Migration";
 
-dbDebug("Checking for migrations");
-
-
 export async function migrate() {
+    dbDebug("Checking for migrations");
     await checkMigrationCollection();
     const migrationList = getMigrations();
 
@@ -36,7 +34,6 @@ async function migrateToDB(migration: Migration) {
         await migrationCollection.save({_key: migration.file});
     }
 }
-
 
 function getMigrations() {
     const dir = path.resolve(__dirname, '../../ArangoDB/Migrations/');

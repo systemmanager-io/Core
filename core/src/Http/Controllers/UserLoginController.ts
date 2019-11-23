@@ -44,13 +44,16 @@ export default class UserLoginController {
             const user = userAccount[0];
             if (await argon.verify(user.password, password + user.salt)) {
 
+                if (user.blocked) {
+                    res.status(403);
+                    res.send({error: "You no longer have access to this resource"});
+                    return
+                }
+
                 const jwt = jsonwebtoken.sign({
                     userId: user._id
-                }, "123", {expiresIn: "1h"})
+                }, config.jwt.secret, {expiresIn: "1h"});
 
-
-                const checker = jsonwebtoken.verify(jwt, config.jwt.secret);
-                console.log(checker);
 
                 res.send({jwt})
 

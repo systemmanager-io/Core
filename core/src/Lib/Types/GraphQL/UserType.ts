@@ -6,6 +6,7 @@ export interface UserCreateType  {
     password: string | undefined,
     authMethod: string
     salt: undefined | string
+    blocked: boolean
 }
 
 export interface UserUpdateType {
@@ -15,6 +16,7 @@ export interface UserUpdateType {
     password: string | undefined,
     authMethod: string | undefined,
     salt: undefined | string
+    blocked: boolean
 }
 
 // @TODO make proper enum

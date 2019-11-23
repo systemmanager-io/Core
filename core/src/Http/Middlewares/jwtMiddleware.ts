@@ -5,13 +5,16 @@ import {httpMiddlewareDebug} from "../../Lib/debug";
 import * as jwt from "jsonwebtoken";
 import * as config from "../../config"
 import {JsonWebTokenError} from "jsonwebtoken";
-
+import {aql, AqlQuery} from "arangojs/lib/cjs/aql-query";
+import {ArrayCursor} from "arangojs/lib/async/cursor";
+import {arangodb} from "../../connectors";
+import {UserJWT} from "../../Lib/Types/Jwt/UserJWT";
 
 const invalidToken = {
     error: "No JWT",
     message: "Perhaps you forgot to log in?"
-}
-export default function jwtMiddleware(req: Request, res: Response, next: NextFunction) {
+};
+export default async function jwtMiddleware(req: Request, res: Response, next: NextFunction) {
 
     httpMiddlewareDebug("JWT Middleware", uuid());
     const jwtToken: any = req.headers.token;
@@ -25,16 +28,41 @@ export default function jwtMiddleware(req: Request, res: Response, next: NextFun
         return
     }
 
+    let jwtData: any;
     try {
-        //@TODO Change this to RSA KEYS?
-        jwt.verify(jwtToken, config.jwt.secret)
+        //@TODO Make it compatible with Pub/Priv keys?
+        jwtData = await jwt.verify(jwtToken, config.jwt.secret)
     } catch (e) {
         if (e instanceof JsonWebTokenError) {
-            console.log("JWT", e);
-            res.status(403);
-            res.send(invalidToken);
+            console.log("JWT", e.name);
+            if (e.name == "TokenExpiredError") {
+                res.status(403);
+                res.send({error: "Token Expired"})
+            } else if (e.name == "JsonWebTokenError") {
+                res.status(403);
+                res.send({error: "Token Malformed"});
+            }
             return
         }
+    }
+    if (jwtData == undefined) return;
+    const query: AqlQuery = aql`
+        FOR u in users
+            FILTER u._id == @userId
+            LIMIT 1
+        RETURN u.blocked
+    `;
+    query.bindVars = {userId: jwtData.userId};
+    const queryResult: ArrayCursor = await arangodb.query(query);
+
+    // This seems little off to do all(). But i have limited the query to show/retrieve the first user only
+    const userAccount: any = await queryResult.all();
+
+    //If this is false the user has been blocked by an system operator.
+    if (userAccount[0]) {
+        res.status(403);
+        res.send({error: "You no longer have access to this resource"});
+        return
     }
     next();
 

@@ -22,6 +22,7 @@ Vagrant.configure("2") do |config|
   config.vm.provider "virtualbox" do |v|
     v.memory = 2048
     v.name = "SystemManager"
+    v.customize ["setextradata", :id, "VBoxInternal2/SharedFoldersEnableSymlinksCreate/v-root", "1"]
   end
 
   if OS.mac?
@@ -33,9 +34,9 @@ Vagrant.configure("2") do |config|
 
 
   config.vm.network "private_network", :ip => '192.168.10.100', :adapter => 2
-  config.vm.network "forwarded_port", guest: 8080, host: 8080
-  config.vm.network "forwarded_port", guest: 6379, host: 6379
-  config.vm.network "forwarded_port", guest: 8529, host: 3000
+  #config.vm.network "forwarded_port", guest: 8080, host: 8080
+  #config.vm.network "forwarded_port", guest: 6379, host: 6379
+  #config.vm.network "forwarded_port", guest: 8529, host: 3000
 
   #config.vm.provision "file", source: "~/.tmux.conf", destination: "/home/vagrant/.tmux.conf"
   #config.vm.provision "file", source: "~/.tmux.conf", destination: "/root/.tmux.conf"

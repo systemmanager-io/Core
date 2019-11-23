@@ -2,7 +2,8 @@ import {
     GraphQLString,
     GraphQLObjectType,
     GraphQLInputObjectType,
-    GraphQLNonNull
+    GraphQLNonNull,
+    GraphQLBoolean
 } from 'graphql'
 import authMethodType from '../../../Lib/Enums/AuthMethodENUM';
 
@@ -35,6 +36,12 @@ export const User = new GraphQLObjectType({
             type: new GraphQLNonNull(authMethodType),
             description: "The way a user is being authenticated, defaults to PASSWORD",
             default: "PASSWORD"
+        },
+
+        blocked: {
+            type: GraphQLBoolean,
+            description: "Toggle this if you want to block a user, defaults to FALSE",
+            default: false
         }
 
     }),
@@ -71,14 +78,20 @@ export const UserInput = new GraphQLObjectType({
             default: "PASSWORD"
         },
 
-        password: {
-            type: GraphQLString,
-            description: "The password of the user, fill in when authMethod PASSWORD is being selected."
-        },
+        // password: {
+        //     type: GraphQLString,
+        //     description: "The password of the user, fill in when authMethod PASSWORD is being selected."
+        // },
+        //
+        // password_confirmation: {
+        //     type: GraphQLString,
+        //     description: "The password of the user, fill in when authMethod PASSWORD is being selected."
+        // },
 
-        password_confirmation: {
-            type: GraphQLString,
-            description: "The password of the user, fill in when authMethod PASSWORD is being selected."
+        blocked: {
+            type: GraphQLBoolean,
+            description: "Toggle this if you want to block a user, defaults to FALSE",
+            default: false
         }
     }),
 });
@@ -125,6 +138,12 @@ export const UserUpdateInput = new GraphQLInputObjectType({
         password_confirmation: {
             type: GraphQLString,
             description: "The password of the user, fill in when authMethod PASSWORD is being selected."
+        },
+
+        blocked: {
+            type: GraphQLBoolean,
+            description: "Toggle this if you want to block a user, defaults to FALSE",
+            default: false
         }
     }),
 });
@@ -161,6 +180,12 @@ export const UserCreateInput = new GraphQLInputObjectType({
         password_confirmation: {
             type: new GraphQLNonNull(GraphQLString),
             description: "The password of the user, fill in when authMethod PASSWORD is being selected."
+        },
+
+        blocked: {
+            type: GraphQLBoolean,
+            description: "Toggle this if you want to block a user, defaults to FALSE",
+            default: false
         }
 
     }),

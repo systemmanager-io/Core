@@ -1,7 +1,6 @@
-import * as express from "express";
-import {app, httpServer} from "../../connectors";
-import {httpDebug} from "../../Lib/debug";
 import * as config from "../../config";
+import {httpServer} from "../../connectors";
+import {httpDebug} from "../../Lib/debug";
 import graphqlServer from "./graphql";
 import {migrate} from "./migrations";
 import {showLogo} from "./showCoreInfo";
