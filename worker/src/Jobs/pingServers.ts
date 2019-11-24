@@ -1,7 +1,7 @@
-import {workerDebug} from "../Lib/debugs";
+import {workerDebug} from "../Lib/debug";
 
-export default function (job: any, jobDone: any) {
+export default function (job: any, done: any) {
     workerDebug("Pinging Server on" + job.process.pid);
     console.log("Pinging Server");
-    jobDone();
+    done();
 }

@@ -60,6 +60,6 @@ export default async function jwtMiddleware(req: Request, res: Response, next: N
         res.send({error: "You no longer have access to this resource"});
         return
     }
-    next();
+    next(userAccount);
 
 }

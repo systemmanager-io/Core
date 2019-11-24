@@ -5,6 +5,32 @@ import {
     GraphQLNonNull
 } from 'graphql'
 
+const CpuType = new GraphQLObjectType({
+    name: "CPU",
+    fields: () => ({})
+});
+
+const GpuType = new GraphQLObjectType({
+    name: "GPU",
+    fields: () => ({})
+});
+
+const RamType = new GraphQLObjectType({
+    name: "RAM",
+    fields: () => ({})
+});
+
+const MoboType = new GraphQLObjectType({
+    name: "MOBO",
+    fields: () => ({})
+});
+
+const DiskType = new GraphQLObjectType({
+    name: "DISK",
+    fields: () => ({})
+})
+
+
 export const ServerSpecs = new GraphQLObjectType({
     name: 'ServerSpecs',
     fields: () => ({
@@ -17,17 +43,21 @@ export const ServerSpecs = new GraphQLObjectType({
             type: GraphQLString
         },
 
-        // CPU: {
-        //     name: 'CPU',
-        // },
-        // RAM: {
-        //     type: new GraphQLNonNull(GraphQLString),
-        //     description: "The value of the setting.",
-        // },
-        // GPU: {},
-        // MOBO: {},
-        // DISKS: {},
-
+        CPU: {
+            type: CpuType
+        },
+        RAM: {
+            type: RamType,
+        },
+        GPU: {
+            type: GpuType
+        },
+        MOBO: {
+            type: MoboType
+        },
+        DISKS: {
+            type: DiskType
+        },
     }),
 });
 
