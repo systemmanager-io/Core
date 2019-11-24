@@ -32,4 +32,7 @@ export const jwt = {
     secret: process.env.JWT_SECRET || '',
 };
 
+export const builtinJobWorker = {
+    amount: parseInt(process.env.JOB_WORKERS || '1') ,
+}
 configDebug("Config Loaded");

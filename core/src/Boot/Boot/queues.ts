@@ -1,19 +1,23 @@
 import {queueDebug} from "../../Lib/debug";
 import {redis} from "../../connectors";
+import Queue from "bull"
+import pingServers from "../../Jobs/pingServers";
+import pingAllServers from "../../Jobs/pingAllServers";
 
-const Bull = require('bull');
-export const pingQueue = new Bull('pingQueue');
+export const pingQueue = new Queue('pingServer', 'redis://127.0.0.1:6379');
+export const pingAllQueue = new Queue('pingAllServers', 'redis://127.0.0.1:6379');
 
 export async function queue() {
+    queueDebug("Configuring Queues");
+    redis.flushall();
 
-    queueDebug("Configuring queues and jobs");
-
-    redis.echo("Test").then(result => console.log);
-
-    pingQueue.add("TEST").then((r: any) => queueDebug("Job Added"));
-
-    pingQueue.process(function (job: any, jobDone: any) {
-        queueDebug("Job Done!", job);
-        jobDone();
-    }).then((r: any) => queueDebug("Job Processed"))
+    pingAllQueue.add({}, {repeat: {every: 60000}});
 }
+
+pingQueue.process(async (job, jobDone) => {
+    return pingServers(job, jobDone);
+});
+
+pingAllQueue.process(async (job, jobDone) => {
+    return pingAllServers(job, jobDone);
+});
