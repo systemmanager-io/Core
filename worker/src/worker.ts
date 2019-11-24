@@ -1,4 +1,4 @@
-import "./Lib/debugs"
+import "./Lib/debug"
 import pingServers from "./Jobs/pingServers";
 
 let Queue = require('bull');
