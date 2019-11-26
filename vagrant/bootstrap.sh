@@ -1,3 +1,3 @@
 #!/usr/bin/env bash
 
-sudo chown vagrant /home/vagrant/.config/
+#sudo chown vagrant /home/vagrant/.config/
