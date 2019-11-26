@@ -1,0 +1,12 @@
+name: CI
+
+on: [push]
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Mirror to GitLab and run GitLab CI
+      uses: SvanBoxel/gitlab-mirror-and-ci-action@0.2
