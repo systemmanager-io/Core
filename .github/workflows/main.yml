@@ -1,4 +1,4 @@
-name: CI
+name: "Mirroring to GenericDevelopment GitLab Instance"
 
 on: [push]
 
