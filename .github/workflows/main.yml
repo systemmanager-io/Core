@@ -10,7 +10,7 @@ jobs:
     - name: Mirror + trigger CI
       uses: SvanBoxel/gitlab-mirror-and-ci-action@master
       with:
-        args: "https://gitlab.com/<namespace>/<repository>"
+        args: "https://git.genericdevelopment.nl/systemmanager.io/core"
       env:
         GITLAB_HOSTNAME: "git.genericdevelopment.nl"
         GITLAB_USERNAME: ${{ secrets.GITLAB_USERNAME }}
