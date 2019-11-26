@@ -4,8 +4,6 @@ const roleHasPermissionsEdgeCollection = arangodb.edgeCollection('roleHasPermiss
 const userHasPermissionsEdgeCollection = arangodb.edgeCollection('userHasPermissions');
 const userHasRolesEdgeCollection = arangodb.edgeCollection('userHasRoles');
 
-
-
 export async function up() {
     await roleHasPermissionsEdgeCollection.create();
     await userHasPermissionsEdgeCollection.create();

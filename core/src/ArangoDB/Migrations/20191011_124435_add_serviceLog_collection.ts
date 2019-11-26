@@ -2,8 +2,6 @@ import {arangodb} from "../../connectors";
 
 const serviceLogCollection = arangodb.collection('serviceLogs');
 
-
-
 export async function up() {
     await serviceLogCollection.create();
 }
