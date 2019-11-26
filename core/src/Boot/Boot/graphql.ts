@@ -22,7 +22,6 @@ export default async function graphqlServer() {
         subscriptions: {},
         uploads: {},
         formatError: (err => {
-            console.log(err)
             const error = getErrorCode(err.message);
             return ({message: error.message, statusCode: error.statusCode});
         }),
@@ -39,7 +38,6 @@ export default async function graphqlServer() {
         schema: serverSchema,
         ...graphqlSettings,
     });
-
 
     adminGraphql.applyMiddleware({
         app: app,

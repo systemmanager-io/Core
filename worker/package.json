@@ -16,7 +16,8 @@
     "debug": "^4.1.1",
     "dotenv": "^8.2.0",
     "ioredis": "^4.14.1",
-    "node-fetch": "^2.6.0"
+    "node-fetch": "^2.6.0",
+    "ssh2": "^0.8.6"
   },
   "devDependencies": {
     "@types/bull": "^3.10.0",

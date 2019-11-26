@@ -9,15 +9,16 @@ export const pingAllQueue = new Queue('pingAllServers', 'redis://127.0.0.1:6379'
 
 export async function queue() {
     queueDebug("Configuring Queues");
-    redis.flushall();
+
 
     pingAllQueue.add({}, {repeat: {every: 60000}});
+    queueDebug("Queues Configured");
 }
 
-pingQueue.process(async (job, jobDone) => {
-    return pingServers(job, jobDone);
-});
-
-pingAllQueue.process(async (job, jobDone) => {
-    return pingAllServers(job, jobDone);
-});
+// pingQueue.process(async (job, jobDone) => {
+//     return pingServers(job, jobDone);
+// });
+//
+// pingAllQueue.process(async (job, jobDone) => {
+//     return pingAllServers(job, jobDone);
+// });
