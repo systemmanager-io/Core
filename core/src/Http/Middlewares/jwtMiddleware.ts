@@ -8,7 +8,6 @@ import {JsonWebTokenError} from "jsonwebtoken";
 import {aql, AqlQuery} from "arangojs/lib/cjs/aql-query";
 import {ArrayCursor} from "arangojs/lib/async/cursor";
 import {arangodb} from "../../connectors";
-import {UserJWT} from "../../Lib/Types/Jwt/UserJWT";
 
 const invalidToken = {
     error: "No JWT",
@@ -60,6 +59,5 @@ export default async function jwtMiddleware(req: Request, res: Response, next: N
         res.send({error: "You no longer have access to this resource"});
         return
     }
-    next(userAccount);
-
+    next();
 }

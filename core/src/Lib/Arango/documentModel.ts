@@ -115,8 +115,10 @@ export default abstract class documentModel {
                 console.log(e);
                 return false;
             }
-        } else return false;
-    }
+        } else {
+            return false
+        }
+    };
 
 
     protected parseInsert(document: any): any {

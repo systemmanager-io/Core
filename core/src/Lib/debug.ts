@@ -11,6 +11,7 @@ export const httpDebug = coreDebug.extend('http');
 export const httpMiddlewareDebug = httpDebug.extend("middleware");
 export const queueDebug = coreDebug.extend('queue');
 export const graphqlDebug = coreDebug.extend('graphql');
+export const installDebug = coreDebug.extend('install');
 
 
 

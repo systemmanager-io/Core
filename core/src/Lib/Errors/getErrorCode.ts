@@ -1,7 +1,7 @@
 import errorType from "./GraphQL/ErrorTypes";
 
 const getErrorCode = (errorName: any) => {
-    return errorType[errorName]
-}
+    return errorType[errorName];
+};
 
-export default getErrorCode
+export default getErrorCode;

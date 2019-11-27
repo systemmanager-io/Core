@@ -29,9 +29,7 @@ export default async function graphqlServer() {
 
     const adminGraphql = new ApolloServer({
         schema: adminSchema,
-
         ...graphqlSettings,
-
     });
 
     const serverGraphql = new ApolloServer({

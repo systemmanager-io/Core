@@ -7,6 +7,20 @@ export interface UserCreateType  {
     authMethod: string
     salt: undefined | string
     blocked: boolean
+
+}
+export interface UserCreateTypeSec  {
+    _key: string,
+    username: string,
+    email: string,
+    name: string | undefined,
+    password: string | undefined,
+    password_confirmation: string | undefined,
+    authMethod: string
+    salt: undefined | string
+    blocked: boolean
+
+
 }
 
 export interface UserUpdateType {
