@@ -24,5 +24,4 @@ export const arangodb: any = new ArangoJS.Database(config.arangodb.host);
 arangodb.useBasicAuth(config.arangodb.username, config.arangodb.password);
 arangodb.useDatabase(config.arangodb.database);
 
-
 export const httpServer: http.Server = http.createServer(app);

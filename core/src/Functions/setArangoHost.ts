@@ -5,7 +5,7 @@ export default function setArangoHost(entry: string) {
     */
 
     //Check if the entry is even filled
-    if (entry === "") throw "No ARANGODB_HOST specified";
+    if (entry === '') throw "No ARANGODB_HOST specified in the config";
 
     // Check for common ArangoDB protocols
     if (entry.includes("tcp://")) return entry;

@@ -10,6 +10,18 @@ class SettingModel extends documentModel {
         '_key': ['doc._key', '=='],
     };
 
+    async getSetting(setting: string) {
+        const result = await this.find(setting);
+        return result.value;
+    }
+
+    async setSetting(setting: string, value: any) {
+        const result = await this.update(setting, {
+            value: value
+        });
+        return result.value;
+    }
+
 }
 
 export default new SettingModel();
