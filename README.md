@@ -4,4 +4,4 @@
 ###### Let long downtimes be a thing of the past!
 You can find support here\
 [Discord](https://discord.gg/UKX3Qux)\
-[Forum](forum.systemmanager.io)
+[Forum](https://forum.systemmanager.io)
