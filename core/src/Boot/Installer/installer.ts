@@ -12,7 +12,7 @@ export default async function () {
         installDebug("SystemManager has been installed, skipping first time setup.");
         return
     }
-    installDebug("Welcome to SystemManager");
+    installDebug("Thank you for choosing SystemManager");
     installDebug("We will now set up the rest of the Core");
     installDebug("First we will create a user for you which will have the role \"admin\"");
 
@@ -60,6 +60,8 @@ export default async function () {
         await createUser(user);
         delete answers.password;
         delete answers.password_confirmation;
+
+        // Does this actually work?
         answers = {};
         user = null;
     });

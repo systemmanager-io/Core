@@ -17,14 +17,14 @@ boot().then((bootTime: any) => {
 async function boot() {
     // This is the boot order of SystemManager. This should make it easier for us to maintain the core.
     const options = commandLineArgs([
+        { name: 'help', alias: 'h'},
         { name: 'install', alias: 'i', type: Boolean, defaultValue: false},
+        { name: 'no-auth', type: Boolean, defaultValue: false, },
     ]);
 
     await showLogo();
-    await migrate();
-    if(options.install) {
-        await installer();
-    }
+    await migrate(); // We first migrate the DB before showing the installer or booting the engine
+    if(options.install) await installer();
     await queue();
 
     httpServer.listen(config.http.port, config.http.host);
