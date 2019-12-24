@@ -11,6 +11,7 @@ import {PaginateType} from "../Types/GraphQL/PaginateType";
 
 export default abstract class documentModel {
 
+    // The CreatedAt and UpdatedAt timestamps
     timestamps = true;
 
     protected abstract collection: arangojs.DocumentCollection;
@@ -18,7 +19,7 @@ export default abstract class documentModel {
     // @TODO build a function/thing that will allow models to give their fields, so you wont put be able to put unknown data in the database
     // @TODO This is especially handy if you are going to use certain models for certain stuff in an plugin, idk, have to decide how plugins are going to work.
 
-    // @TODO Also implement something that will ONLY allow the model to insert in their own collection not another collection. Then the purpose of seperate models just goed to shit/
+    // @TODO Also implement something that will ONLY allow the model to insert in their own collection not another collection. Then the purpose of seperate models just goes to shit
     // protected abstract modelFields: ;
     //
     // protected ModelFields(): any {
@@ -131,7 +132,6 @@ export default abstract class documentModel {
 
 
     protected addDatesToDocument(newDocument: any) {
-
         newDocument = this.parseInsert(newDocument);
 
         let now = new Date().toISOString();
@@ -139,7 +139,6 @@ export default abstract class documentModel {
         newDocument.updatedAt = now;
 
         return newDocument;
-
     }
 
 }

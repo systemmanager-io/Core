@@ -11,20 +11,31 @@ import installer from "../Installer/installer";
 boot().then((bootTime: any) => {
     // httpDebug(`🚀 SystemManager took ${bootTime} seconds to boot`);
     httpDebug(`🚀 SystemManager ready at http://${config.http.host}:${config.http.port}`);
-    httpDebug(`🚀 SystemManager Subscriptions ready at ws://${config.http.host}:${config.http.port}`);
+    httpDebug(`🚀 SystemManager subscriptions ready at ws://${config.http.host}:${config.http.port}`);
+
+    // httpDebug(`---`);
+    // httpDebug(``);
+    // httpDebug(`🚀 SystemManager is ready and on the following endpoints`);
+    // httpDebug(`🚀 HTTP: http://${config.http.host}:${config.http.port}`);
+    // httpDebug(`🚀 Subscriptions: ws://${config.http.host}:${config.http.port}`);
+    // httpDebug(``);
+    // httpDebug(`---`);
 });
 
 async function boot() {
-    // This is the boot order of SystemManager. This should make it easier for us to maintain the core.
+
     const options = commandLineArgs([
-        { name: 'help', alias: 'h'},
-        { name: 'install', alias: 'i', type: Boolean, defaultValue: false},
-        { name: 'no-auth', type: Boolean, defaultValue: false, },
+        {name: 'help', alias: 'h'},
+        {name: 'install', alias: 'i', type: Boolean, defaultValue: false},
+        {name: 'noauth', type: Boolean, defaultValue: false,},
+        {name: 'nologo', type: Boolean, defaultValue: false,},
     ]);
 
-    await showLogo();
+
+    // This is the boot order of SystemManager. This should make it easier for us to maintain the core.
+    if (!options.nologo) await showLogo();
     await migrate(); // We first migrate the DB before showing the installer or booting the engine
-    if(options.install) await installer();
+    if (options.install) await installer();
     await queue();
 
     httpServer.listen(config.http.port, config.http.host);

@@ -5,6 +5,7 @@ import * as inquirer from "inquirer";
 import createUser from "../../Functions/createUser";
 import {InputQuestion} from "inquirer";
 import settingModel from "../../ArangoDB/Models/DocumentModels/settingModel";
+import userHasRole from "../../ArangoDB/Models/EdgeModels/Permissions/userHasRole";
 
 export default async function () {
 
@@ -56,14 +57,15 @@ export default async function () {
             password_confirmation: answers.password_confirmation,
             blocked: false
         };
-
-        await createUser(user);
-        delete answers.password;
-        delete answers.password_confirmation;
-
-        // Does this actually work?
         answers = {};
+
+        const createdUser = await createUser(user);
         user = null;
+
+        // Set said user as admin!
+        await userHasRole.createRelation({_from: createdUser._id, _to: "roles/1"});
+
+
     });
 
     installDebug("We will now setup basic settings");

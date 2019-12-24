@@ -42,11 +42,10 @@ export default async function graphqlServer() {
         path: config.graphql.path + "admin"
     });
 
-    serverGraphql.applyMiddleware({
-        app: app,
-        path: config.graphql.path + "server"
-    });
-
     graphqlDebug('GraphQL Loaded');
 
 }
+// serverGraphql.applyMiddleware({
+//     app: app,
+//     path: config.graphql.path + "server"
+// });
