@@ -1,5 +1,7 @@
 import * as arangojs from "arangojs";
 import EdgeDocument from "../Types/ArangoDB/EdgeDocument";
+import {AqlQuery} from "arangojs/lib/async/aql-query";
+import {aql} from "arangojs";
 
 export default abstract class edgeModel {
 
@@ -28,12 +30,22 @@ export default abstract class edgeModel {
         return result.new;
     };
 
-    // Do we ne
-    public async listRelations(_from: String) {
+
+    public async getRelation(_from: String) {
 
     };
 
     public async getRelations(_from: String) {
+        const query: AqlQuery = aql`
+            FOR d IN @@collectionName
+            FILTER d._from == @_from
+            RETURN d
+        `;
+
+        query.bindVars = {
+            "@collectionName": this.collectionName(),
+            "_from": _from,
+        };
 
     };
 

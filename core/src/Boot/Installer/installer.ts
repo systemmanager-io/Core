@@ -57,15 +57,13 @@ export default async function () {
             password_confirmation: answers.password_confirmation,
             blocked: false
         };
-        answers = {};
+        answers = {}; // Remove EVERYTHING as it contains passwords
 
         const createdUser = await createUser(user);
-        user = null;
+        user = null; // Remove EVERYTHING as it contains passwords
 
         // Set said user as admin!
         await userHasRole.createRelation({_from: createdUser._id, _to: "roles/1"});
-
-
     });
 
     installDebug("We will now setup basic settings");
@@ -82,7 +80,6 @@ export default async function () {
     ];
     await inquirer.prompt(setupQuestions).then(async answers => {
         await settingModel.setSetting("NAME", answers.name);
-
         answers = {};
     });
 
@@ -120,7 +117,7 @@ export default async function () {
         }
     ];
     await inquirer.prompt(emailQuestions).then(async answers => {
-
+        // Set a bunch of settings that keep your core working
         await settingModel.setSetting("MAIL_ENABLED", true);
         await settingModel.setSetting("MAIL_DRIVER", "SMTP");
         await settingModel.setSetting("MAIL_HOST", answers.host);
@@ -129,7 +126,6 @@ export default async function () {
         await settingModel.setSetting("MAIL_USER", answers.username);
         await settingModel.setSetting("MAIL_PASSWORD", answers.password);
         await settingModel.setSetting("MAIL_ENCRYPTION", answers.secure);
-
         answers = {};
     });
 

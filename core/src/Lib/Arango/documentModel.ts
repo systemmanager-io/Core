@@ -95,11 +95,9 @@ export default abstract class documentModel {
             RETURN d
         `;
 
-
         query.bindVars = {
             "@collectionName": this.collectionName(),
             "limit": paginator.paginate.limit || 50
-
         };
 
         const result: ArrayCursor = await arangodb.query(query);
