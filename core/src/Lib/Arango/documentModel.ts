@@ -9,6 +9,8 @@ import {ArrayCursor} from "arangojs/lib/async/cursor";
 import {AqlQuery} from "arangojs/lib/async/aql-query";
 import {PaginateType} from "../Types/GraphQL/PaginateType";
 
+
+
 export default abstract class documentModel {
 
     // The CreatedAt and UpdatedAt timestamps
@@ -16,22 +18,21 @@ export default abstract class documentModel {
 
     protected abstract collection: arangojs.DocumentCollection;
 
+    // protected abstract modelFields = Object;
+
     // @TODO build a function/thing that will allow models to give their fields, so you wont put be able to put unknown data in the database
     // @TODO This is especially handy if you are going to use certain models for certain stuff in an plugin, idk, have to decide how plugins are going to work.
 
     // @TODO Also implement something that will ONLY allow the model to insert in their own collection not another collection. Then the purpose of seperate models just goes to shit
     // protected abstract modelFields: ;
     //
-    // protected ModelFields(): any {
-    //     return this.modelData
-    // }
-
 
     protected collectionName(): string {
         return this.collection.name;
     }
 
-    public async insert(newDocument: DocumentData<any>): Promise<any> {
+
+    public async insert(newDocument: DocumentData<modelFields>): Promise<any> {
 
         if (this.timestamps) {
             if (Array.isArray(newDocument)) {

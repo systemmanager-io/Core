@@ -1,6 +1,6 @@
 import * as config from "../../config";
 import {httpServer} from "../../connectors";
-import {httpDebug} from "../../Lib/debug";
+import {coreDebug, httpDebug, updateDebug} from "../../Lib/debug";
 import graphqlServer from "./graphql";
 import {migrate} from "./migrations";
 import {showLogo} from "./showCoreInfo";
@@ -8,18 +8,25 @@ import {queue} from "./queues";
 import commandLineArgs from "command-line-args";
 import installer from "../Installer/installer";
 
-boot().then((bootTime: any) => {
-    // httpDebug(`🚀 SystemManager took ${bootTime} seconds to boot`);
-    httpDebug(`🚀 SystemManager ready at http://${config.http.host}:${config.http.port}`);
-    httpDebug(`🚀 SystemManager subscriptions ready at ws://${config.http.host}:${config.http.port}`);
+boot().then(() => {
+    coreDebug(`---
+    
+    🚀 SystemManager is ready and listening on the following endpoints
+    🚀 GraphQL Requests: http://${config.http.host}:${config.http.port}
+    🚀 Subscriptions: ws://${config.http.host}:${config.http.port}
+    
+---`);
 
-    // httpDebug(`---`);
-    // httpDebug(``);
-    // httpDebug(`🚀 SystemManager is ready and on the following endpoints`);
-    // httpDebug(`🚀 HTTP: http://${config.http.host}:${config.http.port}`);
-    // httpDebug(`🚀 Subscriptions: ws://${config.http.host}:${config.http.port}`);
-    // httpDebug(``);
-    // httpDebug(`---`);
+
+    updateDebug(`---
+    
+    ⬆ New update available
+    ⬆ Newest version is Version 0.0.2
+    
+    ⬆ Update recommendation: HIGH
+    
+---`);
+
 });
 
 async function boot() {

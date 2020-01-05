@@ -4,17 +4,13 @@ import {string} from "joi";
 
 class ServerModel extends documentModel {
 
-    collection = arangodb.collection("servers");
+    collection = arangodb.collection("serverInfos");
 
     filterFields = {
         '_id': ['doc._id', '=='],
         '_key': ['doc._key', '=='],
     };
-    modelFields = {};
 
-    // modelFields = {
-    //     'permission': string
-    // };
 
 }
 

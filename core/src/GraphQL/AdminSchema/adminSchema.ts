@@ -13,6 +13,7 @@ import permissionQuery from "./permissions/permissionQuery";
 import permissionMutation from "./permissions/permissionMutation";
 import userLogQuery from "./userLogs/userLogQuery";
 import userLogMutation from "./userLogs/userLogMutation";
+import serverActionMutation from "./serverActions/serverActionMutation";
 
 const query = {
     server: serverQuery,
@@ -33,6 +34,7 @@ const mutation = {
     setting: settingMutation,
     user: userMutation,
 
+    serverAction: serverActionMutation,
 
     role: roleMutation,
     permission: permissionMutation

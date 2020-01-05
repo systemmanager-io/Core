@@ -10,6 +10,18 @@ class UserModel extends documentModel {
         '_key': ['doc._key', '=='],
     };
 
+    modelFields = {
+        name: String,
+        username: String,
+        email: String,
+        authMethod: String,
+        password: String,
+        salt: String,
+        blocked: Boolean,
+        updatedAt: String,
+        createdAt: String,
+    };
+
 }
 
 export default new UserModel();

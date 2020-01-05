@@ -6,6 +6,8 @@ const errorName = {
     USERALREADYEXISTS: "USERALREADYEXISTS",
 
     NOPERMISSION: "NOPERMISSION",
-}
 
-export default errorName
+    FAILEDTOSENDCOMMAND: "FAILEDTOSENDCOMMAND"
+};
+
+export default errorName;

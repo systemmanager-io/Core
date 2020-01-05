@@ -4,7 +4,7 @@ import userLogModel from "../../../ArangoDB/Models/DocumentModels/Logs/userLogMo
 
 export default {
     type: new GraphQLObjectType({
-        name: 'UserLogMutations',
+        name: 'UserLogMutation',
         fields: () => ({
             create: {
                 type: UserLog,

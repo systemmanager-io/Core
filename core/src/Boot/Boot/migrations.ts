@@ -28,7 +28,7 @@ async function migrateToDB(migration: Migration) {
         const file = await require(migration.path);
         if (typeof file.up === 'function') {
             dbDebug("Migrating", migration.file);
-            await file.up();
+            await file.up(); // I feel that there is a huge security flaw right here. Or am i paranoid at this point.
             dbDebug("Migrated", migration.file);
         }
         await migrationCollection.save({_key: migration.file});

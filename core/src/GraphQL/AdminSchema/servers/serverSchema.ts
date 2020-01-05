@@ -115,4 +115,4 @@ export const ServerPaginator = new GraphQLInputObjectType({
             type: GraphQLPaginateObject
         }
     })
-})
+});

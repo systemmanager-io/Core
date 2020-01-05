@@ -2,7 +2,7 @@ import debug from "debug";
 
 const appDebug = debug('systemmanager');
 export const coreDebug = appDebug.extend('core');
-export const updateDebug = coreDebug.extend('update');
+export const updateDebug = appDebug.extend('updater');
 export const dbDebug = coreDebug.extend('database');
 export const workerDebug = coreDebug.extend('worker');
 export const configDebug = coreDebug.extend('config');
