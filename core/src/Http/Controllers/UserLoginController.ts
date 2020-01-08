@@ -37,31 +37,27 @@ export default class UserLoginController {
         // This seems little off to do all(). But i have limited the query to show/retrieve the first user only
         const userAccount: any = await queryResult.all();
 
-        if (Array.isArray(userAccount) && userAccount.length != 0) {
-            // The const below this thing feels SO broken.
-            const user = userAccount[0];
-            if (await argon.verify(user.password, password + user.salt)) {
+        if (Array.isArray(userAccount) && userAccount.length == 0) res.status(401).send(incorrectInfo)
+        // The const below this thing feels SO broken.
+        const user = userAccount[0];
+        if (await argon.verify(user.password, password + user.salt)) {
 
-                if (user.blocked) {
-                    res.status(403);
-                    res.send({error: "You no longer have access to this resource"});
-                    return
-                }
-
-                const jwt = jsonwebtoken.sign({
-                    userId: user._id
-                }, config.jwt.secret, {expiresIn: "1h"});
-
-
-                res.send({jwt})
-
-            } else {
-                res.status(401);
-                res.send(incorrectInfo)
+            if (user.blocked) {
+                res.status(403);
+                res.send({error: "You no longer have access to this resource"});
+                return
             }
+
+            const jwt = jsonwebtoken.sign({
+                userId: user._id
+            }, config.jwt.secret, {expiresIn: "1h"});
+
+
+            res.send({token: jwt})
+
         } else {
             res.status(401);
-            res.send(incorrectInfo);
+            res.send(incorrectInfo)
         }
     }
 }

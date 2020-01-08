@@ -17,7 +17,7 @@ boot().then(() => {
     
 ---`);
 
-
+    // WILL GET REMOVED AFTER I HAVE A "UPDATER"
     updateDebug(`---
     
     ⬆ New update available

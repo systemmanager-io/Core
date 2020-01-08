@@ -11,6 +11,7 @@ export default async function graphqlServer() {
     graphqlDebug('Loading GraphQL');
 
     const graphqlSettings: ApolloServerExpressConfig = {
+
         playground: {
             ...defaultPlaygroundOptions,
             settings: {

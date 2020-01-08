@@ -26,5 +26,4 @@ A clear and concise description of what you expected to happen.
  - Software Version [e.g. 22]
 
 
-**Additional context**
-Add any other context about the problem here.
+**Additional contexAdd any other context about the problem here.

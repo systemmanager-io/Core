@@ -1,5 +1,4 @@
 import * as arangojs from "arangojs";
-import {graphqlDebug} from "../debug";
 import {DocumentHandle} from "arangojs/lib/cjs/collection";
 import {DocumentData} from "arangojs/lib/cjs/util/types";
 import {aql} from "arangojs";
@@ -32,7 +31,7 @@ export default abstract class documentModel {
     }
 
 
-    public async insert(newDocument: DocumentData<modelFields>): Promise<any> {
+    public async insert(newDocument: DocumentData<any>): Promise<any> {
 
         if (this.timestamps) {
             if (Array.isArray(newDocument)) {

@@ -32,6 +32,8 @@ export const jwt = {
     secret: process.env.JWT_SECRET || '',
 };
 
+export const enable_playground = process.env.ENABLE_PLAYGROUND
+
 // export const builtinJobWorker = {
 //     amount: parseInt(process.env.JOB_WORKERS || '1') ,
 // };
