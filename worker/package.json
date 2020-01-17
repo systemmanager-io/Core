@@ -9,7 +9,7 @@
   "scripts": {
     "start": "ts-node src/worker.ts",
     "build": "tsc",
-    "buildstart": "npm build && node build/worker.js"
+    "buildstart": "npm run build && node build/worker.js"
   },
   "dependencies": {
     "bull": "^3.10.0",

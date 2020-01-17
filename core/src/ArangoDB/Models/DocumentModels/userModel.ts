@@ -12,6 +12,7 @@ class UserModel extends documentModel {
     };
 
     modelFields =  Joi.object({
+        _key: string(),
         name: string(),
         username: string(),
         email: string(),

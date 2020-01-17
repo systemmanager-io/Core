@@ -14,7 +14,7 @@ export default abstract class documentModel {
     timestamps = true;
 
     protected abstract collection: arangojs.DocumentCollection;
-    protected abstract modelFields: Schema;
+    protected modelFields: Schema | undefined;
 
     // @TODO build a function/thing that will allow models to give their fields, so you wont put be able to put unknown data in the database
     // @TODO This is especially handy if you are going to use certain models for certain stuff in an plugin, idk, have to decide how plugins are going to work.
@@ -25,16 +25,16 @@ export default abstract class documentModel {
         return this.collection.name;
     }
 
-    public async validateData(data: object) {
-
-        const test = this.modelFields.validate(data);
-        console.log(test);
-
-    }
+    // public async validateData(data: object) {
+    //
+    //     const test = this.modelFields.validate(data);
+    //     console.log("Result:", test);
+    //
+    // }
 
     public async insert(newDocument: DocumentData): Promise<any> {
 
-        this.validateData(newDocument);
+        // this.validateData(newDocument);
 
         if (this.timestamps) {
             if (Array.isArray(newDocument)) {
