@@ -11,6 +11,7 @@ export const redis = new IORedis(config.redis);
 export const app = express();
 export const router = express.Router();
 
+app.use(express.json());
 // @TODO MOVE THESE TO ITS OWN ROUTE FILE WHERE WE SET THIS
 app.post("/admin/login", function (req, res, next) {
     UserLoginController.login(req, res, next)

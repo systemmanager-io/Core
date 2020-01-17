@@ -11,8 +11,10 @@ const incorrectInfo = {status: "Incorrect login information"};
 export default class UserLoginController {
 
     public static async login(req: Request, res: Response, next: NextFunction) {
-        let email: string | string[] | undefined = req.headers.email;
-        const password: string | string[] | undefined = req.headers.password;
+
+
+        let email: string | string[] | undefined = req.body.email;
+        const password: string | string[] | undefined = req.body.password;
 
         if (email == undefined || password == undefined) {
             res.status(401);
