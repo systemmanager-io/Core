@@ -1,5 +1,6 @@
 import documentModel from "../../../Lib/Arango/documentModel";
 import {arangodb} from "../../../connectors";
+import Joi from "@hapi/joi";
 
 class SettingModel extends documentModel {
 
@@ -9,6 +10,8 @@ class SettingModel extends documentModel {
         '_id': ['doc._id', '=='],
         '_key': ['doc._key', '=='],
     };
+
+    modelFields = Joi.object({});
 
     async getSetting(setting: string) {
         const result = await this.find(setting);
@@ -21,6 +24,7 @@ class SettingModel extends documentModel {
         });
         return result.value;
     }
+
 
 }
 

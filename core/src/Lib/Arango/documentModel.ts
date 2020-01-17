@@ -6,8 +6,7 @@ import errorName from "../Errors/GraphQL/Errors";
 import {arangodb} from "../../connectors";
 import {ArrayCursor} from "arangojs/lib/async/cursor";
 import {AqlQuery} from "arangojs/lib/async/aql-query";
-
-
+import Joi, {Schema} from "@hapi/joi";
 
 export default abstract class documentModel {
 
@@ -15,22 +14,27 @@ export default abstract class documentModel {
     timestamps = true;
 
     protected abstract collection: arangojs.DocumentCollection;
-
-    // protected abstract modelFields = Object;
+    protected abstract modelFields: Schema;
 
     // @TODO build a function/thing that will allow models to give their fields, so you wont put be able to put unknown data in the database
     // @TODO This is especially handy if you are going to use certain models for certain stuff in an plugin, idk, have to decide how plugins are going to work.
 
     // @TODO Also implement something that will ONLY allow the model to insert in their own collection not another collection. Then the purpose of seperate models just goes to shit
-    // protected abstract modelFields: ;
-    //
 
     protected collectionName(): string {
         return this.collection.name;
     }
 
+    public async validateData(data: object) {
+
+        const test = this.modelFields.validate(data);
+        console.log(test);
+
+    }
 
     public async insert(newDocument: DocumentData): Promise<any> {
+
+        this.validateData(newDocument);
 
         if (this.timestamps) {
             if (Array.isArray(newDocument)) {

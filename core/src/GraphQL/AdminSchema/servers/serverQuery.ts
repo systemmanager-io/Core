@@ -1,6 +1,7 @@
 import * as graphql from 'graphql'
 import {Server, ServerCreateInput, ServerPaginator} from './serverSchema'
 import serverModel from '../../../ArangoDB/Models/DocumentModels/serverModel';
+import serverHasServerInfo from "../../../ArangoDB/Models/EdgeModels/serverHasServerInfo";
 
 export default {
     type: new graphql.GraphQLObjectType({
@@ -15,8 +16,10 @@ export default {
                         description: "Filter your results"
                     },
                 },
-                resolve(root, args) {
-                    return serverModel.list(args.paginator);
+                async resolve(root, args) {
+                    const serverdata: any = await serverModel.list(args.paginator);
+
+                    return serverdata;
                 }
             },
             get: {
@@ -28,8 +31,12 @@ export default {
                         description: 'Get an Server entry by its _id or _key',
                     },
                 },
-                resolve(root, args) {
-                    return serverModel.find(args.selector);
+                async resolve(root, args) {
+                    const serverdata: any = await serverModel.find(args.selector);
+                    const serverHasServerInfoData = await serverHasServerInfo.getRelations(serverdata._id);
+
+                    console.log(serverdata, serverHasServerInfoData);
+                    return serverdata;
                 },
             },
         }),

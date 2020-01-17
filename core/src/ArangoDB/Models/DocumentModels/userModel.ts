@@ -1,5 +1,6 @@
 import documentModel from "../../../Lib/Arango/documentModel";
 import {arangodb} from "../../../connectors";
+import Joi, {string, boolean} from "@hapi/joi"
 
 class UserModel extends documentModel {
 
@@ -10,17 +11,17 @@ class UserModel extends documentModel {
         '_key': ['doc._key', '=='],
     };
 
-    modelFields =  {
-        name: string,
-        username: string,
-        email: string,
-        authMethod: string,
-        password: string,
-        salt: string,
-        blocked: boolean,
-        updatedAt: string,
-        createdAt: string,
-    };
+    modelFields =  Joi.object({
+        name: string(),
+        username: string(),
+        email: string(),
+        authMethod: string(),
+        password: string(),
+        salt: string(),
+        blocked: boolean(),
+        updatedAt: string(),
+        createdAt: string(),
+    });
 
 }
 
