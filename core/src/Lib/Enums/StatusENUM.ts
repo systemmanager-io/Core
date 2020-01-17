@@ -25,6 +25,6 @@ const serverLogType = new GraphQLEnumType({
         }
 
     }
-})
+});
 
 export default serverLogType;

@@ -2,7 +2,6 @@ import {GraphQLObjectType, GraphQLBoolean, GraphQLList, GraphQLNonNull, GraphQLI
 import {UserUpdateInput, UserCreateInput, User, UserInput} from './userSchema'
 import userModel from "../../../ArangoDB/Models/DocumentModels/userModel";
 import {dbDebug} from "../../../Lib/debug";
-import {UserCreateType, UserUpdateType} from "../../../Lib/Types/GraphQL/UserType";
 import * as crypto from "crypto";
 import argon from "argon2";
 import uuid from "uuid/v4"
@@ -44,7 +43,7 @@ export default {
                         user.name = args.data.username;
                     }
 
-                    const userExists: boolean = await checkIfUserExists(user.email)
+                    const userExists: boolean = await checkIfUserExists(user.email);
                     if (userExists) throw new Error(errorName.USERALREADYEXISTS);
 
                     if (args.data.authMethod === "password") {
@@ -89,7 +88,7 @@ export default {
                     };
 
                     if (user.email !== undefined) {
-                        const userExists: boolean = await checkIfUserExists(user.email)
+                        const userExists: boolean = await checkIfUserExists(user.email);
 
                         if (userExists) throw new Error(errorName.USERALREADYEXISTS);
                     }

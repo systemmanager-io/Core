@@ -1,5 +1,4 @@
 import * as arangojs from "arangojs";
-import EdgeDocument from "../Types/ArangoDB/EdgeDocument";
 import {AqlQuery} from "arangojs/lib/async/aql-query";
 import {aql} from "arangojs";
 import {arangodb} from "../../connectors";
@@ -48,7 +47,7 @@ export default abstract class edgeModel {
             "_from": _from,
         };
 
-        const result = await arangodb.query(query);
+        return await arangodb.query(query);
 
     };
 

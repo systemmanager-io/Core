@@ -12,7 +12,7 @@
 export default
 `----------------------------------------------------
 
-SystemManager Monitoring Software
+SystemManager Server Monitoring & Managing Software
 https://systemmanager.io
 Copyright © 2018 - 2020 Tigo Middelkoop
 

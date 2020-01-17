@@ -39,7 +39,7 @@ export const RolePaginator = new GraphQLInputObjectType({
             type: GraphQLPaginateObject
         }
     })
-})
+});
 
 
 export const RoleUpdateInput = new GraphQLInputObjectType({

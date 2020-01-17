@@ -43,7 +43,7 @@ export const UserLogPaginator = new GraphQLInputObjectType({
             type: GraphQLPaginateObject
         }
     })
-})
+});
 
 
 export const UserLogUpdateInput = new GraphQLInputObjectType({

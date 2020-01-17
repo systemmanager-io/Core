@@ -1,5 +1,3 @@
-import Migration from "../../Lib/Types/ArangoDB/Migration";
-
 export const allowedFileExtensions = /\.(js|ts)$/;
 const declarationFiles = /\.d\.ts$/;
 

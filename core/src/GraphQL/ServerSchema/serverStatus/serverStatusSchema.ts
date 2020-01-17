@@ -90,4 +90,4 @@ export const ServerStatusPaginator = new GraphQLInputObjectType({
             type: GraphQLString
         }
     })
-})
+});
