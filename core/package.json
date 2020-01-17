@@ -39,7 +39,7 @@
     "node-fetch": "^2.6.0",
     "nodemailer": "^6.4.2",
     "uuid": "^3.3.3",
-    "yaml": "^1.7.2"
+    "yaml": "^1.7.2",
   },
   "devDependencies": {
     "@types/bull": "^3.10.6",
