@@ -104,7 +104,7 @@ export const UserPaginator = new GraphQLInputObjectType({
             type: GraphQLString
         }
     })
-})
+});
 
 export const UserUpdateInput = new GraphQLInputObjectType({
     name: 'UserUpdateInput',

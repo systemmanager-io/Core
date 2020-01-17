@@ -1,4 +1,4 @@
-export interface PaginateType {
+declare interface PaginateType {
     paginate: {
         limit: number,
         offset: number,

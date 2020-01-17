@@ -28,7 +28,7 @@ const MoboType = new GraphQLObjectType({
 const DiskType = new GraphQLObjectType({
     name: "DISK",
     fields: () => ({})
-})
+});
 
 
 export const ServerSpecs = new GraphQLObjectType({

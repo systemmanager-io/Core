@@ -1,4 +1,3 @@
-import {UserCreateTypeSec} from "../Lib/Types/GraphQL/UserType";
 import uuid from "uuid/v4";
 import errorName from "../Lib/Errors/GraphQL/Errors";
 import * as crypto from "crypto";
@@ -8,9 +7,9 @@ import {ArrayCursor} from "arangojs/lib/async/cursor";
 import {arangodb} from "../connectors";
 import userModel from "../ArangoDB/Models/DocumentModels/userModel";
 
-export default async function (userData: UserCreateTypeSec) {
+export default async function (userData: UserCreateType) {
 
-    let user: UserCreateTypeSec = {
+    let user: UserCreateType = {
         _key: uuid(),
         name: undefined,
         username: userData.username,
@@ -62,4 +61,4 @@ async function checkIfUserExists(email: string) {
     const userAccount: any = await queryResult.all();
     return Array.isArray(userAccount) && userAccount.length != 0;
 
-};
+}

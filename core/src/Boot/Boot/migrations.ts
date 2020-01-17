@@ -5,7 +5,6 @@ import * as _ from 'lodash'
 import checkMigrationCollection from "../../ArangoDB/Functions/checkMigrationCollection";
 import {arangodb} from "../../connectors";
 import checkMigrationExtensions from "../../ArangoDB/Functions/checkMigrationExtensions";
-import Migration from "../../Lib/Types/ArangoDB/Migration";
 
 export async function migrate() {
     dbDebug("Checking for migrations");

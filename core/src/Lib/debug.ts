@@ -13,10 +13,3 @@ export const queueDebug = coreDebug.extend('queue');
 export const graphqlDebug = coreDebug.extend('graphql');
 export const installDebug = coreDebug.extend('install');
 
-
-
-
-
-export function debugLog() {
-
-}

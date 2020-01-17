@@ -25,5 +25,5 @@ const errorType: any = {
         message: `Failed to send the command to the server, it might not respond or the daemon is not running`,
         code: 502
     }
-}
+};
 export default errorType;

@@ -12,6 +12,6 @@ const authMethodType = new GraphQLEnumType({
             description: "Authenticate a user over Email"
         },
     }
-})
+});
 
 export default authMethodType;

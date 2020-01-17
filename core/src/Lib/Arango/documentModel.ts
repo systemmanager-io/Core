@@ -6,7 +6,6 @@ import errorName from "../Errors/GraphQL/Errors";
 import {arangodb} from "../../connectors";
 import {ArrayCursor} from "arangojs/lib/async/cursor";
 import {AqlQuery} from "arangojs/lib/async/aql-query";
-import {PaginateType} from "../Types/GraphQL/PaginateType";
 
 
 
@@ -31,7 +30,7 @@ export default abstract class documentModel {
     }
 
 
-    public async insert(newDocument: DocumentData<any>): Promise<any> {
+    public async insert(newDocument: DocumentData): Promise<any> {
 
         if (this.timestamps) {
             if (Array.isArray(newDocument)) {
@@ -47,7 +46,7 @@ export default abstract class documentModel {
         return result.new;
     }
 
-    public async update(selector: any, newDocument: DocumentData<any>) {
+    public async update(selector: any, newDocument: DocumentData) {
 
         const document: any = await this.collection.document(selector).catch(reason => {
             return null

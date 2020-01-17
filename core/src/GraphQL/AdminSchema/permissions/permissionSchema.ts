@@ -39,7 +39,7 @@ export const PermissionPaginator = new GraphQLInputObjectType({
             type: GraphQLPaginateObject
         }
     })
-})
+});
 
 
 export const PermissionUpdateInput = new GraphQLInputObjectType({

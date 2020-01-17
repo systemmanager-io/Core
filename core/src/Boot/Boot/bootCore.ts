@@ -11,7 +11,8 @@ import installer from "../Installer/installer";
 boot().then(() => {
     coreDebug(`---
     
-    🚀 SystemManager is ready and listening on the following endpoints
+    🚀 SystemManager is ready
+    
     🚀 GraphQL Requests: http://${config.http.host}:${config.http.port}
     🚀 Subscriptions: ws://${config.http.host}:${config.http.port}
     
@@ -22,8 +23,6 @@ boot().then(() => {
     
     ⬆ New update available
     ⬆ Newest version is Version 0.0.2
-    
-    ⬆ Update recommendation: HIGH
     
 ---`);
 
