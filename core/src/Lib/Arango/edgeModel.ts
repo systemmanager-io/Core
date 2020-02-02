@@ -3,7 +3,7 @@ import {AqlQuery} from "arangojs/lib/async/aql-query";
 import {aql} from "arangojs";
 import {arangodb} from "../../connectors";
 
-export default abstract class edgeModel {
+export default abstract class edgeModel<DOC extends ArangoEdgeDocument> {
 
     // The CreatedAt and UpdatedAt timestamps
     timestamps = true;
@@ -14,7 +14,7 @@ export default abstract class edgeModel {
         return this.collection.name;
     };
 
-    public async createRelation(newDocument: EdgeDocument) {
+    public async createRelation(newDocument: ArangoEdgeDocument): Promise<DOC | null> {
 
         if (this.timestamps) {
             if (Array.isArray(newDocument)) {
@@ -30,12 +30,7 @@ export default abstract class edgeModel {
         return result.new;
     };
 
-
-    public async getRelation(_from: String) {
-
-    };
-
-    public async getRelations(_from: String) {
+    public async getRelationsData(_from: String) : Promise<DOC | null> {
         const query: AqlQuery = aql`
             FOR d IN @@collectionName
             FILTER d._from == @_from
@@ -51,15 +46,31 @@ export default abstract class edgeModel {
 
     };
 
-    public async removeRelation(id: String) {
+    public async getRelations(_from: String) : Promise<DOC | null> {
+        const query: AqlQuery = aql`
+            FOR d IN @@collectionName
+            FILTER d._from == @_from
+            RETURN d
+        `;
 
+        query.bindVars = {
+            "@collectionName": this.collectionName(),
+            "_from": _from,
+        };
+
+        return await arangodb.query(query);
+
+    };
+
+    public async removeRelation(id: String): Promise<DOC | false> {
+        return false;
     };
 
     protected parseInsert(document: any): any {
         return document;
     }
 
-    protected addDatesToDocument(newDocument: any) {
+    protected addDatesToDocument(newDocument: any): any {
         newDocument = this.parseInsert(newDocument);
 
         let now = new Date().toISOString();

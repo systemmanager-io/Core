@@ -1,12 +1,12 @@
 import documentModel from "../../../../Lib/Arango/documentModel";
 import {arangodb} from "../../../../connectors";
-import Joi from "@hapi/joi";
 
-class RoleModel extends documentModel {
+interface documentFields extends ArangoDocument {
+    role: string,
+}
+class RoleModel extends documentModel<documentFields> {
 
     collection = arangodb.collection("roles");
-
-    modelFields = Joi.object({});
 
     filterFields = {
         '_id': ['doc._id', '=='],

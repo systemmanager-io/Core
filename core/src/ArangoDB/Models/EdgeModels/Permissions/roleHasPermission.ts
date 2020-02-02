@@ -1,7 +1,11 @@
 import edgeModel from "../../../../Lib/Arango/edgeModel";
 import {arangodb} from "../../../../connectors";
 
-class RoleHasPermission extends edgeModel {
+interface edgeFields extends ArangoEdgeDocument {
+
+}
+
+class RoleHasPermission extends edgeModel<edgeFields> {
 
     collection = arangodb.collection('roleHasPermissions')
 }

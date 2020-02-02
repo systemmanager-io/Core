@@ -8,7 +8,6 @@ const errorType: any = {
         statusCode: 500
     },
 
-
     NOPASSWORDMATCH: {
         message: `Passwords do not match.`,
     },
@@ -24,6 +23,12 @@ const errorType: any = {
     FAILEDTOSENDCOMMAND: {
         message: `Failed to send the command to the server, it might not respond or the daemon is not running`,
         code: 502
-    }
+    },
+
+    ARANGODBERROR: {
+        message: `ArangoDB Failed to Insert/Update/Delete`,
+        statusCode: 502
+    },
+
 };
 export default errorType;

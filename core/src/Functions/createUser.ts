@@ -38,8 +38,9 @@ export default async function (userData: UserCreateType) {
     }
 
     return userModel.insert(user).then(user => {
+        if(user === null || user === undefined) throw new Error(errorName.ARANGODBERROR);
         delete user.password;
-        return user
+        return user;
     });
 
 };

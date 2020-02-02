@@ -6,6 +6,8 @@ import createUser from "../../Functions/createUser";
 import {InputQuestion} from "inquirer";
 import settingModel from "../../ArangoDB/Models/DocumentModels/settingModel";
 import userHasRole from "../../ArangoDB/Models/EdgeModels/Permissions/userHasRole";
+import {create} from "ts-node";
+import errorName from "../../Lib/Errors/GraphQL/Errors";
 
 export default async function () {
 
@@ -62,6 +64,7 @@ export default async function () {
         const createdUser = await createUser(user);
         user = null; // Remove EVERYTHING as it contains passwords
 
+        if(createdUser === null || createdUser === undefined) throw new Error(errorName.ARANGODBERROR);
         // Set said user as admin!
         await userHasRole.createRelation({_from: createdUser._id, _to: "roles/1"});
     });

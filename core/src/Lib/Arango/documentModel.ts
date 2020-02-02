@@ -8,7 +8,7 @@ import {ArrayCursor} from "arangojs/lib/async/cursor";
 import {AqlQuery} from "arangojs/lib/async/aql-query";
 import Joi, {Schema} from "@hapi/joi";
 
-export default abstract class documentModel {
+export default abstract class documentModel<DOC extends ArangoDocument> {
 
     // The CreatedAt and UpdatedAt timestamps
     timestamps = true;
@@ -32,7 +32,7 @@ export default abstract class documentModel {
     //
     // }
 
-    public async insert(newDocument: DocumentData): Promise<any> {
+    public async insert(newDocument: Partial<DOC>): Promise<DOC | null> {
 
         // this.validateData(newDocument);
 
@@ -50,7 +50,7 @@ export default abstract class documentModel {
         return result.new;
     }
 
-    public async update(selector: any, newDocument: DocumentData) {
+    public async update(selector: any, newDocument: Partial<DOC>): Promise<DOC | null> {
 
         const document: any = await this.collection.document(selector).catch(reason => {
             return null
@@ -70,7 +70,7 @@ export default abstract class documentModel {
 
     }
 
-    public async find(selector: any): Promise<any | null> {
+    public async find(selector: any): Promise<DOC | null> {
         try {
             return await this.collection.document(selector);
         } catch (err) {
@@ -82,11 +82,11 @@ export default abstract class documentModel {
 
     public async search(searchFilters: any) {
         // We can use the list for this as well. It I think that is the way to go to be honest. Or we do listing and such jusst in that one.
-        // If the list is doing more than just listing we cu
+        // If the list is doing more than just listing we
     }
 
     // List all entries in a collection with (possibly applied filters)
-    public async list(paginator: PaginateType) {
+    public async list(paginator: PaginateType): Promise<DOC | null> {
         //@ TODO Make types for these.
         // This is a query and not an all function so I can make an paginator soon. The Models already use an paginator schema.
         // @TODO Make paginator
@@ -109,7 +109,7 @@ export default abstract class documentModel {
 
     }
 
-    public async remove(selector: DocumentHandle): Promise<any | null> {
+    public async remove(selector: DocumentHandle): Promise<true | false> {
         if (await this.collection.documentExists(selector)) {
             try {
                 return await this.collection.remove(selector);

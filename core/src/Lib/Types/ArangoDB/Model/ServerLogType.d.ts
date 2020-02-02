@@ -1,0 +1,1 @@
+declare type ServerLogType = "INFO" | "WARNING" | "ERROR" | "FATAL"

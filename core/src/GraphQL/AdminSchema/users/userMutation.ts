@@ -60,6 +60,7 @@ export default {
 
                     }
                     return userModel.insert(user).then(user => {
+                        if (user === null || user === undefined) throw new Error(errorName.ARANGODBERROR);
                         delete user.password;
                         return user
                     });
@@ -110,6 +111,7 @@ export default {
 
 
                     return userModel.update(args.selector, user).then(user => {
+                        if (user === null || user === undefined) throw new Error(errorName.ARANGODBERROR)
                         delete user.password;
                         return user;
                     });

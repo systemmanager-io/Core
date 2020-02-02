@@ -1,16 +1,13 @@
 import documentModel from "../../../../Lib/Arango/documentModel";
 import {arangodb} from "../../../../connectors";
-import Joi from "@hapi/joi";
 
-interface databaseFields {
-    permission: string
+interface documentFields extends ArangoDocument {
+    permission: string,
 }
 
-class PermissionModel extends documentModel {
+class PermissionModel extends documentModel<documentFields> {
 
     collection = arangodb.collection("permissions");
-
-    modelFields = Joi.object({});
 
     filterFields = {
         '_id': ['doc._id', '=='],

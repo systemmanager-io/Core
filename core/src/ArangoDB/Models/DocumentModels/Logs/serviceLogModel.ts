@@ -1,12 +1,14 @@
 import documentModel from "../../../../Lib/Arango/documentModel";
 import {arangodb} from "../../../../connectors";
-import Joi from "@hapi/joi";
 
-class ServiceLogModel extends documentModel {
+interface DocumentFields extends ArangoDocument {
+    type: ServerLogType,
+    message: string,
+}
+
+class ServiceLogModel extends documentModel<DocumentFields> {
 
     collection = arangodb.collection("serviceLogs");
-
-    modelFields = Joi.object({});
 
     filterFields = {
         '_id': ['doc._id', '=='],
