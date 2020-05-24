@@ -36,7 +36,7 @@ export default class UserLoginController {
 
         const queryResult: ArrayCursor = await arangodb.query(query);
 
-        // This seems little off to do all(). But i have limited the query to show/retrieve the first user only
+        // This seems little off to do all(). But I have limited the query to show/retrieve the first user only
         const userAccount: any = await queryResult.all();
 
         if (Array.isArray(userAccount) && userAccount.length == 0) res.status(401).send(incorrectInfo);

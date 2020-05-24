@@ -12,25 +12,13 @@ export async function migrate() {
     const migrationList = getMigrations();
 
     for (let index in migrationList) {
-        if (migrationList.hasOwnProperty(index)) {
-            await migrateToDB(migrationList[index])
+        if (migrationList.hasOwnProperty(index)){
+            if(await checkMigrationExtensions(migrationList[index])) {
+                await migrateToDB(migrationList[index])
+            } else {
+                dbDebug(`Not running this integration ${migrationList[index].file}, Unknown file extension.`)
+            }
         }
-    }
-}
-
-async function migrateToDB(migration: Migration) {
-    //@TODO Check only for ts/js files. So no other files will be imported.
-
-    const migrationCollection = arangodb.collection("migrations");
-
-    if (!(await migrationCollection.documentExists(migration.file))) {
-        const file = await require(migration.path);
-        if (typeof file.up === 'function') {
-            dbDebug("Migrating", migration.file);
-            await file.up(); // I feel that there is a huge security flaw right here. Or am i paranoid at this point.
-            dbDebug("Migrated", migration.file);
-        }
-        await migrationCollection.save({_key: migration.file});
     }
 }
 
@@ -44,3 +32,19 @@ function getMigrations() {
 
     return _.orderBy(dirList, 'file', 'asc');
 }
+
+async function migrateToDB(migration: Migration) {
+
+    const migrationCollection = arangodb.collection("migrations");
+
+    if (!(await migrationCollection.documentExists(migration.file))) {
+        const file = await require(migration.path);
+        if (typeof file.up === 'function') {
+            dbDebug("Migrating", migration.file);
+            await file.up();
+            dbDebug("Migrated", migration.file);
+        }
+        await migrationCollection.save({_key: migration.file});
+    }
+}
+

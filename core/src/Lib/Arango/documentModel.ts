@@ -87,20 +87,27 @@ export default abstract class documentModel<DOC extends ArangoDocument> {
 
     // List all entries in a collection with (possibly applied filters)
     public async list(paginator: PaginateType): Promise<DOC | null> {
-        //@ TODO Make types for these.
-        // This is a query and not an all function so I can make an paginator soon. The Models already use an paginator schema.
-        // @TODO Make paginator
-        console.log(paginator);
+
+        const paginate = paginator.paginate
+
+
+        const firstFilter = aql.literal(paginate.last !== undefined ? `SORT doc._key ASC LIMIT @last` : ``);
+        const lastFilter = aql.literal(paginate.first !== undefined ? `SORT doc._key DESC LIMIT @first` : ``);
+        const limitFilter = aql.literal(paginate.limit !== undefined ? `LIMIT @limit` : ``);
 
         const query: AqlQuery = aql`
             FOR d IN @@collectionName
-            LIMIT @limit
+            ${lastFilter}
+            ${firstFilter}
+            ${limitFilter}
             RETURN d
         `;
 
         query.bindVars = {
             "@collectionName": this.collectionName(),
-            "limit": paginator.paginate.limit || 50
+            "first": paginate.first,
+            "last": paginate.last,
+            "limit": paginate.limit
         };
 
         const result: ArrayCursor = await arangodb.query(query);
@@ -109,18 +116,32 @@ export default abstract class documentModel<DOC extends ArangoDocument> {
 
     }
 
-    public async remove(selector: DocumentHandle): Promise<true | false> {
-        if (await this.collection.documentExists(selector)) {
+    public async remove(selector: DocumentHandle | Array<DocumentHandle>): Promise<any> {
+
+        if (Array.isArray(selector)) {
+
+            const result = await selector.map(async (document: DocumentHandle) => {
+                return await this.removeItem(document)
+            });
+            return await Promise.all(result);
+
+        } else {
+            return await this.removeItem(selector);
+        }
+    };
+
+    protected async removeItem(document: DocumentHandle): Promise<true | false> {
+        if (await this.collection.documentExists(document)) {
             try {
-                return await this.collection.remove(selector);
+                return await this.collection.remove(document);
             } catch (e) {
-                console.log(e);
+                console.log(e); // @TODO Make better error logging, in case of SystemManager there is error reporting to graphql
                 return false;
             }
         } else {
-            return false
+            return false;
         }
-    };
+    }
 
 
     protected parseInsert(document: any): any {

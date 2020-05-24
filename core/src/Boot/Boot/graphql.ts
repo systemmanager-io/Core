@@ -4,14 +4,12 @@ import {ApolloServer, ApolloServerExpressConfig} from "apollo-server-express";
 import {defaultPlaygroundOptions} from "apollo-server-core";
 import {graphqlDebug} from "../../Lib/debug";
 import adminSchema from "../../GraphQL/AdminSchema/adminSchema";
-import serverSchema from "../../GraphQL/ServerSchema/serverSchema";
 import getErrorCode from "../../Lib/Errors/getErrorCode";
 
 export default async function graphqlServer() {
     graphqlDebug('Loading GraphQL');
 
     const graphqlSettings: ApolloServerExpressConfig = {
-
         playground: {
             ...defaultPlaygroundOptions,
             settings: {
@@ -32,19 +30,12 @@ export default async function graphqlServer() {
         }),
     };
 
-    const adminGraphql = new ApolloServer({
+    new ApolloServer({
         schema: adminSchema,
         ...graphqlSettings,
-    });
-
-    const serverGraphql = new ApolloServer({
-        schema: serverSchema,
-        ...graphqlSettings,
-    });
-
-    adminGraphql.applyMiddleware({
+    }).applyMiddleware({
         app: app,
-        path: config.graphql.path + "admin"
+        path: config.graphql.path + "manage"
     });
 
     graphqlDebug('GraphQL Loaded');

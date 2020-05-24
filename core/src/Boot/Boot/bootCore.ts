@@ -9,22 +9,21 @@ import commandLineArgs from "command-line-args";
 import installer from "../Installer/installer";
 
 boot().then(() => {
-    coreDebug(`---
+    coreDebug(
+        `---
     
-    🚀 SystemManager is ready
+    🚀 SystemManager has been booted and is ready for action.
     
-    🚀 GraphQL Requests: http://${config.http.host}:${config.http.port}
-    🚀 Subscriptions: ws://${config.http.host}:${config.http.port}
+    🚀 SystemManager Core is reachable on the following URIs:
+        🌐 GraphQL Requests: http(s)://${config.http.host}:${config.http.port}/manage
+        🌐 GraphQL Subscriptions: ws(s)://${config.http.host}:${config.http.port}/manage
     
----`);
-
-    // WILL GET REMOVED AFTER I HAVE A "UPDATER"
-    updateDebug(`---
+        🌐 REST Requests: http(s)://${config.http.host}:${config.http.port}
+        
+    Need support? Contact us via one of the support options at https://systemmanager.io/support
     
-    ⬆ New update available
-    ⬆ Newest version is Version 0.0.2
-    
----`);
+---`
+    );
 
 });
 
@@ -33,8 +32,8 @@ async function boot() {
     const options = commandLineArgs([
         {name: 'help', alias: 'h'},
         {name: 'install', alias: 'i', type: Boolean, defaultValue: false},
-        {name: 'noauth', type: Boolean, defaultValue: false,},
-        {name: 'nologo', type: Boolean, defaultValue: false,},
+        {name: 'noauth', type: Boolean, defaultValue: false},
+        {name: 'nologo', type: Boolean, defaultValue: false},
     ]);
 
 
@@ -47,3 +46,12 @@ async function boot() {
     httpServer.listen(config.http.port, config.http.host);
     await graphqlServer();
 }
+
+
+// @TODO WILL GET REMOVED AFTER I HAVE A "UPDATER"
+// updateDebug(`---
+//
+// ⬆ New update available
+// ⬆ Newest version is Version 0.0.2
+//
+// ---`);

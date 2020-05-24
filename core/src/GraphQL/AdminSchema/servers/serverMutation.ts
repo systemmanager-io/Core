@@ -15,7 +15,8 @@ export default {
                         description: "Create an new Server entry in SystemManager"
                     },
                 },
-                resolve(root, args) {
+                resolve(root, args, context) {
+                    console.log(context);
                     args.data._key = uuid();
                     return serverModel.insert(args.data);
                 },
