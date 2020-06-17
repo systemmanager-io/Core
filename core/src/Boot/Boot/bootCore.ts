@@ -2,7 +2,7 @@ import * as config from "../../config";
 import {httpServer} from "../../connectors";
 import {coreDebug, httpDebug, updateDebug} from "../../Lib/debug";
 import graphqlServer from "./graphql";
-import {migrate} from "./migrations";
+import {migrate} from "./../../Lib/Arango/migrator";
 import {showLogo} from "./showCoreInfo";
 import {queue} from "./queues";
 import commandLineArgs from "command-line-args";
