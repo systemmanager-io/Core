@@ -21,10 +21,11 @@ Vagrant.configure("2") do |config|
 
   config.vm.provider "virtualbox" do |v|
     v.cpus = 4
-    v.memory = 2048
+    v.memory = 4096
     v.name = "SystemManager"
     v.customize ["setextradata", :id, "VBoxInternal2/SharedFoldersEnableSymlinksCreate/v-root", "1"]
   end
+
 
   if OS.mac?
     config.vm.synced_folder ".", "/var/www/systemmanager"

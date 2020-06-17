@@ -1,4 +1,4 @@
-import {arangodb} from "../../connectors";
+import {arangodb} from "../../../connectors";
 
 export default async function () {
     const migrationCollection = arangodb.collection("migrations");

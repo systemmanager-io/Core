@@ -1,8 +1,8 @@
-import edgeModel from "../../../../Lib/Arango/edgeModel";
+import edgeModel from "../../../../Lib/Arango/Models/edgeModel";
 import {arangodb} from "../../../../connectors";
 
 interface edgeFields extends ArangoEdgeDocument {
-    
+
 }
 
 class UserHasPermission extends edgeModel<edgeFields> {

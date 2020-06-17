@@ -1,4 +1,4 @@
-import documentModel from "../../../../Lib/Arango/documentModel";
+import documentModel from "../../../../Lib/Arango/Models/documentModel";
 import {arangodb} from "../../../../connectors";
 
 interface DocumentFields extends ArangoDocument {

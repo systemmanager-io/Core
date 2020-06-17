@@ -1,12 +1,10 @@
-// Deprecated, is about to be moved to another file.
-
-import {dbDebug} from "../../Lib/debug";
+import {dbDebug} from "../debug";
 import * as path from "path";
 import * as fs from "fs";
 import * as _ from 'lodash'
-import checkMigrationCollection from "../../Lib/Arango/Functions/checkMigrationCollection";
+import checkMigrationCollection from "./Functions/checkMigrationCollection";
 import {arangodb} from "../../connectors";
-import checkMigrationExtensions from "../../Lib/Arango/Functions/checkMigrationExtensions";
+import checkMigrationExtensions from "./Functions/checkMigrationExtensions";
 
 export async function migrate() {
     dbDebug("Checking for migrations");
@@ -26,6 +24,8 @@ export async function migrate() {
 
 function getMigrations() {
     const dir = path.resolve(__dirname, '../../ArangoDB/Migrations/');
+
+    console.log(dir);
     const dirList = fs.readdirSync(path.resolve(__dirname, '../../ArangoDB/Migrations/'))
         .map(fileName => ({
             file: fileName,

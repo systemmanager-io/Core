@@ -1,4 +1,4 @@
-import documentModel from "../../../../Lib/Arango/documentModel";
+import documentModel from "../../../../Lib/Arango/Models/documentModel";
 import {arangodb} from "../../../../connectors";
 
 
@@ -12,7 +12,7 @@ interface documentFields extends ArangoDocument {
 class UserLogModel extends documentModel<documentFields> {
 
     collection = arangodb.collection("userLogs");
-    
+
     filterFields = {
         '_id': ['doc._id', '=='],
         '_key': ['doc._key', '=='],

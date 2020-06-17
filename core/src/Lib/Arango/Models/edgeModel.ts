@@ -1,7 +1,7 @@
 import * as arangojs from "arangojs";
 import {AqlQuery} from "arangojs/lib/async/aql-query";
 import {aql} from "arangojs";
-import {arangodb} from "../../connectors";
+import {arangodb} from "../../../connectors";
 
 export default abstract class edgeModel<DOC extends ArangoEdgeDocument> {
 

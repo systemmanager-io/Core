@@ -6,7 +6,7 @@ import * as ArangoJS from "arangojs";
 // import jwtMiddleware from "./Http/Middlewares/jwtMiddleware";
 // import UserLoginController from "./Http/Controllers/UserLoginController";
 
-export const redis = new IORedis(config.redis);
+// export const redis = new IORedis(config.redis);
 
 export const app = express();
 export const router = express.Router();
