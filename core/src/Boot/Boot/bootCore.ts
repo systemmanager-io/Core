@@ -44,16 +44,16 @@ async function boot() {
     if (options.install) await installer();
     await queue();
 
-    const testing123 = new EventEmitter;
-
-    let testfunc = (arg1: string, arg2: string) => {
-        console.log("Something happened", arg1, arg2)
-    }
-    testing123.on("save", testfunc)
-
-    setInterval(() => {
-        testing123.emit('save', 'testing', 'testing2')
-    }, 1000)
+    // const testing123 = new EventEmitter;
+    //
+    // let testfunc = (arg1: string, arg2: string) => {
+    //     console.log("Something happened", arg1, arg2)
+    // }
+    // testing123.on("save", testfunc)
+    //
+    // setInterval(() => {
+    //     testing123.emit('save', 'testing', 'testing2')
+    // }, 1000)
 
     httpServer.listen(config.http.port, config.http.host);
     await graphqlServer();

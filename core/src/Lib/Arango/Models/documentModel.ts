@@ -88,20 +88,25 @@ export default abstract class documentModel<DOC extends ArangoDocument> {
     // List all entries in a collection with (possibly applied filters)
     public async list(paginator: PaginateType): Promise<DOC | null> {
 
-        const paginate = paginator.paginate
-
+        console.log(paginator);
+        const paginate = paginator !== undefined ? paginator.paginate : {
+            last: undefined,
+            first: undefined,
+            limit: undefined
+        };
 
         const firstFilter = aql.literal(paginate.last !== undefined ? `SORT doc._key ASC LIMIT @last` : ``);
         const lastFilter = aql.literal(paginate.first !== undefined ? `SORT doc._key DESC LIMIT @first` : ``);
         const limitFilter = aql.literal(paginate.limit !== undefined ? `LIMIT @limit` : ``);
 
         const query: AqlQuery = aql`
-            FOR d IN @@collectionName
+            FOR doc IN @@collectionName
             ${lastFilter}
             ${firstFilter}
             ${limitFilter}
-            RETURN d
+            RETURN doc
         `;
+
 
         query.bindVars = {
             "@collectionName": this.collectionName(),
@@ -111,9 +116,7 @@ export default abstract class documentModel<DOC extends ArangoDocument> {
         };
 
         const result: ArrayCursor = await arangodb.query(query);
-
         return await result.all();
-
     }
 
     public async remove(selector: DocumentHandle | Array<DocumentHandle>): Promise<any> {

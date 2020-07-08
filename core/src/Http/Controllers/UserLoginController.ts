@@ -12,7 +12,7 @@ export default class UserLoginController {
 
     public static async login(req: Request, res: Response, next: NextFunction) {
 
-
+        // Implement JOI
         let email: string | string[] | undefined = req.body.email;
         const password: string | string[] | undefined = req.body.password;
 
@@ -21,6 +21,7 @@ export default class UserLoginController {
             res.send(incorrectInfo);
             return
         }
+
         if (typeof email === "string") email = email.toLowerCase();
 
         const query: AqlQuery = aql`

@@ -17,6 +17,10 @@ export default async function jwtMiddleware(req: Request, res: Response, next: N
 
     const jwtToken: any = req.headers.token;
 
+    const cookies: any = req.cookies
+
+    console.log(cookies);
+
     // @TODO There must be a safer way to check if someone is real. We also need to keep the possibility of jwt Hijacking in mind
 
     if (jwtToken == undefined) {

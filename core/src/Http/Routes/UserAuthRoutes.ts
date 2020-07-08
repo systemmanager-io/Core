@@ -2,7 +2,7 @@ import UserLoginController from "../Controllers/UserLoginController";
 import jwtMiddleware from "../Middlewares/jwtMiddleware";
 import {app} from "../../connectors";
 
-app.post("/manage/login", function (req, res, next) {
+app.post("/login", function (req, res, next) {
     UserLoginController.login(req, res, next)
 });
 

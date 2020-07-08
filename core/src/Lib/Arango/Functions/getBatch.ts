@@ -19,7 +19,8 @@ export async function getBatch() {
     const result: ArrayCursor = await arangodb.query(query);
     const batch = await result.all();
 
-    if(batch[0].batch == undefined) return 0;
+    if (batch.length == 0 || batch[0].batch == undefined) return 0;
+
     return batch[0].batch;
 
 }
