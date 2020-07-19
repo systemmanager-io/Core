@@ -1,6 +1,6 @@
-const errorType: any = {
+export const errorType: any = {
     NOTFOUND: {
-        message: `Document has not been found in the database.`,
+        message: `Document does not exist in the database`,
         statusCode: 404
     },
     INTERNALERROR: {
@@ -12,7 +12,8 @@ const errorType: any = {
         message: `Passwords do not match.`,
     },
     USERALREADYEXISTS: {
-        message: `User already exists.`
+        message: `User already exists.`,
+        statusCode: 502
     },
 
     NOPERMISSION: {
@@ -31,4 +32,17 @@ const errorType: any = {
     },
 
 };
-export default errorType;
+
+export declare enum errorName {
+    NOTFOUND = "NOTFOUND",
+    INTERNALERROR = "INTERNALERROR",
+
+    NOPASSWORDMATCH = "NOPASSWORDMATCH",
+    USERALREADYEXISTS = "USERALREADYEXISTS",
+
+    NOPERMISSION = "NOPERMISSION",
+
+    FAILEDTOSENDCOMMAND = "FAILEDTOSENDCOMMAND",
+
+    ARANGODBERROR = "ARANGODBERROR"
+};

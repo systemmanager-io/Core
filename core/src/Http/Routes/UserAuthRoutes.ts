@@ -6,6 +6,6 @@ app.post("/login", function (req, res, next) {
     UserLoginController.login(req, res, next)
 });
 
-app.use("/manage", function (req, res, next) {
-    jwtMiddleware(req, res, next)
-});
+// app.use("/manage", function (req, res, next) {
+    // jwtMiddleware(req, res, next)
+// });

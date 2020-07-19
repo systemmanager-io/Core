@@ -9,6 +9,8 @@ import {aql, AqlQuery} from "arangojs/lib/cjs/aql-query";
 import {ArrayCursor} from "arangojs/lib/async/cursor";
 import {arangodb} from "../../connectors";
 
+// Move this to a separate error file.
+
 const invalidToken = {
     error: "No JWT",
     message: "Perhaps you forgot to log in?"

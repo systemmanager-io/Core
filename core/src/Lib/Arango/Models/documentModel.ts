@@ -74,9 +74,7 @@ export default abstract class documentModel<DOC extends ArangoDocument> {
         try {
             return await this.collection.document(selector);
         } catch (err) {
-            console.log(err);
-            // @TODO Throw error?
-            return null;
+            throw new Error(errorName.NOTFOUND);
         }
     }
 

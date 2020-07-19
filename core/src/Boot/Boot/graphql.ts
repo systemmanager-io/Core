@@ -22,7 +22,7 @@ export default async function graphqlServer() {
         uploads: {},
         formatError: (err => {
             const error = getErrorCode(err.message);
-            if (error !== undefined) {
+            if (error !== unde-fined) {
                 return ({message: error.message, statusCode: error.statusCode});
             } else {
                 return ({message: err.message, statusCode: 502})

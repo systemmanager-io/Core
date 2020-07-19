@@ -1,6 +1,6 @@
-import errorType from "./GraphQL/ErrorTypes";
+import {errorType, errorName} from "./GraphQL/ErrorTypes";
 
-const getErrorCode = (errorName: any) => {
+const getErrorCode = (errorName: errorName | string) => {
     return errorType[errorName];
 };
 
