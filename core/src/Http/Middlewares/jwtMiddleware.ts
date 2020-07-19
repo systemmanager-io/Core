@@ -13,15 +13,26 @@ const invalidToken = {
     error: "No JWT",
     message: "Perhaps you forgot to log in?"
 };
+
+const expiredToken = {
+    error: "Token Expired",
+    message: "The token you send is invalid, get a new token and try again"
+}
+
+const malformedToken = {
+    error: "Token Expired",
+    message: "The token you send is invalid, get a new token and try again"
+}
 export default async function jwtMiddleware(req: Request, res: Response, next: NextFunction) {
 
-    const jwtToken: any = req.headers.token;
+    const jwtToken: string | string[] | any = req.headers.token;
 
     const cookies: any = req.cookies
 
     console.log(cookies);
 
     // @TODO There must be a safer way to check if someone is real. We also need to keep the possibility of jwt Hijacking in mind
+    // The last one might be paranoia at its best.
 
     if (jwtToken == undefined) {
         res.status(403);
@@ -29,7 +40,7 @@ export default async function jwtMiddleware(req: Request, res: Response, next: N
         return
     }
 
-    let jwtData: any;
+    let jwtData: string | object| any;
     try {
         //@TODO Make it compatible with Pub/Priv keys?
         jwtData = await jwt.verify(jwtToken, config.jwt.secret)
@@ -38,10 +49,10 @@ export default async function jwtMiddleware(req: Request, res: Response, next: N
             console.log("JWT", e.name);
             if (e.name == "TokenExpiredError") {
                 res.status(403);
-                res.send({error: "Token Expired"})
+                res.send(expiredToken)
             } else if (e.name == "JsonWebTokenError") {
                 res.status(403);
-                res.send({error: "Token Malformed"});
+                res.send(malformedToken);
             }
             return
         }

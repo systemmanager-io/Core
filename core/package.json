@@ -17,11 +17,11 @@
   },
   "dependencies": {
     "@hapi/joi": "^17.1.1",
-    "apollo-server-core": "^2.15.1",
-    "apollo-server-express": "^2.15.1",
+    "apollo-server-core": "^2.16.0",
+    "apollo-server-express": "^2.16.0",
     "arangojs": "^6.14.1",
     "argon2": "^0.26.2",
-    "bull": "^3.15.0",
+    "bull": "^3.16.0",
     "command-line-args": "^5.1.1",
     "cors": "^2.8.5",
     "cron": "^1.7.2",
@@ -31,10 +31,10 @@
     "express-graphql": "^0.9.0",
     "graphql": "^14.7.0",
     "graphql-subscriptions": "^1.1.0",
-    "inquirer": "^7.3.0",
+    "inquirer": "^7.3.2",
     "ioredis": "^4.17.3",
     "jsonwebtoken": "^8.5.1",
-    "lodash": "^4.17.15",
+    "lodash": "^4.17.19",
     "moment": "^2.27.0",
     "node-fetch": "^2.6.0",
     "nodemailer": "^6.4.10",
@@ -51,7 +51,7 @@
     "@types/graphql": "^14.5.0",
     "@types/hapi__joi": "^16.0.6",
     "@types/inquirer": "^6.5.0",
-    "@types/ioredis": "^4.17.0",
+    "@types/ioredis": "^4.17.2",
     "@types/joi": "^14.3.4",
     "@types/jsonwebtoken": "^8.5.0",
     "@types/lodash": "^4.14.157",
@@ -61,6 +61,6 @@
     "@types/yaml": "^1.9.7",
     "mocha": "^7.2.0",
     "ts-node": "^8.10.2",
-    "typescript": "^3.9.6"
+    "typescript": "^3.9.7"
   }
 }

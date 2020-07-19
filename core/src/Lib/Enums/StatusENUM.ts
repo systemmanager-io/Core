@@ -5,11 +5,11 @@ const serverLogType = new GraphQLEnumType({
     values: {
         INFO: {
             value: "info",
-            description: "The server has some info about a configured item"
+            description: "The server has some info about a watched item"
         },
         WARNING: {
             value: "warning",
-            description: "The server has warnings that will need to be addressed"
+            description: "The server has warnings that will need to be addressed or looked at"
         },
         ERROR: {
             value: "error",
@@ -17,7 +17,11 @@ const serverLogType = new GraphQLEnumType({
         },
         CRITICAL: {
             value: "critcal",
-            description: "The server has suffered an critical error. Certain applications that suffer this will probably stop working."
+            description: "The server has suffered an critical error. Most applications that suffer a critical error will probably end up crashing."
+        },
+        FLAPPING: {
+            value: "flapping",
+            description: "The server is flicking between offline and offline."
         },
         DOWN: {
             value: "down",
